@@ -1,200 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FEG SOL | Feed Every Gain</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-<style>
-body {
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(135deg, #0f0f0f, #111827);
-}
-.glow {
-    text-shadow: 0 0 15px #00ff88;
-}
-.button-glow {
-    box-shadow: 0 0 20px #00ff88;
-}
-</style>
-</head>
-    <script>
-const items = document.querySelectorAll('.timeline-item');
-
-window.addEventListener('scroll', () => {
-    const triggerBottom = window.innerHeight * 0.85;
-
-    items.forEach(item => {
-        const boxTop = item.getBoundingClientRect().top;
-
-        if(boxTop < triggerBottom){
-            item.classList.add('show');
-        }
-    });
-});
-</script>
-<body class="text-white">
+<body class="bg-white text-gray-800 font-sans scroll-smooth">
 
 <!-- NAVBAR -->
-<nav class="flex justify-between items-center px-8 py-4 bg-black bg-opacity-70 fixed w-full z-50">
+<nav class="fixed w-full bg-white shadow-md z-50">
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+    
     <div class="flex items-center gap-3">
-        <img src="logo-gorilla.PNG" alt="FEG SOL Logo" class="w-10 h-10 rounded-full">
-        <span class="text-xl font-bold text-green-400">FEG SOL</span>
+      <img src="logo-gorilla.PNG" class="w-10 h-10 rounded-full">
+      <span class="text-xl font-bold text-blue-600">FEG SOL</span>
     </div>
 
-    <div class="flex gap-6 text-gray-300">
-        <a href="#buy-section" class="hover:text-green-400">Buy</a>
-        <a href="#chart" class="hover:text-green-400">Chart</a>
-        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="hover:text-green-400">Telegram</a>
-        <a href="https://x.com/fegirvan?s=21" target="_blank" class="hover:text-green-400">Twitter</a>
+    <div class="hidden md:flex gap-8 font-medium text-gray-600">
+      <a href="#buy" class="hover:text-blue-600">Buy</a>
+      <a href="#chart" class="hover:text-blue-600">Chart</a>
+      <a href="#tokenomics" class="hover:text-blue-600">Tokenomics</a>
+      <a href="#roadmap" class="hover:text-blue-600">Roadmap</a>
     </div>
+
+    <div class="flex gap-3">
+      <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank"
+        class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm hover:bg-blue-700">
+        Telegram
+      </a>
+      <a href="https://x.com/fegirvan?s=21" target="_blank"
+        class="border px-4 py-2 rounded-full text-sm hover:bg-gray-100">
+        Twitter
+      </a>
+    </div>
+
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-32">
-    
-    <img src="logo-gorilla.PNG" alt="Gorilla Logo" class="w-40 md:w-56 mb-6 drop-shadow-2xl">
-
-    <h1 class="text-5xl md:text-7xl font-bold glow text-green-400">FEG SOL</h1>
-    <p class="mt-4 text-xl text-gray-300">Feed Every Gain on Solana</p>
-    <p class="mt-6 max-w-xl text-gray-400">
-        The Gorilla of Solana. Born to Pump. Built to Dominate.
-    </p>
-
-    <div class="mt-8 flex gap-4">
-        <a href="#buy-section" class="bg-green-400 text-black px-6 py-3 rounded-full font-bold hover:scale-105 transition">Buy Now</a>
-        <a href="#chart" class="border border-green-400 px-6 py-3 rounded-full hover:bg-green-400 hover:text-black transition">View Chart</a>
-    </div>
-
-</section>
 
 <!-- HERO -->
-<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-    <h1 class="text-5xl md:text-7xl font-bold glow text-green-400">FEG SOL</h1>
-    <p class="mt-4 text-xl text-gray-300">Feed Every Gain on Solana</p>
-    <p class="mt-6 max-w-xl text-gray-400">
-        The Gorilla of Solana. Born to Pump. Built to Dominate.
-    </p>
-    <div class="mt-8 flex gap-4">
-        <a href="https://fegirvan.github.io/FEGsol/" class="bg-green-400 text-black px-6 py-3 rounded-full font-bold button-glow hover:scale-105 transition">Visit Site</a>
-        <a href="#buy-section" class="border border-green-400 px-6 py-3 rounded-full hover:bg-green-400 hover:text-black transition">Buy / Sell</a>
-        <a href="#chart" class="border border-green-400 px-6 py-3 rounded-full hover:bg-green-400 hover:text-black transition">Chart</a>
-    </div>
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-32 bg-gradient-to-b from-white to-blue-50">
 
-    <div class="mt-6 flex gap-6">
-        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-300 hover:text-green-400">Telegram</a>
-        <a href="https://x.com/fegirvan?s=21" target="_blank" class="text-gray-300 hover:text-green-400">Twitter</a>
-    </div>
+  <img src="logo-gorilla.PNG" class="w-32 mb-6">
+
+  <h1 class="text-5xl font-extrabold text-blue-600">FEG SOL</h1>
+
+  <p class="mt-4 text-lg text-gray-600">
+    Feed Every Gain on Solana
+  </p>
+
+  <p class="mt-4 max-w-xl text-gray-500">
+    The Gorilla of Solana. Born to Pump. Built to Dominate.
+  </p>
+
+  <div class="mt-8 flex gap-4 flex-wrap justify-center">
+    <a href="#buy"
+      class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition">
+      🚀 Buy Now
+    </a>
+
+    <a href="#chart"
+      class="border border-blue-600 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition">
+      📊 View Chart
+    </a>
+  </div>
+
+  <div class="mt-8 bg-white shadow px-6 py-3 rounded-xl text-sm text-gray-600">
+    ✅ Live on Solana | ⚡ Instant Swaps | 🔥 LP Burned
+  </div>
+
 </section>
 
-<!-- ABOUT -->
-<section class="py-20 px-6 bg-black">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-6">About FEG SOL</h2>
-        <p class="text-gray-300 leading-relaxed">
-            FEG SOL is a community-driven meme token powered by pure gorilla energy.
-            Built on Solana for lightning-fast transactions and low fees.
-            No fear. No fake hype. Just strength, memes, and momentum.
-        </p>
+
+<!-- BUY SECTION -->
+<section id="buy" class="py-20 text-center px-6">
+
+  <h2 class="text-3xl font-bold text-blue-600 mb-6">How To Buy</h2>
+
+  <div class="max-w-3xl mx-auto space-y-6 text-gray-600">
+
+    <div class="bg-blue-50 p-6 rounded-xl">
+      1️⃣ Download Phantom Wallet
     </div>
-</section>
-    
-    <!-- PREMIUM ROADMAP -->
-<section id="roadmap" class="py-24 px-6 bg-black">
-    <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-16">FEG SOL Roadmap</h2>
 
-        <div class="relative border-l-2 border-green-400 mx-auto max-w-3xl">
-
-            <!-- Phase 1 -->
-            <div class="timeline-item mb-16 ml-6">
-                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
-                <div class="bg-gray-900 p-6 rounded-xl glow-box">
-                    <h3 class="text-2xl text-green-400 mb-3">Phase 1 – Foundation</h3>
-                    <p>Branding, Website Launch, Social Setup, Smart Contract Deploy, Pump Launch.</p>
-                </div>
-            </div>
-
-            <!-- Phase 2 -->
-            <div class="timeline-item mb-16 ml-6">
-                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
-                <div class="bg-gray-900 p-6 rounded-xl glow-box">
-                    <h3 class="text-2xl text-green-400 mb-3">Phase 2 – Community Growth</h3>
-                    <p>Meme Contests, Raids, Influencer Push, 500+ Holders Target.</p>
-                </div>
-            </div>
-
-            <!-- Phase 3 -->
-            <div class="timeline-item mb-16 ml-6">
-                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
-                <div class="bg-gray-900 p-6 rounded-xl glow-box">
-                    <h3 class="text-2xl text-green-400 mb-3">Phase 3 – Expansion</h3>
-                    <p>Raydium Liquidity, Dex Update, Coin Listing, NFT Drop.</p>
-                </div>
-            </div>
-
-            <!-- Phase 4 -->
-            <div class="timeline-item ml-6">
-                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
-                <div class="bg-gray-900 p-6 rounded-xl glow-box">
-                    <h3 class="text-2xl text-green-400 mb-3">Phase 4 – Gorilla Era</h3>
-                    <p>Staking Concept, DAO Governance, Merch Drop, Major Partnerships.</p>
-                </div>
-            </div>
-
-        </div>
+    <div class="bg-blue-50 p-6 rounded-xl">
+      2️⃣ Fund with SOL
     </div>
-</section>
-<!-- BUY / SELL -->
-<section id="buy-section" class="py-20 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-8">Buy & Sell FEG SOL</h2>
-        <p class="text-gray-300 mb-4">Use the buttons below to swap FEG SOL on Solana DEX</p>
-        <div class="flex justify-center gap-4">
-            <a href="https://dexscreener.com/solana" target="_blank" class="bg-green-400 text-black px-6 py-3 rounded-full font-bold hover:scale-105 transition">Buy on DEX</a>
-            <a href="https://dexscreener.com/solana" target="_blank" class="bg-red-500 text-black px-6 py-3 rounded-full font-bold hover:scale-105 transition">Sell on DEX</a>
-        </div>
+
+    <div class="bg-blue-50 p-6 rounded-xl">
+      3️⃣ Swap on Raydium or Jupiter
     </div>
+
+    <div class="bg-blue-50 p-6 rounded-xl">
+      4️⃣ Paste Contract Address & Swap
+    </div>
+
+  </div>
+
 </section>
 
-<!-- CHART -->
-<section id="chart" class="py-20 px-6 bg-black">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-8">Price Chart</h2>
-        <div class="w-full flex justify-center">
-            <!-- Replace with real chart later -->
-            <img src="https://via.placeholder.com/600x300.png?text=FEG+SOL+Chart" class="rounded-lg shadow-lg" alt="FEG SOL Chart">
-        </div>
-        <p class="text-gray-400 mt-3">Chart data will appear here when available.</p>
-    </div>
+
+<!-- CHART SECTION -->
+<section id="chart" class="py-20 bg-gray-50 text-center px-6">
+
+  <h2 class="text-3xl font-bold text-blue-600 mb-8">Live Chart</h2>
+
+  <div class="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg">
+    <iframe src="https://dexscreener.com" 
+      class="w-full h-96">
+    </iframe>
+  </div>
+
 </section>
+
 
 <!-- TOKENOMICS -->
-<section class="py-20 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-10">Tokenomics</h2>
-        <div class="grid md:grid-cols-2 gap-8 text-gray-300">
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-2">Supply</h3>
-                <p>1,000,000,000 FEGS</p>
-                <p>No Tax</p>
-            </div>
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-2">Allocation</h3>
-                <p>80% Liquidity</p>
-                <p>10% Marketing</p>
-                <p>5% Community</p>
-                <p>5% Team (Locked)</p>
-            </div>
-        </div>
+<section id="tokenomics" class="py-20 text-center px-6">
+
+  <h2 class="text-3xl font-bold text-blue-600 mb-10">Tokenomics</h2>
+
+  <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto text-gray-600">
+
+    <div class="bg-white shadow p-6 rounded-xl">
+      <h3 class="font-bold mb-2">Total Supply</h3>
+      1,000,000,000 FEGSOL
     </div>
+
+    <div class="bg-white shadow p-6 rounded-xl">
+      <h3 class="font-bold mb-2">Liquidity</h3>
+      Burned 🔥
+    </div>
+
+    <div class="bg-white shadow p-6 rounded-xl">
+      <h3 class="font-bold mb-2">Tax</h3>
+      0% Buy / 0% Sell
+    </div>
+
+  </div>
+
 </section>
 
+
+<!-- ROADMAP -->
+<section id="roadmap" class="py-20 bg-gray-50 text-center px-6">
+
+  <h2 class="text-3xl font-bold text-blue-600 mb-12">
+    Roadmap to Gorilla Era
+  </h2>
+
+  <div class="max-w-3xl mx-auto space-y-6">
+
+    <div class="bg-white shadow-md rounded-xl p-6">
+      Phase 1 – Branding, Website, Smart Contract
+    </div>
+
+    <div class="bg-white shadow-md rounded-xl p-6">
+      Phase 2 – Community Growth & DEX Launch
+    </div>
+
+    <div class="bg-white shadow-md rounded-xl p-6">
+      Phase 3 – CoinGecko & CMC Listing
+    </div>
+
+    <div class="bg-white shadow-md rounded-xl p-6">
+      Phase 4 – CEX Target & Ecosystem Expansion
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- WHITEPAPER -->
+<section class="py-20 text-center px-6">
+
+  <h2 class="text-3xl font-bold text-blue-600 mb-6">
+    Whitepaper
+  </h2>
+
+  <p class="text-gray-600 mb-6">
+    Full documentation about FEG SOL vision and ecosystem.
+  </p>
+
+  <a href="#"
+    class="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700">
+    Download Whitepaper
+  </a>
+
+</section>
+
+
 <!-- FOOTER -->
-<footer class="py-10 bg-black text-center text-gray-500">
-    © 2026 FEG SOL. All Rights Reserved • <a href="https://t.me/+16oraMVw88w3MmU9" class="hover:text-green-400">Telegram</a> • <a href="https://x.com/fegirvan?s=21" class="hover:text-green-400">Twitter</a>
+<footer class="bg-blue-600 text-white text-center py-8">
+
+  <p class="font-semibold">FEG SOL © 2026</p>
+  <p class="text-sm mt-2">Built on Solana Blockchain</p>
+
 </footer>
 
 </body>
-</html>
