@@ -13,11 +13,17 @@
         .card-shiba { background: rgba(20, 20, 20, 0.8); border: 1px solid #333; border-radius: 20px; transition: 0.3s; }
         .card-shiba:hover { border-color: #14F195; transform: translateY(-5px); }
         .neon-text { color: #14F195; text-shadow: 0 0 10px rgba(20, 241, 149, 0.5); }
-        .roadmap-line { border-left: 2px dashed #333; }
         .phase-tag { background: #14F195; color: #000; padding: 2px 10px; border-radius: 5px; font-weight: 900; font-size: 10px; }
-        ul { list-style: none; padding: 0; }
-        li { font-size: 11px; margin-bottom: 5px; color: #aaa; display: flex; align-items: center; }
-        li::before { content: "✓"; color: #14F195; font-weight: bold; margin-right: 8px; }
+        .phase-tag-pending { background: #333; color: #777; padding: 2px 10px; border-radius: 5px; font-weight: 900; font-size: 10px; }
+        .ca-container { background: rgba(255, 255, 255, 0.05); border: 1px dashed #14F195; border-radius: 12px; }
+        
+        /* Style untuk list yang sudah selesai */
+        .li-done { font-size: 11px; margin-bottom: 5px; color: #fff; display: flex; align-items: center; }
+        .li-done::before { content: "✓"; color: #14F195; font-weight: bold; margin-right: 8px; }
+        
+        /* Style untuk list yang belum selesai */
+        .li-pending { font-size: 11px; margin-bottom: 5px; color: #666; display: flex; align-items: center; }
+        .li-pending::before { content: "○"; color: #444; font-weight: bold; margin-right: 8px; }
     </style>
 </head>
 <body class="bg-gradient-main">
@@ -25,125 +31,126 @@
     <nav class="p-5 flex justify-between items-center max-w-7xl mx-auto">
         <div class="font-meme text-2xl neon-text">FEGSOL</div>
         <div class="flex gap-4">
-            <a href="https://t.me/+16oraMVw88w3MmU9" class="bg-white text-black px-4 py-2 rounded-full font-bold text-xs hover:bg-green-400 transition">TELEGRAM</a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="bg-white text-black px-4 py-2 rounded-full font-bold text-xs hover:bg-green-400 transition uppercase">Telegram</a>
         </div>
     </nav>
 
-    <section class="text-center py-16 px-5">
-        <img src="logo-gorilla.PNG" class="w-48 mx-auto mb-8 drop-shadow-[0_0_30px_#14F195]" alt="FEGsol">
+    <section class="text-center py-12 px-5">
+        <img src="logo-gorilla.PNG" class="w-40 mx-auto mb-6 drop-shadow-[0_0_30px_#14F195]" alt="FEGsol">
         <h1 class="text-5xl md:text-7xl font-meme mb-4 uppercase leading-none">The Evolution <br><span class="text-purple-500">Of Apes</span></h1>
-        <p class="max-w-xl mx-auto text-gray-400 text-sm mb-8">Inspired by the legends, built for the future. $FEGsol is the next generation meme coin on Solana. Community first, alpha energy always.</p>
         
-        <div class="flex justify-center gap-3 mb-12">
-            <div class="card-shiba p-4 text-center min-w-[100px]">
-                <div class="text-[10px] text-gray-500 uppercase">Supply</div>
-                <div class="font-bold text-lg">1B</div>
+        <div class="max-w-md mx-auto mt-8 mb-10">
+            <p class="text-[10px] text-green-400 font-bold uppercase tracking-[0.3em] mb-2 text-center">Official Contract Address</p>
+            <div class="ca-container p-4 flex items-center justify-between">
+                <code id="caText" class="text-xs text-gray-300 truncate mr-4 uppercase font-mono">Launching Soon on Pump.fun</code>
+                <button onclick="copyCA()" class="text-green-400 font-black text-xs hover:text-white transition uppercase">Copy</button>
             </div>
-            <div class="card-shiba p-4 text-center min-w-[100px]">
-                <div class="text-[10px] text-gray-500 uppercase">Tax</div>
-                <div class="font-bold text-lg text-green-400">0%</div>
+        </div>
+
+        <div class="flex justify-center gap-2 mb-12">
+            <div class="card-shiba p-3 text-center min-w-[90px]">
+                <div class="text-[9px] text-gray-500 uppercase">Supply</div>
+                <div class="font-bold text-md">1B</div>
             </div>
-            <div class="card-shiba p-4 text-center min-w-[100px]">
-                <div class="text-[10px] text-gray-500 uppercase">Liquidity</div>
-                <div class="font-bold text-lg text-purple-400">Burned</div>
+            <div class="card-shiba p-3 text-center min-w-[90px]">
+                <div class="text-[9px] text-gray-500 uppercase">Tax</div>
+                <div class="font-bold text-md text-green-400">0%</div>
+            </div>
+            <div class="card-shiba p-3 text-center min-w-[90px]">
+                <div class="text-[9px] text-gray-500 uppercase">LP</div>
+                <div class="font-bold text-md text-purple-400 uppercase">Burned</div>
             </div>
         </div>
     </section>
 
     <section class="max-w-6xl mx-auto px-5 pb-24">
-        <h2 class="font-meme text-3xl text-center mb-16 neon-text">PAW-SOME ROADMAP</h2>
-        
+        <h2 class="font-meme text-3xl text-center mb-16 neon-text uppercase">Ape-some Roadmap</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <div class="card-shiba p-6">
-                <span class="phase-tag">PHASE 1: GENESIS</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">The Awakening</h3>
-                <ul>
-                    <li>Official Website Launch</li>
-                    <li>Social Media Setup (X & TG)</li>
-                    <li>Community Build-up</li>
-                    <li>Initial Marketing Push</li>
-                    <li>500 Telegram Members</li>
-                    <li>Stealth Launch on Solana</li>
+            <div class="card-shiba p-6 border-green-500/40">
+                <span class="phase-tag uppercase">Phase 1: Genesis</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-white uppercase">The Awakening</h3>
+                <ul class="list-none p-0">
+                    <li class="li-done">Website Launch</li>
+                    <li class="li-done">Social Media Setup</li>
+                    <li class="li-done">Community Build-up</li>
+                    <li class="li-done">Stealth Launch Preparation</li>
                 </ul>
             </div>
 
-            <div class="card-shiba p-6">
-                <span class="phase-tag">PHASE 2: EVOLUTION</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">The Rise</h3>
-                <ul>
-                    <li>1,000+ Holders</li>
-                    <li>DEXscreener & Birdeye Trending</li>
-                    <li>Community Giveaways</li>
-                    <li>First Influencer Partnership</li>
-                    <li>Coingecko Application</li>
-                    <li>2,000 Telegram Members</li>
+            <div class="card-shiba p-6 opacity-80">
+                <span class="phase-tag-pending uppercase">Phase 2: Evolution</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-gray-400 uppercase">Growth</h3>
+                <ul class="list-none p-0">
+                    <li class="li-pending">1,000+ Holders</li>
+                    <li class="li-pending">DEXscreener Trending</li>
+                    <li class="li-pending">Coingecko Listing</li>
+                    <li class="li-pending">Initial Marketing Raids</li>
                 </ul>
             </div>
 
-            <div class="card-shiba p-6 border-green-500/50">
-                <span class="phase-tag">PHASE 3: EXPANSION</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">Ape Domination</h3>
-                <ul>
-                    <li>CoinMarketCap Listing</li>
-                    <li>Large Scale Marketing</li>
-                    <li>Official Merch Store Teaser</li>
-                    <li>Partnership with Alpha Callers</li>
-                    <li>5,000+ Holders</li>
-                    <li>CEX Listing Tier 3</li>
+            <div class="card-shiba p-6 opacity-70">
+                <span class="phase-tag-pending uppercase">Phase 3: Expansion</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-gray-500 uppercase">Domination</h3>
+                <ul class="list-none p-0">
+                    <li class="li-pending">CoinMarketCap Listing</li>
+                    <li class="li-pending">Large Scale Marketing</li>
+                    <li class="li-pending">Tier 3 CEX Listing</li>
+                    <li class="li-pending">5,000+ Holders</li>
                 </ul>
             </div>
 
-            <div class="card-shiba p-6">
-                <span class="phase-tag">PHASE 4: UTILITY</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">Gorilla Tools</h3>
-                <ul>
-                    <li>FEGsol Staking Platform</li>
-                    <li>NFT Collection Launch</li>
-                    <li>Exclusive Ape Division Club</li>
-                    <li>Mainstream Media Press</li>
-                    <li>10,000+ Holders</li>
-                    <li>Audit by Certik/Interfi</li>
+            <div class="card-shiba p-6 opacity-60">
+                <span class="phase-tag-pending uppercase">Phase 4: Utility</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-gray-500 uppercase">Ape Tools</h3>
+                <ul class="list-none p-0">
+                    <li class="li-pending">FEGsol Staking</li>
+                    <li class="li-pending">NFT Collection Launch</li>
+                    <li class="li-pending">Audit by Certik</li>
+                    <li class="li-pending">10,000+ Holders</li>
                 </ul>
             </div>
 
-            <div class="card-shiba p-6">
-                <span class="phase-tag">PHASE 5: POWER</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">Global Invasion</h3>
-                <ul>
-                    <li>Tier 1 CEX Listing</li>
-                    <li>Global Billboard Ads</li>
-                    <li>Charity Donations (Ape Conservation)</li>
-                    <li>25,000+ Holders</li>
-                    <li>Governance DAO Launch</li>
-                    <li>Ecosystem Expansion</li>
+            <div class="card-shiba p-6 opacity-50">
+                <span class="phase-tag-pending uppercase">Phase 5: Power</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-gray-500 uppercase">Global Scale</h3>
+                <ul class="list-none p-0">
+                    <li class="li-pending">Tier 1 CEX Listing</li>
+                    <li class="li-pending">Global Billboard Ads</li>
+                    <li class="li-pending">25,000+ Holders</li>
+                    <li class="li-pending">DAO Launch</li>
                 </ul>
             </div>
 
-            <div class="card-shiba p-6 border-purple-500/30">
-                <span class="phase-tag">PHASE 6: ETERNITY</span>
-                <h3 class="font-meme text-lg mt-3 mb-4 text-white">To The Moon</h3>
-                <ul>
-                    <li>FEGsol Swap Launch</li>
-                    <li>Metaverse Integration</li>
-                    <li>100,000+ Holders</li>
-                    <li>Top 100 on CoinMarketCap</li>
-                    <li>The Future of Solana Memes</li>
-                    <li>TBA (Secret Phase)</li>
+            <div class="card-shiba p-6 opacity-40">
+                <span class="phase-tag-pending uppercase">Phase 6: Eternity</span>
+                <h3 class="font-meme text-lg mt-3 mb-4 text-gray-500 uppercase">Moon Mission</h3>
+                <ul class="list-none p-0">
+                    <li class="li-pending">FEGsol Swap</li>
+                    <li class="li-pending">Metaverse Integration</li>
+                    <li class="li-pending">100,000+ Holders</li>
+                    <li class="li-pending">Top 100 CMC Goal</li>
                 </ul>
             </div>
-
         </div>
     </section>
 
     <footer class="p-10 text-center border-t border-gray-900 bg-black">
         <div class="font-meme text-xl mb-4">FEGSOL</div>
-        <p class="text-[10px] text-gray-600 uppercase tracking-widest">© 2026 FEGSOL APE DIVISION. ALL RIGHTS RESERVED. <br> MEME COIN WITH NO FINANCIAL RETURN EXPECTATION.</p>
+        <p class="text-[9px] text-gray-600 uppercase tracking-widest leading-loose">© 2026 FEGSOL APE DIVISION. <br> $FEGsol is a meme coin for community fun. DYOR.</p>
         <div class="flex justify-center gap-6 mt-6">
-            <a href="https://x.com/fegirvan" class="text-xs text-gray-400 hover:text-white">TWITTER</a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" class="text-xs text-gray-400 hover:text-white">TELEGRAM</a>
+            <a href="https://x.com/fegirvan" target="_blank" class="text-xs text-gray-400 hover:text-white uppercase">Twitter</a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-xs text-gray-400 hover:text-white uppercase">Telegram</a>
         </div>
     </footer>
+
+    <script>
+        function copyCA() {
+            const ca = "LAUNCHING-SOON"; 
+            navigator.clipboard.writeText(ca);
+            alert("Contract Address Copied: " + ca);
+        }
+    </script>
 
 </body>
 </html>
