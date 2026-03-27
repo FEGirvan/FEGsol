@@ -1,236 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEGsol | The Future Evolution</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow-x: hidden; scroll-behavior: smooth; }
-        .font-meme { font-family: 'Bungee', cursive; text-transform: uppercase; }
-        .neon-text { color: #14F195; text-shadow: 0 0 10px rgba(20, 241, 149, 0.7); }
-        .phase-card { background: rgba(20, 20, 20, 0.9); border: 2px solid #333; border-radius: 15px; transition: 0.3s; padding: 15px; width: 100%; max-width: 250px; }
-        
-        /* Roadmap Tangga Layout */
-        .roadmap-container { display: flex; flex-direction: column; gap: 30px; padding: 60px 20px; position: relative; max-width: 1200px; mx-auto; }
-        
-        /* Step styling */
-        .roadmap-step { display: flex; align-items: flex-end; justify-content: flex-start; position: relative; width: 100%; }
-        
-        /* Vertical staircase line */
-        .stair-line { position: absolute; left: 10px; bottom: 0; width: 4px; background: repeating-linear-gradient(to bottom, #14F195, #14F195 10px, #000 10px, #000 20px); border-radius: 2px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FEGSOL | The Future Evolution</title>
 
-        /* Step circle (marker) */
-        .stair-marker { width: 24px; height: 24px; border-radius: 50%; border: 4px solid #14F195; background: #000; z-index: 10; flex-shrink: 0; }
-        .marker-completed { background: #14F195; box-shadow: 0 0 15px #14F195; }
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-        /* Step text & line horizontal */
-        .step-content { margin-left: 20px; display: flex; flex-direction: column; width: calc(100% - 44px); }
-        .step-line-h { width: 50px; height: 3px; background: #14F195; margin: 10px 0 20px 0; border-radius: 2px; }
-        
-        /* Specific step heights (staircase effect) */
-        #phase1 { margin-left: 0%; transform: translateY(0px); }
-        #phase2 { margin-left: 15%; transform: translateY(-50px); }
-        #phase3 { margin-left: 30%; transform: translateY(-100px); }
-        #phase4 { margin-left: 45%; transform: translateY(-150px); }
-        #phase5 { margin-left: 60%; transform: translateY(-200px); }
-        #phase6 { margin-left: 75%; transform: translateY(-250px); }
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at 20% 20%, #1a002e, #000 60%);
+    color: #fff;
+    overflow-x: hidden;
+}
 
-        /* The Climbing Ape - Positioned between Phase 1 and 2 */
-        .climbing-ape { position: absolute; left: 15%; top: calc(0% + 150px); width: 140px; transform: rotate(-5deg); filter: drop-shadow(0 0 20px #14F195); z-index: 100; animation: climbingApe 2s infinite ease-in-out; }
-        @keyframes climbingApe { 0%, 100% { transform: translateY(0px) rotate(-5deg); } 50% { transform: translateY(-20px) rotate(0deg); } }
+.font-meme { font-family: 'Bungee', cursive; }
 
-        /* Status colors and markers for phases */
-        .li-done { font-size: 11px; margin-bottom: 5px; color: #fff; display: flex; align-items: center; }
-        .li-done::before { content: "✓"; color: #14F195; font-weight: bold; margin-right: 8px; }
-        .phase-tag { background: #14F195; color: #000; padding: 2px 10px; border-radius: 5px; font-weight: 900; font-size: 10px; }
+.glow-text {
+    background: linear-gradient(90deg,#14F195,#9945FF,#14F195);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glowmove 4s linear infinite;
+    background-size: 200%;
+}
 
-        .li-pending { font-size: 11px; margin-bottom: 5px; color: #666; display: flex; align-items: center; }
-        .li-pending::before { content: "○"; color: #444; font-weight: bold; margin-right: 8px; }
-        .phase-tag-pending { background: #333; color: #777; padding: 2px 10px; border-radius: 5px; font-weight: 900; font-size: 10px; }
-        
-        /* CA Box */
-        .ca-container { background: rgba(255, 255, 255, 0.05); border: 1px dashed #14F195; border-radius: 12px; max-width: 400px; mx-auto; }
+@keyframes glowmove {
+    0% { background-position: 0% }
+    100% { background-position: 200% }
+}
 
-        /* Responsiveness for Mobile */
-        @media (max-width: 768px) {
-            #phase1, #phase2, #phase3, #phase4, #phase5, #phase6 { margin-left: 0%; transform: translateY(0px); max-width: none; }
-            .roadmap-container { padding: 40px 15px 120px 15px; }
-            .stair-line { left: 8px; }
-            .stair-marker { width: 20px; height: 20px; border-width: 3px; }
-            .step-content { margin-left: 15px; width: calc(100% - 35px); }
-            
-            /* Reposition climbing ape on mobile to be smaller and below phase cards */
-            .climbing-ape { width: 90px; left: calc(50% - 45px); top: auto; bottom: 40px; }
-        }
-    </style>
+.card {
+    background: rgba(20,20,20,0.8);
+    border: 1px solid #222;
+    border-radius: 20px;
+    transition: .3s;
+}
+
+.card:hover {
+    border-color: #14F195;
+    box-shadow: 0 0 30px rgba(20,241,149,0.4);
+    transform: translateY(-6px);
+}
+
+.btn-main {
+    background: linear-gradient(90deg,#14F195,#9945FF);
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: .3s;
+}
+
+.btn-main:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(153,69,255,0.7);
+}
+
+.section-glow {
+    background: radial-gradient(circle at center, rgba(153,69,255,0.15), transparent 70%);
+}
+</style>
 </head>
-<body class="bg-gradient-to-b from-black to-gray-950 selection:bg-purple-900 selection:text-green-300">
 
-    <nav class="p-5 flex justify-between items-center max-w-7xl mx-auto z-50 position-relative">
-        <div class="font-meme text-2xl neon-text">FEGSOL</div>
-        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="bg-white text-black px-4 py-2 rounded-full font-bold text-xs hover:bg-green-400 transition uppercase tracking-widest">Telegram</a>
-    </nav>
+<body>
 
-    <section class="text-center py-12 px-5 z-20 position-relative">
-        <h1 class="text-6xl md:text-8xl font-meme mb-3 uppercase leading-[0.85] text-white">Future Ape</h1>
-        <h2 class="text-3xl md:text-4xl font-meme neon-text uppercase leading-none mb-8 tracking-tighter">Evolution</h2>
-        
-        <div class="ca-container p-4 mx-auto mb-10 text-center flex items-center justify-between">
-            <div class="truncate mr-4 text-left">
-                <span class="text-[8px] text-green-400 font-bold uppercase block tracking-[0.3em] mb-1">Official contract address</span>
-                <code id="caText" class="text-xs text-gray-300 truncate uppercase font-mono">Launching Soon on Pump.fun</code>
-            </div>
-            <button onclick="copyCA()" class="text-green-400 font-black text-xs hover:text-white transition uppercase">Copy</button>
+<nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+    <div class="font-meme text-2xl glow-text">FEGSOL</div>
+    <a href="https://pump.fun" target="_blank" class="btn-main text-black">Buy Now</a>
+</nav>
+
+<section class="text-center py-20 px-5 section-glow">
+    <img src="logo-gorilla.PNG" class="w-44 mx-auto mb-8 drop-shadow-[0_0_40px_#9945FF]" alt="FEGsol">
+
+    <h1 class="text-5xl md:text-7xl font-meme uppercase mb-6 leading-tight">
+        The Evolution <br>
+        <span class="glow-text">Of Apes</span>
+    </h1>
+
+    <p class="text-gray-400 max-w-xl mx-auto mb-10">
+        $FEGsol is not just a meme.  
+        It's the next generation Solana ape movement.  
+        Built for community. Built for domination.
+    </p>
+
+    <div class="flex justify-center gap-4 flex-wrap">
+        <a href="https://pump.fun" target="_blank" class="btn-main text-black">
+            Buy on Pump.fun
+        </a>
+        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="border border-purple-500 px-6 py-3 rounded-full uppercase text-sm hover:bg-purple-600 transition">
+            Join Telegram
+        </a>
+    </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-6 py-20">
+    <h2 class="font-meme text-4xl text-center mb-16 glow-text uppercase">
+        Tokenomics
+    </h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="card p-6">
+            <div class="text-gray-400 text-xs uppercase">Supply</div>
+            <div class="text-2xl font-bold">1,000,000,000</div>
+        </div>
+        <div class="card p-6">
+            <div class="text-gray-400 text-xs uppercase">Tax</div>
+            <div class="text-2xl font-bold text-green-400">0%</div>
+        </div>
+        <div class="card p-6">
+            <div class="text-gray-400 text-xs uppercase">Liquidity</div>
+            <div class="text-2xl font-bold text-purple-400">Burned</div>
+        </div>
+        <div class="card p-6">
+            <div class="text-gray-400 text-xs uppercase">Chain</div>
+            <div class="text-2xl font-bold text-pink-400">Solana</div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-6 py-20 section-glow">
+    <h2 class="font-meme text-4xl text-center mb-16 glow-text uppercase">
+        How To Buy
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-8 text-center">
+
+        <div class="card p-8">
+            <div class="text-4xl mb-4">1️⃣</div>
+            <h3 class="font-bold mb-3">Create Wallet</h3>
+            <p class="text-gray-400 text-sm">
+                Download Phantom or Solflare wallet and fund it with SOL.
+            </p>
         </div>
 
-        <div class="flex justify-center gap-2 mb-12 flex-wrap">
-            <div class="bg-gray-900 border border-gray-800 p-3 text-center rounded-lg min-w-[85px]">
-                <div class="text-[8px] text-gray-500 uppercase">Supply</div>
-                <div class="font-bold text-sm">1B</div>
-            </div>
-            <div class="bg-gray-900 border border-gray-800 p-3 text-center rounded-lg min-w-[85px]">
-                <div class="text-[8px] text-gray-500 uppercase">Tax</div>
-                <div class="font-bold text-sm text-green-400">0%</div>
-            </div>
-            <div class="bg-gray-900 border border-gray-800 p-3 text-center rounded-lg min-w-[85px]">
-                <div class="text-[8px] text-gray-500 uppercase">LP</div>
-                <div class="font-bold text-sm text-purple-400 uppercase">Burned</div>
-            </div>
+        <div class="card p-8">
+            <div class="text-4xl mb-4">2️⃣</div>
+            <h3 class="font-bold mb-3">Go to Pump.fun</h3>
+            <p class="text-gray-400 text-sm">
+                Connect your wallet and search for FEGsol token.
+            </p>
         </div>
-    </section>
 
-    <section class="py-24 px-5 border-t border-gray-900 relative">
-        <h2 class="font-meme text-3xl text-center mb-24 neon-text uppercase tracking-tight">The Ape Staircase</h2>
-        
-        <img src="logo-gorilla.PNG" class="climbing-ape" alt="Climbing Ape">
-
-        <div class="roadmap-container mx-auto">
-            <div class="stair-line" style="height: calc(100% - 250px);"></div>
-
-            <div id="phase1" class="roadmap-step">
-                <div class="stair-marker marker-completed"></div>
-                <div class="step-content">
-                    <span class="phase-tag uppercase">Genesis</span>
-                    <div class="step-line-h"></div>
-                    <div class="phase-card border-green-500/50">
-                        <h3 class="font-meme text-lg text-white uppercase mb-4">Genesis Awakening</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-done">Website Launch</li>
-                            <li class="li-done">Social Media Setup</li>
-                            <li class="li-done">Community Build-up</li>
-                            <li class="li-done">Stealth Launch Ready</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="phase2" class="roadmap-step">
-                <div class="stair-marker marker-completed"></div>
-                <div class="step-content">
-                    <span class="phase-tag-pending uppercase">Evolution</span>
-                    <div class="step-line-h bg-gray-600"></div>
-                    <div class="phase-card opacity-90">
-                        <h3 class="font-meme text-lg text-gray-400 uppercase mb-4">Ape Growth</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-pending">1,000+ Holders</li>
-                            <li class="li-pending">DEXscreener Trending</li>
-                            <li class="li-pending">Coingecko Listing</li>
-                            <li class="li-pending">Initial Raids</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="phase3" class="roadmap-step">
-                <div class="stair-marker"></div>
-                <div class="step-content">
-                    <span class="phase-tag-pending uppercase">Expansion</span>
-                    <div class="step-line-h bg-gray-600"></div>
-                    <div class="phase-card opacity-80">
-                        <h3 class="font-meme text-lg text-gray-500 uppercase mb-4">Ape Domination</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-pending">CMC Listing</li>
-                            <li class="li-pending">Large Marketing</li>
-                            <li class="li-pending">Tier 3 CEX</li>
-                            <li class="li-pending">5,000+ Holders</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="phase4" class="roadmap-step">
-                <div class="stair-marker"></div>
-                <div class="step-content">
-                    <span class="phase-tag-pending uppercase">Utility</span>
-                    <div class="step-line-h bg-gray-600"></div>
-                    <div class="phase-card opacity-70">
-                        <h3 class="font-meme text-lg text-gray-500 uppercase mb-4">Ape Tools</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-pending">Staking Launch</li>
-                            <li class="li-pending">NFT Collection</li>
-                            <li class="li-pending">Audit by Certik</li>
-                            <li class="li-pending">10k+ Holders</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="phase5" class="roadmap-step">
-                <div class="stair-marker"></div>
-                <div class="step-content">
-                    <span class="phase-tag-pending uppercase">Power</span>
-                    <div class="step-line-h bg-gray-600"></div>
-                    <div class="phase-card opacity-60">
-                        <h3 class="font-meme text-lg text-gray-500 uppercase mb-4">Alpha Ape</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-pending">Tier 1 CEX</li>
-                            <li class="li-pending">Global Ads</li>
-                            <li class="li-pending">Charity Donations</li>
-                            <li class="li-pending">DAO Launch</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div id="phase6" class="roadmap-step">
-                <div class="stair-marker"></div>
-                <div class="step-content">
-                    <span class="phase-tag-pending uppercase">Eternity</span>
-                    <div class="step-line-h bg-gray-600"></div>
-                    <div class="phase-card opacity-50">
-                        <h3 class="font-meme text-lg text-gray-500 uppercase mb-4">Moon Mission</h3>
-                        <ul class="list-none p-0">
-                            <li class="li-pending">FEGsol Swap</li>
-                            <li class="li-pending">Metaverse link</li>
-                            <li class="li-pending">100k+ Holders</li>
-                            <li class="li-pending">TBA</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
+        <div class="card p-8">
+            <div class="text-4xl mb-4">3️⃣</div>
+            <h3 class="font-bold mb-3">Swap SOL → FEGsol</h3>
+            <p class="text-gray-400 text-sm">
+                Enter amount, confirm transaction, and join the ape army.
+            </p>
         </div>
-        
-    </section>
 
-    <footer class="p-10 text-center border-t border-gray-900 bg-black z-50 position-relative">
-        <div class="font-meme text-xl mb-4 neon-text">FEGSOL</div>
-        <p class="text-[9px] text-gray-600 uppercase tracking-widest leading-loose">© 2026 FEGSOL APE DIVISION. <br> $FEGsol is a meme coin. Always DYOR.</p>
-        <div class="flex justify-center gap-6 mt-6">
-            <a href="https://x.com/fegirvan" target="_blank" class="text-xs text-gray-400 hover:text-white uppercase tracking-wider">Twitter</a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-xs text-gray-400 hover:text-white uppercase tracking-wider">Telegram</a>
-        </div>
-    </footer>
+    </div>
+</section>
 
-    <script>
-        function copyCA() {
-            const ca = "LAUNCHING-SOON"; 
-            navigator.clipboard.writeText(ca);
-            alert("Contract Address Copied: " + ca);
-        }
-    </script>
+<section class="text-center py-20">
+    <h2 class="font-meme text-4xl glow-text mb-6 uppercase">
+        Ready To Ape In?
+    </h2>
+    <a href="https://pump.fun" target="_blank" class="btn-main text-black">
+        BUY $FEGSOL NOW
+    </a>
+</section>
+
+<footer class="text-center py-10 border-t border-gray-900">
+    <div class="font-meme text-xl mb-4 glow-text">FEGSOL</div>
+    <p class="text-gray-500 text-xs uppercase">
+        Meme coin for community entertainment. Always DYOR.
+    </p>
+</footer>
 
 </body>
 </html>
