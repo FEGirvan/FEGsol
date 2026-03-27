@@ -19,6 +19,21 @@ body {
 }
 </style>
 </head>
+    <script>
+const items = document.querySelectorAll('.timeline-item');
+
+window.addEventListener('scroll', () => {
+    const triggerBottom = window.innerHeight * 0.85;
+
+    items.forEach(item => {
+        const boxTop = item.getBoundingClientRect().top;
+
+        if(boxTop < triggerBottom){
+            item.classList.add('show');
+        }
+    });
+});
+</script>
 <body class="text-white">
 
 <!-- NAVBAR -->
@@ -85,62 +100,52 @@ body {
     </div>
 </section>
     
-    <!-- ROADMAP -->
-<section id="roadmap" class="py-20 px-6 bg-black">
+    <!-- PREMIUM ROADMAP -->
+<section id="roadmap" class="py-24 px-6 bg-black">
     <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-green-400 mb-12">Roadmap</h2>
+        <h2 class="text-4xl font-bold text-green-400 mb-16">FEG SOL Roadmap</h2>
 
-        <div class="grid md:grid-cols-2 gap-10 text-left text-gray-300">
+        <div class="relative border-l-2 border-green-400 mx-auto max-w-3xl">
 
             <!-- Phase 1 -->
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-4">Phase 1 – Foundation</h3>
-                <ul class="space-y-2">
-                    <li>✔ Branding & Gorilla Mascot</li>
-                    <li>✔ Website Launch</li>
-                    <li>✔ Social Media Setup (Telegram & Twitter)</li>
-                    <li>✔ Smart Contract Deployment</li>
-                    <li>✔ Pump Launch</li>
-                </ul>
+            <div class="timeline-item mb-16 ml-6">
+                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
+                <div class="bg-gray-900 p-6 rounded-xl glow-box">
+                    <h3 class="text-2xl text-green-400 mb-3">Phase 1 – Foundation</h3>
+                    <p>Branding, Website Launch, Social Setup, Smart Contract Deploy, Pump Launch.</p>
+                </div>
             </div>
 
             <!-- Phase 2 -->
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-4">Phase 2 – Community Growth</h3>
-                <ul class="space-y-2">
-                    <li>• Community Raids</li>
-                    <li>• Meme Contests</li>
-                    <li>• 500+ Holders Target</li>
-                    <li>• Influencer Micro KOL</li>
-                </ul>
+            <div class="timeline-item mb-16 ml-6">
+                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
+                <div class="bg-gray-900 p-6 rounded-xl glow-box">
+                    <h3 class="text-2xl text-green-400 mb-3">Phase 2 – Community Growth</h3>
+                    <p>Meme Contests, Raids, Influencer Push, 500+ Holders Target.</p>
+                </div>
             </div>
 
             <!-- Phase 3 -->
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-4">Phase 3 – Expansion</h3>
-                <ul class="space-y-2">
-                    <li>• Raydium Liquidity</li>
-                    <li>• Dexscreener Update</li>
-                    <li>• Coin Listing Submission</li>
-                    <li>• NFT Drop Concept</li>
-                </ul>
+            <div class="timeline-item mb-16 ml-6">
+                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
+                <div class="bg-gray-900 p-6 rounded-xl glow-box">
+                    <h3 class="text-2xl text-green-400 mb-3">Phase 3 – Expansion</h3>
+                    <p>Raydium Liquidity, Dex Update, Coin Listing, NFT Drop.</p>
+                </div>
             </div>
 
             <!-- Phase 4 -->
-            <div class="bg-gray-900 p-6 rounded-xl">
-                <h3 class="text-2xl text-green-400 mb-4">Phase 4 – Gorilla Era</h3>
-                <ul class="space-y-2">
-                    <li>• Staking Concept</li>
-                    <li>• DAO Discussion</li>
-                    <li>• Merch Drop</li>
-                    <li>• Major Partnerships</li>
-                </ul>
+            <div class="timeline-item ml-6">
+                <div class="absolute -left-3 w-6 h-6 bg-green-400 rounded-full"></div>
+                <div class="bg-gray-900 p-6 rounded-xl glow-box">
+                    <h3 class="text-2xl text-green-400 mb-3">Phase 4 – Gorilla Era</h3>
+                    <p>Staking Concept, DAO Governance, Merch Drop, Major Partnerships.</p>
+                </div>
             </div>
 
         </div>
     </div>
 </section>
-
 <!-- BUY / SELL -->
 <section id="buy-section" class="py-20 px-6">
     <div class="max-w-4xl mx-auto text-center">
