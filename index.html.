@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEGsol | The Future Evolution Gorilla</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">FEGsol 🦍</div>
+            <div class="links">
+                <a href="#about">About</a>
+                <a href="#tokenomics">Tokenomics</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="#whitepaper">Whitepaper</a>
+            </div>
+            <a href="https://t.me/+16oraMVw88w3MmU9" class="buy-btn">JOIN TELEGRAM</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="assets/logo-gorilla.png" alt="FEGsol Gorilla" class="main-logo">
+        <h1>THE EVOLUTION IS HERE</h1>
+        <p>Man & Ape united under $FEGsol. The most aggressive community on Solana.</p>
+        <div class="ca-box">CA: COMING SOON</div>
+        <div class="social-icons">
+            <a href="https://x.com/fegirvan">Twitter (X)</a> | 
+            <a href="https://t.me/+16oraMVw88w3MmU9">Telegram</a>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="info-section">
+        <h2>TOKENOMICS</h2>
+        <div class="grid">
+            <div class="card"><h3>1,000,000,000</h3><p>Total Supply</p></div>
+            <div class="card"><h3>0%</h3><p>Buy/Sell Tax</p></div>
+            <div class="card"><h3>LP BURNED</h3><p>Security 100%</p></div>
+            <div class="card"><h3>MINT REVOKED</h3><p>Ownership Renounced</p></div>
+        </div>
+    </section>
+
+    <section id="whitepaper" class="whitepaper-section">
+        <h2>LITEPAPER (WHITEPAPER)</h2>
+        <div class="paper-content">
+            <p><strong>1. Filosofi:</strong> FEGsol lahir dari konsep evolusi. Di saat pasar jenuh dengan anjing dan katak, Gorilla Division datang untuk mengambil alih tahta Solana dengan kekuatan komunitas murni.</p>
+            <p><strong>2. Ekosistem:</strong> Fokus utama kami adalah stabilitas harga melalui 1 Milyar supply yang tetap. Tidak ada pajak yang menghambat trader, memberikan kebebasan penuh bagi para "Apes" untuk bertransaksi.</p>
+            <p><strong>3. Keamanan:</strong> Likuiditas akan dibakar selamanya untuk memastikan tidak ada "Rug Pull". Kontrak akan dilepas kepemilikannya (Renounced) agar komunitas yang memegang kendali penuh.</p>
+        </div>
+    </section>
+
+    <section id="roadmap" class="info-section">
+        <h2>THE GORILLA ROADMAP</h2>
+        <div class="roadmap-container">
+            <div class="roadmap-item">
+                <h3>Phase 1: Genesis</h3>
+                <p>Website Launch, Social Media Setup, Community Building, 1,000+ Holders Goal.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Phase 2: The Awakening</h3>
+                <p>Influencer Marketing, Trending on Twitter, CoinGecko & CMC Listing, DexTools Ads.</p>
+            </div>
+            <div class="roadmap-item">
+                <h3>Phase 3: Alpha Domination</h3>
+                <p>CEX Listings, NFT Gorilla Collection, Viral Meme Contests, $100M Market Cap Goal.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 $FEGsol. Created by @FEGirvan. Join the Evolution.</p>
+    </footer>
+</body>
+</html>
+
