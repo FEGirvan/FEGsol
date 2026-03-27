@@ -1,3 +1,18 @@
+<style>
+.timeline-item {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+}
+.timeline-item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.glow-box {
+    box-shadow: 0 0 20px #00ff88;
+}
+</style>
+
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
