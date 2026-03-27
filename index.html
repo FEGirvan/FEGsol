@@ -1,76 +1,114 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FEGsol | The Future Evolution Gorilla</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #050505; scroll-behavior: smooth; overflow-x: hidden; }
+        .font-meme { font-family: 'Bungee', cursive; }
+        .neon-purple { color: #9945FF; text-shadow: 0 0 10px #9945FF; }
+        .neon-green { color: #14F195; text-shadow: 0 0 15px #14F195; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(20, 241, 149, 0.1); }
+        .ape-btn { background: linear-gradient(90deg, #9945FF, #14F195); transition: all 0.3s ease; border-radius: 99px; font-weight: bold; color: black; }
+        .ape-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(20, 241, 149, 0.6); }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+    </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">FEGsol 🦍</div>
-            <div class="links">
-                <a href="#about">About</a>
-                <a href="#tokenomics">Tokenomics</a>
-                <a href="#roadmap">Roadmap</a>
-                <a href="#whitepaper">Whitepaper</a>
+<body class="text-white selection:bg-purple-500">
+    <nav class="fixed w-full z-50 top-0 glass-card px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-3xl font-meme neon-green">FEGsol</div>
+            <div class="hidden md:flex space-x-8 uppercase font-bold text-[10px] tracking-widest">
+                <a href="#about" class="hover:text-green-400">Lore</a>
+                <a href="#tokenomics" class="hover:text-green-400">Stats</a>
+                <a href="#roadmap" class="hover:text-green-400">Roadmap</a>
+                <a href="#whitepaper" class="hover:text-green-400">Paper</a>
             </div>
-            <a href="https://t.me/+16oraMVw88w3MmU9" class="buy-btn">JOIN TELEGRAM</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <img src="assets/logo-gorilla.png" alt="FEGsol Gorilla" class="main-logo">
-        <h1>THE EVOLUTION IS HERE</h1>
-        <p>Man & Ape united under $FEGsol. The most aggressive community on Solana.</p>
-        <div class="ca-box">CA: COMING SOON</div>
-        <div class="social-icons">
-            <a href="https://x.com/fegirvan">Twitter (X)</a> | 
-            <a href="https://t.me/+16oraMVw88w3MmU9">Telegram</a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="ape-btn px-6 py-2 text-xs">JOIN DIVISION</a>
         </div>
-    </section>
+    </nav>
 
-    <section id="tokenomics" class="info-section">
-        <h2>TOKENOMICS</h2>
-        <div class="grid">
-            <div class="card"><h3>1,000,000,000</h3><p>Total Supply</p></div>
-            <div class="card"><h3>0%</h3><p>Buy/Sell Tax</p></div>
-            <div class="card"><h3>LP BURNED</h3><p>Security 100%</p></div>
-            <div class="card"><h3>MINT REVOKED</h3><p>Ownership Renounced</p></div>
-        </div>
-    </section>
-
-    <section id="whitepaper" class="whitepaper-section">
-        <h2>LITEPAPER (WHITEPAPER)</h2>
-        <div class="paper-content">
-            <p><strong>1. Filosofi:</strong> FEGsol lahir dari konsep evolusi. Di saat pasar jenuh dengan anjing dan katak, Gorilla Division datang untuk mengambil alih tahta Solana dengan kekuatan komunitas murni.</p>
-            <p><strong>2. Ekosistem:</strong> Fokus utama kami adalah stabilitas harga melalui 1 Milyar supply yang tetap. Tidak ada pajak yang menghambat trader, memberikan kebebasan penuh bagi para "Apes" untuk bertransaksi.</p>
-            <p><strong>3. Keamanan:</strong> Likuiditas akan dibakar selamanya untuk memastikan tidak ada "Rug Pull". Kontrak akan dilepas kepemilikannya (Renounced) agar komunitas yang memegang kendali penuh.</p>
-        </div>
-    </section>
-
-    <section id="roadmap" class="info-section">
-        <h2>THE GORILLA ROADMAP</h2>
-        <div class="roadmap-container">
-            <div class="roadmap-item">
-                <h3>Phase 1: Genesis</h3>
-                <p>Website Launch, Social Media Setup, Community Building, 1,000+ Holders Goal.</p>
+    <section class="relative min-h-screen flex items-center pt-24 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="z-10 text-center md:text-left">
+                <div class="inline-block bg-green-500/20 text-green-400 px-4 py-1 rounded-full text-[10px] font-bold mb-6 border border-green-500/30 uppercase tracking-widest">Alpha Ape Division • Solana</div>
+                <h1 class="text-6xl md:text-8xl font-meme leading-[0.9] mb-6 uppercase">The Future <br><span class="neon-purple underline decoration-green-400">Ape</span> Is Here</h1>
+                <p class="text-lg text-gray-400 mb-10 tracking-widest uppercase">Man & Ape united under one mission. <br>Welcome to the <span class="text-white font-bold">$FEGsol</span> era.</p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-12 justify-center md:justify-start">
+                    <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="ape-btn px-10 py-4 text-center uppercase">Telegram</a>
+                    <a href="https://x.com/fegirvan" target="_blank" class="border border-purple-500 text-purple-400 px-10 py-4 font-bold text-center rounded-full hover:bg-purple-500/10 transition uppercase">Twitter / X</a>
+                </div>
+                <div class="glass-card p-4 rounded-2xl flex items-center justify-between border border-green-500/20 max-w-md mx-auto md:mx-0">
+                    <div class="truncate mr-4 text-left">
+                        <span class="text-[9px] text-green-400 font-bold uppercase block mb-1">Contract Address</span>
+                        <code class="text-xs text-gray-300">LAUNCHING SOON ON PUMP.FUN</code>
+                    </div>
+                    <button class="text-purple-400 font-bold hover:text-white uppercase text-xs">Copy</button>
+                </div>
             </div>
-            <div class="roadmap-item">
-                <h3>Phase 2: The Awakening</h3>
-                <p>Influencer Marketing, Trending on Twitter, CoinGecko & CMC Listing, DexTools Ads.</p>
-            </div>
-            <div class="roadmap-item">
-                <h3>Phase 3: Alpha Domination</h3>
-                <p>CEX Listings, NFT Gorilla Collection, Viral Meme Contests, $100M Market Cap Goal.</p>
+            <div class="flex justify-center">
+                <img src="logo-gorilla.png" alt="FEGsol Gorilla" class="w-full max-w-[450px] animate-float drop-shadow-[0_0_50px_rgba(153,69,255,0.4)]">
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 $FEGsol. Created by @FEGirvan. Join the Evolution.</p>
+    <section id="about" class="py-24 px-6 max-w-4xl mx-auto text-center border-t border-white/5">
+        <h2 class="text-4xl font-meme mb-10 neon-green uppercase">The Ape Lore</h2>
+        <div class="glass-card p-10 rounded-[40px] border-2 border-dashed border-purple-500/30">
+            <p class="text-xl leading-relaxed text-gray-300 italic">"In the heart of Solana's digital jungle, the frogs and dogs have grown weak. One Alpha Gorilla saw the connection—the link between human technology and ape strength. $FEGsol (Future Evolution Gorilla) is the awakening. We don't eat grass. We eat the charts. Join the Great Ape Leap."</p>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="py-20 px-6 max-w-7xl mx-auto text-center border-t border-white/5">
+        <h2 class="font-meme text-4xl mb-12 uppercase neon-purple">Ape-Nomics</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-8 rounded-3xl"><p class="text-gray-500 text-[10px] uppercase mb-1">Tax</p><p class="text-3xl font-meme text-green-400">0%</p></div>
+            <div class="glass-card p-8 rounded-3xl"><p class="text-gray-500 text-[10px] uppercase mb-1">LP</p><p class="text-3xl font-meme uppercase">Burned</p></div>
+            <div class="glass-card p-8 rounded-3xl"><p class="text-gray-500 text-[10px] uppercase mb-1">Supply</p><p class="text-3xl font-meme">1 Billion</p></div>
+            <div class="glass-card p-8 rounded-3xl"><p class="text-gray-500 text-[10px] uppercase mb-1">Mint</p><p class="text-3xl font-meme uppercase text-purple-400">Revoked</p></div>
+        </div>
+    </section>
+
+    <section id="whitepaper" class="py-24 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <h2 class="text-4xl font-meme text-center mb-10 neon-green uppercase">Alpha Paper</h2>
+        <div class="glass-card p-8 rounded-3xl text-gray-300 space-y-4">
+            <p><strong>Vision:</strong> To establish the Alpha Division as the dominant force on Solana through pure community resilience.</p>
+            <p><strong>Philosophy:</strong> No whales, no taxes, no rugs. Just pure Ape energy. We utilize the lightning-fast Solana network to ensure our evolution is unstoppable.</p>
+            <p><strong>Security:</strong> Liquidity is burned forever. Ownership is renounced. The community IS the dev.</p>
+        </div>
+    </section>
+
+    <section id="roadmap" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <h2 class="text-5xl font-meme neon-purple uppercase text-center mb-16">The Evolution Map</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-3xl border-b-4 border-green-500">
+                <h3 class="font-meme text-xl mb-4 uppercase">Phase 1: Birth</h3>
+                <p class="text-xs leading-relaxed">Website Launch • Stealth Launch on Pump.fun • Twitter Raids • 500+ Apes</p>
+            </div>
+            <div class="glass-card p-8 rounded-3xl border-b-4 border-purple-500">
+                <h3 class="font-meme text-xl mb-4 uppercase">Phase 2: Growth</h3>
+                <p class="text-xs leading-relaxed">DEXscreener Trending • Influencer Partnerships • CMC & CG Listing • 2,500+ Apes</p>
+            </div>
+            <div class="glass-card p-8 rounded-3xl border-b-4 border-green-500">
+                <h3 class="font-meme text-xl mb-4 uppercase">Phase 3: Rule</h3>
+                <p class="text-xs leading-relaxed">CEX Listings • Alpha Ape NFT Drop • $100M Market Cap Goal • Dominate Solana</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-white/5 text-center px-6 bg-black/50">
+        <div class="text-4xl font-meme neon-green mb-8 uppercase tracking-widest">FEGsol</div>
+        <div class="flex justify-center space-x-12 mb-10 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
+            <a href="https://x.com/fegirvan" class="hover:text-purple-400">Twitter (X)</a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" class="hover:text-green-400">Telegram</a>
+        </div>
+        <p class="text-[9px] text-gray-700 uppercase tracking-widest max-w-2xl mx-auto italic">
+            $FEGsol is a meme coin for entertainment only. No intrinsic value. Apes only. DYOR.
+        </p>
     </footer>
 </body>
 </html>
