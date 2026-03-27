@@ -3,26 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FEGSOL | The Future Evolution</title>
+<title>FEGSOL | Rise of the Ape Empire</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at 20% 20%, #1a002e, #000 60%);
+    background: radial-gradient(circle at 50% 0%, #140021, #000 60%);
     color: #fff;
     overflow-x: hidden;
 }
 
-.font-meme { font-family: 'Bungee', cursive; }
-
-.glow-text {
-    background: linear-gradient(90deg,#14F195,#9945FF,#14F195);
+/* glowing title */
+.glow-anime {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(90deg,#9945FF,#14F195,#ff00cc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: glowmove 4s linear infinite;
+    animation: glowmove 6s linear infinite;
     background-size: 200%;
 }
 
@@ -31,140 +31,173 @@ body {
     100% { background-position: 200% }
 }
 
-.card {
-    background: rgba(20,20,20,0.8);
-    border: 1px solid #222;
-    border-radius: 20px;
-    transition: .3s;
+/* card anime style */
+.anime-card {
+    background: rgba(15,15,25,0.9);
+    border: 1px solid rgba(153,69,255,0.4);
+    border-radius: 18px;
+    padding: 24px;
+    transition: 0.4s;
 }
 
-.card:hover {
+.anime-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 40px rgba(153,69,255,0.6);
     border-color: #14F195;
-    box-shadow: 0 0 30px rgba(20,241,149,0.4);
-    transform: translateY(-6px);
 }
 
-.btn-main {
-    background: linear-gradient(90deg,#14F195,#9945FF);
-    padding: 14px 28px;
+/* button */
+.btn-anime {
+    background: linear-gradient(90deg,#9945FF,#14F195);
+    padding: 14px 32px;
     border-radius: 999px;
-    font-weight: 900;
+    font-weight: 800;
     text-transform: uppercase;
     transition: .3s;
 }
 
-.btn-main:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(153,69,255,0.7);
-}
-
-.section-glow {
-    background: radial-gradient(circle at center, rgba(153,69,255,0.15), transparent 70%);
+.btn-anime:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(20,241,149,0.7);
 }
 </style>
 </head>
 
 <body>
 
-<nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
-    <div class="font-meme text-2xl glow-text">FEGSOL</div>
-    <a href="https://pump.fun" target="_blank" class="btn-main text-black">Buy Now</a>
+<!-- NAV -->
+<nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+    <div class="glow-anime text-2xl">FEGSOL</div>
+    <a href="https://pump.fun" target="_blank" class="btn-anime text-black">BUY NOW</a>
 </nav>
 
-<section class="text-center py-20 px-5 section-glow">
-    <img src="logo-gorilla.PNG" class="w-44 mx-auto mb-8 drop-shadow-[0_0_40px_#9945FF]" alt="FEGsol">
-
-    <h1 class="text-5xl md:text-7xl font-meme uppercase mb-6 leading-tight">
-        The Evolution <br>
-        <span class="glow-text">Of Apes</span>
+<!-- HERO -->
+<section class="text-center py-24 px-6">
+    <h1 class="glow-anime text-5xl md:text-7xl uppercase mb-6 leading-tight">
+        Rise Of The Ape Empire
     </h1>
 
-    <p class="text-gray-400 max-w-xl mx-auto mb-10">
-        $FEGsol is not just a meme.  
-        It's the next generation Solana ape movement.  
-        Built for community. Built for domination.
+    <p class="text-gray-400 max-w-2xl mx-auto mb-10">
+        In a world where weak tokens fade away...  
+        Only the strongest community survives.  
+        $FEGsol is the beginning of a new era on Solana.
     </p>
 
-    <div class="flex justify-center gap-4 flex-wrap">
-        <a href="https://pump.fun" target="_blank" class="btn-main text-black">
-            Buy on Pump.fun
+    <div class="flex justify-center gap-6 flex-wrap">
+        <a href="https://pump.fun" target="_blank" class="btn-anime text-black">
+            Enter The Empire
         </a>
-        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="border border-purple-500 px-6 py-3 rounded-full uppercase text-sm hover:bg-purple-600 transition">
-            Join Telegram
+        <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank"
+           class="border border-purple-500 px-6 py-3 rounded-full uppercase text-sm hover:bg-purple-600 transition">
+           Join Army
         </a>
     </div>
 </section>
 
+<!-- TOKENOMICS -->
 <section class="max-w-6xl mx-auto px-6 py-20">
-    <h2 class="font-meme text-4xl text-center mb-16 glow-text uppercase">
-        Tokenomics
-    </h2>
+    <h2 class="glow-anime text-4xl text-center mb-16 uppercase">Token Power</h2>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        <div class="card p-6">
-            <div class="text-gray-400 text-xs uppercase">Supply</div>
+
+        <div class="anime-card">
+            <div class="text-gray-400 text-xs uppercase mb-2">Total Supply</div>
             <div class="text-2xl font-bold">1,000,000,000</div>
+            <div class="text-xs text-purple-400 mt-2">1B Fixed</div>
         </div>
-        <div class="card p-6">
-            <div class="text-gray-400 text-xs uppercase">Tax</div>
+
+        <div class="anime-card">
+            <div class="text-gray-400 text-xs uppercase mb-2">Tax</div>
             <div class="text-2xl font-bold text-green-400">0%</div>
+            <div class="text-xs text-gray-500 mt-2">Pure Trading</div>
         </div>
-        <div class="card p-6">
-            <div class="text-gray-400 text-xs uppercase">Liquidity</div>
+
+        <div class="anime-card">
+            <div class="text-gray-400 text-xs uppercase mb-2">Liquidity</div>
             <div class="text-2xl font-bold text-purple-400">Burned</div>
+            <div class="text-xs text-gray-500 mt-2">No Rug</div>
         </div>
-        <div class="card p-6">
-            <div class="text-gray-400 text-xs uppercase">Chain</div>
+
+        <div class="anime-card">
+            <div class="text-gray-400 text-xs uppercase mb-2">Network</div>
             <div class="text-2xl font-bold text-pink-400">Solana</div>
-        </div>
-    </div>
-</section>
-
-<section class="max-w-5xl mx-auto px-6 py-20 section-glow">
-    <h2 class="font-meme text-4xl text-center mb-16 glow-text uppercase">
-        How To Buy
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-8 text-center">
-
-        <div class="card p-8">
-            <div class="text-4xl mb-4">1️⃣</div>
-            <h3 class="font-bold mb-3">Create Wallet</h3>
-            <p class="text-gray-400 text-sm">
-                Download Phantom or Solflare wallet and fund it with SOL.
-            </p>
-        </div>
-
-        <div class="card p-8">
-            <div class="text-4xl mb-4">2️⃣</div>
-            <h3 class="font-bold mb-3">Go to Pump.fun</h3>
-            <p class="text-gray-400 text-sm">
-                Connect your wallet and search for FEGsol token.
-            </p>
-        </div>
-
-        <div class="card p-8">
-            <div class="text-4xl mb-4">3️⃣</div>
-            <h3 class="font-bold mb-3">Swap SOL → FEGsol</h3>
-            <p class="text-gray-400 text-sm">
-                Enter amount, confirm transaction, and join the ape army.
-            </p>
+            <div class="text-xs text-gray-500 mt-2">Fast & Cheap</div>
         </div>
 
     </div>
 </section>
 
-<section class="text-center py-20">
-    <h2 class="font-meme text-4xl glow-text mb-6 uppercase">
-        Ready To Ape In?
+<!-- ANIME ROADMAP -->
+<section class="max-w-6xl mx-auto px-6 py-20">
+    <h2 class="glow-anime text-4xl text-center mb-20 uppercase">The Anime Saga</h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+        <div class="anime-card">
+            <h3 class="text-xl font-bold mb-4 text-purple-400">ARC I — Awakening</h3>
+            <ul class="text-sm space-y-2 text-gray-300">
+                <li>• Website Launch</li>
+                <li>• Community Formation</li>
+                <li>• Stealth Launch</li>
+                <li>• 1,000 Holders</li>
+            </ul>
+        </div>
+
+        <div class="anime-card">
+            <h3 class="text-xl font-bold mb-4 text-green-400">ARC II — Evolution</h3>
+            <ul class="text-sm space-y-2 text-gray-300">
+                <li>• DEX Trending</li>
+                <li>• CoinGecko Listing</li>
+                <li>• 5,000 Holders</li>
+                <li>• Marketing Domination</li>
+            </ul>
+        </div>
+
+        <div class="anime-card">
+            <h3 class="text-xl font-bold mb-4 text-pink-400">ARC III — Empire</h3>
+            <ul class="text-sm space-y-2 text-gray-300">
+                <li>• CoinMarketCap</li>
+                <li>• Tier 3 CEX</li>
+                <li>• 25,000 Holders</li>
+                <li>• Global Expansion</li>
+            </ul>
+        </div>
+
+        <div class="anime-card">
+            <h3 class="text-xl font-bold mb-4 text-yellow-400">ARC IV — Power Ascension</h3>
+            <ul class="text-sm space-y-2 text-gray-300">
+                <li>• NFT Collection</li>
+                <li>• Staking Platform</li>
+                <li>• Audit</li>
+                <li>• 50,000 Holders</li>
+            </ul>
+        </div>
+
+        <div class="anime-card">
+            <h3 class="text-xl font-bold mb-4 text-cyan-400">ARC V — Final Form</h3>
+            <ul class="text-sm space-y-2 text-gray-300">
+                <li>• Tier 1 CEX</li>
+                <li>• DAO Governance</li>
+                <li>• 100,000 Holders</li>
+                <li>• Top 100 CMC</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="text-center py-24">
+    <h2 class="glow-anime text-5xl mb-8 uppercase">
+        The Empire Is Rising
     </h2>
-    <a href="https://pump.fun" target="_blank" class="btn-main text-black">
-        BUY $FEGSOL NOW
+    <a href="https://pump.fun" target="_blank" class="btn-anime text-black text-lg">
+        BUY $FEGSOL
     </a>
 </section>
 
 <footer class="text-center py-10 border-t border-gray-900">
-    <div class="font-meme text-xl mb-4 glow-text">FEGSOL</div>
+    <div class="glow-anime text-xl mb-4">FEGSOL</div>
     <p class="text-gray-500 text-xs uppercase">
         Meme coin for community entertainment. Always DYOR.
     </p>
