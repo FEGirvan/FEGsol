@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEGsol | The Future of Solana Ape Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        body {
+            background-color: #0a0a0b;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at center, #4c1d95 0%, #0a0a0b 70%);
+        }
+
+        .gold-text {
+            background: linear-gradient(to right, #fde047, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #7c3aed, #9333ea);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-8 py-3">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold">G</div>
+                <span class="font-orbitron text-xl font-bold tracking-widest">FEG<span class="text-purple-500">SOL</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-orbitron text-sm uppercase tracking-wider">
+                <a href="#" class="hover:text-purple-400 transition">About</a>
+                <a href="#" class="hover:text-purple-400 transition">Roadmap</a>
+                <a href="#" class="hover:text-purple-400 transition">Ecosystem</a>
+                <a href="#" class="hover:text-purple-400 transition">Community</a>
+            </div>
+            <button class="btn-primary px-6 py-2 rounded-full font-orbitron text-xs font-bold uppercase tracking-widest">Connect Wallet</button>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-20 hero-gradient">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900 rounded-full filter blur-[100px] animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-900 rounded-full filter blur-[100px] animate-pulse-slow"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-6">
+            <h1 class="text-5xl md:text-8xl font-orbitron font-bold mb-6 tracking-tighter">
+                WE BUILD <br> <span class="gold-text">THE FUTURE</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl mb-10 leading-relaxed font-light">
+                FEGsol is more than a token. It's a high-performance ecosystem on Solana built for the strongest community in crypto. Quality first, chart second.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <button class="btn-primary px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto">JOIN THE RAID</button>
+                <button class="glass-morphism px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto hover:bg-white hover:bg-opacity-5 transition">VIEW ROADMAP</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-morphism p-8 hover:border-purple-500 transition duration-500 group">
+                <div class="w-14 h-14 bg-purple-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-600 transition">
+                    <i class="fas fa-shield-halved text-2xl text-purple-400 text-white"></i>
+                </div>
+                <h3 class="font-orbitron text-xl mb-4">Unmatched Security</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Safety is our DNA. Our ecosystem is built with advanced security protocols to protect every ape in our tribe.</p>
+            </div>
+            
+            <div class="glass-morphism p-8 hover:border-yellow-500 transition duration-500 group">
+                <div class="w-14 h-14 bg-yellow-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-yellow-600 transition">
+                    <i class="fas fa-bolt text-2xl text-yellow-400 text-white"></i>
+                </div>
+                <h3 class="font-orbitron text-xl mb-4">Solana Speed</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Lightning-fast transactions and minimal fees. We leverage the full power of the Solana blockchain.</p>
+            </div>
+
+            <div class="glass-morphism p-8 hover:border-blue-500 transition duration-500 group">
+                <div class="w-14 h-14 bg-blue-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition">
+                    <i class="fas fa-users text-2xl text-blue-400 text-white"></i>
+                </div>
+                <h3 class="font-orbitron text-xl mb-4">Community Driven</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Ape together strong. We grow organically with a dedicated community that leads the vision.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 bg-[#0d0d0f]">
+        <div class="max-w-4xl mx-auto glass-morphism p-10 text-center">
+            <h2 class="font-orbitron text-3xl mb-8 tracking-wider">DEVELOPMENT STATUS</h2>
+            <div class="w-full bg-gray-800 rounded-full h-4 mb-4">
+                <div class="bg-gradient-to-right from-purple-500 to-purple-800 h-4 rounded-full w-[75%]"></div>
+            </div>
+            <div class="flex justify-between text-xs font-orbitron text-purple-400 uppercase tracking-widest">
+                <span>Phase: Web Alpha</span>
+                <span>75% Complete</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-500 text-xs border-t border-gray-900">
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="#" class="hover:text-white transition text-xl"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="hover:text-white transition text-xl"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="hover:text-white transition text-xl"><i class="fas fa-book"></i></a>
+        </div>
+        <p class="font-orbitron">&copy; 2026 FEGSOL ECOSYSTEM. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>
