@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEGsol | Live Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        body { background-color: #0a0a0b; color: #ffffff; font-family: 'Orbitron', sans-serif; }
+        .glass-morphism { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <div class="w-full p-4 glass-morphism flex justify-between items-center">
+        <a href="index2.html" class="text-purple-400 hover:text-white transition text-xs tracking-widest uppercase">
+            <i class="fas fa-arrow-left mr-2"></i> Back
+        </a>
+        <h1 class="text-sm md:text-xl font-bold tracking-tighter">FEGSOL <span class="text-purple-500 text-xs">LIVE CHART</span></h1>
+        <div class="w-10"></div> </div>
+
+    <div class="flex-grow w-full relative">
+        <iframe 
+            src="https://pump.fun/ALAMAT_KOIN_KAMU_DISINI" 
+            class="absolute inset-0 w-full h-full border-none"
+            title="Pump.fun Chart">
+        </iframe>
+    </div>
+
+</body>
+</html>
