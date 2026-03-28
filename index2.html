@@ -14,6 +14,7 @@
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
@@ -38,6 +39,7 @@
         .btn-primary {
             background: linear-gradient(90deg, #7c3aed, #9333ea);
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .btn-primary:hover {
@@ -64,16 +66,16 @@
                 <span class="font-orbitron text-xl font-bold tracking-widest">FEG<span class="text-purple-500">SOL</span></span>
             </div>
             <div class="hidden md:flex space-x-8 font-orbitron text-sm uppercase tracking-wider">
-                <a href="#" class="hover:text-purple-400 transition">About</a>
-                <a href="#" class="hover:text-purple-400 transition">Roadmap</a>
-                <a href="#" class="hover:text-purple-400 transition">Ecosystem</a>
-                <a href="#" class="hover:text-purple-400 transition">Community</a>
+                <a href="#about" class="hover:text-purple-400 transition">About</a>
+                <a href="#roadmap" class="hover:text-purple-400 transition">Roadmap</a>
+                <a href="#ecosystem" class="hover:text-purple-400 transition">Ecosystem</a>
+                <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="hover:text-purple-400 transition">Community</a>
             </div>
             <button class="btn-primary px-6 py-2 rounded-full font-orbitron text-xs font-bold uppercase tracking-widest">Connect Wallet</button>
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex items-center justify-center pt-20 hero-gradient">
+    <section id="about" class="relative min-h-screen flex items-center justify-center pt-20 hero-gradient">
         <div class="absolute inset-0 opacity-20 pointer-events-none">
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900 rounded-full filter blur-[100px] animate-pulse-slow"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-900 rounded-full filter blur-[100px] animate-pulse-slow"></div>
@@ -84,63 +86,98 @@
                 WE BUILD <br> <span class="gold-text">THE FUTURE</span>
             </h1>
             <p class="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl mb-10 leading-relaxed font-light">
-                FEGsol is more than a token. It's a high-performance ecosystem on Solana built for the strongest community in crypto. Quality first, chart second.
+                FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
             </p>
             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-                <button class="btn-primary px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto">JOIN THE RAID</button>
-                <button class="glass-morphism px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto hover:bg-white hover:bg-opacity-5 transition">VIEW ROADMAP</button>
+                <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto">
+                    JOIN THE RAID
+                </a>
+                <a href="#roadmap" class="glass-morphism px-10 py-4 rounded-xl font-orbitron text-sm font-bold w-full md:w-auto hover:bg-white hover:bg-opacity-5 transition">
+                    VIEW ROADMAP
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section id="ecosystem" class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div class="glass-morphism p-8 hover:border-purple-500 transition duration-500 group">
-                <div class="w-14 h-14 bg-purple-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-600 transition">
-                    <i class="fas fa-shield-halved text-2xl text-purple-400 text-white"></i>
+                <div class="w-14 h-14 bg-purple-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 mx-auto group-hover:bg-purple-600 transition">
+                    <i class="fas fa-shield-halved text-2xl text-purple-400"></i>
                 </div>
                 <h3 class="font-orbitron text-xl mb-4">Unmatched Security</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Safety is our DNA. Our ecosystem is built with advanced security protocols to protect every ape in our tribe.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Advanced security protocols to protect every ape in our tribe.</p>
             </div>
             
             <div class="glass-morphism p-8 hover:border-yellow-500 transition duration-500 group">
-                <div class="w-14 h-14 bg-yellow-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-yellow-600 transition">
-                    <i class="fas fa-bolt text-2xl text-yellow-400 text-white"></i>
+                <div class="w-14 h-14 bg-yellow-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 mx-auto group-hover:bg-yellow-600 transition">
+                    <i class="fas fa-bolt text-2xl text-yellow-400"></i>
                 </div>
                 <h3 class="font-orbitron text-xl mb-4">Solana Speed</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Lightning-fast transactions and minimal fees. We leverage the full power of the Solana blockchain.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Lightning-fast transactions leveraging the power of Solana.</p>
             </div>
 
             <div class="glass-morphism p-8 hover:border-blue-500 transition duration-500 group">
-                <div class="w-14 h-14 bg-blue-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition">
-                    <i class="fas fa-users text-2xl text-blue-400 text-white"></i>
+                <div class="w-14 h-14 bg-blue-900 bg-opacity-30 rounded-lg flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-600 transition">
+                    <i class="fas fa-users text-2xl text-blue-400"></i>
                 </div>
                 <h3 class="font-orbitron text-xl mb-4">Community Driven</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Ape together strong. We grow organically with a dedicated community that leads the vision.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Ape together strong. We grow organically with our dedicated community.</p>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 bg-[#0d0d0f]">
-        <div class="max-w-4xl mx-auto glass-morphism p-10 text-center">
-            <h2 class="font-orbitron text-3xl mb-8 tracking-wider">DEVELOPMENT STATUS</h2>
-            <div class="w-full bg-gray-800 rounded-full h-4 mb-4">
-                <div class="bg-gradient-to-right from-purple-500 to-purple-800 h-4 rounded-full w-[75%]"></div>
-            </div>
-            <div class="flex justify-between text-xs font-orbitron text-purple-400 uppercase tracking-widest">
-                <span>Phase: Web Alpha</span>
-                <span>75% Complete</span>
+    <section id="roadmap" class="py-24 px-6 bg-[#0d0d0f]">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="font-orbitron text-4xl font-bold text-center mb-16 tracking-wider">ROADMAP</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-morphism p-10 relative overflow-hidden group border-l-4 border-purple-500">
+                    <div class="font-orbitron text-sm text-purple-400 mb-2 tracking-widest uppercase">Phase 1</div>
+                    <h3 class="font-orbitron text-2xl font-bold mb-6 gold-text font-bold">Foundation</h3>
+                    <ul class="space-y-4 text-gray-400 text-sm list-disc list-inside leading-relaxed text-left">
+                        <li>Website Alpha Launch</li>
+                        <li>Community Building</li>
+                        <li>Security Infrastructure</li>
+                        <li>Whitepaper Release</li>
+                    </ul>
+                </div>
+                <div class="glass-morphism p-10 relative overflow-hidden group border-l-4 border-blue-500">
+                    <div class="font-orbitron text-sm text-blue-400 mb-2 tracking-widest uppercase">Phase 2</div>
+                    <h3 class="font-orbitron text-2xl font-bold mb-6 gold-text">Launch & Hype</h3>
+                    <ul class="space-y-4 text-gray-400 text-sm list-disc list-inside leading-relaxed text-left">
+                        <li>Smart Contract Audit</li>
+                        <li>Fair Launch on DEX</li>
+                        <li>Global Marketing</li>
+                        <li>CMC & CG Listing</li>
+                    </ul>
+                </div>
+                <div class="glass-morphism p-10 relative overflow-hidden group border-l-4 border-yellow-500">
+                    <div class="font-orbitron text-sm text-yellow-400 mb-2 tracking-widest uppercase">Phase 3</div>
+                    <h3 class="font-orbitron text-2xl font-bold mb-6 gold-text">Expansion</h3>
+                    <ul class="space-y-4 text-gray-400 text-sm list-disc list-inside leading-relaxed text-left">
+                        <li>Utility Features</li>
+                        <li>Staking Dashboard</li>
+                        <li>DAO Governance</li>
+                        <li>Tier 1 Partnerships</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
 
     <footer class="py-12 text-center text-gray-500 text-xs border-t border-gray-900">
-        <div class="flex justify-center space-x-6 mb-6">
-            <a href="#" class="hover:text-white transition text-xl"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="hover:text-white transition text-xl"><i class="fab fa-telegram"></i></a>
-            <a href="#" class="hover:text-white transition text-xl"><i class="fas fa-book"></i></a>
+        <div class="flex justify-center space-x-8 mb-6">
+            <a href="https://x.com/fegirvan?s=21" target="_blank" class="hover:text-white transition text-3xl">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="hover:text-white transition text-3xl">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="FEGSOL-Whitepaper.pdf" target="_blank" class="hover:text-white transition text-3xl">
+                <i class="fas fa-file-contract"></i>
+            </a>
         </div>
-        <p class="font-orbitron">&copy; 2026 FEGSOL ECOSYSTEM. ALL RIGHTS RESERVED.</p>
+        <p class="font-orbitron tracking-widest uppercase">&copy; 2026 FEGSOL ECOSYSTEM. ALL RIGHTS RESERVED.</p>
     </footer>
 
 </body>
