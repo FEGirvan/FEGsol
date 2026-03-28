@@ -63,27 +63,22 @@
 
             <nav class="max-w-7xl mx-auto flex items-center justify-between p-4 glass-morphism border-purple-500/50 mb-10 shadow-lg relative">
     <div class="flex items-center gap-3">
-        <img src="G.PNG" alt="FEGsol Logo" class="w-10 h-10 rounded-full border-2 border-gold-text object-cover ape-glow">
-        <span class="font-orbitron text-xl font-bold tracking-tight">FEG<span class="gold-text">SOL</span></span>
+        <img src="G.PNG" alt="FEGsol Logo" class="w-10 h-10 rounded-full border-2 border-yellow-500 object-cover shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+        <span class="font-orbitron text-xl font-bold tracking-tight text-white">FEG<span class="gold-text">SOL</span></span>
     </div>
 
     <div class="relative">
-        
-        <button id="menu-button" class="flex items-center justify-center p-2 rounded-xl text-white/70 hover:text-white bg-purple-900/40 hover:bg-purple-800/60 transition-all border border-purple-500/30 w-10 h-10 shadow-inner group">
-            
-            <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=032" alt="Solana Menu" class="w-6 h-6 object-contain filter grayscale group-hover:grayscale-0 transition-all">
-            
+        <button id="menu-button" class="flex items-center justify-center p-2 rounded-xl bg-purple-900/40 hover:bg-purple-800/60 border border-purple-500/30 w-10 h-10 transition-all">
+            <svg width="24" height="24" viewBox="0 0 397 311" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                <path d="M64.6 237.9c-2.4 2.4-5.4 3.7-8.8 3.7H5.1c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5L64.6 159.7c2.4-2.4 5.4-3.7 8.8-3.7H134c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L64.6 237.9zM332.4 151.3c2.4-2.4 5.4-3.7 8.8-3.7h59.5c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L332.4 230c-2.4 2.4-5.4 3.7-8.8 3.7h-60.5c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5l75.9-66.6zM27.1 73.1c-2.4 2.4-5.4 3.7-8.8 3.7H-41.2c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5L27.1-5.1c2.4-2.4 5.4-3.7 8.8-3.7h60.5c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L27.1 73.1z" fill="white"/>
+            </svg>
         </button>
-        <div id="dropdown-menu" class="absolute right-0 mt-3 w-48 glass-morphism p-3 z-50 transform scale-95 opacity-0 hidden transition-all duration-300 ease-out origin-top-right shadow-xl">
+
+        <div id="dropdown-menu" class="absolute right-0 mt-3 w-48 glass-morphism p-3 z-50 hidden border border-purple-500/30">
             <div class="space-y-2 font-orbitron text-[11px] uppercase tracking-wider text-white">
-                <a href="#" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg transition-colors"><i class="fas fa-home mr-2 text-gold-text">
-                Home</a>
-                <a href="whitepaper.html" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg transition-colors"><i class="fas fa-file-contract mr-2 text-gold-text">
-                Whitepaper</a>
-                <a href="#" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg transition-colors"><i class="fas fa-chart-line mr-2 text-gold-text">
-                Chart (Pump.fun)</a>
-                <a href="contract.html" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg transition-colors"><i class="fas fa-file-code mr-2 text-gold-text">
-                Solana Contract</a>
+                <a href="index2.html" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg">Home</a>
+                <a href="whitepaper.html" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg">Whitepaper</a>
+                <a href="#" class="block px-4 py-2 hover:bg-purple-900/50 rounded-lg">Chart</a>
             </div>
         </div>
     </div>
@@ -233,6 +228,20 @@
     </footer>
 
 </body>
+    <script>
+    const btn = document.getElementById('menu-button');
+    const menu = document.getElementById('dropdown-menu');
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', () => {
+        menu.classList.add('hidden');
+    });
+</script>
+
   <script>
     // Set tanggal target: 8 April 2026 jam 11:00
     const countdownDate = new Date("April 8, 2026 11:00:00").getTime();
