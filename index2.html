@@ -42,10 +42,20 @@
             transition: all 0.3s ease;
         }
 
-        /* Efek Glow Ungu seperti di foto */
         .ape-glow {
             filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             border: 2px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .roadmap-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 4px solid #7c3aed;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-card:hover {
+            background: rgba(124, 58, 237, 0.05);
+            transform: translateX(5px);
         }
     </style>
 </head>
@@ -58,20 +68,23 @@
                 <span class="font-orbitron text-base font-bold tracking-tighter">FEG<span class="text-purple-500">SOL</span></span>
             </div>
             
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-4">
                 <div class="bg-purple-900/40 p-1.5 rounded-lg border border-purple-500/30">
                     <i class="fab fa-solana text-purple-400 text-xl"></i>
                 </div>
-                <i class="fas fa-bars text-gray-400 ml-2"></i>
+                <div class="hidden md:flex space-x-4 font-orbitron text-[10px] uppercase tracking-widest">
+                    <a href="#about" class="hover:text-purple-400">About</a>
+                    <a href="#roadmap" class="hover:text-purple-400">Roadmap</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <section class="relative min-h-screen flex flex-col items-center justify-center pt-20 hero-gradient text-center px-6">
+    <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
         
         <div class="relative mb-8">
             <div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
-            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover ape-glow">
+            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape-glow">
         </div>
 
         <h1 class="text-4xl md:text-7xl font-orbitron font-bold leading-none mb-4 tracking-tight">
@@ -80,10 +93,10 @@
         </h1>
 
         <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
-            FEGsol is a high-performance ecosystem on Solana built for the strongest community.
+            FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
         </p>
 
-        <div class="flex flex-col gap-3 w-full max-w-xs">
+        <div class="flex flex-col gap-3 w-full max-w-xs mb-12">
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase">
                 Join the Raid
             </a>
@@ -91,15 +104,65 @@
                 View Roadmap
             </a>
         </div>
-
     </section>
 
-    <footer class="py-8 text-center border-t border-white/5">
-        <div class="flex justify-center space-x-6 text-2xl text-gray-500 mb-4">
-            <a href="https://x.com/fegirvan?s=21" target="_blank"><i class="fab fa-twitter hover:text-white transition"></i></a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank"><i class="fab fa-telegram hover:text-white transition"></i></a>
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-morphism p-6 text-center">
+                <i class="fas fa-shield-halved text-2xl text-purple-400 mb-4"></i>
+                <h3 class="font-orbitron text-sm mb-2">Secure</h3>
+                <p class="text-gray-500 text-xs">LP Burned & Renounced.</p>
+            </div>
+            <div class="glass-morphism p-6 text-center">
+                <i class="fas fa-bolt text-2xl text-yellow-400 mb-4"></i>
+                <h3 class="font-orbitron text-sm mb-2">Fast</h3>
+                <p class="text-gray-500 text-xs">Powered by Solana.</p>
+            </div>
+            <div class="glass-morphism p-6 text-center">
+                <i class="fas fa-users text-2xl text-blue-400 mb-4"></i>
+                <h3 class="font-orbitron text-sm mb-2">Community</h3>
+                <p class="text-gray-500 text-xs">Ape together strong.</p>
+            </div>
         </div>
-        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em]">&copy; 2026 FEGSOL ECOSYSTEM</p>
+    </section>
+
+    <section id="roadmap" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">ROADMAP</h2>
+            <div class="space-y-6">
+                <div class="roadmap-card p-6 rounded-r-xl">
+                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
+                    <h4 class="text-xl font-bold mb-2">Foundation</h4>
+                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
+                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
+                    <h4 class="text-xl font-bold mb-2">Launch</h4>
+                    <p class="text-gray-400 text-xs">Fair Launch, Global Marketing, CMC/CG Listings.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
+                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
+                    <h4 class="text-xl font-bold mb-2">Expansion</h4>
+                    <p class="text-gray-400 text-xs">Staking Dashboard, DAO Governance, Tier-1 CEX.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
+        <div class="flex justify-center space-x-8 mb-8">
+            <a href="https://x.com/fegirvan?s=21" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="FEGSOL-Whitepaper.pdf" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+                <i class="fas fa-file-alt"></i>
+            </a>
+        </div>
+        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
+        <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
 </body>
