@@ -55,14 +55,24 @@
             0%, 100% { opacity: 1; }
             50% { opacity: .5; }
         }
+
+        /* Efek Glow untuk Logo Baru */
+        .logo-glow {
+            filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.6));
+            transition: all 0.3s ease;
+        }
+        .logo-glow:hover {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 15px rgba(253, 224, 71, 0.8));
+        }
     </style>
 </head>
 <body>
 
     <nav class="fixed w-full z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-8 py-3">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center font-bold">G</div>
+            <div class="flex items-center space-x-3">
+                <img src="G.PNG" alt="FEGsol Logo" class="w-12 h-12 rounded-full object-cover logo-glow border-2 border-purple-500/30">
                 <span class="font-orbitron text-xl font-bold tracking-widest">FEG<span class="text-purple-500">SOL</span></span>
             </div>
             <div class="hidden md:flex space-x-8 font-orbitron text-sm uppercase tracking-wider">
@@ -133,7 +143,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="glass-morphism p-10 relative overflow-hidden group border-l-4 border-purple-500">
                     <div class="font-orbitron text-sm text-purple-400 mb-2 tracking-widest uppercase">Phase 1</div>
-                    <h3 class="font-orbitron text-2xl font-bold mb-6 gold-text font-bold">Foundation</h3>
+                    <h3 class="font-orbitron text-2xl font-bold mb-6 gold-text">Foundation</h3>
                     <ul class="space-y-4 text-gray-400 text-sm list-disc list-inside leading-relaxed text-left">
                         <li>Website Alpha Launch</li>
                         <li>Community Building</li>
