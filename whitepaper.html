@@ -3,95 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEG SOL | Whitepaper</title>
+    <title>FEGSOL Whitepaper | Institutional Grade DeFi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
-        body { background-color: #0a0a0b; color: #ffffff; font-family: 'Inter', sans-serif; margin: 0; }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-morphism { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-gradient { background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%); }
+        body {
+            background-color: #050506;
+            color: #e5e7eb;
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.8;
+        }
+        .header-font { font-family: 'Syncopate', sans-serif; }
+        .gold-gradient {
+            background: linear-gradient(135deg, #FDE047 0%, #CA8A04 50%, #A16207 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+        }
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(5, 5, 6, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
     </style>
 </head>
-<body class="hero-gradient min-h-screen p-4 md:p-8">
+<body class="antialiased">
 
-    <div class="max-w-4xl mx-auto glass-morphism p-6 md:p-12 shadow-2xl relative mb-10 border-t-4 border-purple-500">
-        <a href="index4.html" class="inline-flex items-center mb-8 text-purple-400 hover:text-white transition font-orbitron text-[10px] tracking-widest uppercase">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Home
-        </a>
+    <nav class="nav-sticky py-4 px-6">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="G.PNG" class="w-8 h-8 rounded-full" alt="Logo">
+                <span class="header-font text-xs font-bold tracking-widest text-white uppercase">FEGSOL Technical Paper</span>
+            </div>
+            <a href="index.html" class="text-[10px] uppercase tracking-widest text-gray-500 hover:text-white transition">Back to Home</a>
+        </div>
+    </nav>
 
-        <header class="text-center mb-12">
-            <h1 class="font-orbitron text-3xl md:text-5xl font-bold gold-text mb-3 uppercase">Whitepaper</h1>
-            <p class="text-purple-400 font-orbitron tracking-[0.2em] text-[10px] md:text-xs uppercase">Feed Every Gain on Solana</p>
+    <main class="max-w-4xl mx-auto px-6 py-20">
+        
+        <header class="text-center mb-24">
+            <h1 class="header-font text-4xl md:text-5xl font-bold mb-6 gold-gradient tracking-tighter uppercase">TECHNICAL<br>WHITEPAPER</h1>
+            <p class="text-gray-500 text-sm tracking-[0.3em] uppercase">Protocol Version 1.2 | Solana Network</p>
         </header>
 
-        <div class="space-y-10 text-gray-300 text-sm md:text-base leading-relaxed">
-            
-            <section>
-                <h2 class="font-orbitron text-white text-lg mb-4 border-b border-purple-500/30 pb-2 uppercase font-bold">1. Introduction</h2>
-                <p>FEG SOL (Feed Every Gain) is a community-driven meme token built on the Solana blockchain. Inspired by strength, dominance, and collective growth, FEG SOL represents the Gorilla mindset—strong hands, long-term vision, and unstoppable momentum. Our mission is to build a powerful community token that combines meme culture with sustainable growth.</p>
-            </section>
+        <section class="mb-20">
+            <h2 class="header-font text-lg text-brand-purple mb-6 uppercase tracking-widest border-b border-purple-900/30 pb-2">01. Mission Statement</h2>
+            <p class="text-gray-400 font-light italic">
+                FEGSOL is engineered to bridge the gap between community-driven meme culture and sustainable decentralized finance. Our goal is to create a hyper-deflationary ecosystem on Solana where long-term holders are rewarded through systematic supply reduction.
+            </p>
+        </section>
 
-            <section>
-                <h2 class="font-orbitron text-white text-lg mb-4 border-b border-purple-500/30 pb-2 uppercase font-bold">2. Vision</h2>
-                <p>FEG SOL aims to become a recognizable meme brand on Solana, build a strong community-driven ecosystem, and evolve beyond short-term hype into long-term sustainability.</p>
-            </section>
+        <section class="mb-20 glass-card p-10 border-l-4 border-pink-600">
+            <h2 class="header-font text-lg text-pink-500 mb-6 uppercase tracking-widest">02. The Burn Protocol</h2>
+            <p class="mb-6 text-gray-300">
+                Unlike traditional memecoins, $FEGSOL utilizes a <span class="text-white font-bold text-pink-500">Monthly Buyback & Burn</span> strategy to ensure a constantly diminishing supply and increased scarcity.
+            </p>
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Monthly Buyback:</strong> A portion of the marketing fund will be used to buy back $FEGSOL from the open market.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Permanent Burn:</strong> Tokens acquired via buyback will be sent to the Solana Null Address (Burn), removing them from circulation forever.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Public Proof:</strong> All burn transactions (TXIDs) will be published on our official channels for full transparency.</span>
+                </li>
+            </ul>
+        </section>
 
-            <section>
-                <h2 class="font-orbitron text-white text-lg mb-4 border-b border-purple-500/30 pb-2 uppercase font-bold">3. Token Information</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                        <p class="text-[10px] uppercase text-gray-500 mb-1">Name</p>
-                        <p class="text-white font-bold font-orbitron">FEG SOL</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                        <p class="text-[10px] uppercase text-gray-500 mb-1">Symbol</p>
-                        <p class="text-white font-bold font-orbitron">$FEGSOL</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                        <p class="text-[10px] uppercase text-gray-500 mb-1">Total Supply</p>
-                        <p class="text-white font-bold font-orbitron">1,000,000,000</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/10">
-                        <p class="text-[10px] uppercase text-gray-500 mb-1">Tax</p>
-                        <p class="text-green-400 font-bold font-orbitron">0% Buy / Sell</p>
-                    </div>
+        <section class="mb-20">
+            <h2 class="header-font text-lg text-yellow-500 mb-6 uppercase tracking-widest border-b border-yellow-900/30 pb-2">03. Security Architecture</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                    <h4 class="text-white font-bold mb-2">Protocol Status</h4>
+                    <p class="text-xs text-yellow-500 uppercase tracking-widest font-bold mb-4">Internal Review in Progress</p>
+                    <p class="text-gray-400 text-sm">Our lead developer is currently performing a manual code review and stress-test on the deployment parameters to ensure a 100% safe launch.</p>
                 </div>
-                <p class="mt-4 text-center text-purple-400 font-orbitron text-[10px] uppercase tracking-widest italic">Liquidity: Burned</p>
-            </section>
-
-            <section>
-                <h2 class="font-orbitron text-white text-lg mb-4 border-b border-purple-500/30 pb-2 uppercase font-bold">4. Roadmap</h2>
-                <div class="space-y-4">
-                    <div class="bg-white/5 p-4 rounded-lg border-l-2 border-purple-500">
-                        <p><span class="text-purple-400 font-bold font-orbitron mr-2">P1</span> <span class="text-white font-bold uppercase text-xs">Foundation:</span> Smart contract deployment, website launch, social media setup.</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-lg border-l-2 border-purple-500">
-                        <p><span class="text-purple-400 font-bold font-orbitron mr-2">P2</span> <span class="text-white font-bold uppercase text-xs">Community Growth:</span> Marketing campaigns, Telegram expansion, influencer partnerships.</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-lg border-l-2 border-purple-500">
-                        <p><span class="text-purple-400 font-bold font-orbitron mr-2">P3</span> <span class="text-white font-bold uppercase text-xs">Expansion:</span> CoinGecko & CoinMarketCap application, meme campaigns.</p>
-                    </div>
-                    <div class="bg-white/5 p-4 rounded-lg border-l-2 border-purple-500">
-                        <p><span class="text-purple-400 font-bold font-orbitron mr-2">P4</span> <span class="text-white font-bold uppercase text-xs">Domination:</span> CEX targeting, NFT integration, ecosystem development.</p>
-                    </div>
+                <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                    <h4 class="text-white font-bold mb-2">Pump.fun Safety</h4>
+                    <p class="text-gray-400 text-sm">By launching on the Pump.fun protocol, $FEGSOL automatically inherits safety features: Mint Revoked, Freeze Revoked, and Liquidity Security.</p>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="bg-red-950/20 p-6 rounded-2xl border border-red-500/20 mt-10">
-                <h2 class="font-orbitron text-red-400 text-sm mb-2 uppercase font-bold italic">Risk Disclaimer</h2>
-                <p class="text-[11px] text-gray-400 leading-relaxed italic">
-                    Cryptocurrency investments involve risk and high volatility. FEG SOL is a meme-based digital asset and should not be considered financial advice. Always do your own research (DYOR).
-                </p>
-            </section>
-        </div>
-        
-        <footer class="mt-12 pt-6 border-t border-white/5 text-center">
-            <p class="text-[9px] text-gray-600 font-orbitron uppercase tracking-[0.3em]">FEGSOL &copy; 2026 | Financial Freedom for the Apes</p>
-        </footer>
-    </div>
+        <section class="mb-20">
+            <h2 class="header-font text-lg text-blue-500 mb-6 uppercase tracking-widest border-b border-blue-900/30 pb-2">04. Tokenomics</h2>
+            <div class="space-y-4 text-sm">
+                <div class="flex justify-between border-b border-white/5 py-3">
+                    <span class="text-gray-500 uppercase">Total Supply</span>
+                    <span class="text-white font-mono">1,000,000,000 $FEGSOL</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 py-3">
+                    <span class="text-gray-500 uppercase">Fair Launch</span>
+                    <span class="text-white font-mono">100% On Pump.fun</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 py-3">
+                    <span class="text-gray-500 uppercase">Buyback & Burn Tax</span>
+                    <span class="text-white font-mono">Applied via Marketing Fund</span>
+                </div>
+                <div class="flex justify-between border-b border-white/5 py-3">
+                    <span class="text-gray-500 uppercase">Network</span>
+                    <span class="text-white font-mono">Solana (SPL Token)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-32 p-8 border border-red-900/20 rounded-2xl bg-red-950/10">
+            <h3 class="header-font text-[10px] text-red-500 mb-4 uppercase tracking-[0.3em]">Disclaimer</h3>
+            <p class="text-[11px] text-gray-500 leading-relaxed font-light">
+                Cryptocurrency investments involve high risk. $FEGSOL is a community-driven project. This whitepaper does not constitute financial advice. Past performance is not indicative of future results. Always Do Your Own Research (DYOR).
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="py-10 text-center text-[10px] text-gray-700 header-font tracking-widest uppercase border-t border-white/5">
+        FEGSOL Protocol &copy; 2026 | Architecting the Future
+    </footer>
 
 </body>
 </html>
