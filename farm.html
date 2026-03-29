@@ -15,6 +15,9 @@
         .hero-gradient { background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%); }
     </style>
 </head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 <body class="hero-gradient min-h-screen">
 
     <nav class="p-6">
@@ -76,4 +79,37 @@
     </footer>
 
 </body>
+    <script>
+    // Fungsi dasar untuk memunculkan notifikasi estetik
+    function showNotice(title, text) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: 'info',
+            background: '#0a0a0b',
+            color: '#ffffff',
+            confirmButtonColor: '#9333ea',
+            border: '1px solid rgba(147, 51, 234, 0.3)'
+        });
+    }
+
+    // Ambil elemen tombol berdasarkan urutannya di halaman
+    const buttons = document.querySelectorAll('button');
+    
+    // Tombol 1: CONNECT WALLET
+    if(buttons[0]) {
+        buttons[0].onclick = () => showNotice('Wallet Integration', 'Solana Wallet integration (Phantom/Solflare) will be activated after our official launch on Pump.fun!');
+    }
+
+    // Tombol 2: STAKE NOW
+    if(buttons[1]) {
+        buttons[1].onclick = () => showNotice('Banana Farm Staking', 'Staking rewards will go live once we successfully migrate to Raydium. Stay tuned, Apes!');
+    }
+
+    // Tombol 3: UNSTAKE
+    if(buttons[2]) {
+        buttons[2].onclick = () => showNotice('Unstake Feature', 'This feature will be available once the staking pools are officially opened.');
+    }
+</script>
+
 </html>
