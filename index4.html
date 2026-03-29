@@ -225,30 +225,54 @@
         <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
-            // SCRIPT TIMER BARU (23 APRIL)
-        const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+            <script>
+    // 1. LOGIKA MENU MOBILE
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
 
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
+    if(menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+    }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.addEventListener('click', () => {
+        if(menu) menu.classList.add('hidden');
+    });
 
-            // Update ke ID yang ada di HTML
+    // 2. LOGIKA COUNTDOWN TIMER (TARGET 23 APRIL 2026)
+    // Jam 20:00 UTC
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+
+        // Perhitungan waktu
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Update teks ke HTML berdasarkan ID
+        if(document.getElementById("days")) {
             document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
             document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
             document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.getElementById("days").parentElement.parentElement.innerHTML = 
-                    "<h2 class='font-orbitron text-2xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
+        // Jika waktu habis
+        if (distance < 0) {
+            clearInterval(timer);
+            const timerContainer = document.getElementById("days")?.parentElement?.parentElement;
+            if(timerContainer) {
+                timerContainer.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
             }
-        }, 1000);
+        }
+    }, 1000);
+</script>
 
 </body>
 </html>
