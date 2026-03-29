@@ -6,12 +6,13 @@
     <title>FEGsol | The Future of Solana Ape Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
+        <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
         body {
-            background-color: #0a0a0b;
-            color: #ffffff;
+            /* Warna background lebih soft (Slate/Navy Deep) */
+            background-color: #0f172a; 
+            color: #f1f5f9;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
@@ -20,44 +21,61 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
         .glass-morphism {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+            /* Glassmorphism lebih halus */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            border-radius: 20px;
         }
 
         .hero-gradient {
-            background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%);
+            /* Gradient yang tidak terlalu gelap, lebih ke arah glow lembut */
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
         }
 
         .gold-text {
-            background: linear-gradient(to right, #fde047, #ca8a04);
+            /* Warna emas yang lebih ke arah Champagne (soft) */
+            background: linear-gradient(to right, #fef08a, #facc15);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .btn-primary {
-            background: linear-gradient(90deg, #7c3aed, #9333ea);
+            /* Tombol dengan warna Lavender Soft */
+            background: linear-gradient(90deg, #818cf8, #a78bfa);
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
         }
 
         .ape-glow {
-            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
-            border: 2px solid rgba(168, 85, 247, 0.3);
+            /* Glow yang lebih tipis dan menyatu */
+            filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.3));
+            border: 2px solid rgba(167, 139, 250, 0.2);
         }
 
         .roadmap-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid #7c3aed;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #a78bfa;
             transition: all 0.3s ease;
         }
 
         .roadmap-card:hover {
-            background: rgba(124, 58, 237, 0.05);
-            transform: translateX(5px);
+            background: rgba(167, 139, 250, 0.08);
+            transform: translateX(8px);
         }
+
+        /* Warna teks tambahan agar lebih senada */
+        .text-purple-400 { color: #c4b5fd !important; }
+        .text-purple-500 { color: #a78bfa !important; }
+        .border-purple-500\/20 { border-color: rgba(167, 139, 250, 0.2) !important; }
     </style>
+
 </head>
 <body>
 
