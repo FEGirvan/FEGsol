@@ -46,155 +46,119 @@
             filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             border: 2px solid rgba(168, 85, 247, 0.3);
         }
-
-        .roadmap-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid #7c3aed;
-            transition: all 0.3s ease;
-        }
-
-        .roadmap-card:hover {
-            background: rgba(124, 58, 237, 0.05);
-            transform: translateX(5px);
-        }
     </style>
 </head>
 <body>
 
-            <nav class="fixed w-full z-50 px-4 py-6">
+    <nav class="fixed w-full z-50 px-4 py-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20">
             <div class="flex items-center space-x-4">
-                <img src="G.PNG" alt="Logo" class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-purple-500/50">
-                <span class="font-orbitron text-2xl md:text-4xl font-bold tracking-tighter uppercase">
+                <img src="G.PNG" alt="Logo" class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-purple-500/50">
+                <span class="font-orbitron text-xl md:text-3xl font-bold tracking-tighter uppercase">
                     FEG<span class="text-purple-500">SOL</span>
                 </span>
             </div>
             
-                        <div class="relative">
-                <button id="mobile-menu-button" class="bg-purple-900/60 p-3 rounded-2xl border border-purple-500/50 hover:bg-purple-600 transition duration-300 flex items-center justify-center">
-                    <svg class="h-6 w-6 text-purple-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+            <div class="relative">
+                <button id="mobile-menu-button" class="bg-purple-900/60 p-3 rounded-2xl border border-purple-500/50 hover:bg-purple-600 transition duration-300">
+                    <i class="fas fa-bars text-xl text-purple-200"></i>
                 </button>
                 
-                <div id="mobile-menu" class="absolute right-0 mt-3 w-56 glass-morphism overflow-hidden hidden transition-all duration-300 z-[100] shadow-2xl border border-purple-500/30">
+                <div id="mobile-menu" class="absolute right-0 mt-3 w-56 glass-morphism overflow-hidden hidden transition-all duration-300 z-[100] border border-purple-500/30 shadow-2xl">
                     <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 border-b border-white/5">
                         <i class="fas fa-book-open mr-3 text-purple-400"></i> Our Story
                     </a>
-                    <a href="https://pump.fun/ALAMAT_KOIN_KAMU" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30">
-                        <i class="fas fa-chart-line mr-3 text-purple-400"></i> Chart
+                    <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 border-b border-white/5">
+                        <i class="fab fa-telegram mr-3 text-purple-400"></i> Join Telegram
+                    </a>
+                    <a href="#" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30">
+                        <i class="fas fa-chart-line mr-3 text-purple-400"></i> Chart (Soon)
                     </a>
                 </div>
             </div>
+        </div>
+    </nav>
 
-
-        <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
-        
+    <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
         <div class="relative mb-6 mt-4">
-
             <div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
-            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape-glow">
+            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-40 h-40 md:w-60 md:h-60 rounded-full object-cover ape-glow">
         </div>
 
-        <h1 class="text-4xl md:text-7xl font-orbitron font-bold leading-none mb-4 tracking-tight">
+        <h1 class="text-3xl md:text-7xl font-orbitron font-bold leading-tight mb-4 tracking-tight uppercase">
             WE BUILD <br> 
             <span class="gold-text">THE FUTURE</span>
         </h1>
 
-<div class="mb-10 w-full max-w-lg mx-auto">
-    <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4 text-center">Launching In:</p>
-    <div class="grid grid-cols-4 gap-2 md:gap-4">
-        <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
-            <span id="days" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
-            <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Days</span>
+        <div class="mb-10 w-full max-w-lg mx-auto">
+            <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4 text-center">Launching In:</p>
+            <div class="grid grid-cols-4 gap-2 md:gap-4">
+                <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
+                    <span id="days" class="block text-xl md:text-4xl font-bold font-orbitron gold-text">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Days</span>
+                </div>
+                <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
+                    <span id="hours" class="block text-xl md:text-4xl font-bold font-orbitron gold-text">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Hours</span>
+                </div>
+                <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
+                    <span id="minutes" class="block text-xl md:text-4xl font-bold font-orbitron gold-text">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Mins</span>
+                </div>
+                <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
+                    <span id="seconds" class="block text-xl md:text-4xl font-bold font-orbitron gold-text text-red-500">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Secs</span>
+                </div>
+            </div>
         </div>
-        <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
-            <span id="hours" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
-            <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Hours</span>
-        </div>
-        <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
-            <span id="minutes" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
-            <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Mins</span>
-        </div>
-        <div class="glass-morphism p-3 md:p-4 border-purple-500/30 text-center">
-            <span id="seconds" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
-            <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Secs</span>
-        </div>
-    </div>
-</div>
 
         <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
             FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
         </p>
 
         <div class="flex flex-col gap-3 w-full max-w-xs mb-12">
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase">
-                Join the Raid
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase shadow-lg shadow-purple-500/20">
+                Join the Tribe
             </a>
             <a href="contract.html" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition">
-    View Smart Contract
-</a>
-
+                Smart Contract
+            </a>
         </div>
     </section>
 
     <section class="py-20 px-6 max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-purple-900/50">Verified</div>
-            <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
-            <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
-            <p class="text-gray-400 text-sm font-light leading-relaxed">
-                Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>. Pure community safety.
-            </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-morphism p-10 text-center hover:border-purple-500/50 transition-all duration-500">
+                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 gold-text">SECURE</h3>
+                <p class="text-gray-400 text-sm">Liquidity is 100% Burned & Contract Renounced.</p>
+            </div>
+            <div class="glass-morphism p-10 text-center hover:border-yellow-500/50 transition-all duration-500">
+                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 gold-text">ULTRA FAST</h3>
+                <p class="text-gray-400 text-sm">Lightning-speed transactions on Solana Network.</p>
+            </div>
+            <div class="glass-morphism p-10 text-center hover:border-blue-500/50 transition-all duration-500">
+                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 gold-text">APE NATION</h3>
+                <p class="text-gray-400 text-sm">A community-driven movement. Power to the holders.</p>
+            </div>
         </div>
+    </section>
 
-        <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
-            <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
-            <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
-            <p class="text-gray-400 text-sm font-light leading-relaxed">
-                Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions and near-zero fees.
-            </p>
-        </div>
-
-        <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
-            <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
-            <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
-            <p class="text-gray-400 text-sm font-light leading-relaxed">
-                A community-driven movement where every <span class="text-white font-bold">Ape</span> has a voice. Power to the holders.
-            </p>
-        </div>
-
-    </div>
-</section>
-
-    <section id="roadmap" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">ROADMAP</h2>
-            <div class="space-y-6">
-                <div class="roadmap-card p-6 rounded-r-xl">
-                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
-                    <h4 class="text-xl font-bold mb-2">Foundation</h4>
-                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
-                </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
-                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
-                    <h4 class="text-xl font-bold mb-2">Launch</h4>
-                    <p class="text-gray-400 text-xs">Fair Launch, Global Marketing, CMC/CG Listings.</p>
-                </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
-                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
-                    <h4 class="text-xl font-bold mb-2">Expansion</h4>
-                    <p class="text-gray-400 text-xs">Staking Dashboard, DAO Governance, Tier-1 CEX.</p>
-                </div>
+    <section id="roadmap" class="py-20 px-6 bg-black/40">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="font-orbitron text-3xl font-bold mb-12 gold-text">ROADMAP</h2>
+            <div class="relative inline-block group w-full">
+                <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                <img src="roadmap-landscape.png" alt="Roadmap" class="relative rounded-2xl border-2 border-purple-500/30 shadow-2xl w-full max-w-4xl mx-auto">
             </div>
         </div>
     </section>
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvan?s=21" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+            <a href="https://x.com/fegirvan" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
                 <i class="fab fa-twitter"></i>
             </a>
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
@@ -205,50 +169,47 @@
             </a>
         </div>
         <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
-        <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
-</body>
-  <script>
-    // Set tanggal target: 8 April 2026 jam 11:00
-    const countdownDate = new Date("April 8, 2026 11:00:00").getTime();
-
-    const timer = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-
-        // Perhitungan waktu
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Tampilkan hasil di elemen
-        document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-        document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-        document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-        document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
-
-        // Jika hitungan mundur selesai
-        if (distance < 0) {
-            clearInterval(timer);
-            document.querySelector(".mb-10.w-full.max-w-lg").innerHTML = 
-                "<h2 class='font-orbitron text-2xl gold-text uppercase animate-bounce'>Token is Live!</h2>";
-        }
-    }, 1000);
-</script>
     <script>
-    const btn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
+        // TOGGLE MENU MOBILE
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
 
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('hidden');
-    });
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
 
-    document.addEventListener('click', () => {
-        menu.classList.add('hidden');
-    });
+        document.addEventListener('click', () => {
+            menu.classList.add('hidden');
+        });
+
+        // COUNTDOWN TIMER (2 April 2026 20:00 WIB)
+        const targetDate = new Date("April 2, 2026 20:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }, 1000);
     </script>
-
+</body>
 </html>
