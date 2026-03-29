@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEGsol | We Build The Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        body { 
+            background-color: #0a0a0b; 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        /* Glassmorphism Effect Modern */
+        .glass-morphism { 
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 16px;
+        }
+        
+        .gold-text { 
+            background: linear-gradient(to right, #fde047, #ca8a04); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        /* Ape Glowing Effect */
+        .ape-glow {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        }
+
+        .hero-gradient { 
+            background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 70%); 
+        }
+
+        /* Animasi halu untuk dropdown */
+        #dropdown-menu {
+            transition: all 0.3s ease-out;
+            transform-origin: top right;
+        }
+        #dropdown-menu.hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        #dropdown-menu:not(.hidden) {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="hero-gradient min-h-screen">
+
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4">
+        <nav class="max-w-7xl mx-auto flex items-center justify-between p-3 glass-morphism shadow-xl">
+            <div class="flex items-center gap-3">
+                <img src="G.PNG" alt="FEGsol Logo" class="w-10 h-10 rounded-full border-2 border-gold-text object-cover shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+                <span class="font-orbitron text-xl font-bold tracking-tight text-white">FEG<span class="gold-text">SOL</span></span>
+            </div>
+
+            <div class="relative">
+                <button id="menu-button" class="flex items-center justify-center p-2 rounded-xl bg-purple-900/40 hover:bg-purple-800/60 transition-all border border-purple-500/30 w-11 h-11 shadow-inner">
+                    <svg width="24" height="24" viewBox="0 0 397 311" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+                        <path d="M64.6 237.9c-2.4 2.4-5.4 3.7-8.8 3.7H5.1c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5L64.6 159.7c2.4-2.4 5.4-3.7 8.8-3.7H134c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L64.6 237.9zM332.4 151.3c2.4-2.4 5.4-3.7 8.8-3.7h59.5c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L332.4 230c-2.4 2.4-5.4 3.7-8.8 3.7h-60.5c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5l75.9-66.6zM27.1 73.1c-2.4 2.4-5.4 3.7-8.8 3.7H-41.2c-5.1 0-9.3-4.2-9.3-9.3 0-2.4.9-4.7 2.7-6.5L27.1-5.1c2.4-2.4 5.4-3.7 8.8-3.7h60.5c5.1 0 9.3 4.2 9.3 9.3 0 2.4-.9 4.7-2.7 6.5L27.1 73.1z" fill="white"/>
+                    </svg>
+                </button>
+
+                <div id="dropdown-menu" class="absolute right-0 mt-3 w-52 glass-morphism p-3 z-50 hidden shadow-2xl border border-purple-500/40">
+                    <div class="space-y-2 font-orbitron text-[11px] uppercase tracking-wider text-white">
+                        <a href="index4.html" class="flex items-center gap-3 px-4 py-2.5 hover:bg-purple-900/60 rounded-lg transition-colors group">
+                            <i class="fas fa-home text-gold-text group-hover:scale-110 transition-transform w-4 text-center"></i>
+                            <span>Home</span>
+                        </a>
+                        <a href="whitepaper.html" class="flex items-center gap-3 px-4 py-2.5 hover:bg-purple-900/60 rounded-lg transition-colors group">
+                            <i class="fas fa-file-contract text-gold-text group-hover:scale-110 transition-transform w-4 text-center"></i>
+                            <span>Whitepaper</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-purple-900/60 rounded-lg transition-colors group">
+                            <i class="fas fa-chart-line text-gold-text group-hover:scale-110 transition-transform w-4 text-center"></i>
+                            <span>Chart (Pump.fun)</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 hover:bg-purple-900/60 rounded-lg transition-colors group">
+                            <i class="fas fa-file-code text-gold-text group-hover:scale-110 transition-transform w-4 text-center"></i>
+                            <span>Solana Contract</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex flex-col items-center justify-center pt-32 pb-16 text-center px-6">
+        
+        <div class="relative mb-8 mt-4 group">
+            <div class="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full group-hover:bg-purple-500/40 transition-all"></div>
+            <img src="G.PNG" alt="Gorilla FEGsol" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape-glow border-4 border-purple-500/40 transition-transform group-hover:scale-105 duration-300">
+        </div>
+
+        <h1 class="font-orbitron text-4xl md:text-6xl font-bold tracking-tight text-white mb-2 leading-tight">
+            WE BUILD<br> <span class="gold-text">THE FUTURE</span>
+        </h1>
+        
+        <p class="text-xs md:text-sm text-gray-400 max-w-sm mb-12 font-light leading-relaxed">
+            FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
+        </p>
+
+        <div class="glass-morphism p-6 mb-16 shadow-2xl border border-purple-500/40 max-w-xs w-full">
+            <p class="text-[10px] font-orbitron uppercase text-purple-400 tracking-[0.2em] mb-4">Launching In:</p>
+            
+            <div class="grid grid-cols-4 gap-3 text-white">
+                <div class="text-center bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <div id="days" class="font-orbitron text-3xl font-bold gold-text">00</div>
+                    <div class="text-[8px] uppercase tracking-widest text-gray-400 mt-1">Days</div>
+                </div>
+                <div class="text-center bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <div id="hours" class="font-orbitron text-3xl font-bold gold-text">00</div>
+                    <div class="text-[8px] uppercase tracking-widest text-gray-400 mt-1">Hours</div>
+                </div>
+                <div class="text-center bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <div id="minutes" class="font-orbitron text-3xl font-bold gold-text">00</div>
+                    <div class="text-[8px] uppercase tracking-widest text-gray-400 mt-1">Min</div>
+                </div>
+                <div class="text-center bg-purple-950/40 p-3 rounded-lg border border-purple-500/20">
+                    <div id="seconds" class="font-orbitron text-3xl font-bold gold-text">00</div>
+                    <div class="text-[8px] uppercase tracking-widest text-gray-400 mt-1">Sec</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-xs font-orbitron text-[11px] uppercase tracking-wider">
+            <a href="#" class="flex items-center justify-center gap-2 p-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold transition-all shadow-[0_5px_20px_rgba(168,85,247,0.4)] active:scale-95">
+                <i class="fab fa-telegram-plane"></i> Join Telegram Raid
+            </a>
+            <a href="#" class="flex items-center justify-center gap-2 p-4 rounded-xl glass-morphism border-white/10 text-gray-300 hover:text-white hover:bg-white/5 transition-all active:scale-95">
+                <i class="fas fa-file-contract text-gold-text"></i> Copy Contract
+            </a>
+        </div>
+    </main>
+
+    <footer class="mt-10 py-6 border-t border-purple-500/20 text-center glass-morphism rounded-none">
+        <p class="text-[9px] text-gray-600 font-orbitron uppercase tracking-[0.3em]">FEGSOL &copy; 2026 | Financial Freedom for the Apes</p>
+    </footer>
+
+    <script>
+        // 1. Script Countdown (image_4.png perbaikan total)
+        const countdownDate = new Date("April 8, 2026 11:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // Perhitungan waktu
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Tampilkan hasil di elemen (dengan padStart agar selalu 2 digit)
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            // Jika hitungan mundur selesai
+            if (distance < 0) {
+                clearInterval(timer);
+                const timerBlock = document.getElementById("days").parentElement.parentElement.parentElement;
+                timerBlock.innerHTML = "<h2 class='font-orbitron text-2xl gold-text uppercase animate-bounce w-full text-center py-4'>Token is Live!</h2>";
+            }
+        }, 1000);
+
+        // 2. Script Menu Dropdown Solana (BARU)
+        const menuButton = document.getElementById('menu-button');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        menuButton.addEventListener('click', (event) => {
+            // Mencegah klik tombol menutup dropdown seketika
+            event.stopPropagation(); 
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        // Menutup menu jika klik di mana saja di luar menu
+        document.addEventListener('click', (event) => {
+            if (!dropdownMenu.contains(event.target) && !menuButton.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
