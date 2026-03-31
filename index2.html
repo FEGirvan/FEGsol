@@ -194,41 +194,40 @@
     </section>
 
     <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto">
-    <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text tracking-widest uppercase">Tokenomics</h2>
-    <div class="glass-morphism p-8 md:p-12 space-y-6 mb-10">
-        
-        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-            <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest font-bold">Total Supply</span>
-            <span class="text-xl md:text-2xl font-bold font-orbitron text-white leading-none">1,000,000,000</span>
-        </div>
-        
-        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-            <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest font-bold">Fair Launch</span>
-            <span class="text-white font-bold font-orbitron text-sm md:text-base uppercase tracking-wider leading-none">100% ORGANIC (PUMP.FUN)</span>
-        </div>
-        
-        <div class="flex justify-between items-center border-b border-white/5 pb-4">
-            <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest font-bold">Buyback & Burn</span>
-            <span class="text-yellow-400 font-bold font-orbitron text-sm md:text-base uppercase tracking-wider leading-none">Phase 2 Initiative</span>
-        </div>
-        
-        <div class="flex justify-between items-center">
-            <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest font-bold">Liquidity Lock</span>
-            <span class="text-blue-400 font-bold font-orbitron text-sm md:text-base uppercase tracking-wider leading-none">Automated (Pump.fun)</span>
-        </div>
+        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">TOKENOMICS</h2>
+        <div class="glass-morphism p-8 md:p-12 space-y-6">
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Total Supply</span>
+                <div class="text-right text-xl md:text-2xl font-bold font-orbitron">
+                    <span id="supply-count" data-target="1000000000">0</span>
+                    <span class="text-purple-500">$FEGSOL</span>
+                </div>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Fair Launch</span>
+                <span class="text-white font-bold font-orbitron">100% ORGANIK</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Buyback & Burn</span>
+                <span class="text-yellow-400 font-bold font-orbitron">PHASE 2 INITIATIVE</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Liquidity Lock</span>
+                <span class="text-blue-400 font-bold font-orbitron uppercase">Automated (Pump.fun)</span>
+            </div>
 
-        <div class="mt-8 p-6 rounded-xl bg-purple-900/10 border border-purple-500/20">
-            <div class="flex justify-between items-center mb-3">
-                <span class="text-[10px] font-orbitron text-purple-400 uppercase tracking-[0.2em]">Circulating Scarcity</span>
-                <span class="text-[10px] font-orbitron text-white">0% BURNED</span>
+            <div class="mt-8 p-6 rounded-xl bg-purple-900/10 border border-purple-500/20">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] font-orbitron text-purple-400 uppercase tracking-[0.2em]">Circulating Scarcity</span>
+                    <span class="text-[10px] font-orbitron text-white">0% BURNED</span>
+                </div>
+                <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-500 h-full transition-all duration-1000" style="width: 1%"></div>
+                </div>
+                <p class="mt-3 text-[9px] text-gray-500 font-orbitron uppercase text-center tracking-widest italic">Monthly Burn Schedule: ACTIVE</p>
             </div>
-            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-purple-600 to-pink-500 h-full transition-all duration-1000" style="width: 1%"></div>
-            </div>
-            <p class="mt-3 text-[9px] text-gray-500 font-orbitron uppercase text-center tracking-widest italic">Monthly Burn Schedule: ACTIVE</p>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
@@ -312,14 +311,6 @@
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
-        // LOGIKA REVEAL WALLET
-        function revealWallet(id) {
-            const el = document.getElementById(id);
-            const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
-            allWallets.forEach(w => { if(w !== id) document.getElementById(w).classList.add('hidden'); });
-            el.classList.toggle('hidden');
-        }
-
         // BACK TO TOP VISIBILITY
         window.onscroll = function() {
             const btn = document.getElementById("toTop");
@@ -330,32 +321,40 @@
             }
         };
 
-        // MENU MOBILE
+        // 1. LOGIKA MENU MOBILE
         const menuBtn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');
+
         if(menuBtn) {
             menuBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 menu.classList.toggle('hidden');
             });
         }
-        document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
 
-        // COUNTDOWN TIMER
+        document.addEventListener('click', () => {
+            if(menu) menu.classList.add('hidden');
+        });
+
+        // 2. LOGIKA COUNTDOWN TIMER
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
             if(document.getElementById("days")) {
                 document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
                 document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
                 document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
+
             if (distance < 0) {
                 clearInterval(timer);
                 if(document.getElementById("days")) {
@@ -364,34 +363,46 @@
             }
         }, 1000);
 
-        // ANIMASI COUNTER TOKENOMICS
+        // 3. ANIMASI COUNTER TOKENOMICS
         const supplyCount = document.getElementById('supply-count');
         const target = +supplyCount.getAttribute('data-target');
+        
         const updateCount = () => {
             const current = +supplyCount.innerText.replace(/,/g, '');
             const increment = target / 100;
+
             if (current < target) {
                 supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
                 setTimeout(updateCount, 20);
-            } else { supplyCount.innerText = target.toLocaleString(); }
+            } else {
+                supplyCount.innerText = target.toLocaleString();
+            }
         };
+
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+            if (entries[0].isIntersecting) {
+                updateCount();
+                observer.disconnect();
+            }
         }, { threshold: 0.5 });
+
         observer.observe(supplyCount);
 
-        // JUPITER TERMINAL
+        // 4. JUPITER TERMINAL INITIALIZATION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             endpoint: 'https://api.mainnet-beta.solana.com',
             strictTokenList: false,
-            formProps: { fixedInputMint: true, fixedOutputMint: false },
+            formProps: {
+                fixedInputMint: true,
+                fixedOutputMint: false,
+            },
         });
 
-        // COPY CA
+        // 5. CLICK TO COPY FUNCTION
         function copyCA() {
-            const ca = "DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93"; 
+            const ca = "ALAMAT_CONTRACT_KAMU_NANTI"; 
             navigator.clipboard.writeText(ca);
             const btnText = document.getElementById('ca-text');
             btnText.innerText = "CA Copied!";
