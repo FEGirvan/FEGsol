@@ -150,7 +150,7 @@
             FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
         </p>
 
-        <div class="flex flex-col gap-3 w-full max-w-xs mb-12">
+        <div class="flex flex-col gap-3 w-full max-w-xs mb-8">
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center">
                 Join the Raid
             </a>
@@ -158,6 +158,16 @@
                 <span id="ca-text">Copy Contract Address</span>
                 <i class="fas fa-copy ml-2 text-purple-400 group-hover:scale-110 transition"></i>
             </button>
+        </div>
+
+        <div class="w-full max-w-4xl py-8 opacity-40 hover:opacity-100 transition-opacity duration-500 border-t border-white/5 mt-4">
+            <div class="flex flex-wrap justify-center items-center gap-6 md:gap-12">
+                <img src="https://dexscreener.com/favicon.ico" class="h-5 grayscale hover:grayscale-0 transition" alt="DexScreener">
+                <img src="https://jupiter.ag/favicon.ico" class="h-5 grayscale hover:grayscale-0 transition" alt="Jupiter">
+                <img src="https://raydium.io/favicon.ico" class="h-5 grayscale hover:grayscale-0 transition" alt="Raydium">
+                <img src="https://solscan.io/favicon.ico" class="h-5 grayscale hover:grayscale-0 transition" alt="Solscan">
+                <img src="https://pump.fun/logo.png" class="h-5 grayscale hover:grayscale-0 transition" alt="Pump.fun">
+            </div>
         </div>
     </section>
 
@@ -192,6 +202,17 @@
             <div class="flex justify-between items-center">
                 <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Liquidity Lock</span>
                 <span class="text-blue-400 font-bold font-orbitron uppercase">Automated (Pump.fun)</span>
+            </div>
+
+            <div class="mt-8 p-6 rounded-xl bg-purple-900/10 border border-purple-500/20">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] font-orbitron text-purple-400 uppercase tracking-[0.2em]">Circulating Scarcity</span>
+                    <span class="text-[10px] font-orbitron text-white">0% BURNED</span>
+                </div>
+                <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-500 h-full transition-all duration-1000" style="width: 1%"></div>
+                </div>
+                <p class="mt-3 text-[9px] text-gray-500 font-orbitron uppercase text-center tracking-widest italic">Monthly Burn Schedule: ACTIVE</p>
             </div>
         </div>
     </section>
@@ -270,9 +291,24 @@
         <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
+    <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 backdrop-blur-md hidden hover:bg-purple-500 transition-all shadow-lg shadow-purple-900/50">
+        <i class="fas fa-arrow-up text-white"></i>
+    </button>
+
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
+        // BACK TO TOP VISIBILITY
+        window.onscroll = function() {
+            const btn = document.getElementById("toTop");
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        };
+
         // 1. LOGIKA MENU MOBILE
         const menuBtn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');
