@@ -43,7 +43,7 @@
         }
 
         .ape-glow {
-            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
+            filter: drop-shadow(0 0-25px rgba(168, 85, 247, 0.5));
             border: 2px solid rgba(168, 85, 247, 0.3);
         }
 
@@ -57,11 +57,16 @@
             background: rgba(124, 58, 237, 0.05);
             transform: translateX(5px);
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0b; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-            <nav class="fixed w-full z-50 px-4 py-6">
+    <nav class="fixed w-full z-50 px-4 py-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20">
             <div class="flex items-center space-x-4">
                 <img src="G.PNG" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-purple-500/50">
@@ -87,13 +92,12 @@
                             <span class="text-[10px] text-gray-400 font-orbitron uppercase">Stage</span>
                             <span class="text-[10px] text-white font-bold font-orbitron">FAIR LAUNCH</span>
                         </div>
-                        <div class="flex justify-between items-center px-6 py-2">
-    <span class="text-[10px] text-gray-400 font-orbitron uppercase">Banana Farm</span>
-    <a href="farm.html" class="text-[10px] text-yellow-400 font-bold font-orbitron italic hover:text-yellow-200 transition-all duration-300 animate-pulse">
-        OPEN APP <i class="fas fa-external-link-alt ml-1 text-[8px]"></i>
-    </a>
-</div>
-
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] text-gray-400 font-orbitron uppercase">Banana Farm</span>
+                            <a href="farm.html" class="text-[10px] text-yellow-400 font-bold font-orbitron italic hover:text-yellow-200 transition-all duration-300 animate-pulse">
+                                OPEN APP <i class="fas fa-external-link-alt ml-1 text-[8px]"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 border-b border-white/5 text-white">
@@ -108,8 +112,6 @@
         </div>
     </nav>
 
-
-
     <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
         <div class="relative mb-8 mt-4">
             <div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
@@ -121,7 +123,7 @@
             <span class="gold-text">THE FUTURE</span>
         </h1>
 
-                <div class="mb-10 w-full max-w-lg mx-auto">
+        <div class="mb-10 w-full max-w-lg mx-auto">
             <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4 text-center">Launching In:</p>
             <div class="grid grid-cols-4 gap-2 md:gap-4">
                 <div class="glass-morphism p-3 md:p-4 border-b-2 border-yellow-500 text-center">
@@ -144,109 +146,113 @@
             <p class="mt-4 text-[9px] font-orbitron text-gray-600 tracking-widest uppercase">Official Launch: April 23, 2026</p>
         </div>
 
-
         <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
             FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
         </p>
 
         <div class="flex flex-col gap-3 w-full max-w-xs mb-12">
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase">
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center">
                 Join the Raid
             </a>
-            <a href="contract.html" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition">
-                View Smart Contract
-            </a>
+            <button onclick="copyCA()" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition group">
+                <span id="ca-text">Copy Contract Address</span>
+                <i class="fas fa-copy ml-2 text-purple-400 group-hover:scale-110 transition"></i>
+            </button>
         </div>
     </section>
 
-        <section class="py-20 px-6 max-w-7xl mx-auto">
+    <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto">
+        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">TOKENOMICS</h2>
+        <div class="glass-morphism p-8 md:p-12 space-y-6">
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Total Supply</span>
+                <div class="text-right text-xl md:text-2xl font-bold font-orbitron">
+                    <span id="supply-count" data-target="1000000000">0</span>
+                    <span class="text-purple-500">$FEGSOL</span>
+                </div>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Fair Launch</span>
+                <span class="text-white font-bold font-orbitron">100% ORGANIK</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Buyback & Burn</span>
+                <span class="text-yellow-400 font-bold font-orbitron">PHASE 2 INITIATIVE</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Liquidity Lock</span>
+                <span class="text-blue-400 font-bold font-orbitron uppercase">Automated (Pump.fun)</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="swap" class="py-20 px-6">
+        <div class="max-w-md mx-auto text-center">
+            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text">DIRECT SWAP</h2>
+            <div id="integrated-terminal" class="shadow-2xl shadow-purple-900/20"></div>
+            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Terminal</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-morphism p-10 text-center relative group hover:border-pink-500/50 transition-all duration-500">
-                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-pink-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-pink-900/50">Monthly Event</div>
-                <i class="fas fa-fire-alt text-4xl text-pink-500 mb-6 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]"></i>
-                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">BUYBACK & BURN</h3>
+            <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-purple-900/50">Verified</div>
+                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
                 <p class="text-gray-400 text-sm font-light leading-relaxed">
-                    We execute <span class="text-white font-bold">Monthly Burn Events</span> using transaction fees to buy back $FEGSOL, ensuring a <span class="text-pink-400 font-bold">Hyper-Deflationary</span> supply.
+                    Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>.
                 </p>
             </div>
-
             <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
                 <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
-                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SOLANA SPEED</h3>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
                 <p class="text-gray-400 text-sm font-light leading-relaxed">
-                    Powered by the <span class="text-white font-bold">Solana Network</span>. Lightning-fast transactions with nearly <span class="text-white font-bold">Zero Fees</span> for all Apes.
+                    Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions.
                 </p>
             </div>
-
-            <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
-                <i class="fas fa-shield-check text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
-                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE SECURE</h3>
+            <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
+                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
                 <p class="text-gray-400 text-sm font-light leading-relaxed">
-                    Liquidity <span class="text-white font-bold">100% Burned</span> & Contract Renounced. Safe, transparent, and built for the community.
+                    A community-driven movement where every <span class="text-white font-bold">Ape</span> has a voice.
                 </p>
             </div>
         </div>
     </section>
 
-        <section id="roadmap" class="py-20 px-6">
+    <section id="roadmap" class="py-20 px-6">
         <div class="max-w-4xl mx-auto">
-            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text tracking-[0.2em]">ROADMAP</h2>
+            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">ROADMAP</h2>
             <div class="space-y-6">
-                <div class="roadmap-card p-6 rounded-r-xl border-l-4 border-purple-500 bg-white/5">
-                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1: Foundation</span>
-                    <h4 class="text-xl font-bold mb-2 text-white">Community Building</h4>
-                    <p class="text-gray-400 text-xs">Website v1.0 Launch, Telegram & Twitter community setup, and $FEGSOL smart contract deployment.</p>
+                <div class="roadmap-card p-6 rounded-r-xl">
+                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
+                    <h4 class="text-xl font-bold mb-2">Foundation</h4>
+                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
                 </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-l-4 border-blue-500 bg-white/5">
-                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2: The Takeover</span>
-                    <h4 class="text-xl font-bold mb-2 text-white">Fair Launch & Marketing</h4>
-                    <p class="text-gray-400 text-xs">Official Launch on Pump.fun, First <span class="text-white font-bold">Monthly Buyback & Burn</span> event, and DexTools/Raydium trending.</p>
+                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
+                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
+                    <h4 class="text-xl font-bold mb-2">Launch</h4>
+                    <p class="text-gray-400 text-xs">Fair Launch on Pump.fun, Global Marketing, CMC/CG Listings.</p>
                 </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-l-4 border-yellow-500 bg-white/5">
-                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3: Ecosystem</span>
-                    <h4 class="text-xl font-bold mb-2 text-white">Banana Farm & CEX</h4>
-                    <p class="text-gray-400 text-xs">Staking Dashboard (Banana Farm) release, Strategic partnerships, and Tier-2 Exchange listings.</p>
+                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
+                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
+                    <h4 class="text-xl font-bold mb-2">Expansion</h4>
+                    <p class="text-gray-400 text-xs">Banana Farm (Staking), DAO Governance, Tier-1 CEX.</p>
                 </div>
             </div>
         </div>
     </section>
-<div class="community-building-section" style="margin-top: 40px; padding: 20px; background: #1a1a1a; border-radius: 16px; border: 1px solid #333;">
-  <h2 style="color: #fff; text-align: center; margin-bottom: 20px;">TOKENOMICS</h2>
-  
-  <div style="display: flex; flex-direction: column; gap: 15px; color: #ccc;">
-    <div style="display: flex; justify-content: space-between; padding: 10px; background: #222; border-radius: 8px;">
-      <span>Total Supply:</span>
-      <span style="color: #fff; font-weight: bold;">1,000,000,000 $FEGSOL</span>
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; padding: 10px; background: #222; border-radius: 8px;">
-      <span>Fair Launch (Pump.fun):</span>
-      <span style="color: #fff; font-weight: bold;">100% Organik</span>
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; padding: 10px; background: #222; border-radius: 8px;">
-      <span>Buyback & Burn (Monthly):</span>
-      <span style="color: #fff; font-weight: bold;">Phase 2 Initiative</span>
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; padding: 10px; background: #222; border-radius: 8px;">
-      <span>Liquidity Lock:</span>
-      <span style="color: #fff; font-weight: bold;">Automatic on Pump.fun migration</span>
-    </div>
-  </div>
-</div>
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
-    <i class="fab fa-twitter"></i>
-</a>
-
+            <a href="https://x.com/fegirvan?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
+                <i class="fab fa-twitter"></i>
             </a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fab fa-telegram"></i>
             </a>
-            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-white transition text-3xl">
+            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fas fa-file-alt"></i>
             </a>
         </div>
@@ -254,73 +260,100 @@
         <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
-            <script>
-    // 1. LOGIKA MENU MOBILE
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
+    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
-    if(menuBtn) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
+    <script>
+        // 1. LOGIKA MENU MOBILE
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        if(menuBtn) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+        }
+
+        document.addEventListener('click', () => {
+            if(menu) menu.classList.add('hidden');
         });
-    }
 
-    document.addEventListener('click', () => {
-        if(menu) menu.classList.add('hidden');
-    });
+        // 2. LOGIKA COUNTDOWN TIMER
+        const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
 
-    // 2. LOGIKA COUNTDOWN TIMER (TARGET 23 APRIL 2026)
-    // Jam 20:00 UTC
-    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
 
-    const timer = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Perhitungan waktu
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Update teks ke HTML berdasarkan ID
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
-        }
-
-        // Jika waktu habis
-        if (distance < 0) {
-            clearInterval(timer);
-            const timerContainer = document.getElementById("days")?.parentElement?.parentElement;
-            if(timerContainer) {
-                timerContainer.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
+            if(document.getElementById("days")) {
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
+
+            if (distance < 0) {
+                clearInterval(timer);
+                if(document.getElementById("days")) {
+                    document.getElementById("days").parentElement.parentElement.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
+                }
+            }
+        }, 1000);
+
+        // 3. ANIMASI COUNTER TOKENOMICS
+        const supplyCount = document.getElementById('supply-count');
+        const target = +supplyCount.getAttribute('data-target');
+        
+        const updateCount = () => {
+            const current = +supplyCount.innerText.replace(/,/g, '');
+            const increment = target / 100;
+
+            if (current < target) {
+                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
+                setTimeout(updateCount, 20);
+            } else {
+                supplyCount.innerText = target.toLocaleString();
+            }
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                updateCount();
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+
+        observer.observe(supplyCount);
+
+        // 4. JUPITER TERMINAL INITIALIZATION
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: true,
+                fixedOutputMint: false,
+            },
+        });
+
+        // 5. CLICK TO COPY FUNCTION
+        function copyCA() {
+            const ca = "ALAMAT_CONTRACT_KAMU_NANTI"; // Ganti setelah launch
+            navigator.clipboard.writeText(ca);
+            const btnText = document.getElementById('ca-text');
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
         }
-    }, 1000);
-</script>
-<script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
-<script>
-  window.Jupiter.init({
-    displayMode: 'integrated',
-    integratedTargetId: 'integrated-terminal',
-    // GANTI INI DENGAN MINT ADDRESS $FEGSOL KAMU SETELAH LAUNCH
-    endpoint: 'https://solana-mainnet.g.allthatnode.com/full/TOKEN_MINT_ADDRESS_KAMU', 
-    // GANTI INI DENGAN MINT ADDRESS $FEGSOL KAMU
-    mint: 'TOKEN_MINT_ADDRESS_KAMU', 
-    // Simbol koin kamu
-    symbol: 'FEGSOL', 
-    // Logo koin kamu
-    logoURI: 'fegirvan.github.io/images/logo.png', 
-    // Warna tema widget (bisa disesuaikan dengan web kamu)
-    theme: 'dark', 
-  });
-</script>
-
-<div id="integrated-terminal" style="width: 100%; max-width: 420px; margin: 20px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.5);"></div>
-
+    </script>
 </body>
 </html>
