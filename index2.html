@@ -43,7 +43,7 @@
         }
 
         .ape-glow {
-            filter: drop-shadow(0 0-25px rgba(168, 85, 247, 0.5));
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             border: 2px solid rgba(168, 85, 247, 0.3);
         }
 
@@ -66,8 +66,8 @@
 </head>
 <body>
 
-    <nav class="fixed w-full z-50 px-4 py-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20">
+    <nav class="fixed w-full z-[60] px-4 py-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20 bg-[#0a0a0b]/80">
             <div class="flex items-center space-x-4">
                 <img src="G.PNG" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-purple-500/50">
                 <a href="index.html" class="font-orbitron text-xl md:text-2xl font-bold tracking-tighter uppercase">
@@ -161,6 +161,16 @@
         </div>
     </section>
 
+    <section id="chart" class="py-12 px-6 max-w-6xl mx-auto">
+        <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
+        <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+            <iframe 
+                src="https://dexscreener.com/solana/ALAMAT_PAIR_KAMU?embed=1&theme=dark&trades=0&info=0" 
+                style="width:100%; height:600px; border:none; border-radius:10px;">
+            </iframe>
+        </div>
+    </section>
+
     <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text">TOKENOMICS</h2>
         <div class="glass-morphism p-8 md:p-12 space-y-6">
@@ -189,7 +199,7 @@
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text">DIRECT SWAP</h2>
-            <div id="integrated-terminal" class="shadow-2xl shadow-purple-900/20"></div>
+            <div id="integrated-terminal" class="shadow-2xl shadow-purple-900/20 relative z-10"></div>
             <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Terminal</p>
         </div>
     </section>
@@ -344,7 +354,7 @@
 
         // 5. CLICK TO COPY FUNCTION
         function copyCA() {
-            const ca = "ALAMAT_CONTRACT_KAMU_NANTI"; // Ganti setelah launch
+            const ca = "ALAMAT_CONTRACT_KAMU_NANTI"; 
             navigator.clipboard.writeText(ca);
             const btnText = document.getElementById('ca-text');
             btnText.innerText = "CA Copied!";
