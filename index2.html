@@ -213,76 +213,88 @@
         </div>
     </section>
 
-    <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
         
-        <div class="glass-morphism p-8 md:p-12 space-y-6 mb-10">
-            <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Total Supply</span>
-                <div class="text-right text-xl md:text-2xl font-bold font-orbitron">
-                    <span id="supply-count" data-target="1000000000">0</span>
-                    <span class="text-purple-500">$FEGSOL</span>
+        <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
+                <div class="text-right">
+                    <div id="supply-count" data-target="1000000000" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
+                    <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Fair Launch</span>
-                <span class="text-white font-bold font-orbitron uppercase">100% Organic (Pump.fun)</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                <span class="text-gray-400 font-orbitron text-xs uppercase tracking-widest">Buyback & Burn</span>
-                <span class="text-yellow-400 font-bold font-orbitron uppercase">Phase 2 Initiative</span>
             </div>
 
-            <div class="mt-8 p-6 rounded-xl bg-purple-900/10 border border-purple-500/20">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-[10px] font-orbitron text-purple-400 uppercase tracking-[0.2em]">Circulating Scarcity</span>
-                    <span class="text-[10px] font-orbitron text-white">0% BURNED</span>
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Fair Launch</span>
+                <div class="text-right">
+                    <div class="text-white font-bold font-orbitron text-sm md:text-xl uppercase tracking-tighter text-nowrap">100% ORGANIK</div>
+                    <div class="text-gray-500 font-orbitron text-[9px] uppercase tracking-widest mt-1">(PUMP.FUN)</div>
                 </div>
-                <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                    <div class="bg-gradient-to-r from-purple-600 to-pink-500 h-full transition-all duration-1000" style="width: 1%"></div>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em] leading-relaxed">Buyback &<br>Burn</span>
+                <div class="text-right">
+                    <div class="text-yellow-400 font-bold font-orbitron text-sm md:text-xl uppercase tracking-tight">PHASE 2</div>
+                    <div class="text-yellow-500/70 font-orbitron text-[9px] uppercase tracking-widest mt-1">INITIATIVE</div>
                 </div>
-                <p class="mt-3 text-[9px] text-gray-500 font-orbitron uppercase text-center tracking-widest italic">Monthly Burn Schedule: ACTIVE</p>
+            </div>
+
+            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20 shadow-inner">
+                <div class="flex justify-between items-end mb-4">
+                    <div class="flex flex-col">
+                        <span class="text-[9px] font-orbitron text-purple-400 uppercase tracking-[0.2em] mb-1">Circulating</span>
+                        <span class="text-xs font-bold font-orbitron text-white uppercase tracking-widest">Scarcity</span>
+                    </div>
+                    <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">0% BURNED</span>
+                </div>
+                <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px] border border-white/5">
+                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="width: 1%"></div>
+                </div>
+                <p class="mt-4 text-[8px] text-gray-500 font-orbitron uppercase text-center tracking-[0.3em] italic opacity-80">Monthly Burn Schedule: <span class="text-green-400">ACTIVE</span></p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition group">
-                <button onclick="revealWallet('marketing-addr')" class="w-full font-orbitron text-[10px] text-blue-400 uppercase tracking-widest py-2">
-                    <i class="fas fa-bullhorn mr-2"></i> Marketing Fund
-                </button>
-                <div id="marketing-addr" class="hidden mt-4 space-y-2">
-                    <p class="text-[8px] text-gray-500 uppercase tracking-tighter">Dedicated for Ads, KOLs & Growth</p>
-                    <p class="text-[9px] text-blue-200 break-all font-mono bg-blue-900/20 p-2 rounded border border-blue-500/10">
+            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-blue-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-bullhorn text-sm group-hover:scale-110 transition"></i>
+                    <span>Marketing Fund</span>
+                </div>
+                <div id="marketing-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-blue-200/70 break-all font-mono bg-blue-900/30 p-3 rounded-lg border border-blue-500/20">
                         D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt
                     </p>
                 </div>
-            </div>
+            </button>
 
-            <div class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition group">
-                <button onclick="revealWallet('burn-addr')" class="w-full font-orbitron text-[10px] text-red-400 uppercase tracking-widest py-2">
-                    <i class="fas fa-fire mr-2"></i> Burn Queue
-                </button>
-                <div id="burn-addr" class="hidden mt-4 space-y-2">
-                    <p class="text-[8px] text-gray-500 uppercase tracking-tighter">Tokens Reserved for Monthly Incineration</p>
-                    <p class="text-[9px] text-red-200 break-all font-mono bg-red-900/20 p-2 rounded border border-red-500/10">
+            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-red-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-fire text-sm group-hover:scale-110 transition"></i>
+                    <span>Burn Queue</span>
+                </div>
+                <div id="burn-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-red-200/70 break-all font-mono bg-red-900/30 p-3 rounded-lg border border-red-500/20">
                         92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T
                     </p>
                 </div>
-            </div>
+            </button>
 
-            <div class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition group">
-                <button onclick="revealWallet('dev-addr')" class="w-full font-orbitron text-[10px] text-purple-400 uppercase tracking-widest py-2">
-                    <i class="fas fa-code mr-2"></i> Developer Wallet
-                </button>
-                <div id="dev-addr" class="hidden mt-4 space-y-2">
-                    <p class="text-[8px] text-gray-500 uppercase tracking-tighter">Technical Operations & Development</p>
-                    <p class="text-[9px] text-purple-200 break-all font-mono bg-purple-900/20 p-2 rounded border border-purple-500/10">
+            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-purple-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-code text-sm group-hover:scale-110 transition"></i>
+                    <span>Developer Wallet</span>
+                </div>
+                <div id="dev-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-3 rounded-lg border border-purple-500/20">
                         DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93
                     </p>
                 </div>
-            </div>
+            </button>
         </div>
     </section>
+
 
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
