@@ -62,6 +62,17 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0b; }
         ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
+
+                /* Kode untuk menyembunyikan tombol Connect Wallet besar */
+        #integrated-terminal button.w-full.flex.items-center.justify-center {
+            display: none !important;
+        }
+
+        /* Opsional: Membuat widget Jupiter lebih menyatu dengan background */
+        #integrated-terminal {
+            background-color: transparent !important;
+        }
+
     </style>
 </head>
 <body>
@@ -324,7 +335,7 @@
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvan?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
+            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fab fa-twitter"></i>
             </a>
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
@@ -346,6 +357,20 @@
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
+                // 4. JUPITER TERMINAL INITIALIZATION
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: true,
+                fixedOutputMint: false,
+            },
+            // Tambahkan baris di bawah ini untuk membantu styling
+            containerClassName: 'jupiter-terminal-container',
+        });
+
         // REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
