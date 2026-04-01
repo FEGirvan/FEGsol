@@ -380,16 +380,19 @@
     <script>
         // JUPITER TERMINAL INITIALIZATION (Cukup pasang satu ini saja)
         window.Jupiter.init({
-            displayMode: 'integrated',
-            integratedTargetId: 'integrated-terminal',
-            endpoint: 'https://api.mainnet-beta.solana.com',
-            strictTokenList: false,
-            formProps: {
-                fixedInputMint: true,
-                fixedOutputMint: false,
-            },
-            containerClassName: 'hide-jupiter-button', 
-        });
+    displayMode: 'integrated',
+    integratedTargetId: 'integrated-terminal',
+    endpoint: 'https://api.mainnet-beta.solana.com',
+    strictTokenList: false,
+    formProps: {
+        fixedInputMint: false,
+        fixedOutputMint: true,
+        initialInputMint: 'So11111111111111111111111111111111111111112',
+        initialOutputMint: 'ALAMAT_CA_FEG_SOL_KAMU'
+    },
+    containerClassName: 'hide-jupiter-button'
+});
+
 
 
         // REVEAL WALLET LOGIC
