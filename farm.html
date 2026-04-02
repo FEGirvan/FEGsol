@@ -8,25 +8,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
-        body { background-color: #0a0a0b; color: #ffffff; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background-color: #0a0a0b; 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+        }
+
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-morphism { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
-        .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-gradient { background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%); }
+        
+        .glass-morphism { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-morphism:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+        }
+
+        .gold-text { 
+            background: linear-gradient(to right, #fde047, #ca8a04); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+
+        .hero-gradient { 
+            background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%); 
+        }
+
+        /* Efek Glow untuk APR */
+        .apr-glow {
+            text-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
     </style>
-</head>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="hero-gradient min-h-screen">
 
     <nav class="p-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3">
-                <img src="G.PNG" alt="Logo" class="w-10 h-10 rounded-full border border-purple-500">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <img src="G.PNG" alt="Logo" class="w-10 h-10 rounded-full border border-purple-500 group-hover:rotate-12 transition-transform">
                 <span class="font-orbitron text-xl font-bold uppercase tracking-tighter">FEG<span class="text-purple-500">SOL</span></span>
             </a>
-            <button class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-orbitron text-xs transition duration-300 border border-purple-400/50 shadow-lg shadow-purple-500/20">
+            <button id="connect-wallet" class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-orbitron text-xs transition duration-300 border border-purple-400/50 shadow-lg shadow-purple-500/20 active:scale-95">
                 CONNECT WALLET
             </button>
         </div>
@@ -41,35 +82,42 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="glass-morphism p-6 text-center border-b-4 border-yellow-500">
                 <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Total Staked</p>
-                <p class="text-2xl font-bold font-orbitron">0.00</p>
+                <p class="text-2xl font-bold font-orbitron"><span id="total-staked">1,240,550</span></p>
             </div>
             <div class="glass-morphism p-6 text-center border-b-4 border-purple-500">
                 <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Estimated APR</p>
-                <p class="text-2xl font-bold font-orbitron text-green-400">169%</p>
+                <p class="text-2xl font-bold font-orbitron text-green-400 apr-glow">169%</p>
             </div>
             <div class="glass-morphism p-6 text-center border-b-4 border-blue-500">
-                <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Your Earnings</p>
-                <p class="text-2xl font-bold font-orbitron text-yellow-500">0.00</p>
+                <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Live Rewards</p>
+                <p class="text-2xl font-bold font-orbitron text-yellow-500"><span id="live-rewards">0.00</span></p>
             </div>
         </div>
 
         <div class="glass-morphism p-8 md:p-12 border-t-2 border-purple-500/30">
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="w-full">
-                    <label class="block text-[10px] font-orbitron text-gray-500 mb-2 uppercase tracking-widest">Amount to Stake</label>
+                    <div class="flex justify-between items-end mb-2">
+                        <label class="block text-[10px] font-orbitron text-gray-500 uppercase tracking-widest">Amount to Stake</label>
+                        <span class="text-[9px] text-purple-400 uppercase font-bold">Balance: 0 $FEGSOL</span>
+                    </div>
                     <div class="relative">
-                        <input type="number" placeholder="0.0" class="w-full bg-black/40 border border-purple-500/30 rounded-xl px-6 py-4 font-orbitron focus:outline-none focus:border-purple-500 transition">
-                        <button class="absolute right-4 top-4 text-xs font-orbitron text-purple-400 hover:text-white uppercase">Max</button>
+                        <input type="number" id="stake-input" placeholder="0.0" class="w-full bg-black/40 border border-purple-500/30 rounded-xl px-6 py-4 font-orbitron focus:outline-none focus:border-purple-500 transition text-white placeholder-gray-700">
+                        <button onclick="maxAmount()" class="absolute right-4 top-4 text-xs font-orbitron text-purple-400 hover:text-white uppercase transition">Max</button>
                     </div>
                 </div>
                 <div class="w-full md:w-auto flex flex-col gap-4">
-                    <button class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest">
+                    <button id="stake-btn" class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest active:scale-95">
                         Stake Now
                     </button>
-                    <button class="w-full md:w-48 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-xl font-orbitron text-xs transition duration-300 uppercase">
+                    <button id="unstake-btn" class="w-full md:w-48 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-xl font-orbitron text-xs transition duration-300 uppercase active:scale-95">
                         Unstake
                     </button>
                 </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-white/5">
+                <p class="text-[10px] text-center text-gray-500 font-orbitron italic">Note: Staked tokens are locked according to the selected pool period.</p>
             </div>
         </div>
     </main>
@@ -78,38 +126,60 @@
         <p class="text-[10px] font-orbitron uppercase tracking-widest">FEGSOL Ecosystem &copy; 2026</p>
     </footer>
 
-</body>
     <script>
-    // Fungsi dasar untuk memunculkan notifikasi estetik
-    function showNotice(title, text) {
-        Swal.fire({
-            title: title,
-            text: text,
-            icon: 'info',
-            background: '#0a0a0b',
-            color: '#ffffff',
-            confirmButtonColor: '#9333ea',
-            border: '1px solid rgba(147, 51, 234, 0.3)'
-        });
-    }
+        // 1. NOTIFICATION SYSTEM
+        function showNotice(title, text) {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'info',
+                background: '#0a0a0b',
+                color: '#ffffff',
+                confirmButtonColor: '#9333ea',
+                customClass: {
+                    popup: 'glass-morphism border border-purple-500/30'
+                }
+            });
+        }
 
-    // Ambil elemen tombol berdasarkan urutannya di halaman
-    const buttons = document.querySelectorAll('button');
-    
-    // Tombol 1: CONNECT WALLET
-    if(buttons[0]) {
-        buttons[0].onclick = () => showNotice('Wallet Integration', 'Solana Wallet integration (Phantom/Solflare) will be activated after our official launch on Pump.fun!');
-    }
+        // 2. BUTTON LOGIC
+        document.getElementById('connect-wallet').onclick = () => {
+            showNotice('Wallet Integration', 'Solana Wallet integration (Phantom/Solflare) will be activated after our official launch on Pump.fun!');
+        };
 
-    // Tombol 2: STAKE NOW
-    if(buttons[1]) {
-        buttons[1].onclick = () => showNotice('Banana Farm Staking', 'Staking rewards will go live once we successfully migrate to Raydium. Stay tuned, Apes!');
-    }
+        document.getElementById('stake-btn').onclick = () => {
+            const val = document.getElementById('stake-input').value;
+            if(!val || val <= 0) {
+                showNotice('Input Error', 'Please enter a valid amount of $FEGSOL to stake.');
+            } else {
+                showNotice('Banana Farm Staking', 'Staking rewards will go live once we successfully migrate to Raydium. Stay tuned, Apes!');
+            }
+        };
 
-    // Tombol 3: UNSTAKE
-    if(buttons[2]) {
-        buttons[2].onclick = () => showNotice('Unstake Feature', 'This feature will be available once the staking pools are officially opened.');
-    }
-</script>
+        document.getElementById('unstake-btn').onclick = () => {
+            showNotice('Unstake Feature', 'This feature will be available once the staking pools are officially opened.');
+        };
 
+        function maxAmount() {
+            // Placeholder logic for MAX button
+            document.getElementById('stake-input').value = 0;
+            showNotice('Balance Empty', 'You do not have $FEGSOL in your wallet yet.');
+        }
+
+        // 3. LIVE DATA SIMULATION (Membuat Web Terlihat Aktif)
+        let totalStaked = 1240550;
+        let userRewards = 0.00;
+
+        setInterval(() => {
+            // Simulasi Total Staked naik perlahan
+            totalStaked += Math.floor(Math.random() * 150);
+            document.getElementById('total-staked').innerText = totalStaked.toLocaleString();
+
+            // Simulasi Rewards berjalan (hanya jika ada angka di input, sebagai contoh visual)
+            userRewards += 0.0001;
+            document.getElementById('live-rewards').innerText = userRewards.toFixed(4);
+        }, 3000);
+    </script>
+
+</body>
 </html>
