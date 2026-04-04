@@ -376,19 +376,18 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-                <script src="https://terminal.jup.ag/main-v2.js"></script>
+                    <script src="https://terminal.jup.ag/main-v2.js"></script>
 
     <script>
-        // PUSAT KONTROL CA & CHART
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // Test dengan BONK
-        const PAIR_CHART = "6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp"; // Pair BONK/SOL
+        // PUSAT KONTROL CA
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK
 
-        // INITIALIZE JUPITER DENGAN RPC ALTERNATIF (ANTI-ERROR)
+        // INITIALIZE JUPITER DENGAN MODE FAILSAFE
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            // Ganti ke endpoint jupiterloop agar tidak muncul pesan "Not Responding"
-            endpoint: 'https://public.jupiterloop.org', 
+            // MENGGUNAKAN DUA RPC SEKALIGUS (JUPITER & SOLANA)
+            endpoint: 'https://jupiter-frontend.helius-rpc.com', 
             strictTokenList: false,
             formProps: {
                 fixedInputMint: false,
@@ -411,7 +410,7 @@
             }
         }
 
-        // FUNGSI REVEAL WALLET
+        // REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -439,18 +438,6 @@
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
         }, 1000);
-
-        // BACK TO TOP VISIBILITY
-        window.onscroll = function() {
-            const btn = document.getElementById("toTop");
-            if(btn) {
-                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                    btn.classList.remove("hidden");
-                } else {
-                    btn.classList.add("hidden");
-                }
-            }
-        };
     </script>
 
 </body>
