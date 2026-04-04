@@ -213,8 +213,7 @@
     </div>
 </section>
 
-
-        <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
+       <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
         
         <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
@@ -376,19 +375,20 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-                    <script src="https://terminal.jup.ag/main-v2.js"></script>
+                       <script src="https://terminal.jup.ag/main-v2.js"></script>
 
     <script>
         // PUSAT KONTROL CA
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; 
 
-        // INITIALIZE JUPITER DENGAN MODE FAILSAFE
+        // INITIALIZE JUPITER - OPTIMIZED VERSION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            // MENGGUNAKAN DUA RPC SEKALIGUS (JUPITER & SOLANA)
-            endpoint: 'https://jupiter-frontend.helius-rpc.com', 
-            strictTokenList: false,
+            // MENGGUNAKAN ENDPOINT PREMIUM HELIUS UNTUK KECEPATAN MAKSIMAL
+            endpoint: 'https://mainnet.helius-rpc.com/?api-key=00000000-0000-0000-0000-000000000000', 
+            strictTokenList: false, // Agar token baru langsung terdeteksi
+            defaultExplorer: "Solscan",
             formProps: {
                 fixedInputMint: false,
                 fixedOutputMint: true,
@@ -396,16 +396,16 @@
             },
         });
 
-        // FUNGSI COPY CA
+        // FUNGSI COPY CA - DENGAN FEEDBACK VISUAL
         function copyCA() {
             navigator.clipboard.writeText(CA_KITA);
             const btnText = document.getElementById('ca-text');
             if(btnText) {
-                btnText.innerText = "CA Copied!";
-                btnText.classList.add('text-green-400');
+                btnText.innerText = "CA Copied! 🚀";
+                btnText.style.color = "#4ade80"; 
                 setTimeout(() => {
                     btnText.innerText = "Copy Contract Address";
-                    btnText.classList.remove('text-green-400');
+                    btnText.style.color = "";
                 }, 2000);
             }
         }
@@ -426,19 +426,41 @@
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            if(document.getElementById("days")) {
-                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(timer);
+                return;
             }
+
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
+
+        // AUTO-COUNTER UNTUK SUPPLY
+        const supplyCount = document.getElementById('supply-count');
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                let start = 0;
+                let end = 1000000000;
+                let duration = 2000;
+                let startTime = null;
+
+                function animate(currentTime) {
+                    if (!startTime) startTime = currentTime;
+                    let progress = currentTime - startTime;
+                    let run = Math.min(Math.floor(start + (end - start) * (progress / duration)), end);
+                    supplyCount.innerText = run.toLocaleString();
+                    if (progress < duration) requestAnimationFrame(animate);
+                }
+                requestAnimationFrame(animate);
+                observer.unobserve(supplyCount);
+            }
+        });
+        observer.observe(supplyCount);
     </script>
+
 
 </body>
 </html>
