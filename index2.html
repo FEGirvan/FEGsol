@@ -386,7 +386,8 @@
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             // MENGGUNAKAN ENDPOINT PREMIUM HELIUS UNTUK KECEPATAN MAKSIMAL
-            endpoint: 'https://mainnet.helius-rpc.com/?api-key=00000000-0000-0000-0000-000000000000', 
+            endpoint: 'https://api.mainnet-beta.solana.com',
+
             strictTokenList: false, // Agar token baru langsung terdeteksi
             defaultExplorer: "Solscan",
             formProps: {
@@ -409,6 +410,14 @@
                 }, 2000);
             }
         }
+window.onscroll = function() {
+    const btn = document.getElementById("toTop");
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        btn.classList.remove("hidden");
+    } else {
+        btn.classList.add("hidden");
+    }
+};
 
         // REVEAL WALLET LOGIC
         function revealWallet(id) {
