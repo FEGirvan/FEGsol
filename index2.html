@@ -376,18 +376,18 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-        <script src="https://terminal.jup.ag/main-v2.js"></script>
+            <script src="https://terminal.jup.ag/main-v2.js"></script>
 
     <script>
-        // PUSAT KONTROL (GANTI DI SINI SAJA)
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK untuk Tes
+        // PUSAT KONTROL CA & CHART
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // Menggunakan CA BONK untuk testing
         const PAIR_CHART = "6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp"; // Pair BONK/SOL
 
-        // 1. INITIALIZE JUPITER SWAP
+        // 2. INITIALIZE JUPITER (DENGAN RPC STABIL)
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            endpoint: 'https://base-rpc.jup.ag', // RPC Stabil
+            endpoint: 'https://base-rpc.jup.ag', // RPC ini lebih stabil dibanding api.mainnet-beta
             strictTokenList: false,
             formProps: {
                 fixedInputMint: false,
@@ -396,7 +396,7 @@
             },
         });
 
-        // 2. COPY CONTRACT FUNCTION
+        // 3. FUNGSI COPY CA (OTOMATIS AMBIL DARI CA_KITA)
         function copyCA() {
             navigator.clipboard.writeText(CA_KITA);
             const btnText = document.getElementById('ca-text');
@@ -410,23 +410,22 @@
             }
         }
 
-        // 3. REVEAL WALLET LOGIC
+        // 4. REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
             allWallets.forEach(walletId => {
-                const walletEl = document.getElementById(walletId);
-                if(walletId !== id && walletEl) walletEl.classList.add('hidden');
+                const w = document.getElementById(walletId);
+                if(walletId !== id && w) w.classList.add('hidden');
             });
             if(el) el.classList.toggle('hidden');
         }
 
-        // 4. COUNTDOWN TIMER (Launch: April 23, 2026)
+        // 5. COUNTDOWN TIMER (Launch: April 23, 2026)
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
-            
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -438,15 +437,14 @@
                 document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
-
             if (distance < 0) {
                 clearInterval(timer);
-                const timerContainer = document.getElementById("days")?.parentElement?.parentElement;
-                if(timerContainer) timerContainer.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>FEGsol is Live!</h2>";
+                const container = document.getElementById("days")?.parentElement?.parentElement;
+                if(container) container.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce text-center w-full'>FEGsol is Live!</h2>";
             }
         }, 1000);
 
-        // 5. BACK TO TOP BUTTON VISIBILITY
+        // 6. BACK TO TOP VISIBILITY
         window.onscroll = function() {
             const btn = document.getElementById("toTop");
             if(btn) {
