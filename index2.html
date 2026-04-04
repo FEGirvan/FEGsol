@@ -204,16 +204,16 @@
     </section>
 
     <section id="chart" class="py-12 px-6 max-w-6xl mx-auto">
-    <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
-    <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
-        <iframe 
-            src="https://dexscreener.com/solana/6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp?embed=1&theme=dark&trades=0&info=0" 
-            style="width:100%; height:600px; border:none; border-radius:10px;">
-        </iframe>
-    </div>
-</section>
+        <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
+        <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+            <iframe 
+                src="https://dexscreener.com/solana/8u9w9z3mX9KkndP6S4uVf4gYJ5yF7aGv7PjG2FqKpump?embed=1&theme=dark&trades=0&info=0" 
+                style="width:100%; height:600px; border:none; border-radius:10px;">
+            </iframe>
+        </div>
+    </section>
 
-       <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
         
         <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
@@ -375,101 +375,109 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-                       <script src="https://terminal.jup.ag/main-v2.js"></script>
+    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
-        // PUSAT KONTROL CA
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; 
+        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-        // INITIALIZE JUPITER - OPTIMIZED VERSION
+        // JUPITER TERMINAL INITIALIZATION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            // MENGGUNAKAN ENDPOINT PREMIUM HELIUS UNTUK KECEPATAN MAKSIMAL
             endpoint: 'https://api.mainnet-beta.solana.com',
-
-            strictTokenList: false, // Agar token baru langsung terdeteksi
-            defaultExplorer: "Solscan",
+            strictTokenList: false,
             formProps: {
                 fixedInputMint: false,
                 fixedOutputMint: true,
-                outputMint: CA_KITA,
+                outputMint: CA_KITA, // Otomatis ke BONK
             },
+            containerClassName: 'hide-jupiter-button', 
         });
 
-        // FUNGSI COPY CA - DENGAN FEEDBACK VISUAL
-        function copyCA() {
-            navigator.clipboard.writeText(CA_KITA);
-            const btnText = document.getElementById('ca-text');
-            if(btnText) {
-                btnText.innerText = "CA Copied! 🚀";
-                btnText.style.color = "#4ade80"; 
-                setTimeout(() => {
-                    btnText.innerText = "Copy Contract Address";
-                    btnText.style.color = "";
-                }, 2000);
-            }
-        }
-window.onscroll = function() {
-    const btn = document.getElementById("toTop");
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-        btn.classList.remove("hidden");
-    } else {
-        btn.classList.add("hidden");
-    }
-};
 
         // REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
             allWallets.forEach(walletId => {
-                const w = document.getElementById(walletId);
-                if(walletId !== id && w) w.classList.add('hidden');
+                if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
             });
-            if(el) el.classList.toggle('hidden');
+            el.classList.toggle('hidden');
         }
 
-        // COUNTDOWN TIMER (Launch: April 23, 2026)
+        // BACK TO TOP VISIBILITY
+        window.onscroll = function() {
+            const btn = document.getElementById("toTop");
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        };
+
+        // MENU MOBILE LOGIC
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        if(menuBtn) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+        }
+        document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
+
+        // COUNTDOWN TIMER
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
-            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if(document.getElementById("days")) {
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            }
             if (distance < 0) {
                 clearInterval(timer);
-                return;
+                if(document.getElementById("days")) {
+                    document.getElementById("days").parentElement.parentElement.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
+                }
             }
-
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }, 1000);
 
-        // AUTO-COUNTER UNTUK SUPPLY
+        // COUNTER ANIMATION
         const supplyCount = document.getElementById('supply-count');
+        const target = +supplyCount.getAttribute('data-target');
+        const updateCount = () => {
+            const current = +supplyCount.innerText.replace(/,/g, '');
+            const increment = target / 100;
+            if (current < target) {
+                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
+                setTimeout(updateCount, 20);
+            } else { supplyCount.innerText = target.toLocaleString(); }
+        };
         const observer = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting) {
-                let start = 0;
-                let end = 1000000000;
-                let duration = 2000;
-                let startTime = null;
-
-                function animate(currentTime) {
-                    if (!startTime) startTime = currentTime;
-                    let progress = currentTime - startTime;
-                    let run = Math.min(Math.floor(start + (end - start) * (progress / duration)), end);
-                    supplyCount.innerText = run.toLocaleString();
-                    if (progress < duration) requestAnimationFrame(animate);
-                }
-                requestAnimationFrame(animate);
-                observer.unobserve(supplyCount);
-            }
-        });
+            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+        }, { threshold: 0.5 });
         observer.observe(supplyCount);
+
+
+        // COPY CA
+        function copyCA() {
+            navigator.clipboard.writeText(CA_KITA);
+            const btnText = document.getElementById('ca-text');
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
+        }
     </script>
-
-
 </body>
 </html>
