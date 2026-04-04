@@ -7,6 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+                /* CSS Paksa untuk Menghilangkan Tombol Besar */
+        div[class*="hide-jupiter-button"] button.w-full.flex.items-center.justify-center,
+        #integrated-terminal button.w-full.flex.items-center.justify-center {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            padding: 0 !important;
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
         body {
@@ -43,7 +52,7 @@
         }
 
         .ape-glow {
-            filter: drop-shadow(0 0-25px rgba(168, 85, 247, 0.5));
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
             border: 2px solid rgba(168, 85, 247, 0.3);
         }
 
@@ -62,6 +71,17 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0b; }
         ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
+
+                /* Kode untuk menyembunyikan tombol Connect Wallet besar */
+        #integrated-terminal button.w-full.flex.items-center.justify-center {
+            display: none !important;
+        }
+
+        /* Opsional: Membuat widget Jupiter lebih menyatu dengan background */
+        #integrated-terminal {
+            background-color: transparent !important;
+        }
+
     </style>
 </head>
 <body>
@@ -81,12 +101,29 @@
                 </button>
                 
                 <div id="mobile-menu" class="absolute right-0 mt-3 w-64 glass-morphism overflow-hidden hidden transition-all duration-300 z-[100] bg-[#0a0a0b]/95 border border-purple-500/30 shadow-2xl">
-                    <div class="px-6 py-3 bg-purple-900/20 border-b border-white/5 text-[10px] font-orbitron text-purple-400 uppercase tracking-widest font-bold">
-                        <i class="fas fa-rocket mr-2"></i> Project Status
+                    <div class="px-6 py-3 bg-purple-900/20 border-b border-white/5">
+                        <p class="text-[10px] font-orbitron text-purple-400 uppercase tracking-widest font-bold">
+                            <i class="fas fa-rocket mr-2"></i> Project Status
+                        </p>
                     </div>
+
+                    <div class="px-6 py-4 space-y-3 border-b border-white/5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] text-gray-400 font-orbitron uppercase">Stage</span>
+                            <span class="text-[10px] text-white font-bold font-orbitron">FAIR LAUNCH</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] text-gray-400 font-orbitron uppercase">Banana Farm</span>
+                            <a href="farm.html" class="text-[10px] text-yellow-400 font-bold font-orbitron italic hover:text-yellow-200 transition-all duration-300 animate-pulse">
+                                OPEN APP <i class="fas fa-external-link-alt ml-1 text-[8px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
                     <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 border-b border-white/5 text-white">
                         <i class="fas fa-book-open mr-3 text-purple-400"></i> Our Story
                     </a>
+
                     <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 font-bold text-blue-400">
                         <i class="fab fa-telegram-plane mr-3"></i> Join Community
                     </a>
@@ -126,154 +163,282 @@
                     <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-400">Secs</span>
                 </div>
             </div>
+            <p class="mt-4 text-[9px] font-orbitron text-gray-600 tracking-widest uppercase">Official Launch: April 23, 2026</p>
         </div>
 
+        <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
+            FEGsol is a high-performance ecosystem on Solana built for the strongest community. Quality first, chart second.
+        </p>
+
         <div class="flex flex-col gap-3 w-full max-w-xs mb-8">
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center shadow-lg">
-                Join Community
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center">
+                Join the Raid
             </a>
             <button onclick="copyCA()" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition group">
                 <span id="ca-text">Copy Contract Address</span>
                 <i class="fas fa-copy ml-2 text-purple-400 group-hover:scale-110 transition"></i>
             </button>
         </div>
-    </section>
 
-    <section id="chart" class="py-12 px-6 max-w-6xl mx-auto">
-        <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
-        <div class="glass-morphism p-2 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
-            <iframe 
-                src="https://dexscreener.com/solana/6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp?embed=1&theme=dark&trades=0&info=0" 
-                style="width:100%; height:600px; border:none; border-radius:10px;">
-            </iframe>
+        <div class="w-full max-w-4xl py-8 opacity-60 hover:opacity-100 transition-opacity duration-500 border-t border-white/5 mt-4">
+            <p class="text-[8px] font-orbitron text-gray-500 uppercase tracking-[0.3em] mb-6 text-center">Verified Ecosystem</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 px-6">
+                <a href="https://dexscreener.com" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-chart-line text-xl text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Chart</span>
+                </a>
+                <a href="https://jup.ag" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-random text-xl text-gray-400 group-hover:text-green-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Swap</span>
+                </a>
+                <a href="https://solscan.io" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-search text-xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Scan</span>
+                </a>
+                <a href="https://pump.fun" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-pills text-xl text-gray-400 group-hover:text-yellow-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Launch</span>
+                </a>
+            </div>
         </div>
     </section>
 
-    <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
+    <section id="chart" class="py-12 px-6 max-w-6xl mx-auto">
+    <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
+    <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+        <iframe 
+            src="https://dexscreener.com/solana/6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp?embed=1&theme=dark&trades=0&info=0" 
+            style="width:100%; height:600px; border:none; border-radius:10px;">
+        </iframe>
+    </div>
+</section>
+
+
+        <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
-        <div class="glass-morphism p-8 space-y-8 mb-10">
+        
+        <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
-                <span class="text-gray-400 font-orbitron text-[10px] uppercase tracking-[0.2em]">Total Supply</span>
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
                 <div class="text-right">
                     <div id="supply-count" data-target="1000000000" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
-                    <div class="text-purple-500 font-bold font-orbitron text-xs mt-1">$FEGSOL</div>
+                    <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
             </div>
+
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
-                <span class="text-gray-400 font-orbitron text-[10px] uppercase tracking-[0.2em]">Fair Launch</span>
-                <span class="text-white font-bold font-orbitron text-sm uppercase tracking-tighter">100% ORGANIC</span>
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Fair Launch</span>
+                <div class="text-right">
+                    <div class="text-white font-bold font-orbitron text-sm md:text-xl uppercase tracking-tighter text-nowrap">100% ORGANIK</div>
+                    <div class="text-gray-500 font-orbitron text-[9px] uppercase tracking-widest mt-1">(PUMP.FUN)</div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em] leading-relaxed">Buyback &<br>Burn</span>
+                <div class="text-right">
+                    <div class="text-yellow-400 font-bold font-orbitron text-sm md:text-xl uppercase tracking-tight">PHASE 2</div>
+                    <div class="text-yellow-500/70 font-orbitron text-[9px] uppercase tracking-widest mt-1">INITIATIVE</div>
+                </div>
+            </div>
+
+            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20 shadow-inner">
+                <div class="flex justify-between items-end mb-4">
+                    <div class="flex flex-col">
+                        <span class="text-[9px] font-orbitron text-purple-400 uppercase tracking-[0.2em] mb-1">Circulating</span>
+                        <span class="text-xs font-bold font-orbitron text-white uppercase tracking-widest">Scarcity</span>
+                    </div>
+                    <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">0% BURNED</span>
+                </div>
+                <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px] border border-white/5">
+                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="width: 1%"></div>
+                </div>
+                <p class="mt-4 text-[8px] text-gray-500 font-orbitron uppercase text-center tracking-[0.3em] italic opacity-80">Monthly Burn Schedule: <span class="text-green-400">ACTIVE</span></p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition group">
-                <div class="font-orbitron text-[10px] text-blue-400 uppercase tracking-widest flex flex-col items-center gap-2">
-                    <i class="fas fa-bullhorn text-sm"></i><span>Marketing</span>
+            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-blue-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-bullhorn text-sm group-hover:scale-110 transition"></i>
+                    <span>Marketing Fund</span>
                 </div>
-                <div id="marketing-addr" class="hidden mt-4 pt-4 border-t border-white/5 text-[9px] text-blue-200/70 break-all bg-blue-900/30 p-3 rounded-lg">D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt</div>
+                <div id="marketing-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-blue-200/70 break-all font-mono bg-blue-900/30 p-3 rounded-lg border border-blue-500/20">
+                        D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt
+                    </p>
+                </div>
             </button>
-            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition group">
-                <div class="font-orbitron text-[10px] text-red-400 uppercase tracking-widest flex flex-col items-center gap-2">
-                    <i class="fas fa-fire text-sm"></i><span>Burn</span>
+
+            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-red-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-fire text-sm group-hover:scale-110 transition"></i>
+                    <span>Burn Queue</span>
                 </div>
-                <div id="burn-addr" class="hidden mt-4 pt-4 border-t border-white/5 text-[9px] text-red-200/70 break-all bg-red-900/30 p-3 rounded-lg">92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T</div>
+                <div id="burn-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-red-200/70 break-all font-mono bg-red-900/30 p-3 rounded-lg border border-red-500/20">
+                        92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T
+                    </p>
+                </div>
             </button>
-            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition group">
-                <div class="font-orbitron text-[10px] text-purple-400 uppercase tracking-widest flex flex-col items-center gap-2">
-                    <i class="fas fa-code text-sm"></i><span>Developer</span>
+
+            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-purple-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-code text-sm group-hover:scale-110 transition"></i>
+                    <span>Developer Wallet</span>
                 </div>
-                <div id="dev-addr" class="hidden mt-4 pt-4 border-t border-white/5 text-[9px] text-purple-200/70 break-all bg-purple-900/30 p-3 rounded-lg">DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93</div>
+                <div id="dev-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-3 rounded-lg border border-purple-500/20">
+                        DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93
+                    </p>
+                </div>
             </button>
         </div>
     </section>
 
+
     <section id="swap" class="py-20 px-6">
-        <div class="max-w-2xl mx-auto text-center">
+        <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
-            <div class="glass-morphism p-2 rounded-3xl border border-purple-500/30 shadow-2xl overflow-hidden bg-black/20" style="min-height: 550px;">
-                <iframe
-                    src="https://raydium.io/swap/?inputMint=sol&outputMint=DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"
-                    style="width: 100%; height: 550px; border: none; border-radius: 20px;"
-                    allow="payment; clipboard-read; clipboard-write"
-                ></iframe>
+            <div id="integrated-terminal" class="shadow-2xl shadow-purple-900/20 relative z-10"></div>
+            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Terminal</p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-purple-900/50">Verified</div>
+                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>.
+                </p>
             </div>
-            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Trade instantly via Raydium Liquidity</p>
+            <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
+                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions.
+                </p>
+            </div>
+            <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
+                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    A community-driven movement where every <span class="text-white font-bold">Ape</span> has a voice.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Roadmap</h2>
+            <div class="space-y-6">
+                <div class="roadmap-card p-6 rounded-r-xl">
+                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
+                    <h4 class="text-xl font-bold mb-2">Foundation</h4>
+                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
+                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
+                    <h4 class="text-xl font-bold mb-2">Launch</h4>
+                    <p class="text-gray-400 text-xs">Fair Launch on Pump.fun, Global Marketing, CMC/CG Listings.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
+                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
+                    <h4 class="text-xl font-bold mb-2">Expansion</h4>
+                    <p class="text-gray-400 text-xs">Banana Farm (Staking), DAO Governance, Tier-1 CEX.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 text-3xl"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 text-3xl"><i class="fab fa-telegram"></i></a>
+            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 text-3xl hover:scale-125">
+                <i class="fas fa-file-alt"></i>
+            </a>
         </div>
-        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em]">FEGSOL &copy; 2026</p>
+        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
+        <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
-    <script>
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // Test CA (BONK)
+    <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 backdrop-blur-md hidden hover:bg-purple-500 transition-all shadow-lg shadow-purple-900/50">
+        <i class="fas fa-arrow-up text-white"></i>
+    </button>
 
-        // 1. COPY CA
+                    <script src="https://terminal.jup.ag/main-v2.js"></script>
+
+    <script>
+        // PUSAT KONTROL CA
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK
+
+        // INITIALIZE JUPITER DENGAN MODE FAILSAFE
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            // MENGGUNAKAN DUA RPC SEKALIGUS (JUPITER & SOLANA)
+            endpoint: 'https://jupiter-frontend.helius-rpc.com', 
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_KITA,
+            },
+        });
+
+        // FUNGSI COPY CA
         function copyCA() {
             navigator.clipboard.writeText(CA_KITA);
             const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
+            if(btnText) {
+                btnText.innerText = "CA Copied!";
+                btnText.classList.add('text-green-400');
+                setTimeout(() => {
+                    btnText.innerText = "Copy Contract Address";
+                    btnText.classList.remove('text-green-400');
+                }, 2000);
+            }
         }
 
-        // 2. REVEAL WALLET
+        // REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
             allWallets.forEach(walletId => {
-                if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+                const w = document.getElementById(walletId);
+                if(walletId !== id && w) w.classList.add('hidden');
             });
-            el.classList.toggle('hidden');
+            if(el) el.classList.toggle('hidden');
         }
 
-        // 3. COUNTDOWN
+        // COUNTDOWN TIMER (Launch: April 23, 2026)
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-        setInterval(function() {
+        const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+            if(document.getElementById("days")) {
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            }
         }, 1000);
-
-        // 4. COUNTER ANIMATION
-        const supplyCount = document.getElementById('supply-count');
-        const target = +supplyCount.getAttribute('data-target');
-        const updateCount = () => {
-            const current = +supplyCount.innerText.replace(/,/g, '');
-            const increment = target / 100;
-            if (current < target) {
-                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
-                setTimeout(updateCount, 20);
-            } else { supplyCount.innerText = target.toLocaleString(); }
-        };
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-        }, { threshold: 0.5 });
-        observer.observe(supplyCount);
-
-        // 5. MOBILE MENU
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
-        });
-        document.addEventListener('click', () => { menu.classList.add('hidden'); });
     </script>
+
 </body>
 </html>
