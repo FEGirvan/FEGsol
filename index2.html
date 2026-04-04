@@ -297,13 +297,21 @@
     </section>
 
 
-    <section id="swap" class="py-20 px-6">
-        <div class="max-w-md mx-auto text-center">
-            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
-            <div id="integrated-terminal" class="shadow-2xl shadow-purple-900/20 relative z-10"></div>
-            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Terminal</p>
-        </div>
-    </section>
+    <section id="swap" class="py-12 px-6 max-w-4xl mx-auto">
+    <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
+    <div class="glass-morphism p-8 text-center border-2 border-purple-500/30">
+        <img src="https://jup.ag/svg/jupiter-logo.svg" class="w-16 mx-auto mb-4" alt="Jupiter">
+        <h3 class="text-xl font-bold mb-2">Swap via Jupiter</h3>
+        <p class="text-gray-400 mb-6">Trade safely using the most liquidity on Solana</p>
+        
+        <a href="https://jup.ag/swap/SOL-DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4" 
+           target="_blank" 
+           class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_20px_rgba(124,58,237,0.5)]">
+           Open Swap Terminal
+        </a>
+    </div>
+</section>
+
 
     <section class="py-20 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -376,25 +384,9 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-                    <script src="https://terminal.jup.ag/main-v2.js"></script>
-
     <script>
         // PUSAT KONTROL CA
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK
-
-        // INITIALIZE JUPITER DENGAN MODE FAILSAFE
-        window.Jupiter.init({
-            displayMode: 'integrated',
-            integratedTargetId: 'integrated-terminal',
-            // MENGGUNAKAN DUA RPC SEKALIGUS (JUPITER & SOLANA)
-            endpoint: 'https://jupiter-frontend.helius-rpc.com', 
-            strictTokenList: false,
-            formProps: {
-                fixedInputMint: false,
-                fixedOutputMint: true,
-                outputMint: CA_KITA,
-            },
-        });
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // BONK
 
         // FUNGSI COPY CA
         function copyCA() {
@@ -439,6 +431,7 @@
             }
         }, 1000);
     </script>
+
 
 </body>
 </html>
