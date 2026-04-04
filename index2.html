@@ -378,18 +378,21 @@
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
+        // MASUKKAN CA DARI PUMP.FUN DISINI SETELAH LAUNCH
+const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI"; 
+
         // JUPITER TERMINAL INITIALIZATION (Cukup pasang satu ini saja)
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             endpoint: 'https://api.mainnet-beta.solana.com',
             strictTokenList: false,
-            formProps: {
-                fixedInputMint: true,
-                fixedOutputMint: false,
-            },
-            containerClassName: 'hide-jupiter-button', 
-        });
+                    formProps: {
+            fixedInputMint: false, 
+            fixedOutputMint: true,
+            outputMint: CA_FEGSOL, // <--- Ganti jadi ini
+        },
+
 
 
         // REVEAL WALLET LOGIC
@@ -462,11 +465,13 @@
         }, { threshold: 0.5 });
         observer.observe(supplyCount);
 
+const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI";
 
         // COPY CA
         function copyCA() {
-            const ca = "ALAMAT_CONTRACT_KAMU_NANTI"; 
-            navigator.clipboard.writeText(ca);
+    const ca = CA_FEGSOL; // <--- Cukup tulis ini saja
+    navigator.clipboard.writeText(ca);
+
             const btnText = document.getElementById('ca-text');
             btnText.innerText = "CA Copied!";
             btnText.classList.add('text-green-400');
