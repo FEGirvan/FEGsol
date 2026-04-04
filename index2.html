@@ -376,110 +376,88 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
+        <script src="https://terminal.jup.ag/main-v2.js"></script>
 
     <script>
-        // PUSAT KONTROL CA (GANTI DI SINI SAJA)
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
+        // PUSAT KONTROL (GANTI DI SINI SAJA)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // CA BONK untuk Tes
+        const PAIR_CHART = "6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp"; // Pair BONK/SOL
 
-        // JUPITER TERMINAL INITIALIZATION
+        // 1. INITIALIZE JUPITER SWAP
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            endpoint: 'https://base-rpc.jup.ag', // Menggunakan RPC Jupiter agar stabil
+            endpoint: 'https://base-rpc.jup.ag', // RPC Stabil
             strictTokenList: false,
             formProps: {
                 fixedInputMint: false,
                 fixedOutputMint: true,
                 outputMint: CA_KITA,
             },
-            containerClassName: 'hide-jupiter-button', 
         });
 
+        // 2. COPY CONTRACT FUNCTION
+        function copyCA() {
+            navigator.clipboard.writeText(CA_KITA);
+            const btnText = document.getElementById('ca-text');
+            if(btnText) {
+                btnText.innerText = "CA Copied!";
+                btnText.classList.add('text-green-400');
+                setTimeout(() => {
+                    btnText.innerText = "Copy Contract Address";
+                    btnText.classList.remove('text-green-400');
+                }, 2000);
+            }
+        }
 
-        // REVEAL WALLET LOGIC
+        // 3. REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
             allWallets.forEach(walletId => {
-                if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+                const walletEl = document.getElementById(walletId);
+                if(walletId !== id && walletEl) walletEl.classList.add('hidden');
             });
-            el.classList.toggle('hidden');
+            if(el) el.classList.toggle('hidden');
         }
 
-        // BACK TO TOP VISIBILITY
-        window.onscroll = function() {
-            const btn = document.getElementById("toTop");
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                btn.classList.remove("hidden");
-            } else {
-                btn.classList.add("hidden");
-            }
-        };
-
-        // MENU MOBILE LOGIC
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-        if(menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menu.classList.toggle('hidden');
-            });
-        }
-        document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
-
-        // COUNTDOWN TIMER
+        // 4. COUNTDOWN TIMER (Launch: April 23, 2026)
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
+            
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
             if(document.getElementById("days")) {
                 document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
                 document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
                 document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
+
             if (distance < 0) {
                 clearInterval(timer);
-                if(document.getElementById("days")) {
-                    document.getElementById("days").parentElement.parentElement.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
-                }
+                const timerContainer = document.getElementById("days")?.parentElement?.parentElement;
+                if(timerContainer) timerContainer.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>FEGsol is Live!</h2>";
             }
         }, 1000);
 
-        // COUNTER ANIMATION
-        const supplyCount = document.getElementById('supply-count');
-        const target = +supplyCount.getAttribute('data-target');
-        const updateCount = () => {
-            const current = +supplyCount.innerText.replace(/,/g, '');
-            const increment = target / 100;
-            if (current < target) {
-                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
-                setTimeout(updateCount, 20);
-            } else { supplyCount.innerText = target.toLocaleString(); }
+        // 5. BACK TO TOP BUTTON VISIBILITY
+        window.onscroll = function() {
+            const btn = document.getElementById("toTop");
+            if(btn) {
+                if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                    btn.classList.remove("hidden");
+                } else {
+                    btn.classList.add("hidden");
+                }
+            }
         };
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-        }, { threshold: 0.5 });
-        observer.observe(supplyCount);
-
-
-        // COPY CA
-        function copyCA() {
-            const ca = CA_KITA; 
-            navigator.clipboard.writeText(ca);
-            const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
-        }
     </script>
+
 </body>
 </html>
