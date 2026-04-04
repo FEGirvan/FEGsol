@@ -376,18 +376,19 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-            <script src="https://terminal.jup.ag/main-v2.js"></script>
+                <script src="https://terminal.jup.ag/main-v2.js"></script>
 
     <script>
         // PUSAT KONTROL CA & CHART
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // Menggunakan CA BONK untuk testing
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // Test dengan BONK
         const PAIR_CHART = "6oFWm7KPLfxnwMb3z5xwBoXNSPP3JJyirAPqPSiVcnsp"; // Pair BONK/SOL
 
-        // 2. INITIALIZE JUPITER (DENGAN RPC STABIL)
+        // INITIALIZE JUPITER DENGAN RPC ALTERNATIF (ANTI-ERROR)
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
-            endpoint: 'https://base-rpc.jup.ag', // RPC ini lebih stabil dibanding api.mainnet-beta
+            // Ganti ke endpoint jupiterloop agar tidak muncul pesan "Not Responding"
+            endpoint: 'https://public.jupiterloop.org', 
             strictTokenList: false,
             formProps: {
                 fixedInputMint: false,
@@ -396,7 +397,7 @@
             },
         });
 
-        // 3. FUNGSI COPY CA (OTOMATIS AMBIL DARI CA_KITA)
+        // FUNGSI COPY CA
         function copyCA() {
             navigator.clipboard.writeText(CA_KITA);
             const btnText = document.getElementById('ca-text');
@@ -410,7 +411,7 @@
             }
         }
 
-        // 4. REVEAL WALLET LOGIC
+        // FUNGSI REVEAL WALLET
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -421,7 +422,7 @@
             if(el) el.classList.toggle('hidden');
         }
 
-        // 5. COUNTDOWN TIMER (Launch: April 23, 2026)
+        // COUNTDOWN TIMER (Launch: April 23, 2026)
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -437,14 +438,9 @@
                 document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
-            if (distance < 0) {
-                clearInterval(timer);
-                const container = document.getElementById("days")?.parentElement?.parentElement;
-                if(container) container.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce text-center w-full'>FEGsol is Live!</h2>";
-            }
         }, 1000);
 
-        // 6. BACK TO TOP VISIBILITY
+        // BACK TO TOP VISIBILITY
         window.onscroll = function() {
             const btn = document.getElementById("toTop");
             if(btn) {
