@@ -378,22 +378,24 @@
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
-        // MASUKKAN CA DARI PUMP.FUN DISINI SETELAH LAUNCH
-const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI"; 
-
-        // JUPITER TERMINAL INITIALIZATION (Cukup pasang satu ini saja)
+        // ==========================================
+        // PUSAT KONTROL CA (GANTI DI SINI SAJA)
+        // ==========================================
+        const CA_FEGSOL = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4"; // <--- SEKARANG SAYA ISI BONK BUAT TES
+        
+        // JUPITER TERMINAL INITIALIZATION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             endpoint: 'https://api.mainnet-beta.solana.com',
             strictTokenList: false,
-                    formProps: {
-            fixedInputMint: false, 
-            fixedOutputMint: true,
-            outputMint: CA_FEGSOL, // <--- Ganti jadi ini
-        },
-
-
+            formProps: {
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_FEGSOL, // <--- OTOMATIS CONNECT KE ATAS
+            },
+            containerClassName: 'hide-jupiter-button', 
+        });
 
         // REVEAL WALLET LOGIC
         function revealWallet(id) {
@@ -408,9 +410,9 @@ const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI";
         // BACK TO TOP VISIBILITY
         window.onscroll = function() {
             const btn = document.getElementById("toTop");
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            if (btn && (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500)) {
                 btn.classList.remove("hidden");
-            } else {
+            } else if (btn) {
                 btn.classList.add("hidden");
             }
         };
@@ -451,34 +453,35 @@ const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI";
 
         // COUNTER ANIMATION
         const supplyCount = document.getElementById('supply-count');
-        const target = +supplyCount.getAttribute('data-target');
-        const updateCount = () => {
-            const current = +supplyCount.innerText.replace(/,/g, '');
-            const increment = target / 100;
-            if (current < target) {
-                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
-                setTimeout(updateCount, 20);
-            } else { supplyCount.innerText = target.toLocaleString(); }
-        };
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-        }, { threshold: 0.5 });
-        observer.observe(supplyCount);
-
-const CA_FEGSOL = "ALAMAT_CONTRACT_KAMU_NANTI";
+        if(supplyCount) {
+            const target = +supplyCount.getAttribute('data-target');
+            const updateCount = () => {
+                const current = +supplyCount.innerText.replace(/,/g, '');
+                const increment = target / 100;
+                if (current < target) {
+                    supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
+                    setTimeout(updateCount, 20);
+                } else { supplyCount.innerText = target.toLocaleString(); }
+            };
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+            }, { threshold: 0.5 });
+            observer.observe(supplyCount);
+        }
 
         // COPY CA
         function copyCA() {
-    const ca = CA_FEGSOL; // <--- Cukup tulis ini saja
-    navigator.clipboard.writeText(ca);
-
+            const ca = CA_FEGSOL; // <--- OTOMATIS AMBIL DARI PUSAT KONTROL
+            navigator.clipboard.writeText(ca);
             const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
+            if(btnText) {
+                btnText.innerText = "CA Copied!";
+                btnText.classList.add('text-green-400');
+                setTimeout(() => {
+                    btnText.innerText = "Copy Contract Address";
+                    btnText.classList.remove('text-green-400');
+                }, 2000);
+            }
         }
     </script>
 </body>
