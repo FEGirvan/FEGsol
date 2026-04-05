@@ -379,26 +379,28 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-       <script src="https://terminal.jup.ag/main-v2.js"></script>
+    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
     <script>
-        // PAKAI CA BONK YANG BARU KAMU KIRIM
-        const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
+        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
         // JUPITER TERMINAL INITIALIZATION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             endpoint: 'https://api.mainnet-beta.solana.com',
-            strictTokenList: false, // Penting agar token baru bisa muncul
+            strictTokenList: false,
             formProps: {
-                initialInputMint: "So11111111111111111111111111111111111111112", // Mulai dari SOL
-                initialOutputMint: CA_KITA, // Tujuan otomatis ke BONK/FEGsol
-                fixedOutputMint: true, // User tidak bisa ganti token tujuan (opsional)
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_KITA, // Otomatis ke BONK
             },
+            containerClassName: 'hide-jupiter-button', 
         });
 
-        // REVEAL WALLET LOGIC (Tetap sama)
+
+        // REVEAL WALLET LOGIC
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -408,7 +410,68 @@
             el.classList.toggle('hidden');
         }
 
-        // COPY CA (Menggunakan CA_KITA yang sudah diupdate)
+        // BACK TO TOP VISIBILITY
+        window.onscroll = function() {
+            const btn = document.getElementById("toTop");
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        };
+
+        // MENU MOBILE LOGIC
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        if(menuBtn) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+        }
+        document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
+
+        // COUNTDOWN TIMER
+        const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if(document.getElementById("days")) {
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            }
+            if (distance < 0) {
+                clearInterval(timer);
+                if(document.getElementById("days")) {
+                    document.getElementById("days").parentElement.parentElement.innerHTML = "<h2 class='font-orbitron text-xl gold-text uppercase animate-bounce w-full text-center'>Token is Live on Pump.fun!</h2>";
+                }
+            }
+        }, 1000);
+
+        // COUNTER ANIMATION
+        const supplyCount = document.getElementById('supply-count');
+        const target = +supplyCount.getAttribute('data-target');
+        const updateCount = () => {
+            const current = +supplyCount.innerText.replace(/,/g, '');
+            const increment = target / 100;
+            if (current < target) {
+                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
+                setTimeout(updateCount, 20);
+            } else { supplyCount.innerText = target.toLocaleString(); }
+        };
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+        }, { threshold: 0.5 });
+        observer.observe(supplyCount);
+
+
+        // COPY CA
         function copyCA() {
             navigator.clipboard.writeText(CA_KITA);
             const btnText = document.getElementById('ca-text');
@@ -419,9 +482,6 @@
                 btnText.classList.remove('text-green-400');
             }, 2000);
         }
-
-        /* --- Sisa kode Countdown & Counter tetap sama seperti sebelumnya --- */
     </script>
-
 </body>
 </html>
