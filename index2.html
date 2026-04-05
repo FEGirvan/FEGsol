@@ -379,26 +379,25 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script src="https://terminal.jup.ag/main-v2.js"></script>
+    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
-<script>
-    // 2. Gunakan CA BONK yang paling baru kamu kasih
-    const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
+    <script>
+        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-    // 3. JUPITER INITIALIZATION (Satu kali saja di sini)
-    window.Jupiter.init({
-        displayMode: 'integrated',
-        integratedTargetId: 'integrated-terminal',
-        endpoint: 'https://api.mainnet-beta.solana.com',
-        strictTokenList: false,
-        formProps: {
-            initialInputMint: "So11111111111111111111111111111111111111112", 
-            initialOutputMint: CA_KITA, 
-            fixedOutputMint: true,
-        },
-    });
-</script>
-
+        // JUPITER TERMINAL INITIALIZATION
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_KITA, // Otomatis ke BONK
+            },
+            containerClassName: 'hide-jupiter-button', 
+        });
 
 
         // REVEAL WALLET LOGIC
