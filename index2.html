@@ -379,31 +379,26 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script src="https://terminal.jup.ag/main-v3.js"></script>
+    <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
 
-<script>
-    function launchJupiter() {
-        if (window.Jupiter) {
-            window.Jupiter.init({
-                displayMode: 'integrated',
-                integratedTargetId: 'integrated-terminal',
-                // MENGGUNAKAN CLOUD PROVIDER (LEBIH AMAN BUAT GITHUB)
-                endpoint: 'https://api.mainnet-beta.solana.com', 
-                strictTokenList: false,
-                formProps: {
-                    initialInputMint: "So11111111111111111111111111111111111111112", // SOL
-                    initialOutputMint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", // CA BONK/FEGsol
-                    fixedOutputMint: true,
-                },
-            });
-        }
-    }
+    <script>
+        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-    // MEMASTIKAN SCRIPT JUPITER SUDAH TERMUAT SEMPURNA
-    window.onload = function() {
-        setTimeout(launchJupiter, 1500); // Tunggu 1.5 detik biar koneksi stabil
-    };
-</script>
+        // JUPITER TERMINAL INITIALIZATION
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_KITA, // Otomatis ke BONK
+            },
+            containerClassName: 'hide-jupiter-button', 
+        });
+
 
         // REVEAL WALLET LOGIC
         function revealWallet(id) {
