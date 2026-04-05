@@ -385,19 +385,19 @@
         // CONTRACT ADDRESS PLACEHOLDER (BONK)
         const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-        // JUPITER TERMINAL INITIALIZATION
+              // JUPITER TERMINAL INITIALIZATION
         window.Jupiter.init({
             displayMode: 'integrated',
             integratedTargetId: 'integrated-terminal',
             endpoint: 'https://api.mainnet-beta.solana.com',
             strictTokenList: false,
             formProps: {
-                fixedInputMint: false,
-                fixedOutputMint: true,
-                outputMint: CA_KITA, // Otomatis ke BONK
+                initialInputMint: "So11111111111111111111111111111111111111112", // Start dari SOL
+                initialOutputMint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", // CA BONK yang kamu kasih
+                fixedOutputMint: true, // Kunci agar user beli token ini saja
             },
-            containerClassName: 'hide-jupiter-button', 
         });
+
 
 
         // REVEAL WALLET LOGIC
