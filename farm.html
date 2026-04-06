@@ -41,7 +41,6 @@
             background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%); 
         }
 
-        /* Efek Glow untuk APR */
         .apr-glow {
             text-shadow: 0 0 15px rgba(74, 222, 128, 0.6);
             animation: pulse-glow 2s infinite ease-in-out;
@@ -52,7 +51,6 @@
             50% { opacity: 0.8; transform: scale(1.05); }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
     </style>
@@ -63,7 +61,7 @@
 
     <nav class="p-6">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3 group text-white decoration-0 no-underline">
+            <a href="index.html" class="flex items-center space-x-3 group no-underline text-white">
                 <img src="G.PNG" alt="Logo" class="w-10 h-10 rounded-full border border-purple-500 group-hover:rotate-12 transition-transform">
                 <span class="font-orbitron text-xl font-bold uppercase tracking-tighter">FEG<span class="text-purple-500">SOL</span></span>
             </a>
@@ -107,7 +105,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-auto flex flex-col gap-4">
-                    <button id="stake-btn" class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest active:scale-95">
+                    <button id="stake-btn" class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest active:scale-95 text-white">
                         Stake Now
                     </button>
                     <button id="unstake-btn" class="w-full md:w-48 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-xl font-orbitron text-[10px] transition duration-300 uppercase active:scale-95 text-gray-400">
@@ -115,10 +113,9 @@
                     </button>
                 </div>
             </div>
-            
             <div class="mt-8 pt-6 border-t border-white/5">
-                <p class="text-[10px] text-center text-gray-500 font-orbitron italic uppercase tracking-tighter">
-                    Note: Staked tokens are locked until the Raydium migration is complete.
+                <p class="text-[10px] text-center text-gray-500 font-orbitron italic uppercase tracking-tighter leading-relaxed">
+                    Note: Staking pools will be officially deployed following the successful migration to Raydium.
                 </p>
             </div>
         </div>
@@ -129,12 +126,56 @@
     </footer>
 
     <script>
-        // 1. NOTIFICATION SYSTEM
-        function showNotice(title, text, type = 'info') {
+        const TELEGRAM_LINK = "Https://t.me/+16oraMVw88w3MmU9";
+
+        function showNoticeWithRedirect(title, text, type = 'info') {
             Swal.fire({
                 title: title,
                 text: text,
                 icon: type,
+                showCancelButton: true,
+                confirmButtonText: 'Join Telegram',
+                cancelButtonText: 'Close',
+                background: '#0a0a0b',
+                color: '#ffffff',
+                confirmButtonColor: '#22c55e',
+                customClass: {
+                    popup: 'glass-morphism border border-purple-500/30 font-orbitron'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(TELEGRAM_LINK, '_blank');
+                }
+            });
+        }
+
+        document.getElementById('connect-wallet').onclick = () => {
+            showNoticeWithRedirect('Wallet Integration', 'Solana Wallet integration will be activated after our official launch. Join our Telegram for the latest updates!');
+        };
+
+        document.getElementById('stake-btn').onclick = () => {
+            showNoticeWithRedirect('Banana Farm Locked!', 'Staking rewards will go live once we migrate to Raydium. Join the community to get notified!');
+        };
+
+        document.getElementById('unstake-btn').onclick = () => {
+            Swal.fire({
+                title: 'No Stake Found',
+                text: 'You do not have any active stakes at the moment.',
+                icon: 'error',
+                background: '#0a0a0b',
+                color: '#ffffff',
+                confirmButtonColor: '#9333ea',
+                customClass: {
+                    popup: 'glass-morphism border border-purple-500/30 font-orbitron'
+                }
+            });
+        };
+
+        function maxAmount() {
+            Swal.fire({
+                title: 'Insufficient Balance',
+                text: 'Your $FEGSOL balance is empty. Purchase tokens after the launch on April 23!',
+                icon: 'warning',
                 background: '#0a0a0b',
                 color: '#ffffff',
                 confirmButtonColor: '#9333ea',
@@ -144,53 +185,12 @@
             });
         }
 
-        // 2. BUTTON LOGIC
-        document.getElementById('connect-wallet').onclick = () => {
-            showNotice('Wallet Integration', 'Solana Wallet integration (Phantom/Solflare) will be activated after our official launch on April 23!', 'warning');
-        };
-
-        document.getElementById('stake-btn').onclick = () => {
-            const val = document.getElementById('stake-input').value;
-            // Kita arahkan ke Telegram atau X agar mereka join komunitas
-            Swal.fire({
-                title: 'Banana Farm Locked!',
-                text: 'Staking opens after Raydium migration. Join our community for updates!',
-                icon: 'lock',
-                showCancelButton: true,
-                confirmButtonText: 'Join Community',
-                cancelButtonText: 'Close',
-                background: '#0a0a0b',
-                color: '#ffffff',
-                confirmButtonColor: '#22c55e',
-                customClass: {
-                    popup: 'glass-morphism border border-purple-500/30'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.open('https://t.me/FEGsol', '_blank'); // Ganti link tele kamu
-                }
-            });
-        };
-
-        document.getElementById('unstake-btn').onclick = () => {
-            showNotice('Unstake Feature', 'No active stakes found. Feature will be available once the pools are officially opened.');
-        };
-
-        function maxAmount() {
-            document.getElementById('stake-input').value = 0;
-            showNotice('Balance Empty', 'You do not have $FEGSOL in your wallet yet. Wait for launch!', 'error');
-        }
-
-        // 3. LIVE DATA SIMULATION (Membuat Web Terlihat Aktif)
         let totalStaked = 1240550;
         let userRewards = 0.00;
 
         setInterval(() => {
-            // Simulasi Total Staked naik perlahan (biar keliatan rame)
             totalStaked += Math.floor(Math.random() * 85);
             document.getElementById('total-staked').innerText = totalStaked.toLocaleString();
-
-            // Simulasi Rewards berjalan pelan
             userRewards += 0.0001;
             document.getElementById('live-rewards').innerText = userRewards.toFixed(4);
         }, 3000);
