@@ -380,23 +380,24 @@
     </button>
 
     <script src="https://terminal.jup.ag/main-v2.js" data-mode="integrated" data-integrated-target-id="integrated-terminal"></script>
-<div style="background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(15px); border: 2px solid gold; border-radius: 25px; padding: 40px; text-align: center; max-width: 450px; margin: 40px auto; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);">
-    
-    <img src="LOGO_FEGSOL_KAMU.png" alt="FEGsol" style="width: 80px; margin-bottom: 20px;">
-    
-    <h2 style="color: gold; font-family: 'Segoe UI', sans-serif; letter-spacing: 2px; margin-bottom: 10px;">SWAP $FEGsol</h2>
-    <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 30px;">Secure & Fast Trading via Jupiter Protocol</p>
-    
-    <a href="https://jup.ag/swap/SOL-FEGsol" target="_blank" 
-       style="display: block; background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%); color: white; padding: 18px; border-radius: 15px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: 0.4s; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4);">
-       BUY ON JUPITER 🚀
-    </a>
 
-    <p style="color: #888; font-size: 0.7rem; margin-top: 20px;">
-        *This will open Jupiter Exchange in a new tab for maximum security and zero RPC errors.
-    </p>
-</div>
+    <script>
+        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
+        // JUPITER TERMINAL INITIALIZATION
+        window.Jupiter.init({
+            displayMode: 'integrated',
+            integratedTargetId: 'integrated-terminal',
+            endpoint: 'https://api.mainnet-beta.solana.com',
+            strictTokenList: false,
+            formProps: {
+                fixedInputMint: false,
+                fixedOutputMint: true,
+                outputMint: CA_KITA, // Otomatis ke BONK
+            },
+            containerClassName: 'hide-jupiter-button', 
+        });
 
 
         // REVEAL WALLET LOGIC
