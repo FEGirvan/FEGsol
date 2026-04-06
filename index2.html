@@ -281,15 +281,15 @@
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
-            <div class="glass-morphism overflow-hidden shadow-2xl shadow-purple-900/20" style="width: 100%; height: 500px; border: 1px solid rgba(168, 85, 247, 0.3);">
+            <div class="glass-morphism overflow-hidden shadow-2xl shadow-purple-900/20" style="width: 100%; height: 550px; border: 1px solid rgba(168, 85, 247, 0.3); background: #000;">
                 <iframe 
-                    src="https://birdeye.so/tv-widget/DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4?chain=solana&viewMode=swap&theme=dark" 
+                    src="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4&fixedTickers=1" 
                     style="width: 100%; height: 100%; border: none;"
                     allow="clipboard-write"
                     loading="lazy">
                 </iframe>
             </div>
-            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Birdeye Terminal</p>
+            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Raydium Protocol</p>
         </div>
     </section>
 
@@ -365,7 +365,7 @@
     </button>
 
     <script>
-        // CONTRACT ADDRESS PLACEHOLDER (BONK)
+        // CONTRACT ADDRESS PLACEHOLDER (BONK/FEGSOL)
         const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
         // REVEAL WALLET LOGIC
@@ -441,7 +441,22 @@
 
         // COPY CA
         function copyCA() {
-            navigator.clipboard.writeText(CA_KITA);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(CA_KITA).then(() => {
+                    handleCopySuccess();
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = CA_KITA;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                handleCopySuccess();
+            }
+        }
+
+        function handleCopySuccess() {
             const btnText = document.getElementById('ca-text');
             btnText.innerText = "CA Copied!";
             btnText.classList.add('text-green-400');
