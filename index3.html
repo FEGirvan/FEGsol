@@ -123,7 +123,7 @@
             <span class="gold-text">THE FUTURE</span>
         </h1>
 
-        <div class="mb-10 w-full max-lg mx-auto">
+        <div class="mb-10 w-full max-w-lg mx-auto">
             <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4 text-center">Launching In:</p>
             <div class="grid grid-cols-4 gap-2 md:gap-4">
                 <div class="glass-morphism p-3 md:p-4 border-b-2 border-yellow-500 text-center">
@@ -281,24 +281,17 @@
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
-            <div id="integrated-terminal" class="glass-morphism overflow-hidden shadow-2xl shadow-purple-900/20" 
-                 style="width: 100%; height: 600px; border: 1px solid rgba(168, 85, 247, 0.3); background: #000;">
+            <div class="glass-morphism overflow-hidden shadow-2xl shadow-purple-900/20" 
+                 style="width: 100%; height: 500px; border: 1px solid rgba(168, 85, 247, 0.3); background: #000;">
+                <iframe 
+                    src="https://birdeye.so/tv-widget/DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4?chain=solana&viewMode=swap&theme=dark" 
+                    style="width: 100%; height: 100%; border: none;"
+                    allow="clipboard-write"
+                    loading="lazy">
+                </iframe>
             </div>
-            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Protocol</p>
+            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Birdeye Protocol</p>
         </div>
-        <script src="https://terminal.jup.ag/main-v2.js"></script>
-        <script>
-            window.Jupiter.init({
-                displayMode: "integrated",
-                integratedTargetId: "integrated-terminal",
-                endpoint: "https://api.mainnet-beta.solana.com",
-                strictTokenList: false,
-                initialOutputMint: "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4", // CA BONK untuk tes
-                formProps: {
-                    fixedOutputMint: true,
-                },
-            });
-        </script>
     </section>
 
     <section class="py-20 px-6 max-w-7xl mx-auto">
