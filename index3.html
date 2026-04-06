@@ -59,18 +59,9 @@
         }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0b;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #7c3aed;
-            border-radius: 10px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0b; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -289,11 +280,28 @@
 
     <section id="swap" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
-            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Direct Swap</h2>
-            <div id="jupiter-terminal" class="glass-morphism overflow-hidden shadow-2xl" 
-                 style="width: 100%; height: 600px; border: 1px solid rgba(168, 85, 247, 0.3); background: #000;">
+            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
+            
+            <div class="glass-morphism p-10 border-2 border-yellow-500/20 shadow-[0_0_50px_rgba(234,179,8,0.1)]">
+                <div class="mb-6 flex justify-center gap-4">
+                    <i class="fas fa-pills text-5xl text-yellow-400 animate-bounce"></i>
+                    <i class="fas fa-rocket text-5xl text-purple-500 animate-pulse"></i>
+                </div>
+                
+                <h3 class="font-orbitron text-white text-lg font-bold mb-2">Live on Pump.fun</h3>
+                <p class="text-gray-400 text-[10px] mb-8 font-orbitron uppercase tracking-widest">Bonding Curve Active</p>
+                
+                <div class="space-y-4">
+                    <a href="https://pump.fun/DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4" target="_blank" 
+                       class="block w-full bg-yellow-500 hover:bg-yellow-400 text-black font-orbitron font-bold py-5 rounded-xl transition-all shadow-lg transform hover:-translate-y-1">
+                        BUY ON PUMP.FUN <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
             </div>
-            <p class="mt-4 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic">Powered by Jupiter Protocol</p>
+            
+            <p class="mt-6 text-[10px] text-gray-500 font-orbitron uppercase tracking-widest italic opacity-70">
+                *Widget dinonaktifkan untuk akses tercepat saat rilis
+            </p>
         </div>
     </section>
 
@@ -307,7 +315,6 @@
                     Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>.
                 </p>
             </div>
-
             <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
                 <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
@@ -315,7 +322,6 @@
                     Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions.
                 </p>
             </div>
-
             <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
                 <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
@@ -370,24 +376,9 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script src="https://terminal.jup.ag/main-v2.js" defer></script>
     <script>
         const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-        // INIT JUPITER (Satu-satunya Tambahan)
-        window.onload = function() {
-            if (window.Jupiter) {
-                window.Jupiter.init({
-                    displayMode: "integrated",
-                    integratedTargetId: "jupiter-terminal",
-                    endpoint: "https://api.mainnet-beta.solana.com",
-                    strictTokenList: false,
-                    initialOutputMint: CA_KITA,
-                });
-            }
-        };
-
-        // Logic Domisili Kamu
         function revealWallet(id) {
             const el = document.getElementById(id);
             const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -406,7 +397,6 @@
             }
         };
 
-        // Menu Logic
         const menuBtn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');
         if(menuBtn) {
@@ -417,7 +407,6 @@
         }
         document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
 
-        // Countdown Logic
         const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -432,9 +421,11 @@
                 document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
                 document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
             }
+            if (distance < 0) {
+                clearInterval(timer);
+            }
         }, 1000);
 
-        // Counter Logic
         const supplyCount = document.getElementById('supply-count');
         const target = +supplyCount.getAttribute('data-target');
         const updateCount = () => {
@@ -451,11 +442,29 @@
         observer.observe(supplyCount);
 
         function copyCA() {
-            navigator.clipboard.writeText(CA_KITA).then(() => {
-                const btnText = document.getElementById('ca-text');
-                btnText.innerText = "CA Copied!";
-                setTimeout(() => btnText.innerText = "Copy Contract Address", 2000);
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(CA_KITA).then(() => {
+                    handleCopySuccess();
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = CA_KITA;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                handleCopySuccess();
+            }
+        }
+
+        function handleCopySuccess() {
+            const btnText = document.getElementById('ca-text');
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
         }
     </script>
 </body>
