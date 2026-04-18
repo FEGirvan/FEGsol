@@ -374,7 +374,8 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-        // ==========================================
+    <script>
+    // ==========================================
     // BAGIAN KERAMAT: GANTI CA DI SINI SAJA !!!
     // ==========================================
     const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
@@ -402,34 +403,6 @@
 
     updateAllLinks();
 
-    // PERBAIKAN TOTAL SUPPLY: Agar tetap 1 Miliar
-    const supplyCount = document.getElementById('supply-count');
-    const target = 1000000000; // Target 1 Miliar
-    
-    const updateCount = () => {
-        let current = parseInt(supplyCount.innerText.replace(/,/g, '')) || 0;
-        const increment = target / 50; // Kecepatan animasi
-        
-        if (current < target) {
-            let nextValue = Math.ceil(current + increment);
-            if (nextValue > target) nextValue = target;
-            supplyCount.innerText = nextValue.toLocaleString();
-            setTimeout(updateCount, 30);
-        } else {
-            supplyCount.innerText = target.toLocaleString();
-        }
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { 
-            updateCount(); 
-            observer.disconnect(); 
-        }
-    }, { threshold: 0.5 });
-    
-    if(supplyCount) observer.observe(supplyCount);
-
-    // --- Fungsi lainnya tetap sama (Copy CA, Menu, Countdown) ---
     function revealWallet(id) {
         const el = document.getElementById(id);
         const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -454,11 +427,25 @@
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+                menuBtn.classList.add('border-purple-500/30');
+            } else {
+                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            }
         });
     }
 
+    document.addEventListener('click', () => { 
+        if(menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            menuBtn.classList.add('border-purple-500/30');
+        }
+    });
+
     const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    setInterval(function() {
+    const timer = setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
         if(document.getElementById("days")) {
@@ -467,20 +454,60 @@
             document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
+        if (distance < 0) { clearInterval(timer); }
     }, 1000);
 
+    // FIX: LOGIKA TOTAL SUPPLY AGAR TETAP 1 MILIAR
+    const supplyCount = document.getElementById('supply-count');
+    const supplyTarget = 1000000000; 
+    
+    const updateCount = () => {
+        let current = parseInt(supplyCount.innerText.replace(/,/g, '')) || 0;
+        const increment = supplyTarget / 50; 
+        
+        if (current < supplyTarget) {
+            let nextValue = Math.ceil(current + increment);
+            if (nextValue > supplyTarget) nextValue = supplyTarget;
+            supplyCount.innerText = nextValue.toLocaleString();
+            setTimeout(updateCount, 30);
+        } else {
+            supplyCount.innerText = supplyTarget.toLocaleString();
+        }
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { 
+            updateCount(); 
+            observer.disconnect(); 
+        }
+    }, { threshold: 0.5 });
+    
+    if(supplyCount) observer.observe(supplyCount);
+
     function copyCA() {
-        navigator.clipboard.writeText(CA_KITA).then(() => {
-            const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
-        });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = CA_KITA;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            handleCopySuccess();
+        }
     }
 
+    function handleCopySuccess() {
+        const btnText = document.getElementById('ca-text');
+        btnText.innerText = "CA Copied!";
+        btnText.classList.add('text-green-400');
+        setTimeout(() => {
+            btnText.innerText = "Copy Contract Address";
+            btnText.classList.remove('text-green-400');
+        }, 2000);
+    }
+</script>
 
 </body>
 </html>
