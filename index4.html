@@ -168,7 +168,7 @@
                     <i class="fas fa-chart-line text-xl text-gray-400 group-hover:text-blue-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Chart</span>
                 </a>
-                <a href="https://jup.ag" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                <a href="https://jup.ag" id="swap-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
                     <i class="fas fa-random text-xl text-gray-400 group-hover:text-green-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Swap</span>
                 </a>
@@ -176,7 +176,7 @@
                     <i class="fas fa-search text-xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Scan</span>
                 </a>
-                <a href="https://pump.fun" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                <a href="https://pump.fun" id="launch-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
                     <i class="fas fa-pills text-xl text-gray-400 group-hover:text-yellow-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Launch</span>
                 </a>
@@ -272,7 +272,7 @@
                     <span>Developer Wallet</span>
                 </div>
                 <div id="dev-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
-                    <p class="text-[9px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-3 rounded-lg border border-purple-500/20">
+                    <p class="text-[9px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-3 rounded-lg border border-blue-500/20">
                         DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93
                     </p>
                 </div>
@@ -280,7 +280,7 @@
         </div>
     </section>
 
-    <section id="swap" class="py-20 px-6">
+    <section id="swap-section" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
             
@@ -382,17 +382,27 @@
     // ==========================================
 
     function updateAllLinks() {
+        // Link Pump.fun (Tombol Besar)
         const pumpLink = document.getElementById('pump-link');
         if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
+        // Link DexScreener (Iframe & Icon)
         const dexIframe = document.getElementById('dex-iframe');
         if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-
         const chartIcon = document.getElementById('chart-link-1');
         if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
 
+        // Link Scan (Solscan)
         const scanLink = document.getElementById('scan-link');
         if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+        // UPDATE: Link Swap (Jupiter)
+        const swapLink = document.getElementById('swap-link');
+        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
+
+        // UPDATE: Link Launch (Pump.fun Small Icon)
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
     updateAllLinks();
@@ -458,7 +468,8 @@
     const supplyCount = document.getElementById('supply-count');
     const target = +supplyCount.getAttribute('data-target');
     const updateCount = () => {
-        const current = +supplyCount.innerText.replace(/,/g, '');
+        const currentText = supplyCount.innerText.replace(/,/g, '');
+        const current = isNaN(currentText) ? 0 : +currentText;
         const increment = target / 100;
         if (current < target) {
             supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
