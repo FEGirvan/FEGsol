@@ -7,10 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
         body {
-            background-color: #050506;
+            background-color: #0a0a0b;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -19,68 +19,32 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* PREMIUM GLASS MORPHISM */
         .glass-morphism {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* SHIMMER EFFECT */
-        .glass-morphism::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 8s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-120%) rotate(45deg); }
-            20%, 100% { transform: translateX(120%) rotate(45deg); }
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
         }
 
         .hero-gradient {
-            background: radial-gradient(circle at 50% -20%, #2e1065 0%, #050506 70%);
+            background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%);
         }
 
         .gold-text {
-            background: linear-gradient(135deg, #fde047 0%, #ca8a04 50%, #fde047 100%);
+            background: linear-gradient(to right, #fde047, #ca8a04);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 900;
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            font-weight: 800;
         }
 
         .btn-primary {
             background: linear-gradient(90deg, #7c3aed, #9333ea);
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+            transition: all 0.3s ease;
         }
 
         .ape-glow {
-            filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.4));
-            border: 2px solid rgba(168, 85, 247, 0.2);
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.5));
+            border: 2px solid rgba(168, 85, 247, 0.3);
         }
 
         .roadmap-card {
@@ -91,32 +55,29 @@
 
         .roadmap-card:hover {
             background: rgba(124, 58, 237, 0.05);
-            transform: translateX(10px);
+            transform: translateX(5px);
         }
 
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+        /* NEW: Partner Logo Style */
+        .partner-logo {
+            filter: grayscale(100%) opacity(0.5);
+            transition: all 0.4s ease;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
         }
 
-        section { position: relative; z-index: 10; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050506; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0b; }
         ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
-
     <nav class="fixed w-full z-[60] px-4 py-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20 bg-[#050506]/60">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-morphism px-6 py-4 border-2 border-purple-500/20 bg-[#0a0a0b]/80">
             <div class="flex items-center space-x-4">
                 <img src="G.PNG" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-purple-500/50">
                 <a href="index.html" class="font-orbitron text-xl md:text-2xl font-bold tracking-tighter uppercase">
@@ -125,14 +86,17 @@
             </div>
             
             <div class="relative">
-                <button id="mobile-menu-button" class="group p-1 rounded-2xl border-2 border-purple-500/30 bg-[#050506] hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all">
-                    <img src="solana.JPG" alt="Solana" class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover group-hover:scale-110 transition-transform">
+                <button id="mobile-menu-button" class="group relative flex items-center justify-center p-1 rounded-2xl border-2 border-purple-500/30 bg-[#0a0a0b] hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300">
+                    <img src="solana.JPG" alt="Solana" class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover group-hover:scale-110 transition-transform duration-300">
                 </button>
                 
-                <div id="mobile-menu" class="absolute right-0 top-full mt-4 w-64 glass-morphism hidden z-[100] bg-[#050506]/95 border border-purple-500/30 shadow-2xl">
+                <div id="mobile-menu" class="absolute right-0 top-full mt-2 w-64 glass-morphism overflow-hidden hidden transition-all duration-300 z-[100] bg-[#0a0a0b]/95 border border-purple-500/30 shadow-2xl">
                     <div class="px-6 py-3 bg-purple-900/20 border-b border-white/5">
-                        <p class="text-[10px] font-orbitron text-purple-400 uppercase tracking-widest font-bold">Project Status</p>
+                        <p class="text-[10px] font-orbitron text-purple-400 uppercase tracking-widest font-bold">
+                            <i class="fas fa-rocket mr-2"></i> Project Status
+                        </p>
                     </div>
+
                     <div class="px-6 py-4 space-y-3 border-b border-white/5">
                         <div class="flex justify-between items-center">
                             <span class="text-[10px] text-gray-400 font-orbitron uppercase">Stage</span>
@@ -140,13 +104,17 @@
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-[10px] text-gray-400 font-orbitron uppercase">Banana Farm</span>
-                            <a href="farm.html" class="text-[10px] text-yellow-400 font-bold font-orbitron italic animate-pulse">OPEN APP</a>
+                            <a href="farm.html" class="text-[10px] text-yellow-400 font-bold font-orbitron italic hover:text-yellow-200 transition-all duration-300 animate-pulse">
+                                OPEN APP <i class="fas fa-external-link-alt ml-1 text-[8px]"></i>
+                            </a>
                         </div>
                     </div>
-                    <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 text-white">
-                        <i class="fas fa-book-open mr-3"></i> Our Story
+
+                    <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 border-b border-white/5 text-white">
+                        <i class="fas fa-book-open mr-3 text-purple-400"></i> Our Story
                     </a>
-                    <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 text-blue-400 font-bold">
+
+                    <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 font-bold text-blue-400">
                         <i class="fab fa-telegram-plane mr-3"></i> Join Community
                     </a>
                 </div>
@@ -154,281 +122,418 @@
         </div>
     </nav>
 
-    <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
-        <div class="relative mb-12 mt-4 floating">
-            <div class="absolute inset-0 bg-purple-600/30 blur-[100px] rounded-full"></div>
-            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-48 h-48 md:w-64 md:h-64 rounded-full object-cover ape-glow">
+    <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
+        <div class="relative mb-8 mt-4">
+            <div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
+            <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape-glow">
         </div>
 
-        <h1 class="text-5xl md:text-8xl font-orbitron font-black leading-[0.9] mb-6 tracking-tighter">
-            <span class="text-white">FORTIFY THE</span> <br> 
-            <span class="gold-text">APE NATION</span>
+        <h1 class="text-4xl md:text-7xl font-orbitron font-bold leading-none mb-4 tracking-tight">
+            WE BUILD <br> 
+            <span class="gold-text">THE FUTURE</span>
         </h1>
 
-        <div class="mb-12 w-full max-w-2xl mx-auto">
-            <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4">Launching In:</p>
-            <div class="grid grid-cols-4 gap-3 md:gap-6">
-                <div class="glass-morphism p-4 border-b-2 border-yellow-500/50">
-                    <span id="days" class="block text-3xl md:text-5xl font-black font-orbitron gold-text">00</span>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">Days</span>
+        <div class="mb-10 w-full max-w-lg mx-auto">
+            <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4 text-center">Launching In:</p>
+            <div class="grid grid-cols-4 gap-2 md:gap-4">
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-yellow-500 text-center">
+                    <span id="days" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-500">Days</span>
                 </div>
-                <div class="glass-morphism p-4 border-b-2 border-purple-500/50">
-                    <span id="hours" class="block text-3xl md:text-5xl font-black font-orbitron text-white">00</span>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">Hours</span>
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-purple-500 text-center">
+                    <span id="hours" class="block text-2xl md:text-4xl font-bold font-orbitron text-white">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-400">Hours</span>
                 </div>
-                <div class="glass-morphism p-4 border-b-2 border-blue-500/50">
-                    <span id="minutes" class="block text-3xl md:text-5xl font-black font-orbitron text-white">00</span>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">Mins</span>
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-blue-500 text-center">
+                    <span id="minutes" class="block text-2xl md:text-4xl font-bold font-orbitron text-white">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-400">Mins</span>
                 </div>
-                <div class="glass-morphism p-4 border-b-2 border-pink-500/50">
-                    <span id="seconds" class="block text-3xl md:text-5xl font-black font-orbitron text-white">00</span>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-bold">Secs</span>
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-pink-500 text-center">
+                    <span id="seconds" class="block text-2xl md:text-4xl font-bold font-orbitron text-white animate-pulse">00</span>
+                    <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gray-400">Secs</span>
                 </div>
             </div>
             <p class="mt-4 text-[9px] font-orbitron text-gray-600 tracking-widest uppercase">Official Launch: April 23, 2026</p>
         </div>
 
-        <p class="text-gray-400 max-w-xl mx-auto text-base md:text-xl mb-10 font-light leading-relaxed">
+        <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
             FEGsol is the ultimate architecture on Solana, built to <span class="text-purple-400 font-bold">Fortify Every Gorilla</span>. Engineering excellence for the strongest tribe.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md mb-16">
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary flex-1 py-4 rounded-2xl font-orbitron text-xs font-black tracking-widest uppercase text-center text-white">
-                ENTER THE JUNGLE
+        <div class="flex flex-col gap-3 w-full max-w-xs mb-8">
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center text-white">
+                Join the Raid
             </a>
-            <button onclick="copyCA()" class="flex-1 bg-white/5 border border-white/10 py-4 rounded-2xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition-all">
-                <span id="ca-text" class="text-white">COPY ADDRESS</span>
+            <button onclick="copyCA()" class="group relative bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition-all duration-300">
+                <div class="absolute inset-0 bg-purple-500/5 blur-xl rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <span id="ca-text" class="relative z-10 text-white">Copy Contract Address</span>
+                <i class="fas fa-copy ml-2 relative z-10 bg-gradient-to-tr from-[#9945FF] via-[#14F195] to-[#14F195] bg-clip-text text-transparent group-hover:scale-110 transition-transform"></i>
             </button>
         </div>
 
-        <div class="w-full max-w-5xl py-10 border-t border-white/5 mt-10">
-            <p class="text-[8px] font-orbitron text-gray-500 uppercase tracking-[0.3em] mb-8">Verified Ecosystem</p>
-            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
-                <a href="#" id="chart-link-1" target="_blank" class="group text-center transition-transform hover:scale-110">
-                    <i class="fas fa-chart-line text-2xl text-gray-400 group-hover:text-blue-400 mb-2"></i>
-                    <span class="block text-[8px] text-gray-600 font-orbitron uppercase">Chart</span>
+        <div class="w-full max-w-4xl py-8 opacity-60 hover:opacity-100 transition-opacity duration-500 border-t border-white/5 mt-4">
+            <p class="text-[8px] font-orbitron text-gray-500 uppercase tracking-[0.3em] mb-6 text-center">Verified Ecosystem</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 px-6">
+                <a href="#" id="chart-link-1" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-chart-line text-xl text-gray-400 group-hover:text-blue-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Chart</span>
                 </a>
-                <a href="https://jup.ag" id="swap-link" target="_blank" class="group text-center transition-transform hover:scale-110">
-                    <i class="fas fa-random text-2xl text-gray-400 group-hover:text-green-400 mb-2"></i>
-                    <span class="block text-[8px] text-gray-600 font-orbitron uppercase">Swap</span>
+                <a href="https://jup.ag" id="swap-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-random text-xl text-gray-400 group-hover:text-green-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Swap</span>
                 </a>
-                <a href="#" id="scan-link" target="_blank" class="group text-center transition-transform hover:scale-110">
-                    <i class="fas fa-search text-2xl text-gray-400 group-hover:text-purple-400 mb-2"></i>
-                    <span class="block text-[8px] text-gray-600 font-orbitron uppercase">Scan</span>
+                <a href="#" id="scan-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-search text-xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Scan</span>
                 </a>
-                <a href="https://pump.fun" id="launch-link" target="_blank" class="group text-center transition-transform hover:scale-110">
-                    <i class="fas fa-pills text-2xl text-gray-400 group-hover:text-yellow-400 mb-2"></i>
-                    <span class="block text-[8px] text-gray-600 font-orbitron uppercase">Launch</span>
+                <a href="https://pump.fun" id="launch-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                    <i class="fas fa-pills text-xl text-gray-400 group-hover:text-yellow-400 transition-colors"></i>
+                    <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Launch</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="chart" class="py-20 px-6 max-w-7xl mx-auto">
-        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Market Intelligence</h2>
-        <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_80px_rgba(124,58,237,0.15)]">
-            <iframe id="dex-iframe" src="" style="width:100%; height:650px; border:none; border-radius:15px;" allow="clipboard-write" loading="lazy"></iframe>
+    <section id="chart" class="py-12 px-6 max-w-6xl mx-auto">
+        <h2 class="font-orbitron text-2xl font-bold text-center mb-8 gold-text uppercase tracking-widest">Live Market Chart</h2>
+        <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+            <iframe 
+                id="dex-iframe"
+                src="" 
+                style="width:100%; height:600px; border:none; border-radius:10px;"
+                allow="clipboard-write"
+                loading="lazy"
+                title="FEGsol Live Chart">
+            </iframe>
         </div>
     </section>
 
-    <section id="tokenomics" class="py-20 px-6 max-w-5xl mx-auto">
-        <h2 class="font-orbitron text-4xl font-bold text-center mb-16 gold-text uppercase tracking-widest">Tokenomics</h2>
-        <div class="glass-morphism p-10 md:p-16 space-y-10 shadow-2xl">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-white/5 pb-8">
-                <div class="text-center md:text-left">
-                    <span class="text-purple-400 font-orbitron text-xs uppercase tracking-[0.3em]">Total Circulation</span>
-                    <h3 id="supply-count" class="text-4xl md:text-6xl font-black font-orbitron text-white leading-none">0</h3>
-                </div>
-                <div class="text-center md:text-right">
-                    <div class="text-white font-bold font-orbitron text-2xl">$FEGSOL</div>
-                    <div class="text-gray-500 font-orbitron text-[10px] uppercase tracking-widest">Solana Token</div>
+    <section class="py-16 px-6 max-w-6xl mx-auto border-t border-white/5">
+        <div class="text-center mb-12">
+            <p class="font-orbitron text-[10px] tracking-[0.5em] text-purple-400 uppercase mb-2">Institutional Grade</p>
+            <h2 class="font-orbitron text-xl font-bold gold-text uppercase tracking-widest">Security & Infrastructure</h2>
+        </div>
+        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+            <div class="text-center group">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="h-6 md:h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Solana Network</span>
+            </div>
+            <div class="text-center group">
+                <i class="fas fa-user-shield text-3xl text-gray-400 partner-logo mb-3 block"></i>
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">RugCheck Verified</span>
+            </div>
+            <div class="text-center group">
+                <img src="https://dexscreener.com/favicon.ico" alt="Dex" class="h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">DexScreener</span>
+            </div>
+            <div class="text-center group">
+                <img src="https://jup.ag/svg/jupiter-logo.svg" alt="Jupiter" class="h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Jupiter Aggregator</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
+        
+        <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
+                <div class="text-right">
+                    <div id="supply-count" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
+                    <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="space-y-4">
-                    <div class="flex justify-between font-orbitron text-xs uppercase text-gray-400">
-                        <span>Organic Fair Launch</span>
-                        <span class="text-white">100%</span>
-                    </div>
-                    <div class="w-full bg-white/5 h-3 rounded-full border border-white/10">
-                        <div class="bg-gradient-to-r from-purple-600 to-pink-500 h-full w-[100%]"></div>
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between font-orbitron text-xs uppercase text-gray-400">
-                        <span>Burn Schedule</span>
-                        <span class="text-yellow-400 italic">Phase 2</span>
-                    </div>
-                    <div class="w-full bg-white/5 h-3 rounded-full border border-white/10">
-                        <div class="bg-gradient-to-r from-yellow-500 to-red-500 h-full w-[15%] animate-pulse"></div>
-                    </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Fair Launch</span>
+                <div class="text-right">
+                    <div class="text-white font-bold font-orbitron text-sm md:text-xl uppercase tracking-tighter text-nowrap">100% ORGANIK</div>
+                    <div class="text-gray-500 font-orbitron text-[9px] uppercase tracking-widest mt-1">(PUMP.FUN)</div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
-                <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition-all">
-                    <div class="font-orbitron text-[10px] text-blue-400 uppercase tracking-widest"><i class="fas fa-bullhorn mb-2 block"></i>Marketing Fund</div>
-                    <div id="marketing-addr" class="hidden mt-4 text-[9px] break-all font-mono text-blue-200">D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt</div>
-                </button>
-                <button onclick="revealWallet('burn-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition-all">
-                    <div class="font-orbitron text-[10px] text-red-400 uppercase tracking-widest"><i class="fas fa-fire mb-2 block"></i>Burn Queue</div>
-                    <div id="burn-addr" class="hidden mt-4 text-[9px] break-all font-mono text-red-200">92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T</div>
-                </button>
-                <button onclick="revealWallet('dev-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition-all">
-                    <div class="font-orbitron text-[10px] text-purple-400 uppercase tracking-widest"><i class="fas fa-code mb-2 block"></i>Dev Wallet</div>
-                    <div id="dev-addr" class="hidden mt-4 text-[9px] break-all font-mono text-purple-200">DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93</div>
-                </button>
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em] leading-relaxed">Buyback &<br>Burn</span>
+                <div class="text-right">
+                    <div class="text-yellow-400 font-bold font-orbitron text-sm md:text-xl uppercase tracking-tight">PHASE 2</div>
+                    <div class="text-yellow-500/70 font-orbitron text-[9px] uppercase tracking-widest mt-1">INITIATIVE</div>
+                </div>
+            </div>
+
+            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20 shadow-inner">
+                <div class="flex justify-between items-end mb-4">
+                    <div class="flex flex-col">
+                        <span class="text-[9px] font-orbitron text-purple-400 uppercase tracking-[0.2em] mb-1">Circulating</span>
+                        <span class="text-xs font-bold font-orbitron text-white uppercase tracking-widest">Scarcity</span>
+                    </div>
+                    <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">0% BURNED</span>
+                </div>
+                <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px] border border-white/5">
+                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="width: 1%"></div>
+                </div>
+                <p class="mt-4 text-[8px] text-gray-500 font-orbitron uppercase text-center tracking-[0.3em] italic opacity-80">Monthly Burn Schedule: <span class="text-green-400">ACTIVE</span></p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-blue-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-bullhorn text-sm group-hover:scale-110 transition"></i>
+                    <span>Marketing Fund</span>
+                </div>
+                <div id="marketing-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-blue-200/70 break-all font-mono bg-blue-900/30 p-3 rounded-lg border border-blue-500/20">
+                        D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt
+                    </p>
+                </div>
+            </button>
+
+            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-red-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-red-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-fire text-sm group-hover:scale-110 transition"></i>
+                    <span>Burn Queue</span>
+                </div>
+                <div id="burn-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-red-200/70 break-all font-mono bg-red-900/30 p-3 rounded-lg border border-red-500/20">
+                        92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T
+                    </p>
+                </div>
+            </button>
+
+            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-5 text-center border border-white/5 hover:border-purple-500/30 transition-all duration-300 group">
+                <div class="font-orbitron text-[10px] text-purple-400 uppercase tracking-widest py-1 flex flex-col items-center gap-2">
+                    <i class="fas fa-code text-sm group-hover:scale-110 transition"></i>
+                    <span>Developer Wallet</span>
+                </div>
+                <div id="dev-addr" class="hidden mt-4 pt-4 border-t border-white/5 animate-fade-in">
+                    <p class="text-[9px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-3 rounded-lg border border-blue-500/20">
+                        DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93
+                    </p>
+                </div>
+            </button>
+        </div>
+    </section>
+
+    <section id="swap-section" class="py-20 px-6">
+        <div class="max-w-md mx-auto text-center">
+            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
+            
+            <div class="glass-morphism p-10 border-2 border-yellow-500/20 shadow-[0_0_50px_rgba(234,179,8,0.1)]">
+                <div class="mb-6 flex justify-center gap-4">
+                    <i class="fas fa-pills text-5xl text-yellow-400 animate-bounce"></i>
+                    <i class="fas fa-rocket text-5xl text-purple-500 animate-pulse"></i>
+                </div>
+                
+                <h3 class="font-orbitron text-white text-lg font-bold mb-2">Live on Pump.fun</h3>
+                <p class="text-gray-400 text-[10px] mb-8 font-orbitron uppercase tracking-widest">Bonding Curve Active</p>
+                
+                <div class="space-y-4">
+                    <a href="#" id="pump-link" target="_blank" 
+                       class="block w-full bg-yellow-500 hover:bg-yellow-400 text-black font-orbitron font-bold py-5 rounded-xl transition-all shadow-lg transform hover:-translate-y-1">
+                        BUY ON PUMP.FUN <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="features" class="py-20 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-morphism p-10 text-center hover:border-purple-500/50 transition-all">
-                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6"></i>
-                <h3 class="font-orbitron text-xl mb-3 gold-text">SECURE</h3>
-                <p class="text-gray-400 text-sm">Liquidity is 100% Burned & Contract is Renounced.</p>
+            <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-purple-900/50">Verified</div>
+                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>.
+                </p>
             </div>
-            <div class="glass-morphism p-10 text-center hover:border-yellow-500/50 transition-all">
-                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6"></i>
-                <h3 class="font-orbitron text-xl mb-3 gold-text">ULTRA FAST</h3>
-                <p class="text-gray-400 text-sm">Engineered on Solana for lightning-speed transactions.</p>
+            <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
+                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions.
+                </p>
             </div>
-            <div class="glass-morphism p-10 text-center hover:border-blue-500/50 transition-all">
-                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6"></i>
-                <h3 class="font-orbitron text-xl mb-3 gold-text">APE NATION</h3>
-                <p class="text-gray-400 text-sm">A community movement where every Ape has a voice.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="roadmap" class="py-20 px-6 max-w-4xl mx-auto">
-        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Roadmap</h2>
-        <div class="space-y-6">
-            <div class="roadmap-card p-6 rounded-r-xl">
-                <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
-                <h4 class="text-xl font-bold mb-2">Foundation</h4>
-                <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
-            </div>
-            <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
-                <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
-                <h4 class="text-xl font-bold mb-2">Launch</h4>
-                <p class="text-gray-400 text-xs">Fair Launch on Pump.fun, Global Marketing, CMC/CG Listings.</p>
-            </div>
-            <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
-                <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
-                <h4 class="text-xl font-bold mb-2">Expansion</h4>
-                <p class="text-gray-400 text-xs">Banana Farm (Staking), DAO Governance, Tier-1 CEX.</p>
+            <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
+                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
+                <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">
+                    A community-driven movement where every <span class="text-white font-bold">Ape</span> has a voice.
+                </p>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center border-t border-white/5 bg-[#030304]">
-        <div class="flex justify-center space-x-12 mb-10">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-500 hover:text-purple-500 transition-all text-4xl">
+    <section id="roadmap" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Roadmap</h2>
+            <div class="space-y-6">
+                <div class="roadmap-card p-6 rounded-r-xl">
+                    <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
+                    <h4 class="text-xl font-bold mb-2">Foundation</h4>
+                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
+                    <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
+                    <h4 class="text-xl font-bold mb-2">Launch</h4>
+                    <p class="text-gray-400 text-xs">Fair Launch on Pump.fun, Global Marketing, CMC/CG Listings.</p>
+                </div>
+                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
+                    <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
+                    <h4 class="text-xl font-bold mb-2">Expansion</h4>
+                    <p class="text-gray-400 text-xs">Banana Farm (Staking), DAO Governance, Tier-1 CEX.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
+        <div class="flex justify-center space-x-8 mb-8">
+            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-500 hover:text-blue-400 transition-all text-4xl">
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fab fa-telegram"></i>
             </a>
+            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 text-3xl hover:scale-125">
+                <i class="fas fa-file-alt"></i>
+            </a>
         </div>
-        <p class="text-[12px] text-gray-600 font-orbitron uppercase tracking-[0.5em] mb-4">FEGSOL &copy; 2026</p>
+        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
+        <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
+
+    <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 backdrop-blur-md hidden hover:bg-purple-500 transition-all shadow-lg shadow-purple-900/50">
+        <i class="fas fa-arrow-up text-white"></i>
+    </button>
 
     <script>
     const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
 
-    function updateLinks() {
-        document.getElementById('dex-iframe').src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-        document.getElementById('chart-link-1').href = `https://dexscreener.com/solana/${CA_KITA}`;
-        document.getElementById('swap-link').href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-        document.getElementById('scan-link').href = `https://solscan.io/token/${CA_KITA}`;
-        document.getElementById('launch-link').href = `https://pump.fun/${CA_KITA}`;
-    }
-    updateLinks();
+    function updateAllLinks() {
+        const pumpLink = document.getElementById('pump-link');
+        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-    // Particle System
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    function initParticles() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        particles = [];
-        for(let i=0; i<60; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5,
-                opacity: Math.random() * 0.5
-            });
-        }
-    }
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.x += p.speedX; p.y += p.speedY;
-            if(p.x > canvas.width) p.x = 0; if(p.x < 0) p.x = canvas.width;
-            if(p.y > canvas.height) p.y = 0; if(p.y < 0) p.y = canvas.height;
-            ctx.fillStyle = `rgba(124, 58, 237, ${p.opacity})`;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-        });
-        requestAnimationFrame(animateParticles);
-    }
-    window.addEventListener('resize', initParticles);
-    initParticles(); animateParticles();
+        const dexIframe = document.getElementById('dex-iframe');
+        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        
+        const chartIcon = document.getElementById('chart-link-1');
+        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
 
-    // Core Logic Supply 1 Billion
-    const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000;
-    let currentSupply = 0;
-    const observer = new IntersectionObserver((entries) => {
-        if(entries[0].isIntersecting) {
-            const increment = supplyTarget / 80;
-            const update = () => {
-                if(currentSupply < supplyTarget) {
-                    currentSupply += increment;
-                    supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-                    setTimeout(update, 20);
-                } else { supplyCount.innerText = "1,000,000,000"; }
-            };
-            update(); observer.disconnect();
-        }
-    });
-    if(supplyCount) observer.observe(supplyCount);
+        const scanLink = document.getElementById('scan-link');
+        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
 
-    // Countdown
-    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    setInterval(() => {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }
-    }, 1000);
+        const swapLink = document.getElementById('swap-link');
+        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
+
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+    }
+
+    updateAllLinks();
 
     function revealWallet(id) {
-        document.getElementById(id).classList.toggle('hidden');
+        const el = document.getElementById(id);
+        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
+        allWallets.forEach(walletId => {
+            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+        });
+        el.classList.toggle('hidden');
     }
+
+    window.onscroll = function() {
+        const btn = document.getElementById("toTop");
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.classList.remove("hidden");
+        } else {
+            btn.classList.add("hidden");
+        }
+    };
 
     const menuBtn = document.getElementById('mobile-menu-button');
     const menu = document.getElementById('mobile-menu');
-    menuBtn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('hidden'); });
-    document.addEventListener('click', () => menu.classList.add('hidden'));
-
-    function copyCA() {
-        navigator.clipboard.writeText(CA_KITA).then(() => {
-            const txt = document.getElementById('ca-text');
-            txt.innerText = "COPIED!";
-            setTimeout(() => { txt.innerText = "COPY ADDRESS"; }, 2000);
+    if(menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+                menuBtn.classList.add('border-purple-500/30');
+            } else {
+                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            }
         });
     }
-    </script>
+
+    document.addEventListener('click', () => { 
+        if(menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            menuBtn.classList.add('border-purple-500/30');
+        }
+    });
+
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+        if(document.getElementById("days")) {
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }
+        if (distance < 0) { clearInterval(timer); }
+    }, 1000);
+
+    const supplyCount = document.getElementById('supply-count');
+    const supplyTarget = 1000000000;
+    let currentSupply = 0;
+
+    const updateCount = () => {
+        const increment = supplyTarget / 80;
+        if (currentSupply < supplyTarget) {
+            currentSupply += increment;
+            if (currentSupply > supplyTarget) currentSupply = supplyTarget;
+            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
+            setTimeout(updateCount, 25);
+        } else {
+            supplyCount.innerText = supplyTarget.toLocaleString();
+        }
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+    }, { threshold: 0.5 });
+    
+    if(supplyCount) observer.observe(supplyCount);
+
+    function copyCA() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = CA_KITA;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            handleCopySuccess();
+        }
+    }
+
+    function handleCopySuccess() {
+        const btnText = document.getElementById('ca-text');
+        btnText.innerText = "CA Copied!";
+        btnText.classList.add('text-green-400');
+        setTimeout(() => {
+            btnText.innerText = "Copy Contract Address";
+            btnText.classList.remove('text-green-400');
+        }, 2000);
+    }
+</script>
+
 </body>
 </html>
