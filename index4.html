@@ -374,39 +374,62 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script>
-    // ==========================================
+        // ==========================================
     // BAGIAN KERAMAT: GANTI CA DI SINI SAJA !!!
     // ==========================================
     const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
     // ==========================================
 
     function updateAllLinks() {
-        // Link Pump.fun (Tombol Besar)
         const pumpLink = document.getElementById('pump-link');
         if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-        // Link DexScreener (Iframe & Icon)
         const dexIframe = document.getElementById('dex-iframe');
         if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        
         const chartIcon = document.getElementById('chart-link-1');
         if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
 
-        // Link Scan (Solscan)
         const scanLink = document.getElementById('scan-link');
         if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
 
-        // UPDATE: Link Swap (Jupiter)
         const swapLink = document.getElementById('swap-link');
         if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
 
-        // UPDATE: Link Launch (Pump.fun Small Icon)
         const launchLink = document.getElementById('launch-link');
         if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
     updateAllLinks();
 
+    // PERBAIKAN TOTAL SUPPLY: Agar tetap 1 Miliar
+    const supplyCount = document.getElementById('supply-count');
+    const target = 1000000000; // Target 1 Miliar
+    
+    const updateCount = () => {
+        let current = parseInt(supplyCount.innerText.replace(/,/g, '')) || 0;
+        const increment = target / 50; // Kecepatan animasi
+        
+        if (current < target) {
+            let nextValue = Math.ceil(current + increment);
+            if (nextValue > target) nextValue = target;
+            supplyCount.innerText = nextValue.toLocaleString();
+            setTimeout(updateCount, 30);
+        } else {
+            supplyCount.innerText = target.toLocaleString();
+        }
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { 
+            updateCount(); 
+            observer.disconnect(); 
+        }
+    }, { threshold: 0.5 });
+    
+    if(supplyCount) observer.observe(supplyCount);
+
+    // --- Fungsi lainnya tetap sama (Copy CA, Menu, Countdown) ---
     function revealWallet(id) {
         const el = document.getElementById(id);
         const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
@@ -431,80 +454,33 @@
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-                menuBtn.classList.add('border-purple-500/30');
-            } else {
-                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            }
         });
     }
 
-    document.addEventListener('click', () => { 
-        if(menu && !menu.classList.contains('hidden')) {
-            menu.classList.add('hidden');
-            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            menuBtn.classList.add('border-purple-500/30');
-        }
-    });
-
     const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    const timer = setInterval(function() {
+    setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         if(document.getElementById("days")) {
-            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
-        if (distance < 0) { clearInterval(timer); }
     }, 1000);
 
-    const supplyCount = document.getElementById('supply-count');
-    const target = +supplyCount.getAttribute('data-target');
-    const updateCount = () => {
-        const currentText = supplyCount.innerText.replace(/,/g, '');
-        const current = isNaN(currentText) ? 0 : +currentText;
-        const increment = target / 100;
-        if (current < target) {
-            supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
-            setTimeout(updateCount, 20);
-        } else { supplyCount.innerText = target.toLocaleString(); }
-    };
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-    }, { threshold: 0.5 });
-    observer.observe(supplyCount);
-
     function copyCA() {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
-        } else {
-            const textArea = document.createElement("textarea");
-            textArea.value = CA_KITA;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            handleCopySuccess();
-        }
+        navigator.clipboard.writeText(CA_KITA).then(() => {
+            const btnText = document.getElementById('ca-text');
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
+        });
     }
 
-    function handleCopySuccess() {
-        const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
-    }
-</script>
 
 </body>
 </html>
