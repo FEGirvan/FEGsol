@@ -58,6 +58,16 @@
             transform: translateX(5px);
         }
 
+        /* Partner Logo Style */
+        .partner-logo {
+            filter: grayscale(100%) opacity(0.5);
+            transition: all 0.4s ease;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0b; }
@@ -198,6 +208,31 @@
         </div>
     </section>
 
+    <section class="py-16 px-6 max-w-6xl mx-auto border-t border-white/5">
+        <div class="text-center mb-12">
+            <p class="font-orbitron text-[10px] tracking-[0.5em] text-purple-400 uppercase mb-2">Institutional Grade</p>
+            <h2 class="font-orbitron text-xl font-bold gold-text uppercase tracking-widest">Security & Infrastructure</h2>
+        </div>
+        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+            <div class="text-center group">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" alt="Solana" class="h-6 md:h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Solana Network</span>
+            </div>
+            <div class="text-center group">
+                <i class="fas fa-user-shield text-3xl text-gray-400 partner-logo mb-3 block"></i>
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">RugCheck Verified</span>
+            </div>
+            <div class="text-center group">
+                <img src="https://dexscreener.com/favicon.ico" alt="Dex" class="h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">DexScreener</span>
+            </div>
+            <div class="text-center group">
+                <img src="https://jup.ag/svg/jupiter-logo.svg" alt="Jupiter" class="h-8 partner-logo mb-3 mx-auto">
+                <span class="block text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Jupiter Aggregator</span>
+            </div>
+        </div>
+    </section>
+
     <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
         
@@ -232,12 +267,21 @@
                         <span class="text-[9px] font-orbitron text-purple-400 uppercase tracking-[0.2em] mb-1">Circulating</span>
                         <span class="text-xs font-bold font-orbitron text-white uppercase tracking-widest">Scarcity</span>
                     </div>
+
                     <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">0% BURNED</span>
                 </div>
+                
                 <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px] border border-white/5">
                     <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="width: 1%"></div>
                 </div>
+                
                 <p class="mt-4 text-[8px] text-gray-500 font-orbitron uppercase text-center tracking-[0.3em] italic opacity-80">Monthly Burn Schedule: <span class="text-green-400">ACTIVE</span></p>
+                
+                <div class="mt-6 text-center">
+                    <a href="https://solscan.io/account/92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T" target="_blank" class="inline-block px-6 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 font-orbitron text-[9px] text-purple-300 hover:bg-purple-500/30 transition-all uppercase tracking-widest">
+                        <i class="fas fa-fire-alt mr-2"></i> View Proof of Burn
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -306,11 +350,11 @@
     <section id="features" class="py-20 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
-                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-purple-900/50">Verified</div>
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-green-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-green-900/50">RugCheck Safe</div>
                 <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
                 <p class="text-gray-400 text-sm font-light leading-relaxed">
-                    Liquidity is <span class="text-white font-bold">100% Burned</span> & Contract is <span class="text-white font-bold">Renounced</span>.
+                    Liquidity <span class="text-white font-bold">Auto-Burned</span> & Mint Authority <span class="text-white font-bold">Revoked</span> via Pump.fun.
                 </p>
             </div>
             <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
@@ -375,11 +419,7 @@
     </button>
 
     <script>
-    // ==========================================
-    // BAGIAN KERAMAT: GANTI CA DI SINI SAJA !!!
-    // ==========================================
     const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
-    // ==========================================
 
     function updateAllLinks() {
         const pumpLink = document.getElementById('pump-link');
@@ -457,21 +497,15 @@
         if (distance < 0) { clearInterval(timer); }
     }, 1000);
 
-    // ==========================================
-    // LOGIKA PERBAIKAN TOTAL SUPPLY (ANTI ERROR)
-    // ==========================================
     const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000; // 1 Miliar
-    let currentSupply = 0; // Mulai dari 0 murni
+    const supplyTarget = 1000000000;
+    let currentSupply = 0;
 
     const updateCount = () => {
-        const increment = supplyTarget / 80; // Kecepatan animasi
-        
+        const increment = supplyTarget / 80;
         if (currentSupply < supplyTarget) {
             currentSupply += increment;
             if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-            
-            // Render ke layar dengan format ribuan
             supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
             setTimeout(updateCount, 25);
         } else {
@@ -480,10 +514,7 @@
     };
 
     const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { 
-            updateCount(); 
-            observer.disconnect(); 
-        }
+        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
     }, { threshold: 0.5 });
     
     if(supplyCount) observer.observe(supplyCount);
