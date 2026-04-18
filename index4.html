@@ -76,9 +76,12 @@
             </div>
             
             <div class="relative">
-                <button id="mobile-menu-button" class="bg-purple-900/60 p-3 rounded-2xl border border-purple-500/50 hover:bg-purple-600 transition duration-300">
-                    <i class="fas fa-bars text-xl text-purple-200"></i>
-                </button>
+                <button id="mobile-menu-button" class="group relative bg-black/40 p-3 rounded-2xl border border-purple-500/50 hover:border-purple-400 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all duration-300">
+    <i class="fa-solid fa-s text-xl bg-gradient-to-tr from-[#9945FF] via-[#14F195] to-[#14F195] bg-clip-text text-transparent group-hover:scale-110 transition-transform"></i>
+    
+    <div class="absolute inset-0 bg-purple-500/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+
                 
                 <div id="mobile-menu" class="absolute right-0 mt-3 w-64 glass-morphism overflow-hidden hidden transition-all duration-300 z-[100] bg-[#0a0a0b]/95 border border-purple-500/30 shadow-2xl">
                     <div class="px-6 py-3 bg-purple-900/20 border-b border-white/5">
@@ -154,10 +157,14 @@
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-center">
                 Join the Raid
             </a>
-            <button onclick="copyCA()" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition group">
-                <span id="ca-text">Copy Contract Address</span>
-                <i class="fas fa-copy ml-2 text-purple-400 group-hover:scale-110 transition"></i>
-            </button>
+            <button onclick="copyCA()" class="group relative bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition-all duration-300">
+    <div class="absolute inset-0 bg-purple-500/5 blur-xl rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+    
+    <span id="ca-text" class="relative z-10">Copy Contract Address</span>
+    
+    <i class="fas fa-copy ml-2 relative z-10 bg-gradient-to-tr from-[#9945FF] via-[#14F195] to-[#14F195] bg-clip-text text-transparent group-hover:scale-110 transition-transform"></i>
+</button>
+
         </div>
 
         <div class="w-full max-w-4xl py-8 opacity-60 hover:opacity-100 transition-opacity duration-500 border-t border-white/5 mt-4">
