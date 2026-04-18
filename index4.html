@@ -385,95 +385,115 @@
     </button>
 
     <script>
-        const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
+    const CA_KITA = "DezXAZhfB9wvS6pLjnSxy4GvmdHJAYc42CscSNH31XJ4";
 
-        function revealWallet(id) {
-            const el = document.getElementById(id);
-            const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
-            allWallets.forEach(walletId => {
-                if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
-            });
-            el.classList.toggle('hidden');
+    function revealWallet(id) {
+        const el = document.getElementById(id);
+        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr'];
+        allWallets.forEach(walletId => {
+            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+        });
+        el.classList.toggle('hidden');
+    }
+
+    window.onscroll = function() {
+        const btn = document.getElementById("toTop");
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.classList.remove("hidden");
+        } else {
+            btn.classList.add("hidden");
         }
+    };
 
-        window.onscroll = function() {
-            const btn = document.getElementById("toTop");
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                btn.classList.remove("hidden");
+    // LOGIKA MENU (Sudah ditambah fitur Redup & Toggle)
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    
+    if(menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+            
+            // Jika menu tertutup, hilangkan glow biru di tombol
+            if(menu.classList.contains('hidden')) {
+                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+                menuBtn.classList.add('border-purple-500/30');
             } else {
-                btn.classList.add("hidden");
+                // Jika menu terbuka, pastikan glow menyala
+                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
             }
-        };
+        });
+    }
 
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-        if(menuBtn) {
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menu.classList.toggle('hidden');
-            });
+    // Klik di luar menu akan menutup menu dan meredupkan tombol
+    document.addEventListener('click', () => { 
+        if(menu && !menu.classList.contains('hidden')) {
+            menu.classList.add('hidden');
+            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            menuBtn.classList.add('border-purple-500/30');
         }
-        document.addEventListener('click', () => { if(menu) menu.classList.add('hidden'); });
+    });
 
-        const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-        const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            if(document.getElementById("days")) {
-                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
-                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
-                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
-                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
-            }
-            if (distance < 0) {
-                clearInterval(timer);
-            }
-        }, 1000);
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        if(document.getElementById("days")) {
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
+        if (distance < 0) {
+            clearInterval(timer);
+        }
+    }, 1000);
 
-        const supplyCount = document.getElementById('supply-count');
-        const target = +supplyCount.getAttribute('data-target');
-        const updateCount = () => {
-            const current = +supplyCount.innerText.replace(/,/g, '');
-            const increment = target / 100;
-            if (current < target) {
-                supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
-                setTimeout(updateCount, 20);
-            } else { supplyCount.innerText = target.toLocaleString(); }
-        };
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-        }, { threshold: 0.5 });
-        observer.observe(supplyCount);
+    const supplyCount = document.getElementById('supply-count');
+    const target = +supplyCount.getAttribute('data-target');
+    const updateCount = () => {
+        const current = +supplyCount.innerText.replace(/,/g, '');
+        const increment = target / 100;
+        if (current < target) {
+            supplyCount.innerText = Math.ceil(current + increment).toLocaleString();
+            setTimeout(updateCount, 20);
+        } else { supplyCount.innerText = target.toLocaleString(); }
+    };
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+    }, { threshold: 0.5 });
+    observer.observe(supplyCount);
 
-        function copyCA() {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(CA_KITA).then(() => {
-                    handleCopySuccess();
-                });
-            } else {
-                const textArea = document.createElement("textarea");
-                textArea.value = CA_KITA;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
+    function copyCA() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(CA_KITA).then(() => {
                 handleCopySuccess();
-            }
+            });
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = CA_KITA;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            handleCopySuccess();
         }
+    }
 
-        function handleCopySuccess() {
-            const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
-        }
-    </script>
+    function handleCopySuccess() {
+        const btnText = document.getElementById('ca-text');
+        btnText.innerText = "CA Copied!";
+        btnText.classList.add('text-green-400');
+        setTimeout(() => {
+            btnText.innerText = "Copy Contract Address";
+            btnText.classList.remove('text-green-400');
+        }, 2000);
+    }
+</script>
+
 </body>
 </html>
