@@ -205,7 +205,7 @@
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
                 <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
                 <div class="text-right">
-                    <div id="supply-count" data-target="1000000000" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
+                    <div id="supply-count" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
                     <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
             </div>
@@ -457,19 +457,23 @@
         if (distance < 0) { clearInterval(timer); }
     }, 1000);
 
-    // FIX: LOGIKA TOTAL SUPPLY AGAR TETAP 1 MILIAR
+    // ==========================================
+    // LOGIKA PERBAIKAN TOTAL SUPPLY (ANTI ERROR)
+    // ==========================================
     const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000; 
-    
+    const supplyTarget = 1000000000; // 1 Miliar
+    let currentSupply = 0; // Mulai dari 0 murni
+
     const updateCount = () => {
-        let current = parseInt(supplyCount.innerText.replace(/,/g, '')) || 0;
-        const increment = supplyTarget / 50; 
+        const increment = supplyTarget / 80; // Kecepatan animasi
         
-        if (current < supplyTarget) {
-            let nextValue = Math.ceil(current + increment);
-            if (nextValue > supplyTarget) nextValue = supplyTarget;
-            supplyCount.innerText = nextValue.toLocaleString();
-            setTimeout(updateCount, 30);
+        if (currentSupply < supplyTarget) {
+            currentSupply += increment;
+            if (currentSupply > supplyTarget) currentSupply = supplyTarget;
+            
+            // Render ke layar dengan format ribuan
+            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
+            setTimeout(updateCount, 25);
         } else {
             supplyCount.innerText = supplyTarget.toLocaleString();
         }
