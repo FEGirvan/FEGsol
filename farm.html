@@ -141,9 +141,10 @@
                 </div>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-white/5">
-                <p class="text-[10px] text-center text-gray-500 font-orbitron italic uppercase tracking-tighter leading-relaxed">
-                    Note: Staking pools will be officially deployed following the successful migration to Raydium.
+            <div class="mt-8 pt-6 border-t border-white/5 text-center">
+                <p class="text-[10px] text-gray-500 font-orbitron italic uppercase tracking-tighter leading-relaxed">
+                    Note: Staking pools are powered by <span class="text-purple-400 font-bold">Streamflow</span>. 
+                    Official pools will be live after the Raydium migration.
                 </p>
             </div>
         </div>
@@ -195,7 +196,15 @@
     </footer>
 
     <script>
-        const TELEGRAM_LINK = "https://t.me/+16oraMVw88w3MmU9";
+        /************************************************************
+         * GANTI LINK DI BAWAH INI SESUAI DATA KAMU            *
+         ************************************************************/
+        
+        const TELEGRAM_LINK   = "https://t.me/+16oraMVw88w3MmU9";
+        const STREAMFLOW_LINK = "https://app.streamflow.finance/"; // <-- GANTI DENGAN LINK POOL KAMU
+
+        /************************************************************/
+
         let currentAPR = 0.8; 
         let currentDays = 7;
 
@@ -231,28 +240,54 @@
             }
         }
 
-        function showNoticeWithRedirect(title, text, type = 'info') {
+        // Fungsi khusus untuk Pop-up Telegram
+        function showTelegramNotice() {
             Swal.fire({
-                title: title, text: text, icon: type,
-                showCancelButton: true, confirmButtonText: 'Join Telegram',
-                cancelButtonText: 'Close', background: '#0a0a0b', color: '#ffffff',
+                title: 'Wallet Integration',
+                text: 'Solana Wallet integration will be activated after our official launch.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Join Telegram',
+                cancelButtonText: 'Close',
+                background: '#0a0a0b',
+                color: '#ffffff',
                 confirmButtonColor: '#22c55e',
                 customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
             }).then((result) => { if (result.isConfirmed) window.open(TELEGRAM_LINK, '_blank'); });
         }
 
+        // Fungsi khusus untuk Pop-up Streamflow
+        function showStreamflowNotice() {
+            Swal.fire({
+                title: 'Proceed to Staking',
+                text: 'You are being redirected to our official Streamflow pool. Rewards will start after migration.',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Open Streamflow',
+                cancelButtonText: 'Not Yet',
+                background: '#0a0a0b',
+                color: '#ffffff',
+                confirmButtonColor: '#7c3aed',
+                customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
+            }).then((result) => { if (result.isConfirmed) window.open(STREAMFLOW_LINK, '_blank'); });
+        }
+
+        // Button Listeners
         document.getElementById('connect-wallet').onclick = () => {
-            showNoticeWithRedirect('Wallet Integration', 'Solana Wallet integration will be activated after our official launch.');
+            showTelegramNotice();
         };
 
         document.getElementById('stake-btn').onclick = () => {
-            showNoticeWithRedirect('Banana Farm Locked!', 'Staking rewards go live once we migrate to Raydium.');
+            showStreamflowNotice();
         };
 
         document.getElementById('unstake-btn').onclick = () => {
             Swal.fire({
-                title: 'No Stake Found', text: 'You do not have any active stakes at the moment.',
-                icon: 'error', background: '#0a0a0b', color: '#ffffff',
+                title: 'No Stake Found',
+                text: 'You do not have any active stakes at the moment.',
+                icon: 'error',
+                background: '#0a0a0b',
+                color: '#ffffff',
                 confirmButtonColor: '#9333ea',
                 customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
             });
@@ -260,13 +295,17 @@
 
         function maxAmount() {
             Swal.fire({
-                title: 'Insufficient Balance', text: 'Your $FEGSOL balance is empty. Buy tokens after launch on April 23rd!',
-                icon: 'warning', background: '#0a0a0b', color: '#ffffff',
+                title: 'Insufficient Balance',
+                text: 'Your $FEGSOL balance is empty. Buy tokens after launch on April 23rd!',
+                icon: 'warning',
+                background: '#0a0a0b',
+                color: '#ffffff',
                 confirmButtonColor: '#9333ea',
                 customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
             });
         }
 
+        // Fake Data Ticker
         let totalStaked = 1240550;
         let userRewards = 0.00;
         setInterval(() => {
