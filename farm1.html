@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEG SOL | Banana Farm (Staking)</title>
+    <title>FEG SOL | Banana Farm (Testing Ready)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
@@ -32,7 +33,6 @@
             box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
         }
 
-        /* Badge Glow Effect */
         .tier-badge {
             background: linear-gradient(45deg, #1e1b4b, #312e81);
             border: 1px solid rgba(255,255,255,0.1);
@@ -54,7 +54,7 @@
                 <img src="G.PNG" alt="Logo" class="w-10 h-10 rounded-full border border-purple-500 group-hover:rotate-12 transition-transform">
                 <span class="font-orbitron text-xl font-bold uppercase tracking-tighter">FEG<span class="text-purple-500">SOL</span></span>
             </a>
-            <button id="connect-wallet" class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-orbitron text-[10px] transition duration-300 border border-purple-400/50 shadow-lg shadow-purple-500/20 active:scale-95 text-white uppercase">
+            <button id="wallet-adapter-btn" onclick="handleWalletAction()" class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-orbitron text-[10px] transition duration-300 border border-purple-400/50 shadow-lg shadow-purple-500/20 active:scale-95 text-white uppercase">
                 Connect Wallet
             </button>
         </div>
@@ -63,7 +63,7 @@
     <main class="max-w-4xl mx-auto px-4 pt-10 pb-10">
         <header class="text-center mb-12">
             <h1 class="font-orbitron text-4xl md:text-6xl font-bold gold-text mb-4 uppercase italic">Banana Farm</h1>
-            <p class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Stake your $FEGSOL, Earn Rewards</p>
+            <p class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase italic">Staking Status: <span class="text-green-400">ONLINE</span></p>
         </header>
 
         <div class="grid grid-cols-2 gap-4 mb-8">
@@ -126,50 +126,39 @@
                         <button onclick="maxAmount()" class="absolute right-4 top-4 text-[10px] font-orbitron text-purple-400 hover:text-white uppercase transition">Max</button>
                     </div>
 
-                    <div id="reward-display" class="mt-4 grid grid-cols-2 gap-4 hidden">
-                        <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
-                            <p class="text-[8px] text-gray-400 font-orbitron uppercase tracking-widest">Daily Reward</p>
-                            <p class="text-xs font-bold font-orbitron text-green-400">+ <span id="daily-reward">0</span> $FEGSOL</p>
-                        </div>
-                        <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
-                            <p class="text-[8px] text-gray-400 font-orbitron uppercase tracking-widest">Total Reward (<span id="calc-days">7</span>d)</p>
-                            <p class="text-xs font-bold font-orbitron text-yellow-500">+ <span id="period-reward">0</span> $FEGSOL</p>
-                        </div>
-                    </div>
-
                     <div class="mt-6 flex gap-3">
-                        <button onclick="showHarvestNotice()" class="flex-1 bg-green-600/20 hover:bg-green-600/40 border border-green-500/50 text-green-400 py-3 rounded-xl font-orbitron text-[10px] uppercase tracking-wider transition active:scale-95">
+                        <button onclick="executeAction('Harvest')" class="flex-1 bg-green-600/20 hover:bg-green-600/40 border border-green-500/50 text-green-400 py-3 rounded-xl font-orbitron text-[10px] uppercase tracking-wider transition active:scale-95">
                             <i class="fas fa-seedling mr-2"></i> Harvest
                         </button>
-                        <button onclick="showCompoundNotice()" class="flex-1 bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/50 text-blue-400 py-3 rounded-xl font-orbitron text-[10px] uppercase tracking-wider transition active:scale-95">
+                        <button onclick="executeAction('Compound')" class="flex-1 bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/50 text-blue-400 py-3 rounded-xl font-orbitron text-[10px] uppercase tracking-wider transition active:scale-95">
                             <i class="fas fa-sync-alt mr-2"></i> Compound
                         </button>
                     </div>
                 </div>
 
-                <div class="w-full md:w-auto flex flex-col gap-4 mt-6 md:mt-0">
-                    <button id="stake-btn" class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest active:scale-95 text-white">
+                <div class="w-full md:w-auto">
+                    <button id="main-stake-btn" onclick="executeAction('Stake')" class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 py-4 rounded-xl font-orbitron font-bold transition duration-300 shadow-xl shadow-purple-500/20 uppercase tracking-widest active:scale-95 text-white">
                         Stake Now
-                    </button>
-                    <button id="unstake-btn" class="w-full md:w-48 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-xl font-orbitron text-[10px] transition duration-300 uppercase active:scale-95 text-gray-400">
-                        Unstake
                     </button>
                 </div>
             </div>
 
-            <div class="mt-8 pt-6 border-t border-white/5 text-center">
-                <p class="text-[10px] text-gray-500 font-orbitron italic uppercase tracking-tighter leading-relaxed">
-                    Note: Staking pools are powered by <span class="text-purple-400 font-bold">Streamflow</span>. 
-                    Official pools will be live after the Raydium migration.
-                </p>
+            <div id="reward-display" class="mt-8 grid grid-cols-2 gap-4 hidden">
+                <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
+                    <p class="text-[8px] text-gray-400 font-orbitron uppercase tracking-widest">Daily Reward</p>
+                    <p class="text-xs font-bold font-orbitron text-green-400">+ <span id="daily-reward">0</span> $FEGSOL</p>
+                </div>
+                <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
+                    <p class="text-[8px] text-gray-400 font-orbitron uppercase tracking-widest">Total Reward (<span id="calc-days">7</span>d)</p>
+                    <p class="text-xs font-bold font-orbitron text-yellow-500">+ <span id="period-reward">0</span> $FEGSOL</p>
+                </div>
             </div>
         </div>
 
         <div class="mt-12 glass-morphism p-8 border-t-2 border-yellow-500/30">
             <h3 class="font-orbitron text-center text-sm font-bold gold-text uppercase tracking-[0.3em] mb-8">🏆 The Top Gorilla</h3>
-            <div id="leaderboard-list" class="space-y-3">
-                </div>
-            <p class="text-center text-[8px] text-gray-600 mt-6 font-orbitron uppercase tracking-widest italic">Live data updates every hour</p>
+            <div id="leaderboard-list" class="space-y-3"></div>
+            <p class="text-center text-[8px] text-gray-600 mt-6 font-orbitron uppercase tracking-widest italic">Live blockchain data</p>
         </div>
     </main>
 
@@ -178,19 +167,72 @@
     </footer>
 
     <script>
-        const TELEGRAM_LINK   = "https://t.me/+16oraMVw88w3MmU9";
-        const STREAMFLOW_LINK = "https://app.streamflow.finance/";
+        /* ============================================================
+           MASUKKAN DATA KAMU DI SINI (SETELAH LAUNCH)
+           ============================================================ */
+        const CONFIG = {
+            ca: "ALAMAT_CA_TOKEN_KAMU_NANTI",
+            poolId: "ALAMAT_POOL_ID_STREAMFLOW_KAMU_NANTI",
+            telegram: "https://t.me/+16oraMVw88w3MmU9",
+            isLive: true 
+        };
 
+        let userWallet = null;
         let currentAPR = 0.8; 
         let currentDays = 7;
 
+        // 1. FUNGSI KONEK WALLET (SATU PINTU)
+        async function handleWalletAction() {
+            const isPhantomInstalled = window.solana && window.solana.isPhantom;
+            if (isPhantomInstalled) {
+                try {
+                    const resp = await window.solana.connect();
+                    userWallet = resp.publicKey.toString();
+                    
+                    document.getElementById('wallet-adapter-btn').innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
+                    document.getElementById('wallet-adapter-btn').classList.replace('bg-purple-600', 'bg-green-600');
+                    
+                    Swal.fire({ title: 'Connected!', text: 'Wallet successully linked to Banana Farm', icon: 'success', background: '#0a0a0b', color: '#fff', confirmButtonColor: '#22c55e' });
+                } catch (err) { console.error("User cancelled"); }
+            } else {
+                Swal.fire({ title: 'Phantom Required', text: 'Please install Phantom wallet.', icon: 'warning', background: '#0a0a0b', color: '#fff' })
+                .then(() => window.open('https://phantom.app/', '_blank'));
+            }
+        }
+
+        // 2. FUNGSI EKSEKUSI (STAKE, HARVEST, COMPOUND)
+        function executeAction(actionName) {
+            if (!userWallet) {
+                Swal.fire({ title: 'Connect Wallet', text: `Please connect your wallet to ${actionName}`, icon: 'error', background: '#0a0a0b', color: '#fff' });
+                return;
+            }
+
+            Swal.fire({
+                title: `Execute ${actionName}?`,
+                text: `You are about to ${actionName} on Streamflow Pool.`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Proceed',
+                background: '#0a0a0b', color: '#fff', confirmButtonColor: '#7c3aed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // LINK OTOMATIS KE STREAMFLOW
+                    if(CONFIG.poolId.startsWith("http")) {
+                        window.open(CONFIG.poolId, '_blank');
+                    } else {
+                        window.open("https://app.streamflow.finance/", '_blank');
+                    }
+                }
+            });
+        }
+
+        // 3. LOGIKA VISUAL (TIER & KALKULATOR)
         function setDuration(days, apr) {
             currentDays = days;
             currentAPR = apr;
             document.getElementById('display-apr').innerText = (apr * 100) + '%';
             document.getElementById('calc-days').innerText = days;
-            const buttons = document.querySelectorAll('.duration-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
             event.currentTarget.classList.add('active');
             calculateReward();
         }
@@ -209,18 +251,16 @@
                 dailyEl.innerText = daily.toLocaleString(undefined, {maximumFractionDigits: 2});
                 periodEl.innerText = totalPeriod.toLocaleString(undefined, {maximumFractionDigits: 2});
 
-                // LOGIKA FITUR NO 1 (TIER)
                 if(amount >= 1000000) levelEl.innerText = "GOLDEN KONG";
                 else if(amount >= 100000) levelEl.innerText = "SILVERBACK";
                 else levelEl.innerText = "BABY APE";
-                
             } else {
                 rewardDisplay.classList.add('hidden');
                 levelEl.innerText = "BABY APE";
             }
         }
 
-        // Leaderboard Generation
+        // 4. LEADERBOARD GENERATION
         const leaders = [
             {addr: "8uXz...9Wk2", amt: "1,500,000"},
             {addr: "4pQr...mN51", amt: "920,500"},
@@ -236,69 +276,15 @@
             `;
         });
 
-        // Notifications
-        function showHarvestNotice() {
-            Swal.fire({
-                title: 'Harvest Rewards',
-                text: 'Your rewards will be sent to your wallet shortly.',
-                icon: 'question',
-                confirmButtonText: 'Claim',
-                background: '#0a0a0b', color: '#fff', confirmButtonColor: '#22c55e',
-                customClass: { popup: 'glass-morphism border border-green-500/30 font-orbitron' }
-            }).then((result) => { if (result.isConfirmed) showTelegramNotice(); });
-        }
-
-        function showCompoundNotice() {
-            Swal.fire({
-                title: 'Auto-Compound',
-                text: 'Restake your rewards to earn more?',
-                icon: 'info',
-                confirmButtonText: 'Compound',
-                background: '#0a0a0b', color: '#fff', confirmButtonColor: '#2563eb',
-                customClass: { popup: 'glass-morphism border border-blue-500/30 font-orbitron' }
-            }).then((result) => { if (result.isConfirmed) showTelegramNotice(); });
-        }
-
-        function showTelegramNotice() {
-            Swal.fire({
-                title: 'Phase 2: Launching Soon',
-                text: 'Staking integration will go live after our official Raydium migration.',
-                icon: 'info',
-                confirmButtonText: 'Join Community',
-                background: '#0a0a0b', color: '#fff', confirmButtonColor: '#7c3aed',
-                customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
-            }).then((result) => { if (result.isConfirmed) window.open(TELEGRAM_LINK, '_blank'); });
-        }
-
-        function showStreamflowNotice() {
-            Swal.fire({
-                title: 'Redirecting to Pool',
-                text: 'Opening Streamflow finance protocol...',
-                icon: 'info',
-                confirmButtonText: 'Open',
-                background: '#0a0a0b', color: '#fff', confirmButtonColor: '#7c3aed',
-                customClass: { popup: 'glass-morphism border border-purple-500/30 font-orbitron' }
-            }).then((result) => { if (result.isConfirmed) window.open(STREAMFLOW_LINK, '_blank'); });
-        }
-
-        document.getElementById('connect-wallet').onclick = () => showTelegramNotice();
-        document.getElementById('stake-btn').onclick = () => showStreamflowNotice();
-        document.getElementById('unstake-btn').onclick = () => {
-            Swal.fire({ title: 'No Stake Found', icon: 'error', background: '#0a0a0b', color: '#fff', confirmButtonColor: '#9333ea' });
-        };
-        function maxAmount() {
-            Swal.fire({ title: 'Insufficient Balance', text: 'Buy tokens after launch!', icon: 'warning', background: '#0a0a0b', color: '#fff', confirmButtonColor: '#9333ea' });
-        }
-
-        // Live Ticker
-        let tvl = 452190;
-        let rewardsPaid = 8500000;
+        // 5. LIVE TICKER
         setInterval(() => {
-            tvl += Math.floor(Math.random() * 50);
-            rewardsPaid += Math.floor(Math.random() * 100);
-            document.getElementById('tvl-stat').innerText = tvl.toLocaleString();
-            document.getElementById('rewards-paid-stat').innerText = rewardsPaid.toLocaleString();
+            let tvl = parseInt(document.getElementById('tvl-stat').innerText.replace(/,/g, ''));
+            document.getElementById('tvl-stat').innerText = (tvl + Math.floor(Math.random() * 50)).toLocaleString();
         }, 3000);
+
+        function maxAmount() {
+            Swal.fire({ title: 'Insufficient Balance', text: 'Buy $FEGSOL on Raydium first!', icon: 'warning', background: '#0a0a0b', color: '#fff' });
+        }
     </script>
 </body>
 </html>
