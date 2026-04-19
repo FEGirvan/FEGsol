@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEGSOL Whitepaper | Institutional Grade DeFi</title>
+    <title>FEGSOL Whitepaper | The Evolution of a Legend</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
@@ -18,6 +18,11 @@
         .header-font { font-family: 'Syncopate', sans-serif; }
         .gold-gradient {
             background: linear-gradient(135deg, #FDE047 0%, #CA8A04 50%, #A16207 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .purple-gold-gradient {
+            background: linear-gradient(135deg, #a855f7 0%, #CA8A04 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -52,33 +57,43 @@
         
         <header class="text-center mb-24">
             <h1 class="header-font text-4xl md:text-5xl font-bold mb-6 gold-gradient tracking-tighter uppercase">TECHNICAL<br>WHITEPAPER</h1>
-            <p class="text-gray-500 text-sm tracking-[0.3em] uppercase">Protocol Version 1.2 | Solana Network</p>
+            <p class="text-gray-500 text-sm tracking-[0.3em] uppercase">Protocol Version 1.5 | Solana Network</p>
         </header>
 
         <section class="mb-20">
-            <h2 class="header-font text-lg text-purple-500 mb-6 uppercase tracking-widest border-b border-purple-900/30 pb-2">01. Mission Statement</h2>
-            <p class="text-gray-400 font-light italic">
-                FEGSOL is engineered to bridge the gap between community-driven meme culture and sustainable decentralized finance. Our goal is to create a hyper-deflationary ecosystem on Solana where long-term holders are rewarded through systematic supply reduction.
+            <h2 class="header-font text-lg text-purple-500 mb-6 uppercase tracking-widest border-b border-purple-900/30 pb-2">01. The Mission & The Legacy</h2>
+            <p class="text-gray-400 font-light mb-6">
+                Inspired by the legendary <span class="text-white font-bold">"Feed Every Gorilla"</span> ethos, $FEGSOL was born to evolve this vision for the high-speed Solana era. We honor the history while architecting the future. 
             </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-6 glass-card border-l-2 border-purple-500">
+                    <h4 class="header-font text-[10px] text-purple-400 mb-2 uppercase">The Heritage</h4>
+                    <p class="text-sm text-gray-500 italic">"Feed Every Gorilla" — Ensuring wealth and rewards are distributed to the tribe.</p>
+                </div>
+                <div class="p-6 glass-card border-l-2 border-yellow-500">
+                    <h4 class="header-font text-[10px] text-yellow-500 mb-2 uppercase">The Evolution</h4>
+                    <p class="text-sm text-gray-500 italic">"Fortify Every Gorilla" — Empowering the tribe through secure engineering and staking infrastructure.</p>
+                </div>
+            </div>
         </section>
 
         <section class="mb-20 glass-card p-10 border-l-4 border-pink-600">
-            <h2 class="header-font text-lg text-pink-500 mb-6 uppercase tracking-widest">02. The Burn Protocol</h2>
+            <h2 class="header-font text-lg text-pink-500 mb-6 uppercase tracking-widest">02. The Banana Farm Engine</h2>
             <p class="mb-6 text-gray-300">
-                Unlike traditional memecoins, $FEGSOL utilizes a <span class="text-pink-500 font-bold">Monthly Buyback & Burn</span> strategy to ensure a constantly diminishing supply and increased scarcity.
+                The <span class="text-white font-bold">Banana Farm</span> is our custom-built staking engine. It is designed to act as the economic heart of the ecosystem, reducing sell pressure while maximizing community gains.
             </p>
             <ul class="space-y-4">
                 <li class="flex items-start">
-                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
-                    <span><strong class="text-white">Monthly Buyback:</strong> A portion of the marketing fund will be used to buy back $FEGSOL from the open market.</span>
+                    <i class="fas fa-bolt text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Monthly Buyback:</strong> A portion of the marketing fund will be used to buy back $FEGSOL, maintaining price floor health.</span>
                 </li>
                 <li class="flex items-start">
-                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
-                    <span><strong class="text-white">Permanent Burn:</strong> Tokens acquired via buyback will be sent to the Solana Null Address (Burn), removing them from circulation forever.</span>
+                    <i class="fas fa-fire text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Deflationary Burn:</strong> Tokens from buybacks are permanently removed from circulation, making $FEGSOL increasingly scarce.</span>
                 </li>
                 <li class="flex items-start">
-                    <i class="fas fa-check-circle text-pink-600 mt-1 mr-3"></i>
-                    <span><strong class="text-white">Public Proof:</strong> All burn transactions (TXIDs) will be published on our official channels for full transparency.</span>
+                    <i class="fas fa-shield-alt text-pink-600 mt-1 mr-3"></i>
+                    <span><strong class="text-white">Fortified Rewards:</strong> Staking rewards are calculated through a secure audit-ready protocol to ensure long-term sustainability.</span>
                 </li>
             </ul>
         </section>
@@ -87,13 +102,13 @@
             <h2 class="header-font text-lg text-yellow-500 mb-6 uppercase tracking-widest border-b border-yellow-900/30 pb-2">03. Security Architecture</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-                    <h4 class="text-white font-bold mb-2">Protocol Status</h4>
-                    <p class="text-xs text-yellow-500 uppercase tracking-widest font-bold mb-4">Internal Review in Progress</p>
-                    <p class="text-gray-400 text-sm">Our lead developer is currently performing a manual code review and stress-test on the deployment parameters to ensure a 100% safe launch.</p>
+                    <h4 class="text-white font-bold mb-2">Lead Developer Review</h4>
+                    <p class="text-xs text-yellow-500 uppercase tracking-widest font-bold mb-4">Final Calibration: 99% Complete</p>
+                    <p class="text-gray-400 text-sm">Every line of code is being manually stress-tested. We build for the long-term; security is never sacrificed for speed.</p>
                 </div>
                 <div class="bg-white/5 p-6 rounded-xl border border-white/10">
-                    <h4 class="text-white font-bold mb-2">Pump.fun Safety</h4>
-                    <p class="text-gray-400 text-sm">By launching on the Pump.fun protocol, $FEGSOL automatically inherits safety features: Mint Revoked, Freeze Revoked, and Liquidity Security.</p>
+                    <h4 class="text-white font-bold mb-2">Solana Native Safety</h4>
+                    <p class="text-gray-400 text-sm">Deploying via Pump.fun ensures Mint Authority is Revoked and Freeze Authority is disabled, protecting the tribe from centralized risks.</p>
                 </div>
             </div>
         </section>
@@ -107,30 +122,27 @@
                 </div>
                 <div class="flex justify-between items-center border-b border-white/5 py-4">
                     <span class="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Fair Launch</span>
-                    <span class="text-white font-bold tracking-tight text-sm md:text-base">100% On Pump.fun</span>
+                    <span class="text-white font-bold tracking-tight text-sm md:text-base">100% Community Driven</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-white/5 py-4">
-                    <span class="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Buyback & Burn</span>
-                    <span class="text-white font-bold tracking-tight text-sm md:text-base text-right">Applied via Marketing Fund</span>
-                </div>
-                <div class="flex justify-between items-center border-b border-white/5 py-4">
-                    <span class="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Network</span>
-                    <span class="text-white font-bold tracking-tight text-sm md:text-base">Solana (SPL Token)</span>
+                    <span class="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Staking Utility</span>
+                    <span class="text-white font-bold tracking-tight text-sm md:text-base">Banana Farm Enabled</span>
                 </div>
             </div>
         </section>
 
-        <section class="mt-32 p-8 border border-red-900/20 rounded-2xl bg-red-950/10">
-            <h3 class="header-font text-[10px] text-red-500 mb-4 uppercase tracking-[0.3em]">Disclaimer</h3>
-            <p class="text-[11px] text-gray-500 leading-relaxed font-light">
-                Cryptocurrency investments involve high risk. $FEGSOL is a community-driven project. This whitepaper does not constitute financial advice. Past performance is not indicative of future results. Always Do Your Own Research (DYOR).
+        <section class="mt-32 p-8 border border-red-900/20 rounded-2xl bg-red-950/10 text-center">
+            <h3 class="header-font text-[10px] text-red-500 mb-4 uppercase tracking-[0.3em]">Join The Tribe</h3>
+            <p class="text-xs text-gray-400 mb-8">Launching April 23rd, 2026. Be part of the evolution.</p>
+            <p class="text-[10px] text-gray-600 leading-relaxed font-light">
+                Disclaimer: Cryptocurrency involves risk. $FEGSOL is a community experiment in decentralized engineering. DYOR.
             </p>
         </section>
 
     </main>
 
     <footer class="py-10 text-center text-[10px] text-gray-700 header-font tracking-widest uppercase border-t border-white/5">
-        FEGSOL Protocol &copy; 2026 | Architecting the Future
+        FEGSOL Protocol &copy; 2026 | Fortifying the Tribe
     </footer>
 
 </body>
