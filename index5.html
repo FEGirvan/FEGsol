@@ -17,7 +17,6 @@
     <script src="https://terminal.jup.ag/main-v2.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
@@ -175,6 +174,7 @@
                 Join the Raid
             </a>
             <button onclick="copyCA()" class="group relative bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase hover:bg-white/10 transition-all duration-300">
+                <div class="absolute inset-0 bg-purple-500/5 blur-xl rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <span id="ca-text" class="relative z-10 text-white">Copy Contract Address</span>
                 <i class="fas fa-copy ml-2 relative z-10 bg-gradient-to-tr from-[#9945FF] via-[#14F195] to-[#14F195] bg-clip-text text-transparent group-hover:scale-110 transition-transform"></i>
             </button>
@@ -187,7 +187,7 @@
                     <i class="fas fa-chart-line text-xl text-gray-400 group-hover:text-blue-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Chart</span>
                 </a>
-                <a href="#" id="swap-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                <a href="#swap-section" class="hover:scale-110 transition-transform text-center group">
                     <i class="fas fa-random text-xl text-gray-400 group-hover:text-green-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Swap</span>
                 </a>
@@ -195,7 +195,7 @@
                     <i class="fas fa-search text-xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Scan</span>
                 </a>
-                <a href="#" id="launch-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                <a href="https://pump.fun" id="launch-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
                     <i class="fas fa-pills text-xl text-gray-400 group-hover:text-yellow-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Launch</span>
                 </a>
@@ -245,7 +245,6 @@
     <section class="py-10 px-6 max-w-4xl mx-auto border-t border-white/5">
         <div class="glass-morphism p-6 md:p-8 border-2 border-purple-500/30 bg-purple-900/5 relative overflow-hidden group">
             <div class="absolute -right-20 -top-20 w-64 h-64 bg-purple-600/10 blur-3xl rounded-full"></div>
-            
             <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
                 <div class="w-full md:w-2/5">
                     <div class="relative">
@@ -253,7 +252,6 @@
                         <img src="https://fegirvan.github.io/FEGsol/G.PNG" alt="Banana Farm" class="relative rounded-xl border border-white/10 shadow-2xl transition-transform duration-500 group-hover:scale-105">
                     </div>
                 </div>
-
                 <div class="w-full md:w-3/5 text-center md:text-left">
                     <div class="flex items-center justify-center md:justify-start gap-2 mb-3">
                         <span class="px-2 py-0.5 rounded bg-green-500/20 text-green-400 text-[9px] font-orbitron font-bold tracking-widest uppercase border border-green-500/30">Partner Integrated</span>
@@ -264,7 +262,6 @@
                     <p class="text-gray-400 text-xs md:text-sm font-light leading-relaxed mb-6">
                         $FEGSOL utilizes <span class="text-white font-semibold">Streamflow Protocol</span> to provide institutional-grade locking and staking. Your assets are secured by the most trusted infrastructure on Solana.
                     </p>
-                    
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-white/5 p-3 rounded-xl border border-white/10">
                             <p class="text-[9px] text-gray-500 font-orbitron uppercase mb-1">Security</p>
@@ -282,7 +279,6 @@
 
     <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
         <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
-        
         <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
                 <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
@@ -291,24 +287,21 @@
                     <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
             </div>
-
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
                 <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Fair Launch</span>
                 <div class="text-right">
-                    <div class="text-white font-bold font-orbitron text-sm md:text-xl uppercase tracking-tighter">100% ORGANIK</div>
+                    <div class="text-white font-bold font-orbitron text-sm md:text-xl uppercase tracking-tighter text-nowrap">100% ORGANIK</div>
                     <div class="text-gray-500 font-orbitron text-[9px] uppercase tracking-widest mt-1">(PUMP.FUN)</div>
                 </div>
             </div>
-
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
-                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em] leading-relaxed">Buyback & Burn</span>
+                <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em] leading-relaxed">Buyback &<br>Burn</span>
                 <div class="text-right">
                     <div class="text-yellow-400 font-bold font-orbitron text-sm md:text-xl uppercase tracking-tight">PHASE 2</div>
                     <div class="text-yellow-500/70 font-orbitron text-[9px] uppercase tracking-widest mt-1">INITIATIVE</div>
                 </div>
             </div>
-
-            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20">
+            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20 shadow-inner">
                 <div class="flex justify-between items-end mb-4">
                     <div class="flex flex-col">
                         <span class="text-[9px] font-orbitron text-purple-400 uppercase tracking-[0.2em] mb-1">Circulating</span>
@@ -317,44 +310,34 @@
                     <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">0% BURNED</span>
                 </div>
                 <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px] border border-white/5">
-                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000" style="width: 1%"></div>
+                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style="width: 1%"></div>
                 </div>
-                <p class="mt-4 text-[8px] text-gray-500 font-orbitron uppercase text-center tracking-[0.3em] italic">Monthly Burn Schedule: <span class="text-green-400">ACTIVE</span></p>
             </div>
         </div>
-
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-4 text-center border border-white/5 hover:border-blue-500/30 group">
+            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-4 text-center border border-white/5 group">
                 <div class="font-orbitron text-[9px] text-blue-400 uppercase tracking-widest flex flex-col items-center gap-2">
                     <i class="fas fa-bullhorn text-xs"></i><span>Marketing</span>
                 </div>
-                <div id="marketing-addr" class="hidden mt-3 pt-3 border-t border-white/5">
-                    <p class="text-[8px] text-blue-200/70 break-all font-mono bg-blue-900/30 p-2 rounded-lg">D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt</p>
-                </div>
+                <div id="marketing-addr" class="hidden mt-3 pt-3 border-t border-white/5 text-[8px] text-blue-200/70 break-all font-mono">D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt</div>
             </button>
-            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-4 text-center border border-white/5 hover:border-red-500/30 group">
+            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-4 text-center border border-white/5 group">
                 <div class="font-orbitron text-[9px] text-red-400 uppercase tracking-widest flex flex-col items-center gap-2">
                     <i class="fas fa-fire text-xs"></i><span>Burn Queue</span>
                 </div>
-                <div id="burn-addr" class="hidden mt-3 pt-3 border-t border-white/5">
-                    <p class="text-[8px] text-red-200/70 break-all font-mono bg-red-900/30 p-2 rounded-lg">92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T</p>
-                </div>
+                <div id="burn-addr" class="hidden mt-3 pt-3 border-t border-white/5 text-[8px] text-red-200/70 break-all font-mono">92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T</div>
             </button>
-            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-4 text-center border border-white/5 hover:border-purple-500/30 group">
+            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-4 text-center border border-white/5 group">
                 <div class="font-orbitron text-[9px] text-purple-400 uppercase tracking-widest flex flex-col items-center gap-2">
                     <i class="fas fa-code text-xs"></i><span>Developer</span>
                 </div>
-                <div id="dev-addr" class="hidden mt-3 pt-3 border-t border-white/5">
-                    <p class="text-[8px] text-purple-200/70 break-all font-mono bg-purple-900/30 p-2 rounded-lg">DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93</p>
-                </div>
+                <div id="dev-addr" class="hidden mt-3 pt-3 border-t border-white/5 text-[8px] text-purple-200/70 break-all font-mono">DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93</div>
             </button>
-            <button onclick="revealWallet('staking-addr')" class="glass-morphism p-4 text-center border border-white/5 hover:border-yellow-500/30 group">
+            <button onclick="revealWallet('staking-addr')" class="glass-morphism p-4 text-center border border-white/5 group">
                 <div class="font-orbitron text-[9px] text-yellow-400 uppercase tracking-widest flex flex-col items-center gap-2">
                     <i class="fas fa-wheat-awn text-xs"></i><span>Banana Farm</span>
                 </div>
-                <div id="staking-addr" class="hidden mt-3 pt-3 border-t border-white/5">
-                    <p class="text-[8px] text-yellow-200/70 break-all font-mono bg-yellow-900/30 p-2 rounded-lg">Hu1atW9tL8THFWBWvayjoMLrpLaGrfb7XssJh4o5XFta</p>
-                </div>
+                <div id="staking-addr" class="hidden mt-3 pt-3 border-t border-white/5 text-[8px] text-yellow-200/70 break-all font-mono">Hu1atW9tL8THFWBWvayjoMLrpLaGrfb7XssJh4o5XFta</div>
             </button>
         </div>
     </section>
@@ -362,18 +345,11 @@
     <section id="swap-section" class="py-20 px-6">
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
-            
-            <div id="jupiter-terminal" class="glass-morphism min-h-[550px] border-2 border-purple-500/20 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
-                <p class="py-20 text-gray-500 font-orbitron text-[10px] animate-pulse uppercase tracking-widest">Loading Jupiter Swap...</p>
-            </div>
-
-            <div class="mt-8 glass-morphism p-6 border-2 border-yellow-500/20">
-                <h3 class="font-orbitron text-white text-sm font-bold mb-2 uppercase">Buy on Pump.fun</h3>
-                <p class="text-gray-400 text-[10px] mb-6 font-orbitron uppercase">Bonding Curve Support</p>
-                <a href="#" id="pump-link" target="_blank" 
-                   class="block w-full bg-yellow-500 hover:bg-yellow-400 text-black font-orbitron font-bold py-5 rounded-xl transition-all">
-                    PUMP.FUN TERMINAL <i class="fas fa-external-link-alt ml-2"></i>
-                </a>
+            <div id="jupiter-terminal" class="glass-morphism min-h-[600px] border-2 border-purple-500/20 shadow-[0_0_50px_rgba(124,58,237,0.1)] relative overflow-hidden">
+                <div id="jup-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0a0a0b] z-10">
+                    <div class="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-gray-500 font-orbitron text-[10px] uppercase tracking-widest">Loading Jupiter Swap...</p>
+                </div>
             </div>
         </div>
     </section>
@@ -384,46 +360,54 @@
             <h2 class="font-orbitron text-2xl font-bold gold-text uppercase tracking-widest">How to Join the Tribe</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class="glass-morphism p-8 text-center border border-white/5 group">
-                <div class="w-14 h-14 bg-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-purple-500/50"><i class="fas fa-wallet text-purple-400 text-xl"></i></div>
+            <div class="glass-morphism p-8 text-center border border-white/5 transition-all group">
+                <div class="w-14 h-14 bg-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-purple-500/50 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-wallet text-purple-400 text-xl"></i>
+                </div>
                 <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white uppercase">1. Create Wallet</h4>
-                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Download Phantom or Solflare from the App Store or as a Chrome extension.</p>
+                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Download Phantom or Solflare.</p>
             </div>
-            <div class="glass-morphism p-8 text-center border border-white/5 group">
-                <div class="w-14 h-14 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/50"><i class="fas fa-coins text-blue-400 text-xl"></i></div>
+            <div class="glass-morphism p-8 text-center border border-white/5 transition-all group">
+                <div class="w-14 h-14 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-blue-500/50 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-coins text-blue-400 text-xl"></i>
+                </div>
                 <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white uppercase">2. Get Some SOL</h4>
-                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Buy SOL on an exchange (Binance, Coinbase, etc.) and send it to your wallet.</p>
+                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Send SOL to your wallet.</p>
             </div>
-            <div class="glass-morphism p-8 text-center border border-white/5 group">
-                <div class="w-14 h-14 bg-yellow-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-500/50"><i class="fas fa-rocket text-yellow-400 text-xl"></i></div>
-                <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white uppercase">3. Pump.fun</h4>
-                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Click the 'Buy' button above or paste our Contract Address on Pump.fun.</p>
+            <div class="glass-morphism p-8 text-center border border-white/5 transition-all group">
+                <div class="w-14 h-14 bg-yellow-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-500/50 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-rocket text-yellow-400 text-xl"></i>
+                </div>
+                <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white uppercase">3. Swap on Jup</h4>
+                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Use the swap widget above.</p>
             </div>
-            <div class="glass-morphism p-8 text-center border border-white/5 group">
-                <div class="w-14 h-14 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/50"><i class="fas fa-check-circle text-green-400 text-xl"></i></div>
+            <div class="glass-morphism p-8 text-center border border-white/5 transition-all group">
+                <div class="w-14 h-14 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-green-500/50 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-check-circle text-green-400 text-xl"></i>
+                </div>
                 <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white uppercase">4. Swap & Hodl</h4>
-                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Swap your SOL for $FEGSOL. Welcome to the strongest gorilla family!</p>
+                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Welcome to the family!</p>
             </div>
         </div>
     </section>
 
     <section id="features" class="py-20 px-6 max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-morphism p-10 text-center relative group">
-                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-green-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest">RugCheck Safe</div>
-                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6"></i>
+            <div class="glass-morphism p-10 text-center relative group hover:border-purple-500/50 transition-all duration-500">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-green-600 px-4 py-1 rounded-full text-[10px] font-orbitron uppercase tracking-widest shadow-lg shadow-green-900/50">RugCheck Safe</div>
+                <i class="fas fa-shield-halved text-4xl text-purple-400 mb-6 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">SECURE</h3>
-                <p class="text-gray-400 text-sm font-light leading-relaxed">Liquidity <span class="text-white font-bold">Auto-Burned</span> & Mint Authority <span class="text-white font-bold">Revoked</span> via Pump.fun.</p>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">Liquidity <span class="text-white font-bold">Auto-Burned</span>.</p>
             </div>
-            <div class="glass-morphism p-10 text-center relative group">
-                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6"></i>
+            <div class="glass-morphism p-10 text-center relative group hover:border-yellow-500/50 transition-all duration-500">
+                <i class="fas fa-bolt text-4xl text-yellow-400 mb-6 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">ULTRA FAST</h3>
-                <p class="text-gray-400 text-sm font-light leading-relaxed">Engineered on the <span class="text-white font-bold">Solana Network</span> for lightning-speed transactions.</p>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">Solana Network speed.</p>
             </div>
-            <div class="glass-morphism p-10 text-center relative group">
-                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6"></i>
+            <div class="glass-morphism p-10 text-center relative group hover:border-blue-500/50 transition-all duration-500">
+                <i class="fas fa-users-viewfinder text-4xl text-blue-400 mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
                 <h3 class="font-orbitron text-xl mb-3 tracking-widest gold-text">APE NATION</h3>
-                <p class="text-gray-400 text-sm font-light leading-relaxed">A community-driven movement where every <span class="text-white font-bold">Ape</span> has a voice.</p>
+                <p class="text-gray-400 text-sm font-light leading-relaxed">Community-driven.</p>
             </div>
         </div>
     </section>
@@ -435,17 +419,17 @@
                 <div class="roadmap-card p-6 rounded-r-xl">
                     <span class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 1</span>
                     <h4 class="text-xl font-bold mb-2">Foundation</h4>
-                    <p class="text-gray-400 text-xs">Website Launch, Community building, Security Audit.</p>
+                    <p class="text-gray-400 text-xs">Website Launch, Community building.</p>
                 </div>
                 <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
                     <span class="text-blue-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 2</span>
                     <h4 class="text-xl font-bold mb-2">Launch</h4>
-                    <p class="text-gray-400 text-xs">Fair Launch on Pump.fun, Global Marketing, CMC/CG Listings.</p>
+                    <p class="text-gray-400 text-xs">Fair Launch, Global Marketing.</p>
                 </div>
                 <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
                     <span class="text-yellow-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">Phase 3</span>
                     <h4 class="text-xl font-bold mb-2">Expansion</h4>
-                    <p class="text-gray-400 text-xs">Banana Farm (Staking), DAO Governance, Tier-1 CEX.</p>
+                    <p class="text-gray-400 text-xs">Banana Farm (Staking).</p>
                 </div>
             </div>
         </div>
@@ -453,26 +437,22 @@
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 text-3xl transition-all"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 text-3xl transition-all"><i class="fab fa-telegram"></i></a>
-            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-yellow-400 text-3xl transition-all"><i class="fas fa-file-alt"></i></a>
+            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 text-3xl"><i class="fab fa-twitter"></i></a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 text-3xl"><i class="fab fa-telegram"></i></a>
         </div>
         <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
-        <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
 
-    <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
-        class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 backdrop-blur-md hidden transition-all">
-        <i class="fas fa-arrow-up text-white"></i>
-    </button>
+    <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 hidden hover:bg-purple-500 transition-all shadow-lg shadow-purple-900/50"><i class="fas fa-arrow-up text-white"></i></button>
 
     <script>
-    // --- KONFIGURASI SATU PINTU ---
-    const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263"; 
+    const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
 
-    // 1. Inisialisasi Jupiter Swap
+    // JUPITER TERMINAL INITIALIZATION
     function initJupiter() {
-        if (window.Jupiter) {
+        const target = document.getElementById('jupiter-terminal');
+        const loader = document.getElementById('jup-loader');
+        if (window.Jupiter && target) {
             window.Jupiter.init({
                 displayMode: "integrated",
                 integratedTargetId: "jupiter-terminal",
@@ -483,51 +463,41 @@
                     initialOutputMint: CA_KITA,
                 },
             });
+            setTimeout(() => { if(loader) loader.style.display = 'none'; }, 3000);
         } else {
             setTimeout(initJupiter, 1000);
         }
     }
 
-    // 2. Update Link Otomatis
     function updateAllLinks() {
-        const links = {
-            'pump-link': `https://pump.fun/${CA_KITA}`,
-            'dex-iframe': `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`,
-            'chart-link-1': `https://dexscreener.com/solana/${CA_KITA}`,
-            'scan-link': `https://solscan.io/token/${CA_KITA}`,
-            'swap-link': `https://jup.ag/swap/SOL-${CA_KITA}`,
-            'launch-link': `https://pump.fun/${CA_KITA}`
-        };
-
-        for (const [id, url] of Object.entries(links)) {
-            const el = document.getElementById(id);
-            if(el) {
-                if(el.tagName === 'IFRAME') el.src = url;
-                else el.href = url;
-            }
-        }
+        const dexIframe = document.getElementById('dex-iframe');
+        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        const chartIcon = document.getElementById('chart-link-1');
+        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+        const scanLink = document.getElementById('scan-link');
+        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
-    // 3. Fungsi Copy CA
-    function copyCA() {
-        navigator.clipboard.writeText(CA_KITA).then(() => {
-            const btnText = document.getElementById('ca-text');
-            btnText.innerText = "CA Copied!";
-            btnText.classList.add('text-green-400');
-            setTimeout(() => {
-                btnText.innerText = "Copy Contract Address";
-                btnText.classList.remove('text-green-400');
-            }, 2000);
-        });
-    }
-
-    // 4. Jalankan Load
     window.addEventListener('load', () => {
-        updateAllLinks();
         initJupiter();
+        updateAllLinks();
     });
 
-    // --- Script UI (Menu, Timer, Supply) ---
+    function revealWallet(id) {
+        const el = document.getElementById(id);
+        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
+        allWallets.forEach(walletId => { if(walletId !== id) document.getElementById(walletId).classList.add('hidden'); });
+        el.classList.toggle('hidden');
+    }
+
+    window.onscroll = function() {
+        const btn = document.getElementById("toTop");
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) btn.classList.remove("hidden");
+        else btn.classList.add("hidden");
+    };
+
     const menuBtn = document.getElementById('mobile-menu-button');
     const menu = document.getElementById('mobile-menu');
     if(menuBtn) {
@@ -537,43 +507,39 @@
         });
     }
 
-    window.onscroll = function() {
-        const btn = document.getElementById("toTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) btn.classList.remove("hidden");
-        else btn.classList.add("hidden");
-    };
-
-    function revealWallet(id) {
-        const all = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
-        all.forEach(w => { if(w !== id) document.getElementById(w).classList.add('hidden'); });
-        document.getElementById(id).classList.toggle('hidden');
-    }
-
     const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    setInterval(() => {
-        const distance = countdownDate - new Date().getTime();
+    setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
         if(document.getElementById("days")) {
-            document.getElementById("days").innerText = Math.floor(distance / 86400000).toString().padStart(2, '0');
-            document.getElementById("hours").innerText = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
+            document.getElementById("days").innerHTML = Math.floor(distance / 86400000).toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
         }
     }, 1000);
 
     const supplyCount = document.getElementById('supply-count');
     const supplyTarget = 1000000000;
     let currentSupply = 0;
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            const count = setInterval(() => {
-                currentSupply += supplyTarget / 80;
-                if(currentSupply >= supplyTarget) { currentSupply = supplyTarget; clearInterval(count); }
-                supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-            }, 25);
-            observer.disconnect();
-        }
-    }, { threshold: 0.5 });
+    const updateCount = () => {
+        const increment = supplyTarget / 80;
+        if (currentSupply < supplyTarget) {
+            currentSupply += increment;
+            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
+            setTimeout(updateCount, 25);
+        } else { supplyCount.innerText = supplyTarget.toLocaleString(); }
+    };
+    const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); } }, { threshold: 0.5 });
     if(supplyCount) observer.observe(supplyCount);
+
+    function copyCA() {
+        const btnText = document.getElementById('ca-text');
+        navigator.clipboard.writeText(CA_KITA).then(() => {
+            btnText.innerText = "CA Copied!";
+            setTimeout(() => { btnText.innerText = "Copy Contract Address"; }, 2000);
+        });
+    }
 </script>
 </body>
 </html>
