@@ -8,12 +8,6 @@
     <meta name="title" content="FEGsol | Fortify Every Gorilla">
     <meta name="description" content="FEGsol is the ultimate architecture on Solana, built to Fortify Every Gorilla. Join the strongest tribe today.">
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fegirvan.github.io/FEGsol/index.html">
-    <meta property="og:title" content="FEGsol | Fortify Every Gorilla">
-    <meta property="og:description" content="Engineering excellence for the strongest tribe on Solana. Join the $FEGSOL movement.">
-    <meta property="og:image" content="https://fegirvan.github.io/FEGsol/G.PNG?v=1">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -58,26 +52,6 @@
             border: 2px solid rgba(168, 85, 247, 0.3);
         }
 
-        .roadmap-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid #7c3aed;
-            transition: all 0.3s ease;
-        }
-
-        .roadmap-card:hover {
-            background: rgba(124, 58, 237, 0.05);
-            transform: translateX(5px);
-        }
-
-        .partner-logo {
-            filter: grayscale(100%) opacity(0.5);
-            transition: all 0.4s ease;
-        }
-        .partner-logo:hover {
-            filter: grayscale(0%) opacity(1);
-            transform: scale(1.1);
-        }
-
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0b; }
         ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
@@ -93,23 +67,14 @@
                     FEG<span class="text-purple-500">SOL</span>
                 </a>
             </div>
-            
-            <div class="relative">
-                <button id="mobile-menu-button" class="group relative flex items-center justify-center p-1 rounded-2xl border-2 border-purple-500/30 bg-[#0a0a0b] hover:border-purple-400">
-                    <img src="solana.JPG" alt="Solana" class="w-10 h-10 md:w-12 md:h-12 rounded-xl object-cover">
-                </button>
-                
-                <div id="mobile-menu" class="absolute right-0 top-full mt-2 w-64 glass-morphism hidden bg-[#0a0a0b]/95 border border-purple-500/30 shadow-2xl">
-                    <a href="story.html" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 text-white">Our Story</a>
-                    <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="block px-6 py-4 text-sm font-orbitron hover:bg-purple-600/30 font-bold text-blue-400">Join Community</a>
-                </div>
-            </div>
+            <button id="mobile-menu-button" class="p-1 rounded-2xl border-2 border-purple-500/30 bg-[#0a0a0b]">
+                <img src="solana.JPG" alt="Solana" class="w-10 h-10 md:w-12 md:h-12 rounded-xl">
+            </button>
         </div>
     </nav>
 
     <section id="about" class="relative min-h-screen flex flex-col items-center justify-center pt-28 hero-gradient text-center px-6">
         <div class="relative mb-8 mt-4">
-            <div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
             <img src="G.PNG" alt="FEGsol Gorilla" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape-glow">
         </div>
 
@@ -119,37 +84,28 @@
         </h1>
 
         <div class="mb-10 w-full max-w-lg mx-auto">
-            <p class="font-orbitron text-[10px] tracking-[0.4em] uppercase text-purple-400 mb-4">Launching In:</p>
             <div class="grid grid-cols-4 gap-2 md:gap-4">
-                <div class="glass-morphism p-3 md:p-4 border-b-2 border-yellow-500 text-center">
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-yellow-500">
                     <span id="days" class="block text-2xl md:text-4xl font-bold font-orbitron gold-text">00</span>
-                    <span class="text-[8px] uppercase tracking-widest text-gray-500">Days</span>
+                    <span class="text-[8px] uppercase text-gray-500">Days</span>
                 </div>
-                <div class="glass-morphism p-3 md:p-4 border-b-2 border-purple-500 text-center">
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-purple-500">
                     <span id="hours" class="block text-2xl md:text-4xl font-bold font-orbitron text-white">00</span>
-                    <span class="text-[8px] uppercase tracking-widest text-gray-400">Hours</span>
+                    <span class="text-[8px] uppercase text-gray-400">Hours</span>
                 </div>
-                <div class="glass-morphism p-3 md:p-4 border-b-2 border-blue-500 text-center">
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-blue-500">
                     <span id="minutes" class="block text-2xl md:text-4xl font-bold font-orbitron text-white">00</span>
-                    <span class="text-[8px] uppercase tracking-widest text-gray-400">Mins</span>
+                    <span class="text-[8px] uppercase text-gray-400">Mins</span>
                 </div>
-                <div class="glass-morphism p-3 md:p-4 border-b-2 border-pink-500 text-center">
+                <div class="glass-morphism p-3 md:p-4 border-b-2 border-pink-500">
                     <span id="seconds" class="block text-2xl md:text-4xl font-bold font-orbitron text-white animate-pulse">00</span>
-                    <span class="text-[8px] uppercase tracking-widest text-gray-400">Secs</span>
+                    <span class="text-[8px] uppercase text-gray-400">Secs</span>
                 </div>
             </div>
-            <p class="mt-4 text-[9px] font-orbitron text-gray-600 tracking-widest uppercase">Official Launch: April 23, 2026</p>
         </div>
 
-        <p class="text-gray-400 max-w-md mx-auto text-sm md:text-lg mb-8 font-light">
-            FEGsol is the ultimate architecture on Solana, built to <span class="text-purple-400 font-bold">Fortify Every Gorilla</span>.
-        </p>
-
-        <div class="flex flex-col gap-3 w-full max-w-xs mb-8">
-            <a href="https://raydium.io/swap/?outputMint=BBigCqRMg57zqgBQMvccvFok2Kt24uwnid47w4rWpump" target="_blank" class="btn-primary py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-white">
-                Buy on Raydium
-            </a>
-            <button onclick="copyCA()" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold tracking-widest uppercase text-white">
+        <div class="flex flex-col gap-3 w-full max-w-xs">
+            <button onclick="copyCA()" class="bg-white/5 border border-white/10 py-3 rounded-xl font-orbitron text-xs font-bold text-white">
                 <span id="ca-text">Copy Contract Address</span>
             </button>
         </div>
@@ -157,115 +113,73 @@
 
     <section id="swap-section" class="py-20 px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
-            <div class="glass-morphism overflow-hidden border-2 border-purple-500/30">
+            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Swap on Raydium</h2>
+            <div class="glass-morphism overflow-hidden border-2 border-purple-500/30 bg-[#121214] shadow-2xl">
                 <iframe 
+                    src="https://raydium.io/swap/?inputMint=sol&outputMint=BBigCqRMg57zqgBQMvccvFok2Kt24uwnid47w4rWpump" 
                     width="100%" 
                     height="600" 
-                    src="https://dexscreener.com/solana/BBigCqRMg57zqgBQMvccvFok2Kt24uwnid47w4rWpump?embed=1&theme=dark" 
-                    style="border:0;">
+                    style="border: none; border-radius: 15px;"
+                    title="Raydium Swap">
                 </iframe>
             </div>
-            <p class="mt-4 text-[10px] font-orbitron text-gray-500 uppercase tracking-widest">Powered by Raydium Liquidity</p>
         </div>
     </section>
 
-    <section class="py-10 px-6 max-w-4xl mx-auto border-t border-white/5">
-        <div class="glass-morphism p-6 md:p-8 border-2 border-purple-500/30 bg-purple-900/5 relative overflow-hidden group">
-            <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
-                <div class="w-full md:w-2/5">
-                    <img src="G.PNG" alt="Banana Farm" class="relative rounded-xl border border-white/10 shadow-2xl">
+    <section class="py-16 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <div class="glass-morphism p-8 border-2 border-purple-500/30 bg-purple-900/5">
+            <h2 class="font-orbitron text-xl font-bold text-white mb-4">STAKING POWERED BY STREAMFLOW</h2>
+            <p class="text-gray-400 text-sm mb-6">Institutional-grade security for $FEGSOL holders.</p>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+                    <p class="text-[10px] text-white font-bold font-orbitron">REAL-TIME YIELD</p>
                 </div>
-                <div class="w-full md:w-3/5 text-center md:text-left">
-                    <h2 class="font-orbitron text-xl md:text-2xl font-bold text-white mb-4">STAKING POWERED BY <span class="gold-text">STREAMFLOW</span></h2>
-                    <p class="text-gray-400 text-xs md:text-sm font-light leading-relaxed mb-6">
-                        $FEGSOL utilizes <span class="text-white font-semibold">Streamflow Protocol</span> to provide institutional-grade locking and staking.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white/5 p-3 rounded-xl border border-white/10">
-                            <p class="text-[9px] text-gray-500 font-orbitron uppercase mb-1">Security</p>
-                            <p class="text-[10px] text-white font-bold font-orbitron">AUDITED CONTRACTS</p>
-                        </div>
-                        <div class="bg-white/5 p-3 rounded-xl border border-white/10">
-                            <p class="text-[9px] text-gray-500 font-orbitron uppercase mb-1">Rewards</p>
-                            <p class="text-[10px] text-yellow-400 font-bold font-orbitron">REAL-TIME YIELD</p>
-                        </div>
-                    </div>
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+                    <p class="text-[10px] text-white font-bold font-orbitron">AUDITED CONTRACTS</p>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="tokenomics" class="py-20 px-6 max-w-4xl mx-auto border-t border-white/5">
-        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Tokenomics</h2>
-        <div class="glass-morphism p-8 md:p-12 space-y-8 mb-10">
-            <div class="flex justify-between items-center border-b border-white/5 pb-6">
-                <span class="text-gray-400 font-orbitron text-[10px] uppercase">Total Supply</span>
-                <div class="text-right">
-                    <div class="text-xl md:text-3xl font-bold font-orbitron text-white">1,000,000,000</div>
-                    <div class="text-purple-500 font-bold font-orbitron text-xs">$FEGSOL</div>
-                </div>
+        <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase">Tokenomics</h2>
+        <div class="glass-morphism p-8 space-y-6">
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase">Total Supply</span>
+                <span class="text-xl font-bold font-orbitron">1,000,000,000</span>
             </div>
-            <div class="mt-8 p-6 rounded-2xl bg-purple-900/10 border border-purple-500/20">
-                <div class="flex justify-between items-end mb-4">
-                    <span class="text-[9px] font-orbitron text-purple-400 uppercase">Circulating Scarcity</span>
-                    <span class="text-[10px] font-orbitron text-white font-bold bg-purple-600/30 px-2 py-1 rounded">1% BURNED</span>
-                </div>
-                <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden p-[2px]">
-                    <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-yellow-500 h-full rounded-full" style="width: 1%"></div>
-                </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                <span class="text-gray-400 font-orbitron text-xs uppercase">Liquidity</span>
+                <span class="text-xl font-bold font-orbitron text-purple-500">BURNED</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-4 text-center border border-white/5">
-                <div class="font-orbitron text-[9px] text-blue-400 uppercase"><i class="fas fa-bullhorn mb-2"></i> Marketing</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10">
+            <button onclick="revealWallet('marketing-addr')" class="glass-morphism p-4 border border-white/5">
+                <div class="font-orbitron text-[9px] text-blue-400 uppercase">Marketing</div>
                 <div id="marketing-addr" class="hidden mt-3 text-[8px] break-all font-mono">D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt</div>
             </button>
-            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-4 text-center border border-white/5">
-                <div class="font-orbitron text-[9px] text-red-400 uppercase"><i class="fas fa-fire mb-2"></i> Burn Queue</div>
+            <button onclick="revealWallet('burn-addr')" class="glass-morphism p-4 border border-white/5">
+                <div class="font-orbitron text-[9px] text-red-400 uppercase">Burn Queue</div>
                 <div id="burn-addr" class="hidden mt-3 text-[8px] break-all font-mono">92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T</div>
             </button>
-            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-4 text-center border border-white/5">
-                <div class="font-orbitron text-[9px] text-purple-400 uppercase"><i class="fas fa-code mb-2"></i> Developer</div>
+            <button onclick="revealWallet('dev-addr')" class="glass-morphism p-4 border border-white/5">
+                <div class="font-orbitron text-[9px] text-purple-400 uppercase">Developer</div>
                 <div id="dev-addr" class="hidden mt-3 text-[8px] break-all font-mono">DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93</div>
             </button>
-            <button onclick="revealWallet('staking-addr')" class="glass-morphism p-4 text-center border border-white/5">
-                <div class="font-orbitron text-[9px] text-yellow-400 uppercase"><i class="fas fa-wheat-awn mb-2"></i> Banana Farm</div>
+            <button onclick="revealWallet('staking-addr')" class="glass-morphism p-4 border border-white/5">
+                <div class="font-orbitron text-[9px] text-yellow-400 uppercase">Banana Farm</div>
                 <div id="staking-addr" class="hidden mt-3 text-[8px] break-all font-mono">Hu1atW9tL8THFWBWvayjoMLrpLaGrfb7XssJh4o5XFta</div>
             </button>
         </div>
     </section>
 
-    <section id="roadmap" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-orbitron text-3xl font-bold text-center mb-12 gold-text uppercase tracking-widest">Roadmap</h2>
-            <div class="space-y-6">
-                <div class="roadmap-card p-6 rounded-r-xl border-purple-500">
-                    <span class="text-purple-400 font-orbitron text-[10px] uppercase">Phase 1</span>
-                    <h4 class="text-xl font-bold mb-2 uppercase">Foundation</h4>
-                    <p class="text-gray-400 text-xs uppercase">Website, Community, Audit.</p>
-                </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-blue-500">
-                    <span class="text-blue-400 font-orbitron text-[10px] uppercase">Phase 2</span>
-                    <h4 class="text-xl font-bold mb-2 uppercase">Launch</h4>
-                    <p class="text-gray-400 text-xs uppercase">Pump.fun, Marketing, Listings.</p>
-                </div>
-                <div class="roadmap-card p-6 rounded-r-xl border-yellow-500">
-                    <span class="text-yellow-400 font-orbitron text-[10px] uppercase">Phase 3</span>
-                    <h4 class="text-xl font-bold mb-2 uppercase">Expansion</h4>
-                    <p class="text-gray-400 text-xs uppercase">Staking, DAO, CEX.</p>
-                </div>
-            </div>
+    <footer class="py-12 text-center border-t border-white/5">
+        <div class="flex justify-center space-x-8 mb-6">
+            <a href="#" class="text-gray-400 hover:text-purple-500 text-2xl"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-blue-400 text-2xl"><i class="fab fa-telegram"></i></a>
         </div>
-    </section>
-
-    <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
-        <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 text-3xl"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 text-3xl"><i class="fab fa-telegram"></i></a>
-        </div>
-        <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em]">FEGSOL &copy; 2026</p>
+        <p class="text-[10px] text-gray-600 font-orbitron">FEGSOL &copy; 2026</p>
     </footer>
 
     <script>
@@ -281,8 +195,6 @@
 
     function revealWallet(id) {
         const el = document.getElementById(id);
-        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
-        allWallets.forEach(wid => { if(wid !== id) document.getElementById(wid).classList.add('hidden'); });
         el.classList.toggle('hidden');
     }
 
@@ -290,17 +202,11 @@
     setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }
+        document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
     }, 1000);
-
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    if(menuBtn) { menuBtn.addEventListener('click', (e) => { e.stopPropagation(); menu.classList.toggle('hidden'); }); }
     </script>
 </body>
 </html>
