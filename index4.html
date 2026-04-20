@@ -21,6 +21,8 @@
     <meta property="twitter:image" content="https://fegirvan.github.io/FEGsol/G.PNG">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://terminal.jup.ag/main-v2.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
@@ -393,12 +395,19 @@
         </div>
     </section>
 
-    <section id="fegswap" class="py-20 px-6">
-    <div class="max-w-md mx-auto text-center">
-        <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">FEGSWAP</h2>
-        <div id="integrated-terminal" class="glass-morphism overflow-hidden border-2 border-purple-500/30 shadow-2xl"></div>
-    </div>
-</section>
+    <section id="swap-section" class="py-20 px-6">
+        <div class="max-w-md mx-auto text-center">
+            <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">FEGSWAP TERMINAL</h2>
+            
+            <div class="glass-morphism p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)] min-h-[550px]">
+                <div id="integrated-terminal"></div>
+            </div>
+            
+            <p class="mt-4 text-gray-500 text-[10px] font-orbitron uppercase tracking-widest italic animate-pulse">
+                Institutional Liquidity via Jupiter
+            </p>
+        </div>
+    </section>
 
     <section id="how-to-buy" class="py-20 px-6 max-w-6xl mx-auto border-t border-white/5">
         <div class="text-center mb-12">
@@ -427,8 +436,8 @@
                 <div class="w-14 h-14 bg-yellow-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-yellow-500/50 group-hover:scale-110 transition-transform">
                     <i class="fas fa-rocket text-yellow-400 text-xl"></i>
                 </div>
-                <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white">3. PUMP.FUN</h4>
-                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Click the 'Buy' button above or paste our Contract Address on Pump.fun.</p>
+                <h4 class="font-orbitron text-xs font-bold mb-3 tracking-widest text-white">3. FEGSWAP</h4>
+                <p class="text-[10px] text-gray-400 leading-relaxed uppercase">Use the swap terminal above to trade your SOL for $FEGSOL instantly.</p>
             </div>
 
             <div class="glass-morphism p-8 text-center border border-white/5 hover:border-green-500/30 transition-all group">
@@ -513,43 +522,43 @@
     </button>
 
     <script>
-    // ==========================================
-    // TANDAI: GANTI CA FEGSOL DI BAWAH INI
-    // ==========================================
-    const CA_KITA = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm";
-    // ==========================================
+    const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
+
+    // TAMBAHAN: Fungsi FEGswap (Jupiter)
+    function initJupiter() {
+        if (window.Jupiter) {
+            window.Jupiter.init({
+                displayMode: "integrated",
+                integratedTargetId: "integrated-terminal",
+                endpoint: "https://api.mainnet-beta.solana.com",
+                formProps: {
+                    initialOutputMint: CA_KITA,
+                    fixedOutputMint: false,
+                },
+                theme: 'dark'
+            });
+        }
+    }
+
+    // Panggil initJupiter saat DOM siap
+    document.addEventListener("DOMContentLoaded", initJupiter);
 
     function updateAllLinks() {
-    // 1. Link Utama ke Pump.fun (Tempat beli saat Fair Launch)
-    const pumpLink = document.getElementById('pump-link');
-    if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+        const dexIframe = document.getElementById('dex-iframe');
+        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        
+        const chartIcon = document.getElementById('chart-link-1');
+        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
 
-    // 2. Link Iframe Chart (DexScreener)
-    const dexIframe = document.getElementById('dex-iframe');
-    if(dexIframe) {
-        dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        const scanLink = document.getElementById('scan-link');
+        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+        const swapLink = document.getElementById('swap-link');
+        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
+
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
-    
-    // 3. Link Icon Chart
-    const chartIcon = document.getElementById('chart-link-1');
-    if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
-
-    // 4. Link Solscan
-    const scanLink = document.getElementById('scan-link');
-    if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-    // 5. Link Jupiter (Format ini lebih akurat untuk nembak CA)
-    const swapLink = document.getElementById('swap-link');
-    if(swapLink) {
-        // Pakai format query parameter agar Jupiter langsung mengenali token baru
-        swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-    }
-
-    // 6. Link Launch (Pump.fun)
-    const launchLink = document.getElementById('launch-link');
-    if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
-}
-
 
     updateAllLinks();
 
@@ -577,22 +586,8 @@
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-                menuBtn.classList.add('border-purple-500/30');
-            } else {
-                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            }
         });
     }
-
-    document.addEventListener('click', () => { 
-        if(menu && !menu.classList.contains('hidden')) {
-            menu.classList.add('hidden');
-            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            menuBtn.classList.add('border-purple-500/30');
-        }
-    });
 
     const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
     const timer = setInterval(function() {
@@ -604,78 +599,27 @@
             document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
-        if (distance < 0) { clearInterval(timer); }
     }, 1000);
 
     const supplyCount = document.getElementById('supply-count');
     const supplyTarget = 1000000000;
     let currentSupply = 0;
-
     const updateCount = () => {
-        const increment = supplyTarget / 80;
         if (currentSupply < supplyTarget) {
-            currentSupply += increment;
-            if (currentSupply > supplyTarget) currentSupply = supplyTarget;
+            currentSupply += supplyTarget / 80;
             supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
             setTimeout(updateCount, 25);
-        } else {
-            supplyCount.innerText = supplyTarget.toLocaleString();
         }
     };
-
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-    }, { threshold: 0.5 });
-    
-    if(supplyCount) observer.observe(supplyCount);
+    if(supplyCount) updateCount();
 
     function copyCA() {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
-        } else {
-            const textArea = document.createElement("textarea");
-            textArea.value = CA_KITA;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            handleCopySuccess();
-        }
+        navigator.clipboard.writeText(CA_KITA).then(() => {
+            const btnText = document.getElementById('ca-text');
+            btnText.innerText = "CA Copied!";
+            setTimeout(() => { btnText.innerText = "Copy Contract Address"; }, 2000);
+        });
     }
-
-    function handleCopySuccess() {
-        const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
-    }
-    <script src="https://terminal.jup.ag/main-v2.js"></script>
-<script>
-    window.Jupiter.init({
-        displayMode: "integrated",
-        integratedTargetId: "integrated-terminal",
-        endpoint: "https://api.mainnet-beta.solana.com",
-        strictTokenList: false,
-        formProps: {
-            fixedOutputMint: true,
-            initialOutputMint: CA_KITA,
-        },
-        // CUSTOM THEME BIAR MIRIP WEB KAMU
-        theme: 'dark',
-        customStyleParams: {
-            containerColor: '#121214', // Background gelap
-            bgColor: '#0a0a0b',
-            primaryColor: '#7c3aed', // Warna Ungu FEGsol
-            accentColor: '#ca8a04',  // Warna Emas FEGsol
-            fontFamily: 'Orbitron',
-        }
-    });
 </script>
-
-</script>
-
 </body>
 </html>
