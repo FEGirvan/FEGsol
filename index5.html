@@ -398,7 +398,8 @@
         <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade on Raydium</h2>
         <div class="glass-morphism overflow-hidden border-2 border-purple-500/30 bg-[#121214] shadow-2xl">
             <iframe 
-                src="https://raydium.io/swap/?inputMint=sol&outputMint=BBigCqRMg57zqgBQMvccvFok2Kt24uwnid47w4rWpump" 
+                id="raydium-iframe"
+                src="" 
                 width="100%" 
                 height="600" 
                 style="border: none; border-radius: 15px;"
@@ -408,6 +409,7 @@
         <p class="mt-4 text-[10px] font-orbitron text-gray-500 uppercase tracking-widest">Powered by Raydium Protocol</p>
     </div>
 </section>
+
 
 
     <section id="how-to-buy" class="py-20 px-6 max-w-6xl mx-auto border-t border-white/5">
@@ -530,24 +532,37 @@
     // ==========================================
 
     function updateAllLinks() {
-        const pumpLink = document.getElementById('pump-link');
-        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+    // 1. Link Pump.fun
+    const pumpLink = document.getElementById('pump-link');
+    if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-        const dexIframe = document.getElementById('dex-iframe');
-        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-        
-        const chartIcon = document.getElementById('chart-link-1');
-        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
-
-        const scanLink = document.getElementById('scan-link');
-        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-        const swapLink = document.getElementById('swap-link');
-        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-
-        const launchLink = document.getElementById('launch-link');
-        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+    // 2. Link Raydium Iframe (Ini yang baru)
+    const raydiumIframe = document.getElementById('raydium-iframe');
+    if(raydiumIframe) {
+        raydiumIframe.src = `https://raydium.io/swap/?inputMint=sol&outputMint=${CA_KITA}`;
     }
+
+    // 3. Link DexScreener Chart
+    const dexIframe = document.getElementById('dex-iframe');
+    if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+    
+    // 4. Link Chart Icon
+    const chartIcon = document.getElementById('chart-link-1');
+    if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+
+    // 5. Link Solscan
+    const scanLink = document.getElementById('scan-link');
+    if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+    // 6. Link Swap (Tombol Manual)
+    const swapLink = document.getElementById('swap-link');
+    if(swapLink) swapLink.href = `https://raydium.io/swap/?inputMint=sol&outputMint=${CA_KITA}`;
+
+    // 7. Link Launch
+    const launchLink = document.getElementById('launch-link');
+    if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+}
+
 
     updateAllLinks();
 
