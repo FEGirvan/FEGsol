@@ -445,10 +445,10 @@
 
     <button id="toTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border border-white/20 hidden hover:bg-purple-500 transition-all shadow-lg shadow-purple-900/50"><i class="fas fa-arrow-up text-white"></i></button>
 
-    <script>
+  <script>
     const CA_KITA = "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263";
 
-    // JUPITER TERMINAL INITIALIZATION
+    // 1. JUPITER TERMINAL INITIALIZATION
     function initJupiter() {
         const target = document.getElementById('jupiter-terminal');
         const loader = document.getElementById('jup-loader');
@@ -469,77 +469,50 @@
         }
     }
 
+    // 2. UPDATE SEMUA LINK OTOMATIS
     function updateAllLinks() {
         const dexIframe = document.getElementById('dex-iframe');
         if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-        const chartIcon = document.getElementById('chart-link-1');
-        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+        
+        const chartLink = document.getElementById('chart-link-1');
+        if(chartLink) chartLink.href = `https://dexscreener.com/solana/${CA_KITA}`;
+
         const scanLink = document.getElementById('scan-link');
         if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-        const launchLink = document.getElementById('launch-link');
-        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+
+        const pumpLink = document.getElementById('launch-link');
+        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
+    // Jalankan semua fungsi saat halaman selesai dimuat
     window.addEventListener('load', () => {
         initJupiter();
         updateAllLinks();
     });
 
-    function revealWallet(id) {
-        const el = document.getElementById(id);
-        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
-        allWallets.forEach(walletId => { if(walletId !== id) document.getElementById(walletId).classList.add('hidden'); });
-        el.classList.toggle('hidden');
-    }
-
-    window.onscroll = function() {
-        const btn = document.getElementById("toTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) btn.classList.remove("hidden");
-        else btn.classList.add("hidden");
-    };
-
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    if(menuBtn) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
-        });
-    }
-
-    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerHTML = Math.floor(distance / 86400000).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
-        }
-    }, 1000);
-
-    const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000;
-    let currentSupply = 0;
-    const updateCount = () => {
-        const increment = supplyTarget / 80;
-        if (currentSupply < supplyTarget) {
-            currentSupply += increment;
-            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-            setTimeout(updateCount, 25);
-        } else { supplyCount.innerText = supplyTarget.toLocaleString(); }
-    };
-    const observer = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); } }, { threshold: 0.5 });
-    if(supplyCount) observer.observe(supplyCount);
-
+    // 3. FUNGSI COPY CA
     function copyCA() {
         const btnText = document.getElementById('ca-text');
         navigator.clipboard.writeText(CA_KITA).then(() => {
-            btnText.innerText = "CA Copied!";
-            setTimeout(() => { btnText.innerText = "Copy Contract Address"; }, 2000);
+            if(btnText) {
+                btnText.innerText = "CA Copied!";
+                setTimeout(() => { btnText.innerText = "Copy Contract Address"; }, 2000);
+            }
         });
     }
+
+    // 4. SCROLL TO TOP
+    window.onscroll = function() {
+        const btn = document.getElementById("toTop");
+        if(btn) {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        }
+    };
 </script>
+
 </body>
 </html>
