@@ -540,19 +540,21 @@
 
     // 2. FUNGSI JUPITER TERMINAL (SWAP DI WEB)
     function launchJupiter() {
-        if (window.Jupiter) {
-            window.Jupiter.init({
-                displayMode: "integrated",
-                integratedTargetId: "integrated-terminal",
-                endpoint: "https://api.mainnet-beta.solana.com",
-                formProps: {
-                    initialInputMint: "So11111111111111111111111111111111111111112", // SOL
-                    initialOutputMint: CA_KITA, 
-                },
-                styles: { theme: "dark" },
-            });
-        }
+    if (window.Jupiter) {
+        window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "integrated-terminal",
+            // KITA GANTI ENDPOINT-NYA KE HELIUS (LEBIH STABIL)
+            endpoint: "https://mainnet.helius-rpc.com/?api-key=475306d0-08e1-454a-8d18-9366d110931d", 
+            formProps: {
+                initialInputMint: "So11111111111111111111111111111111111111112", // SOL
+                initialOutputMint: CA_KITA, 
+            },
+            styles: { theme: "dark" },
+        });
     }
+}
+
 
     // Jalankan semua fungsi saat web dibuka
     updateAllLinks();
