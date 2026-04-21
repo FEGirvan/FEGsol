@@ -602,35 +602,36 @@
     const timer = setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
+        
         if(document.getElementById("days")) {
             document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
             document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
             document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
-                if (distance < 0) { 
+
+        // --- LOGIKA KETIKA WAKTU HABIS ---
+        if (distance < 0) { 
             clearInterval(timer);
             
-            // 1. Mengubah kotak angka menjadi tulisan FEG SOL IS LIVE
             const timerContainer = document.querySelector('.grid.grid-cols-4');
             if(timerContainer) {
                 timerContainer.innerHTML = `
-                    <div class="col-span-4 glass-morphism p-6 border-2 border-yellow-500 animate-bounce">
-                        <span class="block text-3xl md:text-5xl font-bold font-orbitron gold-text">FEG SOL IS LIVE!</span>
+                    <div class="col-span-4 glass-morphism p-6 border-2 border-yellow-500 animate-bounce shadow-[0_0_30px_rgba(234,179,8,0.3)]">
+                        <span class="block text-3xl md:text-5xl font-bold font-orbitron gold-text drop-shadow-[0_0_15px_rgba(253,224,71,0.6)]">FEG SOL IS LIVE!</span>
                     </div>
                 `;
             }
 
-            // 2. Menghilangkan tulisan tanggal April 23
             const launchText = document.querySelector('p.text-gray-600.tracking-widest');
             if(launchText) launchText.style.display = 'none';
 
-            // 3. Mengubah tulisan "Launching In"
             const launchingInText = document.querySelector('p.text-purple-400.tracking-\\[0\\.4em\\]');
             if(launchingInText) launchingInText.innerText = 'Grab Your $FEGSOL Now:';
         }
+    }, 1000);
 
-
+    // --- LOGIKA TOKENOMICS ---
     const supplyCount = document.getElementById('supply-count');
     const supplyTarget = 1000000000;
     let currentSupply = 0;
@@ -640,10 +641,10 @@
         if (currentSupply < supplyTarget) {
             currentSupply += increment;
             if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
+            if(supplyCount) supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
             setTimeout(updateCount, 25);
         } else {
-            supplyCount.innerText = supplyTarget.toLocaleString();
+            if(supplyCount) supplyCount.innerText = supplyTarget.toLocaleString();
         }
     };
 
@@ -669,14 +670,17 @@
 
     function handleCopySuccess() {
         const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
+        if(btnText) {
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
+        }
     }
 </script>
+
 
 </body>
 </html>
