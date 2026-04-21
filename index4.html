@@ -568,18 +568,16 @@
 
     window.onscroll = function() {
         const btn = document.getElementById("toTop");
-        if (btn) {
-            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-                btn.classList.remove("hidden");
-            } else {
-                btn.classList.add("hidden");
-            }
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+            btn.classList.remove("hidden");
+        } else {
+            btn.classList.add("hidden");
         }
     };
 
     const menuBtn = document.getElementById('mobile-menu-button');
     const menu = document.getElementById('mobile-menu');
-    if(menuBtn && menu) {
+    if(menuBtn) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             menu.classList.toggle('hidden');
@@ -592,17 +590,15 @@
         });
     }
 
-    document.addEventListener('click', (e) => { 
+    document.addEventListener('click', () => { 
         if(menu && !menu.classList.contains('hidden')) {
-            if(menuBtn && !menuBtn.contains(e.target) && !menu.contains(e.target)) {
-                menu.classList.add('hidden');
-                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-                menuBtn.classList.add('border-purple-500/30');
-            }
+            menu.classList.add('hidden');
+            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            menuBtn.classList.add('border-purple-500/30');
         }
     });
 
-    const countdownDate = new Date("April 20, 2026 20:00:00").getTime();
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
     const timer = setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
@@ -622,11 +618,7 @@
             if(timerContainer) {
                 timerContainer.innerHTML = `
                     <div class="col-span-4 glass-morphism p-6 border-2 border-yellow-500 animate-bounce shadow-[0_0_30px_rgba(234,179,8,0.3)]">
-                        <div class="flex items-center justify-center gap-2 md:gap-4 gold-text drop-shadow-[0_0_15px_rgba(253,224,71,0.6)]">
-                            <span class="text-3xl md:text-5xl font-bold font-orbitron">FEG S</span>
-                            <img src="G.PNG" alt="O" class="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-yellow-400 animate-pulse shadow-xl">
-                            <span class="text-3xl md:text-5xl font-bold font-orbitron">L IS LIVE!</span>
-                        </div>
+                        <span class="block text-3xl md:text-5xl font-bold font-orbitron gold-text drop-shadow-[0_0_15px_rgba(253,224,71,0.6)]">FEG SOL IS LIVE!</span>
                     </div>
                 `;
             }
@@ -639,7 +631,7 @@
         }
     }, 1000);
 
-    // --- LOGIKA TOKENOMICS (ANIMASI ANGKA) ---
+    // --- LOGIKA TOKENOMICS ---
     const supplyCount = document.getElementById('supply-count');
     const supplyTarget = 1000000000;
     let currentSupply = 0;
@@ -688,7 +680,6 @@
         }
     }
 </script>
-
 
 </body>
 </html>
