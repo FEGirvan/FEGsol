@@ -509,16 +509,14 @@
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
-                <i class="fab fa-telegram"></i>
-            </a>
-            <a href="whitepaper.html" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-all duration-300 text-3xl hover:scale-125">
-                <i class="fas fa-file-alt"></i>
-            </a>
-        </div>
+    <a href="#" id="footer-twitter" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" id="footer-telegram" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
+        <i class="fab fa-telegram"></i>
+    </a>
+    </div>
+
         <p class="text-[10px] text-gray-600 font-orbitron uppercase tracking-[0.2em] mb-2">FEGSOL &copy; 2026</p>
         <p class="text-[8px] text-gray-700">Financial Freedom for the Apes.</p>
     </footer>
@@ -530,33 +528,38 @@
 
         <script>
     // ==========================================
-    // TANDAI: GANTI CA FEGSOL DI BAWAH INI
+    // PINTU UTAMA - GANTI SEMUA DI SINI SAJA!
     // ==========================================
-    const CA_KITA = "Launching on pumpfun 23rd April 2026";
+    const INFO_PROJECT = {
+        CA: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
+        TWITTER: "https://x.com/FEGsol_Official",
+        TELEGRAM: "https://t.me/+16oraMVw88w3MmU9"
+    };
     // ==========================================
 
     function updateAllLinks() {
-        const pumpLink = document.getElementById('pump-link');
-        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+        const elements = {
+            'pump-link': `https://pump.fun/${INFO_PROJECT.CA}`,
+            'dex-iframe': `https://dexscreener.com/solana/${INFO_PROJECT.CA}?embed=1&theme=dark&trades=0&info=0`,
+            'chart-link-1': `https://dexscreener.com/solana/${INFO_PROJECT.CA}`,
+            'scan-link': `https://solscan.io/token/${INFO_PROJECT.CA}`,
+            'swap-link': `https://jup.ag/swap/SOL-${INFO_PROJECT.CA}`,
+            'launch-link': `https://pump.fun/${INFO_PROJECT.CA}`,
+            // Link Media Sosial (Pastikan ID ini ada di tag <a> di HTML)
+            'footer-twitter': INFO_PROJECT.TWITTER,
+            'footer-telegram': INFO_PROJECT.TELEGRAM
+        };
 
-        const dexIframe = document.getElementById('dex-iframe');
-        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-        
-        const chartIcon = document.getElementById('chart-link-1');
-        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
-
-        const scanLink = document.getElementById('scan-link');
-        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-        const swapLink = document.getElementById('swap-link');
-        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-
-        const launchLink = document.getElementById('launch-link');
-        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+        for (const [id, url] of Object.entries(elements)) {
+            const el = document.getElementById(id);
+            if (el) el.href = url;
+        }
     }
 
+    // Jalankan update link saat pertama kali loading
     updateAllLinks();
 
+    // --- Fungsi Bawaan Script Lama ---
     function revealWallet(id) {
         const el = document.getElementById(id);
         const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
@@ -568,16 +571,16 @@
 
     window.onscroll = function() {
         const btn = document.getElementById("toTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        if (btn && (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500)) {
             btn.classList.remove("hidden");
-        } else {
+        } else if (btn) {
             btn.classList.add("hidden");
         }
     };
 
     const menuBtn = document.getElementById('mobile-menu-button');
     const menu = document.getElementById('mobile-menu');
-    if(menuBtn) {
+    if(menuBtn && menu) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             menu.classList.toggle('hidden');
@@ -609,7 +612,6 @@
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
 
-        // --- BAGIAN YANG DIUBAH: MENAMPILKAN GAMBAR SAAT LIVE ---
         if (distance < 0) { 
             clearInterval(timer); 
             const timerContainer = document.querySelector('.grid.grid-cols-4');
@@ -620,12 +622,9 @@
                     </div>
                 `;
             }
-            // Menghilangkan teks "Launching In"
             const labels = document.querySelectorAll('p.text-purple-400, p.text-gray-600');
             labels.forEach(p => { if(p.innerText.includes('Launch')) p.style.display = 'none'; });
         }
-        // -------------------------------------------------------
-
     }, 1000);
 
     const supplyCount = document.getElementById('supply-count');
@@ -637,9 +636,9 @@
         if (currentSupply < supplyTarget) {
             currentSupply += increment;
             if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
+            if(supplyCount) supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
             setTimeout(updateCount, 25);
-        } else {
+        } else if (supplyCount) {
             supplyCount.innerText = supplyTarget.toLocaleString();
         }
     };
@@ -650,12 +649,14 @@
     
     if(supplyCount) observer.observe(supplyCount);
 
+    // Fungsi Copy CA (Sekarang mengambil dari Pintu Utama)
     function copyCA() {
+        const caToCopy = INFO_PROJECT.CA;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
+            navigator.clipboard.writeText(caToCopy).then(() => { handleCopySuccess(); });
         } else {
             const textArea = document.createElement("textarea");
-            textArea.value = CA_KITA;
+            textArea.value = caToCopy;
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand('copy');
@@ -666,14 +667,17 @@
 
     function handleCopySuccess() {
         const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
+        if(btnText) {
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
+        }
     }
 </script>
+
 
 
 </body>
