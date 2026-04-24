@@ -16,22 +16,20 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER SECTION */
+        /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 20px 5px; background: transparent; flex-shrink: 0;
         }
-
         .logo-section { display: flex; align-items: center; gap: 10px; }
         .logo-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #7c3aed; overflow: hidden; }
-
         .btn-wallet {
             background: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
         }
 
-        /* BADGE SECTION */
+        /* BADGE */
         .badge-container { display: flex; justify-content: center; margin: 0 0 10px; }
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
@@ -48,12 +46,7 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        #gorilla { 
-            width: 80px; height: 80px; 
-            position: absolute; bottom: 20px; 
-            left: 0; 
-            z-index: 20; 
-        }
+        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 20px; left: 0; z-index: 20; }
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
         .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
         .banana img { width: 100%; height: 100%; object-fit: contain; }
@@ -63,20 +56,18 @@
             background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 8px; backdrop-filter: blur(4px);
         }
 
-        /* TIER PANEL (GLASSMORPHISM) */
+        /* TIER PANEL */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 10px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
             border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 20px; padding: 12px;
         }
-
         .tier-card {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(139, 92, 246, 0.05); border-radius: 12px; 
             padding: 8px 15px; margin-bottom: 6px; border: 1px solid rgba(255, 255, 255, 0.03);
-            transition: all 0.3s;
+            transition: 0.3s;
         }
-
         .tier-card.active {
             border: 1px solid #8b5cf6;
             background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 27, 75, 0.4) 100%);
@@ -89,15 +80,12 @@
             flex-direction: column; align-items: center; justify-content: center;
             backdrop-filter: blur(8px);
         }
-
-        .btn-claim {
-            background: #fbbf24; color: #000; padding: 12px 0; border-radius: 99px;
-            width: 220px; font-weight: 800; font-family: 'Orbitron'; font-size: 11px;
-            text-transform: uppercase; margin-bottom: 10px;
-        }
     </style>
 </head>
 <body onload="initGame()">
+
+    <audio id="bg-music" loop><source src="musik-game.mp3" type="audio/mpeg"></audio>
+    <audio id="sfx-collect"><source src="tangkap.mp3" type="audio/mpeg"></audio>
 
     <nav>
         <div class="logo-section">
@@ -112,7 +100,7 @@
             <span class="text-yellow-500 text-xs">👑</span>
             <div class="text-center">
                 <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Live Performance</p>
-                <p id="live-rank" class="text-[11px] font-orbitron font-bold uppercase italic text-white">Level: Baby Ape</p>
+                <p id="live-rank" class="text-[11px] font-orbitron font-bold uppercase italic text-white">Level: Trainee</p>
             </div>
         </div>
     </div>
@@ -126,21 +114,16 @@
         
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-1 italic">BUSTED!</h2>
-            <p id="final-rank" class="font-orbitron text-[9px] text-gray-400 uppercase tracking-widest"></p>
             <div id="reward-display" class="font-orbitron text-yellow-400 text-2xl mb-4"></div>
-            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="btn-claim">Claim Reward 🍌</button>
-            <button onclick="initGame()" class="bg-purple-600/20 border border-purple-500 px-10 py-2 rounded-full font-orbitron text-[10px] text-white">Try Again</button>
+            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="bg-[#fbbf24] text-black w-[220px] py-3 rounded-full font-bold font-orbitron text-[11px] mb-2 uppercase">Claim Reward 🍌</button>
+            <button onclick="initGame()" class="border border-purple-500 px-10 py-2 rounded-full font-orbitron text-[10px] text-white">Try Again</button>
         </div>
     </main>
 
     <div class="tier-panel font-orbitron">
-        <div class="flex justify-between items-center mb-3">
-            <h3 class="text-[8px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
-            <span id="tier-status" class="text-[7px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30 text-gray-400">CHECKING HOLDINGS...</span>
-        </div>
         <div id="tier-std" class="tier-card">
             <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Min. Hold 1M FEG SOL</p></div>
-            <p class="text-[11px] font-bold">100 - 500 FEG</p>
+            <p class="text-[11px] font-bold text-gray-300">50 - 500 FEG</p>
         </div>
         <div id="tier-vip" class="tier-card">
             <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Min. Hold 2M FEG SOL</p></div>
@@ -153,9 +136,9 @@
         let userBalance = 0, isVIP = false, isStandard = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0;
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
+        const bgMusic = document.getElementById('bg-music'), sfxCollect = document.getElementById('sfx-collect');
         let gameLoop, spawnLoop;
 
-        // --- PHANTOM CONNECTION ---
         async function connectPhantom() {
             if (window.solana && window.solana.isPhantom) {
                 try {
@@ -163,37 +146,25 @@
                     const pubKey = response.publicKey.toString();
                     document.getElementById('connect-btn').innerText = pubKey.slice(0,4)+"..."+pubKey.slice(-4);
                     
-                    // SIMULATED BALANCE CHECK (Update with real Web3 call later)
+                    // SIMULASI BALANCE (Ubah manual saat testing)
                     userBalance = 2500000; 
-                    
-                    // NEW THRESHOLDS
                     isVIP = userBalance >= 2000000;
                     isStandard = userBalance >= 1000000 && userBalance < 2000000;
                     
                     updateTierUI();
+                    bgMusic.play().catch(e => console.log("Audio play blocked until interaction"));
                 } catch (err) { console.error(err); }
             }
         }
 
         function updateTierUI() {
-            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip'), status = document.getElementById('tier-status');
+            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip');
             std.classList.remove('active'); vip.classList.remove('active');
-            std.style.opacity = "1"; vip.style.opacity = "1";
-
-            if(isVIP) { 
-                vip.classList.add('active'); 
-                std.style.opacity = "0.4";
-                status.innerText = "VIP MODE ACTIVE"; status.style.color = "#fbbf24";
-            } else if (isStandard) {
-                std.classList.add('active'); 
-                vip.style.opacity = "0.4";
-                status.innerText = "STANDARD MODE ACTIVE"; status.style.color = "#a78bfa";
-            } else {
-                status.innerText = "HOLD 1M+ FOR REWARDS";
-            }
+            std.style.opacity = "0.4"; vip.style.opacity = "0.4";
+            if(isVIP) { vip.classList.add('active'); vip.style.opacity = "1"; }
+            else if(isStandard) { std.classList.add('active'); std.style.opacity = "1"; }
         }
 
-        // --- MOVEMENT (PRECISION EDGE-TO-EDGE) ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
@@ -214,12 +185,18 @@
             if(e.cancelable) e.preventDefault();
         };
 
-        // --- REWARD LOGIC (0-49 = 0) ---
         function calculateReward(s) {
             if (s < 50) return 0;
-            if (isVIP) return (s >= 150 ? 750 : (s >= 100 ? 500 : 150));
-            if (isStandard) return (s >= 150 ? 500 : (s >= 100 ? 250 : 50));
-            return 0; // No hold, no reward
+            if (isVIP) {
+                if (s >= 150) return 750; // Golden Kong
+                if (s >= 100) return 500; // Silverback
+                return 150;               // Baby Ape
+            } else if (isStandard) {
+                if (s >= 150) return 500; // Golden Kong
+                if (s >= 100) return 250; // Silverback
+                return 50;                // Baby Ape
+            }
+            return 0;
         }
 
         function updateRank(s) {
@@ -239,6 +216,7 @@
             gorilla.style.left = (frame.offsetWidth/2 - gorilla.offsetWidth/2) + 'px';
             clearInterval(gameLoop); clearInterval(spawnLoop);
             gameLoop = setInterval(update, 20); spawnLoop = setInterval(createBanana, 1000);
+            bgMusic.play().catch(e => {});
         }
 
         function createBanana() {
@@ -254,7 +232,9 @@
             document.querySelectorAll('.banana').forEach(b => {
                 let top = parseInt(b.style.top); b.style.top = (top + speed) + 'px';
                 if(checkCollision(gorilla, b)) {
-                    score++; document.getElementById('score-val').innerText = score;
+                    score++; 
+                    document.getElementById('score-val').innerText = score;
+                    sfxCollect.currentTime = 0; sfxCollect.play().catch(e=>{});
                     updateRank(score); b.remove();
                 }
                 if(top > frame.offsetHeight) gameOver();
@@ -268,6 +248,7 @@
 
         function gameOver() {
             isGameOver = true; clearInterval(gameLoop); clearInterval(spawnLoop);
+            bgMusic.pause(); bgMusic.currentTime = 0;
             const finalReward = calculateReward(score);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('reward-display').innerText = `+${finalReward} FEG SOL`;
