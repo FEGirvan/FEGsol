@@ -16,10 +16,11 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER */
+        /* HEADER - Ditambah padding biar gak mepet atas */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; background: transparent;
+            padding: 25px 20px 15px; /* Jarak atas ditambah */
+            background: transparent;
             flex-shrink: 0;
         }
 
@@ -36,19 +37,24 @@
             font-size: 10px; font-weight: bold; text-transform: uppercase;
         }
 
-        /* STATUS BADGE */
+        /* STATUS BADGE - Ditambah margin biar gak mepet header */
+        .badge-container {
+            display: flex; justify-content: center;
+            margin: 10px 0 20px; /* Jarak atas 10px, bawah 20px */
+        }
+
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
             border: 1px solid #3730a3; border-radius: 20px;
-            padding: 5px 25px; display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 25px; display: inline-flex; align-items: center; gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME - DIKECILIN UKURANNYA */
+        /* FRAME GAME - Ukuran dan posisi diseimbangkan */
         #game-frame {
-            width: 85%; max-width: 380px; 
-            height: 55vh; /* TINGGI DIKURANGI BIAR GAK NABRAK ATAS/BAWAH */
-            margin: 20px auto; /* JARAK OTOMATIS ATAS & BAWAH */
+            width: 88%; max-width: 380px; 
+            height: 52vh; /* Tinggi dijaga biar gak terlalu panjang ke bawah */
+            margin: 0 auto;
             position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
@@ -57,16 +63,15 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* GORILLA PLAYER */
         #gorilla { 
-            width: 80px; height: 80px; /* Ukuran monyet disesuaikan dikit biar pas frame kecil */
+            width: 85px; height: 85px; 
             position: absolute; bottom: 30px; left: 50%; 
             transform: translateX(-50%); z-index: 20; 
         }
         
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
 
-        .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
+        .banana { width: 42px; height: 42px; position: absolute; z-index: 15; }
         .banana img { width: 100%; height: 100%; object-fit: contain; }
 
         .score-box {
@@ -92,7 +97,7 @@
         <button class="btn-wallet font-orbitron">Connect Wallet</button>
     </nav>
 
-    <div class="flex justify-center">
+    <div class="badge-container">
         <div class="status-badge">
             <span class="text-yellow-500 text-xs">👑</span>
             <div class="text-center">
