@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEG SOL - Banana Grabber</title>
+    <style>
+        /* --- CSS (Modern Glassmorphism Style) --- */
+        :root {
+            --feg-gold: #fec107;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #2a2a2a 0%, #000000 100%);
+            color: white;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #game-container {
+            width: 400px;
+            height: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(254, 193, 7, 0.2);
+            overflow: hidden;
+        }
+
+        /* Border Animasi Glow */
+        #game-container::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px;
+            border: 2px solid var(--feg-gold);
+            opacity: 0.5;
+            animation: pulse-glow 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 5px var(--feg-gold); opacity: 0.3; }
+            50% { box-shadow: 0 0 20px var(--feg-gold); opacity: 0.6; }
+            100% { box-shadow: 0 0 5px var(--feg-gold); opacity: 0.3; }
+        }
+
+        #gorilla {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            bottom: 30px;
+            left: 165px;
+            font-size: 55px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: left 0.1s ease-out;
+            z-index: 10;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+        }
+
+        .banana {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            filter: drop-shadow(0 0 5px var(--feg-gold));
+        }
+
+        #score-board {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--feg-gold);
+            z-index: 20;
+            letter-spacing: 1px;
+        }
+
+        #game-over-screen {
+            display: none;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            text-align: center;
+        }
+
+        #game-over-screen h1 {
+            color: var(--feg-gold);
+            margin-bottom: 5px;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 35px;
+            font-size: 16px;
+            background: var(--feg-gold);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Kontrol bantuan buat Mobile */
+        .mobile-hint {
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <div id="score-board">REWARD: <span id="score">0</span> 🍌</div>
+        
+        <div id="gorilla">🦍</div>
+        
+        <div id="game-over-screen">
+            <h1>Mission Failed!</h1>
+            <p>You collected <span id="final-score">0</span> bananas.<br>The tribe needs more volume!</p>
+            <button onclick="startGame()">Try Again</button>
+        </div>
+
+        <div class="mobile-hint">Tap Left / Right to Move</div>
+    </div>
+
+    <script>
+        const gorilla = document.getElementById('gorilla');
+        const gameContainer = document.getElementById('game-container');
+        const scoreElement = document.getElementById('score');
+        const finalScoreElement = document.getElementById('final-score');
+        const gameOverScreen = document.getElementById('game-over-screen');
+
+        const containerWidth = 400;
+        const containerHeight = 600;
+        const gorillaWidth = 70;
+        
+        let gorillaLeft = 165;
+        let score = 0;
+        let isGameOver = false;
+        let gameInterval;
+        let bananaInterval;
+        let speed = 5;
+
+        function startGame() {
+            isGameOver = false;
+            score = 0;
+            speed = 5;
+            scoreElement.innerText = '0';
+            gorillaLeft = 165;
+            gorilla.style.left = gorillaLeft + 'px';
+            gameOverScreen.style.display = 'none';
+            
+            const oldBananas = document.querySelectorAll('.banana');
+            oldBananas.forEach(b => b.remove());
+
+            gameInterval = setInterval(gameLoop, 20);
+            bananaInterval = setInterval(createBanana, 1000);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (isGameOver) return;
+            if (e.key === 'ArrowLeft' && gorillaLeft > 10) {
+                gorillaLeft -= 25;
+            } else if (e.key === 'ArrowRight' && gorillaLeft < (containerWidth - gorillaWidth - 10)) {
+                gorillaLeft += 25;
+            }
+            gorilla.style.left = gorillaLeft + 'px';
+        });
+
+        // Touch Control yang lebih responsif
+        gameContainer.addEventListener('touchstart', (e) => {
+            if (isGameOver) return;
+            const touchX = e.touches[0].clientX;
+            const containerLeft = gameContainer.getBoundingClientRect().left;
+            const relativeX = touchX - containerLeft;
+
+            if (relativeX < containerWidth / 2 && gorillaLeft > 10) {
+                gorillaLeft -= 35;
+            } else if (relativeX >= containerWidth / 2 && gorillaLeft < (containerWidth - gorillaWidth - 10)) {
+                gorillaLeft += 35;
+            }
+            gorilla.style.left = gorillaLeft + 'px';
+            e.preventDefault(); 
+        }, {passive: false});
+
+        function createBanana() {
+            if (isGameOver) return;
+            const banana = document.createElement('div');
+            banana.classList.add('banana');
+            banana.innerText = '🍌';
+            banana.style.left = (Math.random() * (containerWidth - 50) + 5) + 'px';
+            banana.style.top = '-50px';
+            gameContainer.appendChild(banana);
+            
+            // Makin lama makin cepat
+            if(score > 10) speed = 7;
+            if(score > 25) speed = 9;
+        }
+
+        function gameLoop() {
+            if (isGameOver) return;
+
+            const bananas = document.querySelectorAll('.banana');
+            bananas.forEach(banana => {
+                let top = parseInt(banana.style.top);
+                banana.style.top = (top + speed) + 'px';
+
+                if (top > containerHeight) {
+                    endGame();
+                }
+
+                if (isColliding(gorilla, banana)) {
+                    score++;
+                    scoreElement.innerText = score;
+                    banana.remove();
+                }
+            });
+        }
+
+        function isColliding(a, b) {
+            const aRect = a.getBoundingClientRect();
+            const bRect = b.getBoundingClientRect();
+
+            // Pengecekan tabrakan yang lebih akurat
+            return !(
+                aRect.top > bRect.bottom - 10 ||
+                aRect.bottom < bRect.top + 10 ||
+                aRect.left > bRect.right - 10 ||
+                aRect.right < bRect.left + 10
+            );
+        }
+
+        function endGame() {
+            isGameOver = true;
+            clearInterval(gameInterval);
+            clearInterval(bananaInterval);
+            finalScoreElement.innerText = score;
+            gameOverScreen.style.display = 'flex';
+        }
+
+        startGame();
+    </script>
+</body>
+</html>
