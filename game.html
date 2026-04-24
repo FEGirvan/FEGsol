@@ -16,10 +16,10 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER - Ditambah padding biar gak mepet atas */
+        /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 25px 20px 15px; /* Jarak atas ditambah */
+            padding: 20px 20px 10px;
             background: transparent;
             flex-shrink: 0;
         }
@@ -37,53 +37,82 @@
             font-size: 10px; font-weight: bold; text-transform: uppercase;
         }
 
-        /* STATUS BADGE - Ditambah margin biar gak mepet header */
+        /* STATUS BADGE */
         .badge-container {
             display: flex; justify-content: center;
-            margin: 10px 0 20px; /* Jarak atas 10px, bawah 20px */
+            margin: 5px 0 10px;
         }
 
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
             border: 1px solid #3730a3; border-radius: 20px;
-            padding: 6px 25px; display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 20px; display: inline-flex; align-items: center; gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME - Ukuran dan posisi diseimbangkan */
+        /* FRAME GAME */
         #game-frame {
             width: 88%; max-width: 380px; 
-            height: 52vh; /* Tinggi dijaga biar gak terlalu panjang ke bawah */
+            height: 48vh; 
             margin: 0 auto;
             position: relative; overflow: hidden;
-            border-radius: 30px; 
+            border-radius: 25px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
             background: url('hutan.PNG') no-repeat center center;
             background-size: cover;
             box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        #gorilla { 
-            width: 85px; height: 85px; 
-            position: absolute; bottom: 30px; left: 50%; 
-            transform: translateX(-50%); z-index: 20; 
-        }
-        
+        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 20; }
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
-
-        .banana { width: 42px; height: 42px; position: absolute; z-index: 15; }
+        .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
         .banana img { width: 100%; height: 100%; object-fit: contain; }
 
         .score-box {
             position: absolute; top: 15px; left: 15px; z-index: 30;
             display: flex; align-items: center; gap: 5px;
-            background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 8px;
+            background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 8px;
+            backdrop-filter: blur(4px);
         }
+
+        /* TIER PANEL - DESAIN BANANA FARM STYLE */
+        .tier-panel {
+            width: 88%; max-width: 380px;
+            margin: 15px auto;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 12px;
+        }
+
+        .tier-card {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px; padding: 8px 12px; margin-bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tier-card.active {
+            border: 1px solid #8b5cf6;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 27, 75, 0.4) 100%);
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+        }
+
+        .tier-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; }
+        .tier-value { font-size: 11px; font-weight: bold; }
+        .tier-check { font-size: 10px; color: #10b981; }
 
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.95); display: none;
             flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .reward-popup {
+            font-family: 'Orbitron', sans-serif;
+            color: #fbbf24; font-size: 18px; margin: 15px 0;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
         }
     </style>
 </head>
@@ -101,7 +130,7 @@
         <div class="status-badge">
             <span class="text-yellow-500 text-xs">👑</span>
             <div class="text-center">
-                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Your Gorilla Status</p>
+                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Live Performance</p>
                 <p id="live-rank" class="text-[11px] font-orbitron font-bold uppercase italic text-white">Level: Baby Ape</p>
             </div>
         </div>
@@ -112,27 +141,74 @@
             <span class="text-lg">🍌</span>
             <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
         </div>
-
-        <div id="gorilla">
-            <img id="gorilla-img" src="monyet kanan.PNG">
-        </div>
-
+        <div id="gorilla"><img id="gorilla-img" src="monyet kanan.PNG"></div>
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic">BUSTED!</h2>
-            <p id="final-rank" class="font-orbitron text-sm text-yellow-400 mb-8 uppercase"></p>
-            <button onclick="initGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-[10px] font-bold text-white shadow-xl">PLAY AGAIN</button>
+            <p id="final-rank" class="font-orbitron text-sm text-yellow-400 uppercase"></p>
+            <div id="reward-display" class="reward-popup"></div>
+            <button onclick="initGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-[10px] font-bold text-white shadow-xl mt-4">PLAY AGAIN</button>
         </div>
     </main>
 
+    <div class="tier-panel font-orbitron">
+        <div class="flex justify-between items-center mb-3">
+            <h3 class="text-[10px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
+            <span id="tier-status" class="text-[8px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30">CHECKING WALLET...</span>
+        </div>
+        
+        <div id="tier-std" class="tier-card">
+            <div>
+                <p class="tier-label">Standard Mode</p>
+                <p class="text-[7px] text-gray-400">Balance < 1M FEG SOL</p>
+            </div>
+            <div class="text-right">
+                <p class="tier-value">100 - 500 <span class="text-[8px] text-purple-400">FEG</span></p>
+            </div>
+        </div>
+
+        <div id="tier-vip" class="tier-card">
+            <div>
+                <p class="tier-label text-yellow-500">VIP Mode ✨</p>
+                <p class="text-[7px] text-gray-400">Balance > 1M FEG SOL</p>
+            </div>
+            <div class="text-right">
+                <p class="tier-value text-yellow-400">150 - 750 <span class="text-[8px] text-yellow-600">FEG</span></p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let score = 0, isGameOver = false, speed = 4.5;
-        let lastX = 0; 
+        // SIMULASI DATA (Nanti ditarik dari Wallet)
+        let userBalance = 1500000; // Contoh: User punya 1.5jt koin
+        let isVIP = userBalance >= 1000000;
+        let currentRewardAmount = 0;
+
+        let score = 0, isGameOver = false, speed = 4.5, lastX = 0; 
         const frame = document.getElementById('game-frame');
         const gorilla = document.getElementById('gorilla');
         const gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
 
+        // Update Tampilan Tier di Awal
+        function updateTierUI() {
+            const std = document.getElementById('tier-std');
+            const vip = document.getElementById('tier-vip');
+            const status = document.getElementById('tier-status');
+
+            if(isVIP) {
+                vip.classList.add('active');
+                std.style.opacity = "0.5";
+                status.innerText = "VIP ACTIVE";
+                status.style.color = "#fbbf24";
+            } else {
+                std.classList.add('active');
+                vip.style.opacity = "0.5";
+                status.innerText = "STANDARD ACTIVE";
+            }
+        }
+
         function initGame() {
+            updateTierUI();
             score = 0; isGameOver = false; speed = 4.5;
             document.getElementById('score-val').innerText = "0";
             document.getElementById('game-over').style.display = 'none';
@@ -171,8 +247,18 @@
 
         function updateRank(s) {
             const rank = document.getElementById('live-rank');
-            if(s >= 100) { rank.innerText = "Level: Golden Kong 🏆"; rank.style.color = "#fbbf24"; }
-            else if(s >= 50) { rank.innerText = "Level: Silverback 🥈"; rank.style.color = "#e2e8f0"; }
+            if(s >= 100) { 
+                rank.innerText = "Level: Golden Kong 🏆"; rank.style.color = "#fbbf24"; 
+                currentRewardAmount = isVIP ? 750 : 500;
+            }
+            else if(s >= 50) { 
+                rank.innerText = "Level: Silverback 🥈"; rank.style.color = "#e2e8f0"; 
+                currentRewardAmount = isVIP ? 350 : 250;
+            }
+            else {
+                rank.innerText = "Level: Baby Ape 👶";
+                currentRewardAmount = isVIP ? 150 : 100;
+            }
             if(s % 10 === 0 && s > 0) speed += 0.3;
         }
 
@@ -186,6 +272,7 @@
             clearInterval(gameLoop); clearInterval(spawnLoop);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
+            document.getElementById('reward-display').innerText = `+${currentRewardAmount} FEG SOL`;
         }
 
         const moveHandler = (e) => {
@@ -193,20 +280,12 @@
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let currentX = clientX - rect.left;
-            
-            if (currentX < lastX) {
-                gorillaImg.src = "monyet kiri.PNG";
-            } else if (currentX > lastX) {
-                gorillaImg.src = "monyet kanan.PNG";
-            }
+            if (currentX < lastX) gorillaImg.src = "monyet kiri.PNG";
+            else if (currentX > lastX) gorillaImg.src = "monyet kanan.PNG";
             lastX = currentX;
-
             let newX = currentX - (gorilla.offsetWidth / 2);
             const maxX = frame.offsetWidth - gorilla.offsetWidth;
-            
-            if (newX < 0) newX = 0; 
-            if (newX > maxX) newX = maxX;
-            
+            if (newX < 0) newX = 0; if (newX > maxX) newX = maxX;
             gorilla.style.left = newX + 'px';
             gorilla.style.transform = 'none';
             if(e.cancelable) e.preventDefault();
