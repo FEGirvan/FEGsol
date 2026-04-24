@@ -16,10 +16,10 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER */
+        /* HEADER SECTION */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 20px 10px;
+            padding: 25px 20px 10px;
             background: transparent;
             flex-shrink: 0;
         }
@@ -35,7 +35,9 @@
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
+            transition: all 0.3s;
         }
+        .btn-wallet:active { transform: scale(0.95); }
 
         /* STATUS BADGE */
         .badge-container {
@@ -50,7 +52,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME */
+        /* GAME FRAME */
         #game-frame {
             width: 88%; max-width: 380px; 
             height: 48vh; 
@@ -75,7 +77,7 @@
             backdrop-filter: blur(4px);
         }
 
-        /* TIER PANEL - DESAIN BANANA FARM STYLE */
+        /* TIER PANEL - BANANA FARM STYLE */
         .tier-panel {
             width: 88%; max-width: 380px;
             margin: 15px auto;
@@ -88,31 +90,39 @@
 
         .tier-card {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 12px; padding: 8px 12px; margin-bottom: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 12px; padding: 10px 15px; margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s;
         }
 
         .tier-card.active {
             border: 1px solid #8b5cf6;
             background: linear-gradient(90deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 27, 75, 0.4) 100%);
-            box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
         }
 
-        .tier-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; }
-        .tier-value { font-size: 11px; font-weight: bold; }
-        .tier-check { font-size: 10px; color: #10b981; }
+        .tier-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; font-weight: bold; }
+        .tier-value { font-size: 12px; font-weight: bold; font-family: 'Orbitron'; }
 
+        /* GAME OVER SCREEN */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
-            background: rgba(0,0,0,0.95); display: none;
+            background: rgba(0,0,0,0.92); display: none;
             flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
         }
 
         .reward-popup {
             font-family: 'Orbitron', sans-serif;
-            color: #fbbf24; font-size: 18px; margin: 15px 0;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+            color: #fbbf24; font-size: 20px; margin: 15px 0;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
     </style>
 </head>
@@ -120,10 +130,10 @@
 
     <nav>
         <div class="logo-section">
-            <div class="logo-circle"><img src="G.PNG" style="width:100%; height:100%;"></div>
+            <div class="logo-circle"><img src="G.PNG" alt="Logo"></div>
             <div class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-purple-500">SOL</span></div>
         </div>
-        <button class="btn-wallet font-orbitron">Connect Wallet</button>
+        <button id="connect-btn" onclick="connectWallet()" class="btn-wallet font-orbitron">Connect Wallet</button>
     </nav>
 
     <div class="badge-container">
@@ -141,35 +151,39 @@
             <span class="text-lg">🍌</span>
             <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
         </div>
-        <div id="gorilla"><img id="gorilla-img" src="monyet kanan.PNG"></div>
+        
+        <div id="gorilla">
+            <img id="gorilla-img" src="monyet kanan.PNG">
+        </div>
+
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic">BUSTED!</h2>
-            <p id="final-rank" class="font-orbitron text-sm text-yellow-400 uppercase"></p>
+            <p id="final-rank" class="font-orbitron text-[10px] text-gray-400 uppercase tracking-widest"></p>
             <div id="reward-display" class="reward-popup"></div>
-            <button onclick="initGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-[10px] font-bold text-white shadow-xl mt-4">PLAY AGAIN</button>
+            <button onclick="initGame()" class="bg-purple-600 px-12 py-3 rounded-full font-orbitron text-[11px] font-bold text-white shadow-xl mt-4 tracking-widest">PLAY AGAIN</button>
         </div>
     </main>
 
     <div class="tier-panel font-orbitron">
-        <div class="flex justify-between items-center mb-3">
-            <h3 class="text-[10px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
-            <span id="tier-status" class="text-[8px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30">CHECKING WALLET...</span>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-[9px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
+            <span id="tier-status" class="text-[8px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30 text-gray-400">NOT CONNECTED</span>
         </div>
         
         <div id="tier-std" class="tier-card">
             <div>
                 <p class="tier-label">Standard Mode</p>
-                <p class="text-[7px] text-gray-400">Balance < 1M FEG SOL</p>
+                <p class="text-[7px] text-gray-500">Hold < 1,000,000 FEG SOL</p>
             </div>
             <div class="text-right">
-                <p class="tier-value">100 - 500 <span class="text-[8px] text-purple-400">FEG</span></p>
+                <p class="tier-value text-white">100 - 500 <span class="text-[8px] text-purple-400">FEG</span></p>
             </div>
         </div>
 
         <div id="tier-vip" class="tier-card">
             <div>
                 <p class="tier-label text-yellow-500">VIP Mode ✨</p>
-                <p class="text-[7px] text-gray-400">Balance > 1M FEG SOL</p>
+                <p class="text-[7px] text-gray-500">Hold > 1,000,000 FEG SOL</p>
             </div>
             <div class="text-right">
                 <p class="tier-value text-yellow-400">150 - 750 <span class="text-[8px] text-yellow-600">FEG</span></p>
@@ -178,32 +192,50 @@
     </div>
 
     <script>
-        // SIMULASI DATA (Nanti ditarik dari Wallet)
-        let userBalance = 1500000; // Contoh: User punya 1.5jt koin
+        /* WEB3 SIMULATION SETTINGS */
+        let userBalance = 1500000; // Contoh saldo 1.5jt (Ganti ke 0 untuk test mode standar)
         let isVIP = userBalance >= 1000000;
         let currentRewardAmount = 0;
+        let walletConnected = false;
 
+        /* GAME VARIABLES */
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0; 
         const frame = document.getElementById('game-frame');
         const gorilla = document.getElementById('gorilla');
         const gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
 
-        // Update Tampilan Tier di Awal
+        // Fungsi Simulasi Connect Wallet
+        function connectWallet() {
+            walletConnected = true;
+            const btn = document.getElementById('connect-btn');
+            btn.innerText = "Connected";
+            btn.style.background = "#10b981";
+            updateTierUI();
+            alert("Phantom Wallet Connected! (Simulated)");
+        }
+
+        // Update Tampilan Tier Berdasarkan Saldo
         function updateTierUI() {
             const std = document.getElementById('tier-std');
             const vip = document.getElementById('tier-vip');
             const status = document.getElementById('tier-status');
 
+            // Reset classes
+            std.classList.remove('active'); vip.classList.remove('active');
+            std.style.opacity = "1"; vip.style.opacity = "1";
+
             if(isVIP) {
                 vip.classList.add('active');
-                std.style.opacity = "0.5";
-                status.innerText = "VIP ACTIVE";
+                std.style.opacity = "0.4";
+                status.innerText = "VIP MODE ACTIVE";
                 status.style.color = "#fbbf24";
+                status.style.borderColor = "#fbbf24";
             } else {
                 std.classList.add('active');
-                vip.style.opacity = "0.5";
-                status.innerText = "STANDARD ACTIVE";
+                vip.style.opacity = "0.4";
+                status.innerText = "STANDARD MODE ACTIVE";
+                status.style.color = "#a78bfa";
             }
         }
 
@@ -214,6 +246,7 @@
             document.getElementById('game-over').style.display = 'none';
             document.getElementById('live-rank').innerText = "Level: Baby Ape";
             document.querySelectorAll('.banana').forEach(b => b.remove());
+            
             clearInterval(gameLoop); clearInterval(spawnLoop);
             gameLoop = setInterval(update, 20);
             spawnLoop = setInterval(createBanana, 1000);
@@ -264,7 +297,7 @@
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(); const r2 = b.getBoundingClientRect();
-            return !(r1.right < r2.left + 10 || r1.left > r2.right - 10 || r1.bottom < r2.top + 10 || r1.top > r2.bottom - 10);
+            return !(r1.right < r2.left + 15 || r1.left > r2.right - 15 || r1.bottom < r2.top + 15 || r1.top > r2.bottom - 15);
         }
 
         function gameOver() {
@@ -275,17 +308,23 @@
             document.getElementById('reward-display').innerText = `+${currentRewardAmount} FEG SOL`;
         }
 
+        /* CONTROLS */
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let currentX = clientX - rect.left;
+            
             if (currentX < lastX) gorillaImg.src = "monyet kiri.PNG";
             else if (currentX > lastX) gorillaImg.src = "monyet kanan.PNG";
+            
             lastX = currentX;
             let newX = currentX - (gorilla.offsetWidth / 2);
             const maxX = frame.offsetWidth - gorilla.offsetWidth;
-            if (newX < 0) newX = 0; if (newX > maxX) newX = maxX;
+            
+            if (newX < 0) newX = 0; 
+            if (newX > maxX) newX = maxX;
+            
             gorilla.style.left = newX + 'px';
             gorilla.style.transform = 'none';
             if(e.cancelable) e.preventDefault();
