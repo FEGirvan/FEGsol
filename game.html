@@ -8,15 +8,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap');
         
+        /* --- CORE STYLING --- */
         body { 
             background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; 
             margin: 0; overflow: hidden; touch-action: none;
             display: flex; flex-direction: column; height: 100vh;
         }
-
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER */
+        /* --- HEADER NAVIGATION --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 20px 5px; background: transparent; flex-shrink: 0;
@@ -24,13 +24,15 @@
         .logo-section { display: flex; align-items: center; gap: 10px; }
         .logo-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #7c3aed; overflow: hidden; }
         .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+
         .btn-wallet {
             background: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
+            border: none; color: white; cursor: pointer;
         }
 
-        /* BADGE */
+        /* --- RANKING BADGE --- */
         .badge-container { display: flex; justify-content: center; margin: 0 0 10px; }
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
@@ -38,7 +40,7 @@
             padding: 5px 20px; display: inline-flex; align-items: center; gap: 8px;
         }
 
-        /* GAME FRAME */
+        /* --- GAME FRAME ENGINE --- */
         #game-frame {
             width: 88%; max-width: 380px; height: 46vh; margin: 0 auto;
             position: relative; overflow: hidden; border-radius: 25px; 
@@ -47,16 +49,19 @@
             box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6);
         }
 
-        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 20px; left: 0; z-index: 20; }
+        /* Character */
+        #gorilla { 
+            width: 80px; height: 80px; 
+            position: absolute; bottom: 20px; 
+            left: 0; z-index: 20; 
+        }
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
         
-        /* BARU: Styling untuk Emoji Pisang agar Tajam */
+        /* Pisang Tajam 🍌 */
         .banana { 
             position: absolute; z-index: 15; 
-            font-size: 32px; /* Ukuran pisang */
-            line-height: 1;
-            /* Efek sedikit glow agar terlihat 'digital' */
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); 
+            font-size: 35px; line-height: 1;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
         }
 
         .score-box {
@@ -64,7 +69,7 @@
             background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 10px; backdrop-filter: blur(5px);
         }
 
-        /* TIER PANEL */
+        /* --- TIER PANEL DISPLAY --- */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 12px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
@@ -73,14 +78,15 @@
         .tier-card {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(139, 92, 246, 0.05); border-radius: 14px; 
-            padding: 10px 18px; margin-bottom: 8px; transition: 0.3s;
+            padding: 10px 18px; margin-bottom: 8px; border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: 0.4s ease;
         }
         .tier-card.active {
             border: 1px solid #8b5cf6;
             background: linear-gradient(90deg, rgba(139, 92, 246, 0.25) 0%, rgba(30, 27, 75, 0.5) 100%);
         }
 
-        /* OVERLAY */
+        /* --- GAME OVER OVERLAY --- */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.94); display: none;
@@ -117,144 +123,180 @@
             <span class="text-lg">🍌</span>
             <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
         </div>
+        
         <div id="gorilla"><img id="gorilla-img" src="monyet kanan.PNG"></div>
+        
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-1 italic">BUSTED!</h2>
             <div id="reward-display" class="font-orbitron text-yellow-400 text-3xl mb-6"></div>
-            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="bg-[#fbbf24] text-black w-[240px] py-4 rounded-full font-bold font-orbitron text-[12px] mb-3 uppercase">Claim Reward 🍌</button>
+            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="bg-[#fbbf24] text-black w-[240px] py-4 rounded-full font-bold font-orbitron text-[12px] mb-3 uppercase shadow-[0_0_20px_rgba(251,191,36,0.5)]">Claim Reward 🍌</button>
             <button onclick="initGame()" class="border border-purple-500 text-white px-10 py-2 rounded-full font-orbitron text-[10px] uppercase">Try Again</button>
         </div>
     </main>
 
     <div class="tier-panel font-orbitron">
         <div id="tier-std" class="tier-card">
-            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Min. Hold 1M FEG SOL</p></div>
+            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Hold 1M+ FEG SOL</p></div>
             <p class="text-[11px] font-bold">50 - 500 FEG</p>
         </div>
         <div id="tier-vip" class="tier-card">
-            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Min. Hold 2M FEG SOL</p></div>
+            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Hold 2M+ FEG SOL</p></div>
             <p class="text-[11px] font-bold text-yellow-400">150 - 750 FEG</p>
         </div>
     </div>
 
     <script>
-        // --- CONFIG & VARIABLES ---
+        // --- DATA AWAL ---
         let userBalance = 0, isVIP = false, isStandard = false, walletConnected = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0;
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
         const bgMusic = document.getElementById('bg-music'), sfxCollect = document.getElementById('sfx-collect');
         let gameLoop, spawnLoop;
 
-        // --- WEB3 (REWARD & TIER SYSTEM) ---
+        // --- WEB3 CONNECTION (SINKRON KE REWARD) ---
         async function connectPhantom() {
             if (window.solana && window.solana.isPhantom) {
                 try {
                     const response = await window.solana.connect();
                     document.getElementById('connect-btn').innerText = response.publicKey.toString().slice(0,4)+"...";
-                    // SIMULASI BALANCE
-                    userBalance = 2500000; 
+                    
+                    // Logika minimal Hold 1M & 2M
+                    userBalance = 2500000; // Contoh saldo user
                     isVIP = userBalance >= 2000000;
                     isStandard = userBalance >= 1000000 && userBalance < 2000000;
+                    
                     updateTierUI();
                     walletConnected = true;
-                    bgMusic.play().catch(e => {});
+                    bgMusic.play().catch(e => {}); // Main musik setelah connect
                 } catch (err) { console.error(err); }
             }
         }
+
         function updateTierUI() {
             const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip');
             std.classList.remove('active'); vip.classList.remove('active');
             if(isVIP) vip.classList.add('active'); else if(isStandard) std.classList.add('active');
         }
 
-        // --- MOVEMENT (PRECISION EDGE-TO-EDGE) ---
+        // --- MOVEMENT ENGINE (PRESTISI MENTOK KANAN) ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let relativeX = clientX - rect.left;
+
+            // Efek balik arah monyet
             if (relativeX < lastX) gorillaImg.src = "monyet kiri.PNG";
             else if (relativeX > lastX) gorillaImg.src = "monyet kanan.PNG";
             lastX = relativeX;
+
+            // Hitung batas layar agar MENTOK KANAN (maxX)
             let newX = relativeX - (gorilla.offsetWidth / 2);
             let maxX = frame.offsetWidth - gorilla.offsetWidth;
+
             if (newX < 0) newX = 0;
-            if (newX > maxX) newX = maxX; // MENTOK KANAN FIXED
+            if (newX > maxX) newX = maxX; // FIXED Sesuai Instruksi
+
             gorilla.style.left = newX + 'px';
             if(e.cancelable) e.preventDefault();
         };
 
-        // --- GAME LOGIC & REWARD AUTOmation ---
+        // --- SISTEM REWARD OTOMATIS (SULIT) ---
         function calculateReward(s) {
-            if (s < 50) return 0;
-            if (isVIP) return (s >= 150 ? 750 : (s >= 100 ? 500 : 150));
-            if (isStandard) return (s >= 150 ? 500 : (s >= 100 ? 250 : 50));
+            if (s < 50) return 0; // Skor 0-49 dapat 0
+            
+            if (isVIP) {
+                if (s >= 150) return 750; // Golden Kong VIP
+                if (s >= 100) return 500; // Silverback VIP
+                return 150;               // Baby Ape VIP (50-99)
+            } else if (isStandard) {
+                if (s >= 150) return 500; // Golden Kong Standard
+                if (s >= 100) return 250; // Silverback Standard
+                return 50;                // Baby Ape Standard (50-99)
+            }
             return 0;
         }
+
+        // --- UPDATE RANK & SPEED ---
         function updateRank(s) {
             const rank = document.getElementById('live-rank');
             if (s >= 150) rank.innerText = "Level: Golden Kong 🏆";
             else if (s >= 100) rank.innerText = "Level: Silverback 🥈";
             else if (s >= 50) rank.innerText = "Level: Baby Ape 👶";
             else rank.innerText = "Level: Trainee 🍼";
-            if(s % 10 === 0 && s > 0) speed += 0.2;
+            
+            if(s % 10 === 0 && s > 0) speed += 0.2; // Makin lama makin cepat
         }
 
+        // --- GAME CONTROL ---
         function initGame() {
             score = 0; isGameOver = false; speed = 4.5;
             document.getElementById('score-val').innerText = "0";
             document.getElementById('game-over').style.display = 'none';
             document.querySelectorAll('.banana').forEach(b => b.remove());
             gorilla.style.left = (frame.offsetWidth/2 - gorilla.offsetWidth/2) + 'px';
+            
             clearInterval(gameLoop); clearInterval(spawnLoop);
             gameLoop = setInterval(update, 20); 
             spawnLoop = setInterval(createBanana, 1000);
+            
             if(walletConnected) bgMusic.play().catch(e=>{});
         }
 
-        // --- BARU: FUNGSI MEMBUAT EMOJI PISANG TAJAM ---
+        // --- PISANG EMOJI (TAJAM & RINGAN) ---
         function createBanana() {
             if(isGameOver) return;
             const b = document.createElement('div'); 
             b.className = 'banana';
-            b.innerText = '🍌'; // Menggunakan Emoji Langsung
+            b.innerText = '🍌'; // Pakai Emoji Pisang
             
-            // Hitung posisi acak agar tidak keluar frame (lebar emoji sekitar 32px)
             let maxX = frame.offsetWidth - 35; 
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px'; 
             frame.appendChild(b);
         }
 
+        // --- UPDATE LOOP (TABRAKAN & MUSIK) ---
         function update() {
             if(isGameOver) return;
             document.querySelectorAll('.banana').forEach(b => {
                 let top = parseInt(b.style.top); 
                 b.style.top = (top + speed) + 'px';
+                
                 if(checkCollision(gorilla, b)) {
                     score++; 
                     document.getElementById('score-val').innerText = score;
-                    sfxCollect.currentTime = 0; sfxCollect.play().catch(e=>{});
+                    
+                    // Mainkan bunyi tangkap
+                    sfxCollect.currentTime = 0; 
+                    sfxCollect.play().catch(e=>{});
+                    
                     updateRank(score); 
                     b.remove();
                 }
                 if(top > frame.offsetHeight) gameOver();
             });
         }
+
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(), r2 = b.getBoundingClientRect();
-            // Sedikit penyesuaian hitbox untuk emoji (padding 5px)
+            // Hitbox presisi untuk emoji
             return !(r1.right < r2.left + 5 || r1.left > r2.right - 5 || r1.bottom < r2.top + 5 || r1.top > r2.bottom - 5);
         }
+
         function gameOver() {
             isGameOver = true; clearInterval(gameLoop); clearInterval(spawnLoop);
-            bgMusic.pause(); bgMusic.currentTime = 0;
+            bgMusic.pause(); bgMusic.currentTime = 0; // Matikan musik saat kalah
+            
             const finalReward = calculateReward(score);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('reward-display').innerText = `+${finalReward} FEG SOL`;
+            
+            // Tombol claim muncul kalau ada reward
             document.getElementById('claim-btn').style.display = finalReward > 0 ? 'block' : 'none';
         }
 
+        // EVENT LISTENERS
         frame.addEventListener('touchmove', moveHandler, {passive: false});
         frame.addEventListener('mousemove', moveHandler);
     </script>
