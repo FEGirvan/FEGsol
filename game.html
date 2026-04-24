@@ -51,9 +51,8 @@
         #gorilla { 
             width: 80px; height: 80px; 
             position: absolute; bottom: 20px; 
-            left: 0; /* Changed for better calculation */
+            left: 0; 
             z-index: 20; 
-            transition: none; /* Important for smooth drag */
         }
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
         .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
@@ -64,7 +63,7 @@
             background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 8px; backdrop-filter: blur(4px);
         }
 
-        /* TIER PANEL */
+        /* TIER PANEL (GLASSMORPHISM) */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 10px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
@@ -75,6 +74,7 @@
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(139, 92, 246, 0.05); border-radius: 12px; 
             padding: 8px 15px; margin-bottom: 6px; border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s;
         }
 
         .tier-card.active {
@@ -136,21 +136,21 @@
     <div class="tier-panel font-orbitron">
         <div class="flex justify-between items-center mb-3">
             <h3 class="text-[8px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
-            <span id="tier-status" class="text-[7px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30 text-gray-400">NOT CONNECTED</span>
+            <span id="tier-status" class="text-[7px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30 text-gray-400">CHECKING HOLDINGS...</span>
         </div>
         <div id="tier-std" class="tier-card">
-            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Hold < 1M FEG SOL</p></div>
+            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Min. Hold 1M FEG SOL</p></div>
             <p class="text-[11px] font-bold">100 - 500 FEG</p>
         </div>
         <div id="tier-vip" class="tier-card">
-            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Hold > 1M FEG SOL</p></div>
+            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Min. Hold 2M FEG SOL</p></div>
             <p class="text-[11px] font-bold text-yellow-400">150 - 750 FEG</p>
         </div>
     </div>
 
     <script>
         const FEGSOL_CA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
-        let userBalance = 0, isVIP = false, walletConnected = false;
+        let userBalance = 0, isVIP = false, isStandard = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0;
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
@@ -160,57 +160,66 @@
             if (window.solana && window.solana.isPhantom) {
                 try {
                     const response = await window.solana.connect();
-                    walletConnected = true;
-                    document.getElementById('connect-btn').innerText = response.publicKey.toString().slice(0,4)+"..."+response.publicKey.toString().slice(-4);
-                    userBalance = 1500000; // Simulated
-                    isVIP = userBalance >= 1000000;
+                    const pubKey = response.publicKey.toString();
+                    document.getElementById('connect-btn').innerText = pubKey.slice(0,4)+"..."+pubKey.slice(-4);
+                    
+                    // SIMULATED BALANCE CHECK (Update with real Web3 call later)
+                    userBalance = 2500000; 
+                    
+                    // NEW THRESHOLDS
+                    isVIP = userBalance >= 2000000;
+                    isStandard = userBalance >= 1000000 && userBalance < 2000000;
+                    
                     updateTierUI();
                 } catch (err) { console.error(err); }
             }
         }
 
         function updateTierUI() {
-            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip');
-            if(isVIP) { vip.classList.add('active'); std.style.opacity = "0.4"; }
-            else { std.classList.add('active'); vip.style.opacity = "0.4"; }
+            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip'), status = document.getElementById('tier-status');
+            std.classList.remove('active'); vip.classList.remove('active');
+            std.style.opacity = "1"; vip.style.opacity = "1";
+
+            if(isVIP) { 
+                vip.classList.add('active'); 
+                std.style.opacity = "0.4";
+                status.innerText = "VIP MODE ACTIVE"; status.style.color = "#fbbf24";
+            } else if (isStandard) {
+                std.classList.add('active'); 
+                vip.style.opacity = "0.4";
+                status.innerText = "STANDARD MODE ACTIVE"; status.style.color = "#a78bfa";
+            } else {
+                status.innerText = "HOLD 1M+ FOR REWARDS";
+            }
         }
 
-        // --- FIX MOVEMENT (PRECISION EDGE-TO-EDGE) ---
+        // --- MOVEMENT (PRECISION EDGE-TO-EDGE) ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            
-            // Dapatkan posisi mouse/touch relatif terhadap frame
             let relativeX = clientX - rect.left;
 
-            // Update arah hadap
             if (relativeX < lastX) gorillaImg.src = "monyet kiri.PNG";
             else if (relativeX > lastX) gorillaImg.src = "monyet kanan.PNG";
             lastX = relativeX;
 
-            // Hitung posisi baru (tengah monyet mengikuti kursor)
             let newX = relativeX - (gorilla.offsetWidth / 2);
-            
-            // BATAS MAKSIMAL: Lebar frame dikurangi lebar monyet
-            let minX = 0;
             let maxX = frame.offsetWidth - gorilla.offsetWidth;
 
-            // Kunci posisi agar tidak keluar
-            if (newX < minX) newX = minX;
+            if (newX < 0) newX = 0;
             if (newX > maxX) newX = maxX;
 
             gorilla.style.left = newX + 'px';
-            gorilla.style.transform = 'none'; // Menghilangkan transform agar left akurat
-            
             if(e.cancelable) e.preventDefault();
         };
 
-        // --- REWARD SYSTEM (0-49 = 0) ---
+        // --- REWARD LOGIC (0-49 = 0) ---
         function calculateReward(s) {
             if (s < 50) return 0;
             if (isVIP) return (s >= 150 ? 750 : (s >= 100 ? 500 : 150));
-            return (s >= 150 ? 500 : (s >= 100 ? 250 : 50));
+            if (isStandard) return (s >= 150 ? 500 : (s >= 100 ? 250 : 50));
+            return 0; // No hold, no reward
         }
 
         function updateRank(s) {
@@ -222,13 +231,11 @@
             if(s % 10 === 0 && s > 0) speed += 0.25;
         }
 
-        // --- GAME CORE ---
         function initGame() {
             score = 0; isGameOver = false; speed = 4.5;
             document.getElementById('score-val').innerText = "0";
             document.getElementById('game-over').style.display = 'none';
             document.querySelectorAll('.banana').forEach(b => b.remove());
-            // Center gorilla on start
             gorilla.style.left = (frame.offsetWidth/2 - gorilla.offsetWidth/2) + 'px';
             clearInterval(gameLoop); clearInterval(spawnLoop);
             gameLoop = setInterval(update, 20); spawnLoop = setInterval(createBanana, 1000);
