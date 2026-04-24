@@ -3,132 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FEG SOL | Banana Grabber</title>
+    <title>FEG SOL | Banana Grabber JUNGLE EDITION</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        body { background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; touch-action: none; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        body { 
+            background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; 
+            overflow: hidden; touch-action: none;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0a0a0b 100%);
+        }
+
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        
+        /* AREA GAME - THE JUNGLE */
         #game-viewport { 
-            width: 100%; max-width: 450px; height: 75vh; margin: 0 auto; position: relative; overflow: hidden; 
-            background: linear-gradient(180deg, transparent 0%, #0a1f11 100%); border-top: 2px solid #7c3aed;
+            width: 100%; max-width: 450px; height: 80vh; margin: 0 auto; 
+            position: relative; overflow: hidden; border: 1px solid rgba(124, 58, 237, 0.3);
+            background: linear-gradient(180deg, rgba(10,31,17,0) 0%, #0a1f11 100%);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
-        /* Ornamen Hutan Tetap Ada */
-        #game-viewport::before, #game-viewport::after {
-            content: ""; position: absolute; bottom: -10px; width: 120px; height: 120px;
-            background-image: url('https://cdn-icons-png.flaticon.com/512/628/628283.png');
-            background-size: contain; background-repeat: no-repeat; opacity: 0.15; z-index: 1;
+
+        /* ORNAMEN HUTAN (Pohon & Rumput) */
+        .decor { position: absolute; bottom: -5px; width: 140px; height: 140px; pointer-events: none; z-index: 1; opacity: 0.3; }
+        .decor-left { left: -20px; background: url('https://cdn-icons-png.flaticon.com/512/628/628283.png') no-repeat center/contain; }
+        .decor-right { right: -20px; background: url('https://cdn-icons-png.flaticon.com/512/628/628283.png') no-repeat center/contain; transform: scaleX(-1); }
+
+        /* GORILLA & BANANA */
+        #gorilla { width: 90px; height: 90px; position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+        .banana { width: 45px; height: 45px; position: absolute; z-index: 5; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3)); }
+        #gorilla img, .banana img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* UI ELEMENTS */
+        .tier-badge { 
+            background: linear-gradient(45deg, #1e1b4b, #312e81); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
         }
-        #game-viewport::before { left: -10px; }
-        #game-viewport::after { right: -10px; transform: scaleX(-1); }
-        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; }
-        .banana { width: 45px; height: 45px; position: absolute; z-index: 5; }
+        .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body>
-
-    <nav class="p-4 bg-[#0a0a0b]/90 backdrop-blur-md border-b border-white/5">
+<body onload="startGame()"> <nav class="p-4 bg-[#0a0a0b]/90 backdrop-blur-md border-b border-white/5 relative z-50">
         <div class="max-w-7xl mx-auto flex flex-col items-center gap-3">
             <div class="flex justify-between w-full items-center">
                 <div class="flex items-center space-x-2">
                     <img src="G.PNG" class="w-8 h-8 rounded-full border border-purple-500">
-                    <span class="font-orbitron text-lg font-bold uppercase">FEG<span class="text-purple-500">SOL</span></span>
+                    <span class="font-orbitron text-lg font-bold tracking-tighter uppercase">FEG<span class="text-purple-500">SOL</span></span>
                 </div>
-                <button id="wallet-btn" onclick="handleWalletAction()" class="bg-purple-600 px-4 py-1.5 rounded-full font-orbitron text-[10px] uppercase text-white shadow-lg">
-                    Connect Wallet
-                </button>
+                <div class="text-[9px] font-orbitron text-green-400 uppercase tracking-widest border border-green-500/30 px-3 py-1 rounded-full bg-green-500/10">
+                    Visual Preview Mode
+                </div>
             </div>
-            <div class="bg-indigo-900/40 px-6 py-1 rounded-full border border-white/10">
-                <p class="text-[7px] font-orbitron text-purple-300 uppercase text-center">Rank Status</p>
-                <p id="live-rank" class="text-[10px] font-bold font-orbitron text-white text-center uppercase italic">Baby Ape</p>
+            
+            <div class="tier-badge px-8 py-2 rounded-full text-center">
+                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-[0.3em]">Live Evolution</p>
+                <p id="live-rank" class="text-[12px] font-bold font-orbitron text-white italic uppercase">Baby Ape</p>
             </div>
         </div>
     </nav>
 
-    <div id="gate-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md">
-        <div class="glass p-10 text-center max-w-sm mx-4 border-t-2 border-purple-500">
-            <h1 class="font-orbitron text-2xl font-bold text-yellow-400 italic mb-2">BANANA GRABBER</h1>
-            <p class="text-[10px] font-orbitron text-purple-300 uppercase tracking-widest mb-8">Hold 1M $FEGSOL to Play</p>
-            <div id="status-text" class="text-white font-orbitron text-[9px] animate-pulse uppercase">Waiting for Wallet...</div>
-        </div>
-    </div>
-
     <main id="game-viewport" class="glass mt-4">
-        <div class="absolute top-5 left-5 font-orbitron text-yellow-400 font-bold text-xl z-20">🍌 <span id="score-val">0</span></div>
+        <div class="decor decor-left"></div>
+        <div class="decor decor-right"></div>
+
+        <div class="absolute top-5 left-5 font-orbitron text-yellow-400 font-bold text-2xl z-20 drop-shadow-lg">
+            🍌 <span id="score-val">0</span>
+        </div>
+
         <div id="gorilla"></div>
-        <div id="game-over" class="hidden absolute inset-0 z-[50] flex flex-col items-center justify-center bg-black/95 text-center p-6">
-            <h2 class="font-orbitron text-3xl font-bold text-yellow-400 mb-6 uppercase italic">Game Over</h2>
-            <div id="rank-box" class="mb-8"></div>
-            <button onclick="startGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-xs font-bold uppercase text-white">Re-Launch</button>
+        
+        <div id="game-over" class="hidden absolute inset-0 z-[50] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md text-center p-6">
+            <h2 class="font-orbitron text-4xl font-bold gold-text italic mb-2 uppercase">Game Over</h2>
+            <div id="rank-box" class="mb-10 scale-110"></div>
+            <button onclick="startGame()" class="bg-purple-600 hover:bg-purple-700 px-12 py-4 rounded-full font-orbitron text-xs font-bold uppercase text-white shadow-xl shadow-purple-500/20 active:scale-95 transition-all">
+                Play Again
+            </button>
         </div>
     </main>
 
+    <footer class="text-center py-6 mt-4 border-t border-white/5 opacity-50">
+        <p class="text-[8px] font-orbitron text-gray-500 uppercase tracking-widest mb-1">Official $FEGSOL Ecosystem</p>
+        <p class="text-[9px] font-mono text-purple-400 uppercase tracking-widest">49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump</p>
+    </footer>
+
     <script>
         const CONFIG = {
-            ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump", // CA FEGSOL
-            rpc: "https://api.mainnet-beta.solana.com",
             urlGorilla: "G.PNG",
             urlBanana: "https://cdn-icons-png.flaticon.com/512/3143/3143641.png"
         };
 
-        let userWallet = null, score = 0, isGameOver = false, speed = 5, gameInterval, bananaInterval;
+        let score = 0, isGameOver = false, speed = 5, gameInterval, bananaInterval;
         const viewport = document.getElementById('game-viewport'), gorilla = document.getElementById('gorilla');
-
-        // FUNGSI KONEKSI WALLET
-        async function handleWalletAction() {
-            try {
-                const provider = window.solana;
-                if (!provider) return Swal.fire({ title: 'Phantom!', text: 'Buka di browser Phantom.', icon: 'warning' });
-
-                document.getElementById('status-text').innerText = "Verifying Wallet...";
-                
-                const resp = await provider.connect();
-                userWallet = resp.publicKey.toString();
-                
-                // Update Tombol Pojok Kanan Atas
-                const btn = document.getElementById('wallet-btn');
-                btn.innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
-                btn.classList.replace('bg-purple-600', 'bg-green-600');
-
-                // Cek Saldo Otomatis
-                checkFegsolHoldings(userWallet);
-            } catch (err) {
-                document.getElementById('status-text').innerText = "Waiting for Wallet...";
-            }
-        }
-
-        // FUNGSI CEK SALDO (Kunci Biar Nggak Stuck)
-        async function checkFegsolHoldings(address) {
-            try {
-                const connection = new solanaWeb3.Connection(CONFIG.rpc);
-                const mint = new solanaWeb3.PublicKey(CONFIG.ca);
-                const owner = new solanaWeb3.PublicKey(address);
-                
-                const accounts = await connection.getParsedTokenAccountsByOwner(owner, { mint: mint });
-                
-                if (accounts.value.length > 0) {
-                    const balance = accounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-                    if (balance >= 1000000) {
-                        // SUKSES: Hilangkan Overlay & Mulai Game
-                        document.getElementById('gate-overlay').classList.add('hidden');
-                        startGame();
-                    } else {
-                        Swal.fire({ title: 'Need 1M FEGSOL', text: `Saldo kamu: ${balance.toLocaleString()}`, icon: 'error' });
-                        document.getElementById('status-text').innerText = "Insufficient Balance";
-                    }
-                } else {
-                    Swal.fire({ title: 'No FEGSOL Found', text: 'Beli minimal 1 juta FEGSOL.', icon: 'error' });
-                    document.getElementById('status-text').innerText = "No Token Detected";
-                }
-            } catch (e) {
-                console.error("RPC Error:", e);
-                // Jika RPC sibuk, bypass untuk testing (Opsional)
-                // document.getElementById('gate-overlay').classList.add('hidden'); startGame();
-            }
-        }
 
         function startGame() {
             isGameOver = false; score = 0; speed = 5;
@@ -136,8 +103,13 @@
             document.getElementById('live-rank').innerText = "Baby Ape";
             document.getElementById('live-rank').style.color = "#fff";
             document.getElementById('game-over').classList.add('hidden');
-            gorilla.innerHTML = `<img src="${CONFIG.urlGorilla}">`;
+            
+            // Pasang Gambar Gorilla
+            gorilla.innerHTML = `<img src="${CONFIG.urlGorilla}" alt="Ape">`;
+            
+            // Bersihkan pisang lama
             document.querySelectorAll('.banana').forEach(b => b.remove());
+            
             clearInterval(gameInterval); clearInterval(bananaInterval);
             gameInterval = setInterval(updateGame, 20);
             bananaInterval = setInterval(spawnBanana, 1000);
@@ -148,48 +120,91 @@
             document.querySelectorAll('.banana').forEach(b => {
                 let top = parseInt(b.style.top);
                 b.style.top = (top + speed) + 'px';
-                if(top > viewport.offsetHeight) endGame();
+                
+                // Jika pisang jatuh ke tanah (Game Over)
+                if(top > viewport.offsetHeight - 20) endGame();
+
+                // Cek Tabrakan
                 if(isColliding(gorilla, b)) {
                     score++;
                     document.getElementById('score-val').innerText = score;
-                    if(score >= 100) { document.getElementById('live-rank').innerText = "Golden Kong 🏆"; document.getElementById('live-rank').style.color = "#fde047"; }
-                    else if(score >= 50) { document.getElementById('live-rank').innerText = "Silverback 🥈"; document.getElementById('live-rank').style.color = "#C0C0C0"; }
+                    updateRank(score);
                     b.remove();
                 }
             });
+        }
+
+        function updateRank(s) {
+            const rankEl = document.getElementById('live-rank');
+            if (s >= 100) {
+                rankEl.innerText = "Golden Kong 🏆";
+                rankEl.style.color = "#fde047";
+            } else if (s >= 50) {
+                rankEl.innerText = "Silverback 🥈";
+                rankEl.style.color = "#C0C0C0";
+            } else {
+                rankEl.innerText = "Baby Ape 👶";
+            }
         }
 
         function spawnBanana() {
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            b.innerHTML = `<img src="${CONFIG.urlBanana}">`;
+            b.innerHTML = `<img src="${CONFIG.urlBanana}" alt="Banana">`;
             b.style.left = (Math.random() * (viewport.offsetWidth - 50)) + 'px';
-            b.style.top = '-50px';
+            b.style.top = '-60px';
             viewport.appendChild(b);
-            if(score > 30) speed = 7;
+            
+            // Leveling speed
+            if(score > 20) speed = 6;
+            if(score > 50) speed = 8;
+            if(score > 80) speed = 10;
         }
 
         function isColliding(a, b) {
             const aR = a.getBoundingClientRect(); const bR = b.getBoundingClientRect();
-            return !(aR.top > bR.bottom-15 || aR.bottom < bR.top+15 || aR.left > bR.right-15 || aR.right < bR.right-15);
+            return !(aR.top > bR.bottom-15 || aR.bottom < bR.top+15 || aR.left > bR.right-15 || aR.right < bR.left+15);
         }
 
         function endGame() {
-            isGameOver = true; clearInterval(gameInterval); clearInterval(bananaInterval);
+            isGameOver = true;
+            clearInterval(gameInterval); clearInterval(bananaInterval);
+            
             let rank = score >= 100 ? "Golden Kong" : (score >= 50 ? "Silverback" : "Baby Ape");
-            document.getElementById('rank-box').innerHTML = `<p class="font-orbitron text-xl font-bold uppercase text-yellow-400">${rank}</p><p class="text-green-400 font-bold mt-4 uppercase text-[10px]">Screenshot & Claim Reward!</p>`;
+            let color = score >= 100 ? "#fde047" : (score >= 50 ? "#C0C0C0" : "#fff");
+            
+            document.getElementById('rank-box').innerHTML = `
+                <p class="text-[10px] font-orbitron text-purple-400 uppercase tracking-[0.4em] mb-2">Final Status</p>
+                <p class="font-orbitron text-3xl font-bold uppercase" style="color:${color}">${rank}</p>
+                <div class="mt-6 p-4 glass border border-white/10">
+                    <p class="text-green-400 font-orbitron font-bold text-xl uppercase tracking-tighter italic">Reward Qualified</p>
+                </div>
+            `;
             document.getElementById('game-over').classList.remove('hidden');
         }
 
+        // CONTROL - GESER PAKAI JARI
         viewport.addEventListener('touchmove', (e) => {
             if(isGameOver) return;
             const rect = viewport.getBoundingClientRect();
-            let x = e.touches[0].clientX - rect.left - 40;
-            if(x < 5) x = 5; if(x > viewport.offsetWidth - 85) x = viewport.offsetWidth - 85;
+            let x = e.touches[0].clientX - rect.left - 45;
+            // Batasan agar tidak keluar box
+            if(x < 5) x = 5;
+            if(x > viewport.offsetWidth - 95) x = viewport.offsetWidth - 95;
             gorilla.style.left = x + 'px';
             e.preventDefault();
         }, {passive: false});
+
+        // BISA JUGA PAKAI MOUSE (UNTUK TEST DI PC)
+        viewport.addEventListener('mousemove', (e) => {
+            if(isGameOver) return;
+            const rect = viewport.getBoundingClientRect();
+            let x = e.clientX - rect.left - 45;
+            if(x < 5) x = 5;
+            if(x > viewport.offsetWidth - 95) x = viewport.offsetWidth - 95;
+            gorilla.style.left = x + 'px';
+        });
     </script>
 </body>
 </html>
