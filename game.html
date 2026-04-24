@@ -14,28 +14,32 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .glass-morphism { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
         .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tier-badge { background: linear-gradient(45deg, #1e1b4b, #312e81); border: 1px solid rgba(255,255,255,0.1); }
-        #game-viewport { width: 100%; max-width: 450px; height: 80vh; margin: 0 auto; position: relative; overflow: hidden; border-top: 2px solid rgba(124, 58, 237, 0.3); }
+        .tier-badge { background: linear-gradient(45deg, #1e1b4b, #312e81); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 0 15px rgba(124, 58, 237, 0.15); }
+        #game-viewport { width: 100%; max-width: 450px; height: 80vh; margin: 0 auto; position: relative; overflow: hidden; border-top: 2px solid rgba(124, 58, 237, 0.3); background: linear-gradient(180deg, rgba(10,31,17,0) 0%, #0a1f11 100%); }
+        #game-viewport::before, #game-viewport::after { content: ""; position: absolute; bottom: -10px; width: 150px; height: 150px; background-size: contain; background-repeat: no-repeat; opacity: 0.1; z-index: 1; pointer-events: none; }
+        #game-viewport::before { left: -20px; background-image: url('https://cdn-icons-png.flaticon.com/512/628/628283.png'); }
+        #game-viewport::after { right: -20px; background-image: url('https://cdn-icons-png.flaticon.com/512/628/628283.png'); transform: scaleX(-1); }
         #gorilla { width: 80px; height: 80px; position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; }
         .banana { width: 45px; height: 45px; position: absolute; z-index: 5; }
         #gorilla img, .banana img { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen relative">
 
-    <nav class="p-4 border-b border-white/5">
+    <nav class="p-4 border-b border-white/5 relative z-50 bg-[#0a0a0b]/80 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto flex flex-col items-center gap-3">
             <div class="flex justify-between w-full items-center">
-                <div class="flex items-center space-x-2">
-                    <img src="G.PNG" class="w-8 h-8 rounded-full border border-purple-500">
+                <div class="flex items-center space-x-3">
+                    <img src="G.PNG" alt="Logo" class="w-8 h-8 rounded-full border border-purple-500">
                     <span class="font-orbitron text-lg font-bold tracking-tighter uppercase">FEG<span class="text-purple-500">SOL</span></span>
                 </div>
-                <button id="wallet-btn" onclick="handleWalletAction()" class="bg-purple-600 px-4 py-1.5 rounded-full font-orbitron text-[9px] border border-purple-400/50 uppercase text-white">Connect Wallet</button>
+                <button id="wallet-btn" onclick="handleWalletAction()" class="bg-purple-600 hover:bg-purple-700 px-4 py-1.5 rounded-full font-orbitron text-[9px] border border-purple-400/50 uppercase text-white transition active:scale-95">
+                    Connect Wallet
+                </button>
             </div>
-            
-            <div class="tier-badge px-6 py-1.5 rounded-full text-center w-fit shadow-lg shadow-purple-500/10">
-                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Live Rank</p>
-                <p id="live-rank" class="text-[10px] font-bold font-orbitron text-white italic tracking-tighter">BABY APE</p>
+            <div class="tier-badge px-6 py-1.5 rounded-full text-center w-fit shadow-lg">
+                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Live Gorilla Rank</p>
+                <p id="live-rank" class="text-[10px] font-bold font-orbitron text-white italic tracking-tighter uppercase">Baby Ape</p>
             </div>
         </div>
     </nav>
@@ -43,28 +47,38 @@
     <div id="gate-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0b]/95 backdrop-blur-xl">
         <div class="glass-morphism p-10 text-center max-w-sm mx-4 border-t-2 border-purple-500/50">
             <h1 class="font-orbitron text-2xl font-bold gold-text uppercase italic mb-2">Banana Grabber</h1>
-            <p class="text-[10px] font-orbitron text-purple-400 tracking-[0.3em] mb-8 uppercase">Min. Hold: 1,000,000 $VEXOL</p>
-            <button onclick="handleWalletAction()" class="w-full bg-purple-600 py-4 rounded-xl font-orbitron font-bold uppercase tracking-widest text-white shadow-xl shadow-purple-500/20 active:scale-95">Connect & Verify</button>
+            <p class="text-[10px] font-orbitron text-purple-400 tracking-[0.3em] mb-10 uppercase">Requirement: 1,000,000 $FEGSOL</p>
+            <button onclick="handleWalletAction()" class="w-full bg-purple-600 py-4 rounded-xl font-orbitron font-bold uppercase tracking-widest text-white shadow-xl shadow-purple-500/20 active:scale-95">
+                Connect & Verify
+            </button>
         </div>
     </div>
 
     <main id="game-viewport" class="glass-morphism mt-4">
-        <div id="score-tag" class="absolute top-5 left-5 font-orbitron text-yellow-400 font-bold text-xl z-20">🍌 <span id="score-val">0</span></div>
+        <div id="score-tag" class="absolute top-5 left-5 font-orbitron text-yellow-400 font-bold text-xl z-20 drop-shadow-md">
+            🍌 <span id="score-val">0</span>
+        </div>
         <div id="gorilla"></div>
-        
         <div id="game-over" class="hidden absolute inset-0 z-[50] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md">
             <h2 class="font-orbitron text-3xl font-bold gold-text italic mb-6 uppercase">Game Over</h2>
             <div id="rank-box" class="text-center mb-8 w-64"></div>
-            <button onclick="startGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-xs font-bold uppercase text-white active:scale-95">Play Again</button>
+            <button onclick="startGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-xs font-bold uppercase text-white transition active:scale-95">
+                Play Again
+            </button>
         </div>
     </main>
+
+    <footer class="text-center py-6 mt-4 border-t border-white/5 bg-[#0a0a0b]/50">
+        <p class="text-[9px] font-orbitron text-gray-500 uppercase tracking-widest mb-1">Official $FEGSOL Contract</p>
+        <p class="text-[10px] font-mono text-purple-400 select-all">49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump</p>
+    </footer>
 
     <script>
         const CONFIG = {
             ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
             rpc: "https://api.mainnet-beta.solana.com",
             urlGorilla: "G.PNG",
-            urlBanana: "https://cdn-icons-png.flaticon.com/512/3143/3143641.png"
+            urlBanana: "https://cdn-icons-png.flaticon.com/512/3143/3143641.png" 
         };
 
         let userWallet = null, score = 0, isGameOver = false, speed = 5, gameInterval, bananaInterval;
@@ -78,7 +92,9 @@
                     document.getElementById('wallet-btn').innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
                     verifyTokenBalance(userWallet);
                 } catch (e) { console.log("Rejected"); }
-            } else { Swal.fire({ title: 'Phantom Required', text: 'Open in Phantom App Browser', icon: 'warning', background: '#0a0a0b', color: '#fff' }); }
+            } else {
+                Swal.fire({ title: 'Phantom Required', text: 'Open in Phantom App Browser', icon: 'warning', background: '#0a0a0b', color: '#fff' });
+            }
         }
 
         async function verifyTokenBalance(address) {
@@ -91,16 +107,20 @@
                     if (balance >= 1000000) {
                         document.getElementById('gate-overlay').classList.add('hidden');
                         startGame();
-                    } else { Swal.fire({ title: 'Access Denied', text: 'You need 1M $VEXOL', icon: 'error', background: '#0a0a0b', color: '#fff' }); }
-                } else { Swal.fire({ title: 'No Tokens', text: 'Buy $VEXOL first!', icon: 'error', background: '#0a0a0b', color: '#fff' }); }
+                    } else {
+                        Swal.fire({ title: 'Access Denied', text: `You need 1M $FEGSOL. Balance: ${Math.floor(balance).toLocaleString()}`, icon: 'error', background: '#0a0a0b', color: '#fff' });
+                    }
+                } else {
+                    Swal.fire({ title: 'No Tokens', text: 'Buy $FEGSOL first!', icon: 'error', background: '#0a0a0b', color: '#fff' });
+                }
             } catch (err) { console.error(err); }
         }
 
         function startGame() {
             isGameOver = false; score = 0; speed = 5;
             document.getElementById('score-val').innerText = "0";
-            document.getElementById('live-rank').innerText = "BABY APE";
-            document.getElementById('live-rank').className = "text-[10px] font-bold font-orbitron text-white italic tracking-tighter";
+            document.getElementById('live-rank').innerText = "Baby Ape";
+            document.getElementById('live-rank').className = "text-[10px] font-bold font-orbitron text-white italic tracking-tighter uppercase";
             document.getElementById('game-over').classList.add('hidden');
             gorilla.innerHTML = `<img src="${CONFIG.urlGorilla}">`;
             document.querySelectorAll('.banana').forEach(b => b.remove());
@@ -115,8 +135,7 @@
                 if(top > viewport.offsetHeight) endGame();
                 if(isColliding(gorilla, b)) {
                     score++; document.getElementById('score-val').innerText = score;
-                    updateLiveRank(score); // FUNGSI UPDATE RANK OTOMATIS
-                    b.remove();
+                    updateLiveRank(score); b.remove();
                 }
             });
         }
@@ -124,13 +143,13 @@
         function updateLiveRank(s) {
             const rankEl = document.getElementById('live-rank');
             if (s >= 100) {
-                rankEl.innerText = "GOLDEN KONG 🏆";
-                rankEl.classList.add('text-yellow-400');
+                rankEl.innerText = "Golden Kong 🏆";
+                rankEl.className = "text-[10px] font-bold font-orbitron text-yellow-400 italic tracking-tighter uppercase";
             } else if (s >= 50) {
-                rankEl.innerText = "SILVERBACK 🥈";
-                rankEl.classList.add('text-gray-300');
+                rankEl.innerText = "Silverback 🥈";
+                rankEl.className = "text-[10px] font-bold font-orbitron text-gray-300 italic tracking-tighter uppercase";
             } else {
-                rankEl.innerText = "BABY APE 👶";
+                rankEl.innerText = "Baby Ape 👶";
             }
         }
 
@@ -151,10 +170,16 @@
         function endGame() {
             isGameOver = true; clearInterval(gameInterval); clearInterval(bananaInterval);
             let rank = "", reward = "", color = "#fff";
-            if (score < 50) { rank = "BABY APE"; reward = "5,000"; color = "#fff"; }
-            else if (score < 100) { rank = "SILVERBACK"; reward = "25,000"; color = "#C0C0C0"; }
-            else { rank = "GOLDEN KONG"; reward = "100,000"; color = "#fde047"; }
-            document.getElementById('rank-box').innerHTML = `<p class="font-orbitron text-xl font-bold" style="color:${color}">${rank}</p><p class="text-green-400 font-orbitron font-bold mt-2">${reward} $VEXOL REWARD</p>`;
+            if (score < 50) { rank = "Baby Ape"; reward = "5,000"; color = "#fff"; }
+            else if (score < 100) { rank = "Silverback"; reward = "25,000"; color = "#C0C0C0"; }
+            else { rank = "Golden Kong"; reward = "100,000"; color = "#fde047"; }
+            document.getElementById('rank-box').innerHTML = `
+                <p class="font-orbitron text-2xl font-bold uppercase" style="color:${color}">${rank}</p>
+                <div class="bg-white/5 p-4 rounded-xl border border-white/10 mt-4">
+                    <p class="text-[9px] font-orbitron text-gray-500 uppercase">Potential Reward</p>
+                    <p class="text-green-400 font-orbitron text-lg font-bold">${reward} $FEGSOL</p>
+                </div>
+            `;
             document.getElementById('game-over').classList.remove('hidden');
         }
 
