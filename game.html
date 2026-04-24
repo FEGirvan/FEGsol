@@ -43,10 +43,11 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME */
+        /* FRAME GAME - DITURUNKAN MARGIN-NYA */
         #game-frame {
-            width: 90%; max-width: 400px; height: 75vh;
-            margin: 20px auto; position: relative; overflow: hidden;
+            width: 90%; max-width: 400px; height: 70vh; /* Sedikit disesuaikan tingginya */
+            margin: 40px auto 20px; /* Margin atas ditambah menjadi 40px agar lebih turun */
+            position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
             background: url('hutan.PNG') no-repeat center center;
@@ -139,7 +140,6 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            // Pakai file banana.PNG milik Abang
             b.innerHTML = `<img src="banana.PNG">`;
             const maxX = frame.offsetWidth - 50;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
