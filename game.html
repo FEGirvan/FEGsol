@@ -15,7 +15,7 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* VIEWPORT DENGAN BACKGROUND HUTAN BARU */
+        /* VIEWPORT UTAMA DENGAN BACKGROUND HUTAN.JPG */
         #game-container {
             width: 100%;
             max-width: 450px;
@@ -23,28 +23,29 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
-            /* LINK GAMBAR HUTAN DI SINI */
-            background: url('[attachment_0](attachment)') no-repeat center center;
+            /* MENGHUBUNGKAN KE FILE GAMBAR ABANG */
+            background: url('hutan.jpg') no-repeat center center;
             background-size: cover;
             border-left: 1px solid rgba(255,255,255,0.1);
             border-right: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Overlay gelap sedikit biar pisang & monyet lebih kelihatan */
+        /* Overlay halus agar UI lebih terbaca */
         #game-container::before {
             content: ""; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 30%, rgba(0,0,0,0.5));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 30%, rgba(0,0,0,0.4));
             pointer-events: none;
         }
 
-        /* GORILLA & BANANA */
+        /* KARAKTER GORILLA (G.PNG) */
         #gorilla { 
             width: 90px; height: 90px; 
-            position: absolute; bottom: 50px; left: 50%; 
+            position: absolute; bottom: 60px; left: 50%; 
             transform: translateX(-50%); z-index: 20;
             filter: drop-shadow(0 15px 10px rgba(0,0,0,0.6));
         }
         
+        /* PISANG YANG JATUH */
         .banana { 
             width: 45px; height: 45px; 
             position: absolute; z-index: 15; 
@@ -53,15 +54,28 @@
 
         #gorilla img, .banana img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* UI ELEMENTS */
+        /* TAMPILAN SCORE & RANK (DI ATAS) */
         .ui-panel {
-            position: absolute; top: 20px; left: 20px; right: 20px;
+            position: absolute; top: 25px; left: 20px; right: 20px;
             display: flex; justify-content: space-between; align-items: flex-start;
             z-index: 30;
         }
 
-        .score-box { background: rgba(0,0,0,0.6); padding: 5px 15px; border-radius: 12px; border: 1px solid rgba(255,215,0,0.3); }
-        .rank-box { background: rgba(124, 58, 237, 0.4); padding: 5px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); }
+        .score-box { 
+            background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 12px; 
+            border: 1px solid rgba(255,215,0,0.4); backdrop-filter: blur(5px);
+        }
+        .rank-box { 
+            background: rgba(88, 28, 135, 0.6); padding: 8px 15px; border-radius: 12px; 
+            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px);
+        }
+
+        /* LAYAR GAME OVER */
+        #game-over {
+            position: absolute; inset: 0; z-index: 100;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.9); text-center: center; padding: 20px;
+        }
     </style>
 </head>
 <body onload="initGame()">
@@ -69,21 +83,23 @@
     <main id="game-container">
         <div class="ui-panel">
             <div class="score-box">
-                <p class="text-[8px] font-orbitron text-yellow-400 uppercase">Score</p>
+                <p class="text-[8px] font-orbitron text-yellow-400 uppercase tracking-widest">Score</p>
                 <p class="text-2xl font-bold font-orbitron text-white" id="score-val">0</p>
             </div>
             <div class="rank-box text-right">
-                <p class="text-[8px] font-orbitron text-purple-200 uppercase">Status</p>
+                <p class="text-[8px] font-orbitron text-purple-200 uppercase tracking-widest">Evolution</p>
                 <p id="live-rank" class="text-[10px] font-orbitron font-bold text-white uppercase italic">Baby Ape</p>
             </div>
         </div>
 
-        <div id="gorilla"><img src="G.PNG"></div>
+        <div id="gorilla"><img src="G.PNG" alt="Ape"></div>
 
-        <div id="game-over" class="hidden absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/90 text-center px-10">
-            <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic">BUSTED!</h2>
-            <p id="final-rank" class="font-orbitron text-lg text-yellow-400 mb-8 uppercase"></p>
-            <button onclick="initGame()" class="bg-yellow-500 hover:bg-yellow-400 px-12 py-4 rounded-full font-orbitron text-xs font-bold text-black shadow-xl transition-all active:scale-90">TRY AGAIN</button>
+        <div id="game-over">
+            <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic uppercase">Busted!</h2>
+            <p id="final-rank-info" class="font-orbitron text-lg text-yellow-400 mb-8 uppercase tracking-tighter"></p>
+            <button onclick="initGame()" class="bg-yellow-500 hover:bg-yellow-400 px-14 py-4 rounded-full font-orbitron text-xs font-bold text-black shadow-2xl transition-all active:scale-90">
+                PLAY AGAIN
+            </button>
         </div>
     </main>
 
@@ -96,9 +112,11 @@
         function initGame() {
             score = 0; isGameOver = false; speed = 5;
             document.getElementById('score-val').innerText = "0";
-            document.getElementById('game-over').classList.add('hidden');
+            document.getElementById('game-over').style.display = 'none';
             document.getElementById('live-rank').innerText = "Baby Ape";
+            document.getElementById('live-rank').style.color = "#fff";
             
+            // Hapus pisang yang masih ada di layar
             document.querySelectorAll('.banana').forEach(b => b.remove());
             
             clearInterval(gameLoop); clearInterval(spawnLoop);
@@ -110,7 +128,8 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png">`;
+            // Pakai icon pisang HD
+            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png" alt="B">`;
             const maxX = container.offsetWidth - 50;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-60px';
@@ -125,6 +144,7 @@
                 let top = parseInt(b.style.top);
                 b.style.top = (top + speed) + 'px';
 
+                // Cek Tabrakan (Collision)
                 if(checkCollision(gorilla, b)) {
                     score++;
                     document.getElementById('score-val').innerText = score;
@@ -132,6 +152,7 @@
                     b.remove();
                 }
 
+                // Jika pisang lewat bawah layar
                 if(top > container.offsetHeight) {
                     gameOver();
                 }
@@ -140,34 +161,43 @@
 
         function updateRank(s) {
             const rank = document.getElementById('live-rank');
-            if(s >= 100) { rank.innerText = "Golden Kong 🏆"; rank.style.color = "#facc15"; }
-            else if(s >= 50) { rank.innerText = "Silverback 🥈"; rank.style.color = "#e2e8f0"; }
+            if(s >= 100) { 
+                rank.innerText = "Golden Kong 🏆"; 
+                rank.style.color = "#facc15"; 
+            } else if(s >= 50) { 
+                rank.innerText = "Silverback 🥈"; 
+                rank.style.color = "#e2e8f0"; 
+            }
             
-            if(s % 10 === 0) speed += 0.3;
+            // Tingkatkan kesulitan setiap 10 poin
+            if(s % 10 === 0 && s > 0) speed += 0.2;
         }
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect();
             const r2 = b.getBoundingClientRect();
-            // Collision box dikecilkan sedikit biar pas sama gambar monyetnya
-            return !(r1.right < r2.left + 5 || r1.left > r2.right - 5 || r1.bottom < r2.top + 5 || r1.top > r2.bottom - 5);
+            // Box deteksi tabrakan yang presisi
+            return !(r1.right < r2.left + 10 || r1.left > r2.right - 10 || r1.bottom < r2.top + 10 || r1.top > r2.bottom - 10);
         }
 
         function gameOver() {
             isGameOver = true;
-            document.getElementById('game-over').classList.remove('hidden');
-            document.getElementById('final-rank').innerText = "Rank: " + document.getElementById('live-rank').innerText;
+            clearInterval(gameLoop); clearInterval(spawnLoop);
+            document.getElementById('game-over').style.display = 'flex';
+            document.getElementById('final-rank-info').innerText = "Evolution: " + document.getElementById('live-rank').innerText;
         }
 
-        // --- FIX SLIDE KANAN TOTAL ---
-        container.addEventListener('touchmove', (e) => {
+        // --- SISTEM SLIDE (GESER) ---
+        // Mendukung Desktop & Mobile
+        const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = container.getBoundingClientRect();
-            const touchX = e.touches[0].clientX - rect.left;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const touchX = clientX - rect.left;
             
             let newX = touchX - (gorilla.offsetWidth / 2);
 
-            // Hitungan presisi batas kiri & kanan
+            // Batas agar monyet tidak keluar layar (Sangat Presisi)
             const minX = 0;
             const maxX = container.offsetWidth - gorilla.offsetWidth;
 
@@ -175,21 +205,13 @@
             if (newX > maxX) newX = maxX;
 
             gorilla.style.left = newX + 'px';
-            gorilla.style.transform = 'none'; // Menghilangkan transform bawaan biar gak stuck di kanan
-            e.preventDefault();
-        }, {passive: false});
+            gorilla.style.transform = 'none'; // Pastikan tidak ada konflik transform
+            if(e.cancelable) e.preventDefault();
+        };
 
-        // Test PC Mouse
-        container.addEventListener('mousemove', (e) => {
-            if(isGameOver) return;
-            const rect = container.getBoundingClientRect();
-            let newX = (e.clientX - rect.left) - (gorilla.offsetWidth / 2);
-            const maxX = container.offsetWidth - gorilla.offsetWidth;
-            if (newX < 0) newX = 0;
-            if (newX > maxX) newX = maxX;
-            gorilla.style.left = newX + 'px';
-            gorilla.style.transform = 'none';
-        });
+        container.addEventListener('touchmove', moveHandler, {passive: false});
+        container.addEventListener('mousemove', moveHandler);
+
     </script>
 </body>
 </html>
