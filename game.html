@@ -19,8 +19,7 @@
         /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 20px 5px;
-            background: transparent; flex-shrink: 0;
+            padding: 20px 20px 5px; background: transparent; flex-shrink: 0;
         }
 
         .logo-section { display: flex; align-items: center; gap: 10px; }
@@ -30,6 +29,7 @@
             background: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
+            transition: all 0.3s;
         }
 
         /* LIVE STATUS */
@@ -41,7 +41,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* GAME FRAME - Ukuran dikunci agar pas di semua layar */
+        /* GAME FRAME */
         #game-frame {
             width: 88%; max-width: 380px; height: 46vh; margin: 0 auto;
             position: relative; overflow: hidden; border-radius: 25px; 
@@ -61,7 +61,7 @@
             background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 8px; backdrop-filter: blur(4px);
         }
 
-        /* TIER PANEL - Posisi dinaikkan sedikit biar tidak kepotong */
+        /* TIER PANEL */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 10px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
@@ -84,6 +84,7 @@
         .tier-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; font-weight: bold; }
         .tier-value { font-size: 11px; font-weight: bold; font-family: 'Orbitron'; }
 
+        /* GAME OVER */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.92); display: none;
@@ -99,17 +100,12 @@
 </head>
 <body onload="initGame()">
 
-    <script>
-        const FEGSOL_CA = "MASUKKAN_CA_FEGSOL_DI_SINI";
-        const STREAMFLOW_ID = "MASUKKAN_ID_STREAMFLOW_DI_SINI";
-    </script>
-
     <nav>
         <div class="logo-section">
             <div class="logo-circle"><img src="G.PNG"></div>
             <div class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-purple-500">SOL</span></div>
         </div>
-        <button id="connect-btn" onclick="connectWallet()" class="btn-wallet font-orbitron">Connect Wallet</button>
+        <button id="connect-btn" onclick="connectPhantom()" class="btn-wallet font-orbitron">Connect Wallet</button>
     </nav>
 
     <div class="badge-container">
@@ -154,28 +150,74 @@
     </div>
 
     <script>
+        // CONFIGURATION
+        const FEGSOL_CA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+        
         let userBalance = 0, isVIP = false, walletConnected = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0; 
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
 
-        function connectWallet() {
-            walletConnected = true;
-            document.getElementById('connect-btn').innerText = "Connected";
-            document.getElementById('connect-btn').style.background = "#10b981";
-            userBalance = 1500000; // Simulasi saldo VIP
-            isVIP = userBalance >= 1000000;
-            updateTierUI();
-            alert("Wallet Connected! CA: " + FEGSOL_CA);
+        // PHANTOM CONNECTION
+        async function connectPhantom() {
+            const isPhantomInstalled = window.solana && window.solana.isPhantom;
+            if (!isPhantomInstalled) {
+                alert("Phantom Wallet not found. Please install it first!");
+                window.open("https://phantom.app/", "_blank");
+                return;
+            }
+            try {
+                const response = await window.solana.connect();
+                walletConnected = true;
+                const btn = document.getElementById('connect-btn');
+                const pubKey = response.publicKey.toString();
+                btn.innerText = pubKey.slice(0, 4) + "..." + pubKey.slice(-4);
+                btn.style.background = "#10b981";
+
+                // Simulated balance check for now
+                userBalance = 1500000; 
+                isVIP = userBalance >= 1000000;
+                updateTierUI();
+            } catch (err) {
+                console.error("Connection cancelled by user");
+            }
         }
 
         function updateTierUI() {
             const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip'), status = document.getElementById('tier-status');
             std.classList.remove('active'); vip.classList.remove('active');
-            if(isVIP) { vip.classList.add('active'); std.style.opacity = "0.4"; status.innerText = "VIP MODE ACTIVE"; status.style.color = "#fbbf24"; }
-            else { std.classList.add('active'); vip.style.opacity = "0.4"; status.innerText = "STANDARD MODE ACTIVE"; }
+            if(isVIP) { 
+                vip.classList.add('active'); std.style.opacity = "0.4"; 
+                status.innerText = "VIP MODE ACTIVE"; status.style.color = "#fbbf24"; 
+            } else { 
+                std.classList.add('active'); vip.style.opacity = "0.4"; 
+                status.innerText = "STANDARD MODE ACTIVE"; 
+            }
         }
 
+        // CONTROLS & MOVEMENT FIX
+        const moveHandler = (e) => {
+            if(isGameOver) return;
+            const rect = frame.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            let currentX = clientX - rect.left;
+
+            if (currentX < lastX) gorillaImg.src = "monyet kiri.PNG";
+            else if (currentX > lastX) gorillaImg.src = "monyet kanan.PNG";
+            lastX = currentX;
+
+            let halfWidth = gorilla.offsetWidth / 2;
+            let newX = currentX - halfWidth;
+            let maxX = frame.offsetWidth - gorilla.offsetWidth;
+
+            if (newX < 0) newX = 0; 
+            if (newX > maxX) newX = maxX;
+
+            gorilla.style.left = newX + 'px';
+            if(e.cancelable) e.preventDefault();
+        };
+
+        // GAME LOGIC
         function initGame() {
             if(walletConnected) updateTierUI();
             score = 0; isGameOver = false; speed = 4.5;
@@ -190,7 +232,7 @@
             if(isGameOver) return;
             const b = document.createElement('div'); b.className = 'banana';
             b.innerHTML = `<img src="banana.PNG">`;
-            const maxX = frame.offsetWidth - 45;
+            const maxX = frame.offsetWidth - 40;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px'; frame.appendChild(b);
         }
@@ -228,21 +270,6 @@
             document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
             document.getElementById('reward-display').innerText = `+${window.currentReward || 0} FEG SOL`;
         }
-
-        const moveHandler = (e) => {
-            if(isGameOver) return;
-            const rect = frame.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let currentX = clientX - rect.left;
-            if (currentX < lastX) gorillaImg.src = "monyet kiri.PNG";
-            else if (currentX > lastX) gorillaImg.src = "monyet kanan.PNG";
-            lastX = currentX;
-            let newX = currentX - (gorilla.offsetWidth / 2);
-            const maxX = frame.offsetWidth - gorilla.offsetWidth;
-            if (newX < 0) newX = 0; if (newX > maxX) newX = maxX;
-            gorilla.style.left = newX + 'px';
-            if(e.cancelable) e.preventDefault();
-        };
 
         frame.addEventListener('touchmove', moveHandler, {passive: false});
         frame.addEventListener('mousemove', moveHandler);
