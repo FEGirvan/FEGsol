@@ -43,11 +43,10 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME - DITURUNKAN MARGIN-NYA */
+        /* FRAME GAME */
         #game-frame {
-            width: 90%; max-width: 400px; height: 70vh; /* Sedikit disesuaikan tingginya */
-            margin: 40px auto 20px; /* Margin atas ditambah menjadi 40px agar lebih turun */
-            position: relative; overflow: hidden;
+            width: 90%; max-width: 400px; height: 75vh;
+            margin: 20px auto; position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
             background: url('hutan.PNG') no-repeat center center;
@@ -84,7 +83,7 @@
 
     <nav>
         <div class="logo-section">
-            <div class="logo-circle"><img src="G.PNG" style="width:100%; height:100%;"></div>
+            <div class="logo-circle"><img src="monyet kanan.PNG" style="width:100%; height:100%;"></div>
             <div class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-purple-500">SOL</span></div>
         </div>
         <button class="btn-wallet font-orbitron">Connect Wallet</button>
@@ -140,7 +139,7 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            b.innerHTML = `<img src="banana.PNG">`;
+            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png">`;
             const maxX = frame.offsetWidth - 50;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px';
@@ -171,12 +170,12 @@
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(); const r2 = b.getBoundingClientRect();
+            // Area tabrakan diperkecil biar pas sama tangan monyet
             return !(r1.right < r2.left + 15 || r1.left > r2.right - 15 || r1.bottom < r2.top + 15 || r1.top > r2.bottom - 15);
         }
 
         function gameOver() {
             isGameOver = true;
-            clearInterval(gameLoop); clearInterval(spawnLoop);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
         }
@@ -187,6 +186,7 @@
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let currentX = clientX - rect.left;
             
+            // Logika Ganti Gambar Berdasarkan Arah
             if (currentX < lastX) {
                 gorillaImg.src = "monyet kiri.PNG";
             } else if (currentX > lastX) {
@@ -210,3 +210,4 @@
     </script>
 </body>
 </html>
+
