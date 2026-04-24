@@ -15,7 +15,7 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* HEADER STYLE: LOGO KIRI, WALLET KANAN */
+        /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 20px; background: transparent;
@@ -28,7 +28,6 @@
             border: 1px solid #7c3aed; overflow: hidden; 
         }
 
-        /* TOMBOL WALLET UNGU NEON */
         .btn-wallet {
             background: #8b5cf6; 
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
@@ -36,7 +35,7 @@
             font-size: 10px; font-weight: bold; text-transform: uppercase;
         }
 
-        /* BADGE LEVEL DENGAN MAHKOTA (GAYA BANANA FARM) */
+        /* STATUS BADGE */
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
             border: 1px solid #3730a3; border-radius: 20px;
@@ -44,31 +43,35 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME DENGAN LIST (BORDER) MEWAH */
+        /* FRAME GAME */
         #game-frame {
             width: 90%; max-width: 400px; height: 75vh;
             margin: 20px auto; position: relative; overflow: hidden;
             border-radius: 30px; 
-            /* LIST/BORDER FRAME GAYA BANANA FARM */
             border: 2px solid rgba(139, 92, 246, 0.3);
             background: url('hutan.PNG') no-repeat center center;
             background-size: cover;
             box-shadow: 0 0 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* GORILLA & BANANA */
-        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 20; }
-        .banana { width: 45px; height: 45px; position: absolute; z-index: 15; }
-        #gorilla img, .banana img { width: 100%; height: 100%; object-fit: contain; }
+        /* GORILLA PLAYER */
+        #gorilla { 
+            width: 100px; height: 100px; 
+            position: absolute; bottom: 40px; left: 50%; 
+            transform: translateX(-50%); z-index: 20; 
+        }
+        
+        #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* SKOR DI DALAM FRAME */
+        .banana { width: 45px; height: 45px; position: absolute; z-index: 15; }
+        .banana img { width: 100%; height: 100%; object-fit: contain; }
+
         .score-box {
             position: absolute; top: 20px; left: 20px; z-index: 30;
             display: flex; align-items: center; gap: 5px;
             background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 8px;
         }
 
-        /* OVERLAY GAME OVER */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.95); display: none;
@@ -80,7 +83,7 @@
 
     <nav>
         <div class="logo-section">
-            <div class="logo-circle"><img src="G.PNG" style="width:100%; height:100%;"></div>
+            <div class="logo-circle"><img src="monyet kanan.PNG" style="width:100%; height:100%;"></div>
             <div class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-purple-500">SOL</span></div>
         </div>
         <button class="btn-wallet font-orbitron">Connect Wallet</button>
@@ -102,7 +105,9 @@
             <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
         </div>
 
-        <div id="gorilla"><img src="G.PNG"></div>
+        <div id="gorilla">
+            <img id="gorilla-img" src="monyet kanan.PNG">
+        </div>
 
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic">BUSTED!</h2>
@@ -113,8 +118,10 @@
 
     <script>
         let score = 0, isGameOver = false, speed = 4.5;
+        let lastX = 0; 
         const frame = document.getElementById('game-frame');
         const gorilla = document.getElementById('gorilla');
+        const gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
 
         function initGame() {
@@ -163,7 +170,8 @@
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(); const r2 = b.getBoundingClientRect();
-            return !(r1.right < r2.left + 8 || r1.left > r2.right - 8 || r1.bottom < r2.top + 8 || r1.top > r2.bottom - 8);
+            // Area tabrakan diperkecil biar pas sama tangan monyet
+            return !(r1.right < r2.left + 15 || r1.left > r2.right - 15 || r1.bottom < r2.top + 15 || r1.top > r2.bottom - 15);
         }
 
         function gameOver() {
@@ -172,18 +180,31 @@
             document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
         }
 
-        // --- SISTEM GESER SMOOTH ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let newX = (clientX - rect.left) - (gorilla.offsetWidth / 2);
+            let currentX = clientX - rect.left;
+            
+            // Logika Ganti Gambar Berdasarkan Arah
+            if (currentX < lastX) {
+                gorillaImg.src = "monyet kiri.PNG";
+            } else if (currentX > lastX) {
+                gorillaImg.src = "monyet kanan.PNG";
+            }
+            lastX = currentX;
+
+            let newX = currentX - (gorilla.offsetWidth / 2);
             const maxX = frame.offsetWidth - gorilla.offsetWidth;
-            if (newX < 0) newX = 0; if (newX > maxX) newX = maxX;
+            
+            if (newX < 0) newX = 0; 
+            if (newX > maxX) newX = maxX;
+            
             gorilla.style.left = newX + 'px';
             gorilla.style.transform = 'none';
             if(e.cancelable) e.preventDefault();
         };
+
         frame.addEventListener('touchmove', moveHandler, {passive: false});
         frame.addEventListener('mousemove', moveHandler);
     </script>
