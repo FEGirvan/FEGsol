@@ -41,13 +41,14 @@
             border: 1px solid #3730a3; border-radius: 20px;
             padding: 5px 25px; display: inline-flex; align-items: center; gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative; z-index: 50;
         }
 
-        /* FRAME GAME - POSISI DIANGKAT KE ATAS */
+        /* FRAME GAME - POSISI DINAIKKAN MAKSIMAL */
         #game-frame {
-            width: 90%; max-width: 400px; height: 72vh;
-            /* Margin atas dikurangi jadi 10px agar naik, margin bawah 30px */
-            margin: 10px auto 30px; 
+            width: 90%; max-width: 400px; height: 75vh;
+            /* Margin atas dibuat 5px agar sangat dekat dengan badge di atasnya */
+            margin: 5px auto 20px; 
             position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
@@ -69,7 +70,7 @@
         .banana img { width: 100%; height: 100%; object-fit: contain; }
 
         .score-box {
-            position: absolute; top: 20px; left: 20px; z-index: 30;
+            position: absolute; top: 15px; left: 15px; z-index: 30;
             display: flex; align-items: center; gap: 5px;
             background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 8px;
         }
@@ -91,7 +92,7 @@
         <button class="btn-wallet font-orbitron">Connect Wallet</button>
     </nav>
 
-    <div class="flex justify-center mt-1">
+    <div class="flex justify-center">
         <div class="status-badge">
             <span class="text-yellow-500 text-xs">👑</span>
             <div class="text-center">
@@ -141,7 +142,6 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            /* Pisang Pakai banana.PNG */
             b.innerHTML = `<img src="banana.PNG">`;
             const maxX = frame.offsetWidth - 50;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
@@ -178,6 +178,7 @@
 
         function gameOver() {
             isGameOver = true;
+            clearInterval(gameLoop); clearInterval(spawnLoop);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
         }
