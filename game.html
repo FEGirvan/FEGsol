@@ -18,7 +18,7 @@
         /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 20px; background: transparent;
+            padding: 10px 20px; background: transparent;
             position: relative; z-index: 50;
         }
 
@@ -31,7 +31,7 @@
         .btn-wallet {
             background: #8b5cf6; 
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
-            padding: 8px 20px; border-radius: 99px;
+            padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
         }
 
@@ -43,10 +43,12 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        /* FRAME GAME */
+        /* FRAME GAME - POSISI DIANGKAT KE ATAS */
         #game-frame {
-            width: 90%; max-width: 400px; height: 75vh;
-            margin: 20px auto; position: relative; overflow: hidden;
+            width: 90%; max-width: 400px; height: 72vh;
+            /* Margin atas dikurangi jadi 10px agar naik, margin bawah 30px */
+            margin: 10px auto 30px; 
+            position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
             background: url('hutan.PNG') no-repeat center center;
@@ -89,7 +91,7 @@
         <button class="btn-wallet font-orbitron">Connect Wallet</button>
     </nav>
 
-    <div class="flex justify-center mt-2">
+    <div class="flex justify-center mt-1">
         <div class="status-badge">
             <span class="text-yellow-500 text-xs">👑</span>
             <div class="text-center">
@@ -139,7 +141,8 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png">`;
+            /* Pisang Pakai banana.PNG */
+            b.innerHTML = `<img src="banana.PNG">`;
             const maxX = frame.offsetWidth - 50;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px';
@@ -170,7 +173,6 @@
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(); const r2 = b.getBoundingClientRect();
-            // Area tabrakan diperkecil biar pas sama tangan monyet
             return !(r1.right < r2.left + 15 || r1.left > r2.right - 15 || r1.bottom < r2.top + 15 || r1.top > r2.bottom - 15);
         }
 
@@ -186,7 +188,6 @@
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let currentX = clientX - rect.left;
             
-            // Logika Ganti Gambar Berdasarkan Arah
             if (currentX < lastX) {
                 gorillaImg.src = "monyet kiri.PNG";
             } else if (currentX > lastX) {
@@ -210,4 +211,3 @@
     </script>
 </body>
 </html>
-
