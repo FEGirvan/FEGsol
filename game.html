@@ -16,34 +16,29 @@
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* --- HEADER NAVIGATION --- */
+        /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 20px 5px; background: transparent; flex-shrink: 0;
         }
-
         .logo-section { display: flex; align-items: center; gap: 10px; }
         .logo-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #7c3aed; overflow: hidden; }
         .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
-
         .btn-wallet {
             background: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             padding: 8px 18px; border-radius: 99px;
             font-size: 10px; font-weight: bold; text-transform: uppercase;
-            border: none; cursor: pointer; transition: 0.3s;
         }
-        .btn-wallet:hover { transform: scale(1.05); background: #7c3aed; }
 
-        /* --- RANKING BADGE --- */
+        /* BADGE */
         .badge-container { display: flex; justify-content: center; margin: 0 0 10px; }
         .status-badge {
             background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
             border: 1px solid #3730a3; border-radius: 20px;
             padding: 5px 20px; display: inline-flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        /* --- GAME ENGINE FRAME --- */
+        /* GAME FRAME */
         #game-frame {
             width: 88%; max-width: 380px; height: 46vh; margin: 0 auto;
             position: relative; overflow: hidden; border-radius: 25px; 
@@ -52,64 +47,45 @@
             box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6);
         }
 
-        /* Character & Items */
-        #gorilla { 
-            width: 80px; height: 80px; 
-            position: absolute; bottom: 20px; 
-            left: 0; z-index: 20; 
-            pointer-events: none;
-        }
+        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 20px; left: 0; z-index: 20; }
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
         
-        .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
-        .banana img { width: 100%; height: 100%; object-fit: contain; }
+        /* BARU: Styling untuk Emoji Pisang agar Tajam */
+        .banana { 
+            position: absolute; z-index: 15; 
+            font-size: 32px; /* Ukuran pisang */
+            line-height: 1;
+            /* Efek sedikit glow agar terlihat 'digital' */
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); 
+        }
 
         .score-box {
             position: absolute; top: 12px; left: 12px; z-index: 30;
-            background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 10px; 
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 10px; backdrop-filter: blur(5px);
         }
 
-        /* --- TIER DISPLAY (GLASSMORPHISM) --- */
+        /* TIER PANEL */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 12px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
             border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 20px; padding: 15px;
         }
-
         .tier-card {
             display: flex; justify-content: space-between; align-items: center;
             background: rgba(139, 92, 246, 0.05); border-radius: 14px; 
-            padding: 10px 18px; margin-bottom: 8px; border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: all 0.4s ease;
+            padding: 10px 18px; margin-bottom: 8px; transition: 0.3s;
         }
-
         .tier-card.active {
             border: 1px solid #8b5cf6;
             background: linear-gradient(90deg, rgba(139, 92, 246, 0.25) 0%, rgba(30, 27, 75, 0.5) 100%);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
-            transform: scale(1.02);
         }
 
-        /* --- OVERLAY SCREENS --- */
+        /* OVERLAY */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.94); display: none;
             flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px); padding: 20px;
-        }
-
-        .claim-btn {
-            background: #fbbf24; color: #000; padding: 14px 0; border-radius: 99px;
-            width: 240px; font-weight: 800; font-family: 'Orbitron'; font-size: 12px;
-            text-transform: uppercase; margin-bottom: 12px;
-            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
-        }
-
-        .retry-btn {
-            border: 1.5px solid #7c3aed; color: #fff; padding: 10px 0; border-radius: 99px;
-            width: 240px; font-weight: bold; font-family: 'Orbitron'; font-size: 10px;
-            text-transform: uppercase; background: transparent;
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
@@ -141,152 +117,111 @@
             <span class="text-lg">🍌</span>
             <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
         </div>
-        
         <div id="gorilla"><img id="gorilla-img" src="monyet kanan.PNG"></div>
-        
         <div id="game-over">
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-1 italic">BUSTED!</h2>
-            <p id="final-rank-text" class="text-[10px] text-gray-400 font-orbitron uppercase tracking-[3px] mb-2"></p>
-            <div id="reward-display" class="font-orbitron text-yellow-400 text-3xl mb-6 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]"></div>
-            
-            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="claim-btn">Claim Reward 🍌</button>
-            <button onclick="initGame()" class="retry-btn">Try Again</button>
+            <div id="reward-display" class="font-orbitron text-yellow-400 text-3xl mb-6"></div>
+            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="bg-[#fbbf24] text-black w-[240px] py-4 rounded-full font-bold font-orbitron text-[12px] mb-3 uppercase">Claim Reward 🍌</button>
+            <button onclick="initGame()" class="border border-purple-500 text-white px-10 py-2 rounded-full font-orbitron text-[10px] uppercase">Try Again</button>
         </div>
     </main>
 
     <div class="tier-panel font-orbitron">
-        <div class="flex justify-between items-center mb-3">
-            <h3 class="text-[8px] text-purple-300 uppercase tracking-widest">Earning Tiers</h3>
-            <span id="tier-status" class="text-[7px] bg-purple-900/50 px-2 py-1 rounded border border-purple-500/30 text-gray-400 italic">IDLE</span>
-        </div>
-
         <div id="tier-std" class="tier-card">
-            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Hold 1M+ FEG SOL</p></div>
-            <div class="text-right"><p class="text-[11px] font-bold">50 - 500 <span class="text-[7px] text-purple-500">FEG</span></p></div>
+            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Min. Hold 1M FEG SOL</p></div>
+            <p class="text-[11px] font-bold">50 - 500 FEG</p>
         </div>
-
         <div id="tier-vip" class="tier-card">
-            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Hold 2M+ FEG SOL</p></div>
-            <div class="text-right"><p class="text-[11px] font-bold text-yellow-400">150 - 750 <span class="text-[7px] text-yellow-600">FEG</span></p></div>
+            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Min. Hold 2M FEG SOL</p></div>
+            <p class="text-[11px] font-bold text-yellow-400">150 - 750 FEG</p>
         </div>
     </div>
 
     <script>
-        const FEGSOL_CA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+        // --- CONFIG & VARIABLES ---
         let userBalance = 0, isVIP = false, isStandard = false, walletConnected = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0;
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
         const bgMusic = document.getElementById('bg-music'), sfxCollect = document.getElementById('sfx-collect');
         let gameLoop, spawnLoop;
 
-        // --- WEB3 CONNECTION ---
+        // --- WEB3 (REWARD & TIER SYSTEM) ---
         async function connectPhantom() {
             if (window.solana && window.solana.isPhantom) {
                 try {
                     const response = await window.solana.connect();
-                    walletConnected = true;
-                    const pubKey = response.publicKey.toString();
-                    document.getElementById('connect-btn').innerText = pubKey.slice(0,4)+"..."+pubKey.slice(-4);
-                    document.getElementById('connect-btn').style.background = "#10b981";
-                    
-                    // Logic minimal Hold 1M (Standard) & 2M (VIP)
-                    userBalance = 2500000; // Simulated data
+                    document.getElementById('connect-btn').innerText = response.publicKey.toString().slice(0,4)+"...";
+                    // SIMULASI BALANCE
+                    userBalance = 2500000; 
                     isVIP = userBalance >= 2000000;
                     isStandard = userBalance >= 1000000 && userBalance < 2000000;
-                    
                     updateTierUI();
-                    bgMusic.play().catch(e => console.log("Audio waiting for user."));
+                    walletConnected = true;
+                    bgMusic.play().catch(e => {});
                 } catch (err) { console.error(err); }
-            } else { alert("Phantom Wallet not found!"); window.open("https://phantom.app/", "_blank"); }
-        }
-
-        function updateTierUI() {
-            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip'), status = document.getElementById('tier-status');
-            std.classList.remove('active'); vip.classList.remove('active');
-            std.style.opacity = "0.4"; vip.style.opacity = "0.4";
-
-            if(isVIP) { 
-                vip.classList.add('active'); vip.style.opacity = "1";
-                status.innerText = "VIP STATUS: ACTIVE"; status.style.color = "#fbbf24";
-            } else if (isStandard) {
-                std.classList.add('active'); std.style.opacity = "1";
-                status.innerText = "STANDARD STATUS: ACTIVE"; status.style.color = "#a78bfa";
-            } else {
-                status.innerText = "INSUFFICIENT HOLDINGS";
             }
         }
+        function updateTierUI() {
+            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip');
+            std.classList.remove('active'); vip.classList.remove('active');
+            if(isVIP) vip.classList.add('active'); else if(isStandard) std.classList.add('active');
+        }
 
-        // --- MOVEMENT ENGINE (PRECISION MENTOK KANAN) ---
+        // --- MOVEMENT (PRECISION EDGE-TO-EDGE) ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             let relativeX = clientX - rect.left;
-
-            // Flip Gorilla direction
             if (relativeX < lastX) gorillaImg.src = "monyet kiri.PNG";
             else if (relativeX > lastX) gorillaImg.src = "monyet kanan.PNG";
             lastX = relativeX;
-
-            // Edge Boundary Math
             let newX = relativeX - (gorilla.offsetWidth / 2);
             let maxX = frame.offsetWidth - gorilla.offsetWidth;
-
             if (newX < 0) newX = 0;
-            if (newX > maxX) newX = maxX; // FIXED: Touches the right wall perfectly
-
+            if (newX > maxX) newX = maxX; // MENTOK KANAN FIXED
             gorilla.style.left = newX + 'px';
             if(e.cancelable) e.preventDefault();
         };
 
-        // --- REWARD LOGIC (50 SCORE MINIMUM) ---
+        // --- GAME LOGIC & REWARD AUTOmation ---
         function calculateReward(s) {
-            if (s < 50) return 0; // 0 reward if score < 50
-            
-            if (isVIP) {
-                if (s >= 150) return 750; // Golden Kong VIP
-                if (s >= 100) return 500; // Silverback VIP
-                return 150;               // Baby Ape VIP
-            } else if (isStandard) {
-                if (s >= 150) return 500; // Golden Kong Standard
-                if (s >= 100) return 250; // Silverback Standard
-                return 50;                // Baby Ape Standard
-            }
-            return 0; // If no hold balance
+            if (s < 50) return 0;
+            if (isVIP) return (s >= 150 ? 750 : (s >= 100 ? 500 : 150));
+            if (isStandard) return (s >= 150 ? 500 : (s >= 100 ? 250 : 50));
+            return 0;
         }
-
         function updateRank(s) {
             const rank = document.getElementById('live-rank');
             if (s >= 150) rank.innerText = "Level: Golden Kong 🏆";
             else if (s >= 100) rank.innerText = "Level: Silverback 🥈";
             else if (s >= 50) rank.innerText = "Level: Baby Ape 👶";
             else rank.innerText = "Level: Trainee 🍼";
-            
-            if(s % 10 === 0 && s > 0) speed += 0.2; // Increase difficulty
+            if(s % 10 === 0 && s > 0) speed += 0.2;
         }
 
-        // --- GAME LOOP ---
         function initGame() {
             score = 0; isGameOver = false; speed = 4.5;
             document.getElementById('score-val').innerText = "0";
             document.getElementById('game-over').style.display = 'none';
             document.querySelectorAll('.banana').forEach(b => b.remove());
-            
-            // Center gorilla on start
             gorilla.style.left = (frame.offsetWidth/2 - gorilla.offsetWidth/2) + 'px';
-            
             clearInterval(gameLoop); clearInterval(spawnLoop);
             gameLoop = setInterval(update, 20); 
             spawnLoop = setInterval(createBanana, 1000);
-            
             if(walletConnected) bgMusic.play().catch(e=>{});
         }
 
+        // --- BARU: FUNGSI MEMBUAT EMOJI PISANG TAJAM ---
         function createBanana() {
             if(isGameOver) return;
-            const b = document.createElement('div'); b.className = 'banana';
-            b.innerHTML = `<img src="banana.PNG">`;
-            b.style.left = Math.floor(Math.random() * (frame.offsetWidth - 40)) + 'px';
+            const b = document.createElement('div'); 
+            b.className = 'banana';
+            b.innerText = '🍌'; // Menggunakan Emoji Langsung
+            
+            // Hitung posisi acak agar tidak keluar frame (lebar emoji sekitar 32px)
+            let maxX = frame.offsetWidth - 35; 
+            b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px'; 
             frame.appendChild(b);
         }
@@ -296,9 +231,8 @@
             document.querySelectorAll('.banana').forEach(b => {
                 let top = parseInt(b.style.top); 
                 b.style.top = (top + speed) + 'px';
-                
                 if(checkCollision(gorilla, b)) {
-                    score++;
+                    score++; 
                     document.getElementById('score-val').innerText = score;
                     sfxCollect.currentTime = 0; sfxCollect.play().catch(e=>{});
                     updateRank(score); 
@@ -307,26 +241,20 @@
                 if(top > frame.offsetHeight) gameOver();
             });
         }
-
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(), r2 = b.getBoundingClientRect();
-            return !(r1.right < r2.left + 12 || r1.left > r2.right - 12 || r1.bottom < r2.top + 12 || r1.top > r2.bottom - 12);
+            // Sedikit penyesuaian hitbox untuk emoji (padding 5px)
+            return !(r1.right < r2.left + 5 || r1.left > r2.right - 5 || r1.bottom < r2.top + 5 || r1.top > r2.bottom - 5);
         }
-
         function gameOver() {
             isGameOver = true; clearInterval(gameLoop); clearInterval(spawnLoop);
             bgMusic.pause(); bgMusic.currentTime = 0;
-            
             const finalReward = calculateReward(score);
             document.getElementById('game-over').style.display = 'flex';
             document.getElementById('reward-display').innerText = `+${finalReward} FEG SOL`;
-            document.getElementById('final-rank-text').innerText = document.getElementById('live-rank').innerText;
-            
-            // Show claim button only if they earned something
             document.getElementById('claim-btn').style.display = finalReward > 0 ? 'block' : 'none';
         }
 
-        // LISTENERS
         frame.addEventListener('touchmove', moveHandler, {passive: false});
         frame.addEventListener('mousemove', moveHandler);
     </script>
