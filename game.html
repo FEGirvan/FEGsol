@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEG SOL - Banana Grabber</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FEG SOL - Banana Grabber Smooth</title>
     <style>
-        /* --- CSS (Modern Glassmorphism Style) --- */
         :root {
             --feg-gold: #fec107;
             --glass-bg: rgba(255, 255, 255, 0.05);
@@ -13,41 +12,26 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            margin: 0; padding: 0; display: flex; justify-content: center;
+            align-items: center; height: 100vh;
             background: radial-gradient(circle, #2a2a2a 0%, #000000 100%);
-            color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
+            color: white; font-family: 'Segoe UI', sans-serif; 
+            overflow: hidden; touch-action: none; /* Mencegah layar goyang saat main */
         }
 
         #game-container {
-            width: 400px;
-            height: 600px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
+            width: 100%; max-width: 400px; height: 600px;
+            background: var(--glass-bg); backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(254, 193, 7, 0.2);
-            overflow: hidden;
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            position: relative; box-shadow: 0 0 30px rgba(254, 193, 7, 0.2);
+            overflow: hidden; touch-action: none;
         }
 
-        /* Border Animasi Glow */
         #game-container::before {
-            content: "";
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 32px;
-            border: 2px solid var(--feg-gold);
-            opacity: 0.5;
-            animation: pulse-glow 2s infinite;
-            pointer-events: none;
+            content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px; border: 2px solid var(--feg-gold);
+            opacity: 0.5; animation: pulse-glow 2s infinite; pointer-events: none;
         }
 
         @keyframes pulse-glow {
@@ -57,96 +41,45 @@
         }
 
         #gorilla {
-            width: 70px;
-            height: 70px;
-            position: absolute;
-            bottom: 30px;
-            left: 165px;
-            font-size: 55px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: left 0.1s ease-out;
-            z-index: 10;
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            width: 80px; height: 80px; position: absolute;
+            bottom: 30px; left: 160px; z-index: 10;
+            display: flex; justify-content: center; align-items: center;
+            /* Hapus transition biar gak delay pas di-drag */
+            pointer-events: none; 
         }
+
+        #gorilla img { width: 100%; height: 100%; object-fit: contain; }
 
         .banana {
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            font-size: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-            filter: drop-shadow(0 0 5px var(--feg-gold));
+            width: 45px; height: 45px; position: absolute; z-index: 5;
+            display: flex; justify-content: center; align-items: center;
         }
 
+        .banana img { width: 100%; height: 100%; object-fit: contain; }
+
         #score-board {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px 25px;
-            border-radius: 50px;
-            border: 1px solid var(--glass-border);
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--feg-gold);
-            z-index: 20;
-            letter-spacing: 1px;
+            position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6); padding: 10px 25px;
+            border-radius: 50px; border: 1px solid var(--glass-border);
+            font-size: 18px; font-weight: bold; color: var(--feg-gold); z-index: 20;
         }
 
         #game-over-screen {
-            display: none;
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 100;
-            text-align: center;
-        }
-
-        #game-over-screen h1 {
-            color: var(--feg-gold);
-            margin-bottom: 5px;
-            font-size: 32px;
-            text-transform: uppercase;
+            display: none; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px); justify-content: center;
+            align-items: center; flex-direction: column; z-index: 100;
         }
 
         button {
-            margin-top: 25px;
-            padding: 12px 35px;
-            font-size: 16px;
-            background: var(--feg-gold);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            color: black;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: transform 0.2s;
+            margin-top: 25px; padding: 12px 35px; font-size: 16px;
+            background: var(--feg-gold); border: none; border-radius: 50px;
+            cursor: pointer; color: black; font-weight: bold; text-transform: uppercase;
         }
 
-        button:hover {
-            transform: scale(1.1);
-        }
-
-        /* Kontrol bantuan buat Mobile */
-        .mobile-hint {
-            position: absolute;
-            bottom: 5px;
-            width: 100%;
-            text-align: center;
-            font-size: 10px;
-            color: rgba(255,255,255,0.3);
-            text-transform: uppercase;
+        .hint {
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            color: rgba(255,255,255,0.3); font-size: 12px;
         }
     </style>
 </head>
@@ -154,75 +87,82 @@
 
     <div id="game-container">
         <div id="score-board">REWARD: <span id="score">0</span> 🍌</div>
-        
-        <div id="gorilla">🦍</div>
+        <div id="gorilla"></div>
         
         <div id="game-over-screen">
-            <h1>Mission Failed!</h1>
-            <p>You collected <span id="final-score">0</span> bananas.<br>The tribe needs more volume!</p>
+            <h1>MISSION FAILED!</h1>
+            <p>You grabbed <span id="final-score">0</span> bananas.</p>
             <button onclick="startGame()">Try Again</button>
         </div>
-
-        <div class="mobile-hint">Tap Left / Right to Move</div>
+        <div class="hint">DRAG TO MOVE GORILLA</div>
     </div>
 
     <script>
+        /* --- KOTAK PENGATURAN --- */
+        const URL_GAMBAR_GORILLA = "GANTI_ALAMAT_PNG_DI_SINI"; 
+        const URL_GAMBAR_BANANA = "GANTI_ALAMAT_PNG_DI_SINI";
+
         const gorilla = document.getElementById('gorilla');
         const gameContainer = document.getElementById('game-container');
         const scoreElement = document.getElementById('score');
         const finalScoreElement = document.getElementById('final-score');
         const gameOverScreen = document.getElementById('game-over-screen');
 
-        const containerWidth = 400;
-        const containerHeight = 600;
-        const gorillaWidth = 70;
-        
-        let gorillaLeft = 165;
+        let gorillaLeft = 160;
         let score = 0;
         let isGameOver = false;
-        let gameInterval;
-        let bananaInterval;
+        let gameInterval, bananaInterval;
         let speed = 5;
 
+        function initAssets() {
+            if (URL_GAMBAR_GORILLA !== "GANTI_ALAMAT_PNG_DI_SINI") {
+                gorilla.innerHTML = `<img src="${URL_GAMBAR_GORILLA}" alt="Gorilla">`;
+            } else {
+                gorilla.style.fontSize = "60px";
+                gorilla.innerText = "🦍";
+            }
+        }
+
         function startGame() {
+            initAssets();
             isGameOver = false;
-            score = 0;
-            speed = 5;
+            score = 0; speed = 5;
             scoreElement.innerText = '0';
-            gorillaLeft = 165;
+            gorillaLeft = 160;
             gorilla.style.left = gorillaLeft + 'px';
             gameOverScreen.style.display = 'none';
-            
-            const oldBananas = document.querySelectorAll('.banana');
-            oldBananas.forEach(b => b.remove());
+            document.querySelectorAll('.banana').forEach(b => b.remove());
 
             gameInterval = setInterval(gameLoop, 20);
             bananaInterval = setInterval(createBanana, 1000);
         }
 
-        document.addEventListener('keydown', (e) => {
+        // KONTROL DRAG (SMOOTH MOVE)
+        function handleMove(clientX) {
             if (isGameOver) return;
-            if (e.key === 'ArrowLeft' && gorillaLeft > 10) {
-                gorillaLeft -= 25;
-            } else if (e.key === 'ArrowRight' && gorillaLeft < (containerWidth - gorillaWidth - 10)) {
-                gorillaLeft += 25;
+            const rect = gameContainer.getBoundingClientRect();
+            const relativeX = clientX - rect.left;
+            
+            // Atur posisi tengah gorilla agar tepat di bawah jari
+            gorillaLeft = relativeX - (gorilla.offsetWidth / 2);
+
+            // Batasan agar tidak keluar box
+            if (gorillaLeft < 5) gorillaLeft = 5;
+            if (gorillaLeft > rect.width - gorilla.offsetWidth - 5) {
+                gorillaLeft = rect.width - gorilla.offsetWidth - 5;
             }
+
             gorilla.style.left = gorillaLeft + 'px';
+        }
+
+        // Event untuk Mouse (PC)
+        gameContainer.addEventListener('mousemove', (e) => {
+            if(e.buttons === 1) handleMove(e.clientX); // Geser sambil klik kiri
         });
 
-        // Touch Control yang lebih responsif
-        gameContainer.addEventListener('touchstart', (e) => {
-            if (isGameOver) return;
-            const touchX = e.touches[0].clientX;
-            const containerLeft = gameContainer.getBoundingClientRect().left;
-            const relativeX = touchX - containerLeft;
-
-            if (relativeX < containerWidth / 2 && gorillaLeft > 10) {
-                gorillaLeft -= 35;
-            } else if (relativeX >= containerWidth / 2 && gorillaLeft < (containerWidth - gorillaWidth - 10)) {
-                gorillaLeft += 35;
-            }
-            gorilla.style.left = gorillaLeft + 'px';
+        // Event untuk Touch (HP) - INI YANG BIKIN SMOOTH
+        gameContainer.addEventListener('touchmove', (e) => {
+            handleMove(e.touches[0].clientX);
             e.preventDefault(); 
         }, {passive: false});
 
@@ -230,28 +170,25 @@
             if (isGameOver) return;
             const banana = document.createElement('div');
             banana.classList.add('banana');
-            banana.innerText = '🍌';
-            banana.style.left = (Math.random() * (containerWidth - 50) + 5) + 'px';
+            if (URL_GAMBAR_BANANA !== "GANTI_ALAMAT_PNG_DI_SINI") {
+                banana.innerHTML = `<img src="${URL_GAMBAR_BANANA}" alt="Banana">`;
+            } else {
+                banana.style.fontSize = "35px";
+                banana.innerText = "🍌";
+            }
+            banana.style.left = (Math.random() * (gameContainer.offsetWidth - 50) + 5) + 'px';
             banana.style.top = '-50px';
             gameContainer.appendChild(banana);
-            
-            // Makin lama makin cepat
-            if(score > 10) speed = 7;
-            if(score > 25) speed = 9;
+            if(score > 15) speed = 7;
+            if(score > 30) speed = 10;
         }
 
         function gameLoop() {
             if (isGameOver) return;
-
-            const bananas = document.querySelectorAll('.banana');
-            bananas.forEach(banana => {
+            document.querySelectorAll('.banana').forEach(banana => {
                 let top = parseInt(banana.style.top);
                 banana.style.top = (top + speed) + 'px';
-
-                if (top > containerHeight) {
-                    endGame();
-                }
-
+                if (top > 600) endGame();
                 if (isColliding(gorilla, banana)) {
                     score++;
                     scoreElement.innerText = score;
@@ -261,22 +198,14 @@
         }
 
         function isColliding(a, b) {
-            const aRect = a.getBoundingClientRect();
-            const bRect = b.getBoundingClientRect();
-
-            // Pengecekan tabrakan yang lebih akurat
-            return !(
-                aRect.top > bRect.bottom - 10 ||
-                aRect.bottom < bRect.top + 10 ||
-                aRect.left > bRect.right - 10 ||
-                aRect.right < bRect.left + 10
-            );
+            const aR = a.getBoundingClientRect();
+            const bR = b.getBoundingClientRect();
+            return !(aR.top > bR.bottom-10 || aR.bottom < bR.top+10 || aR.left > bR.right-10 || aR.right < bR.left+10);
         }
 
         function endGame() {
             isGameOver = true;
-            clearInterval(gameInterval);
-            clearInterval(bananaInterval);
+            clearInterval(gameInterval); clearInterval(bananaInterval);
             finalScoreElement.innerText = score;
             gameOverScreen.style.display = 'flex';
         }
