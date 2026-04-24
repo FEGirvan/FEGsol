@@ -61,7 +61,7 @@
             background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 8px; backdrop-filter: blur(4px);
         }
 
-        /* TIER PANEL */
+        /* TIER PANEL - Positioned higher to prevent cut-off */
         .tier-panel {
             width: 88%; max-width: 380px; margin: 10px auto 0;
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px);
@@ -84,17 +84,29 @@
         .tier-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a78bfa; font-weight: bold; }
         .tier-value { font-size: 11px; font-weight: bold; font-family: 'Orbitron'; }
 
-        /* GAME OVER */
+        /* GAME OVER OVERLAY */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
             background: rgba(0,0,0,0.92); display: none;
             flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); padding: 20px;
         }
 
         .reward-popup {
-            font-family: 'Orbitron', sans-serif; color: #fbbf24; font-size: 22px; 
+            font-family: 'Orbitron', sans-serif; color: #fbbf24; font-size: 24px; 
             margin: 10px 0; text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+        }
+
+        .btn-claim {
+            background: #fbbf24; color: #000; padding: 12px 0; border-radius: 99px;
+            width: 220px; font-weight: 800; font-family: 'Orbitron'; font-size: 11px;
+            text-transform: uppercase; margin-bottom: 10px; box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn-retry {
+            border: 1px solid #7c3aed; color: #fff; padding: 10px 0; border-radius: 99px;
+            width: 220px; font-weight: bold; font-family: 'Orbitron'; font-size: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -128,7 +140,14 @@
             <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-1 italic">BUSTED!</h2>
             <p id="final-rank" class="font-orbitron text-[9px] text-gray-400 uppercase tracking-widest"></p>
             <div id="reward-display" class="reward-popup"></div>
-            <button onclick="initGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-[10px] font-bold text-white shadow-xl mt-3">PLAY AGAIN</button>
+            
+            <button onclick="window.open('https://app.streamflow.finance/', '_blank')" class="btn-claim">
+                Claim Reward 🍌
+            </button>
+
+            <button onclick="initGame()" class="btn-retry">
+                Try Again
+            </button>
         </div>
     </main>
 
@@ -150,15 +169,16 @@
     </div>
 
     <script>
-        // CONFIGURATION
+        // --- DATA CONFIGURATION ---
         const FEGSOL_CA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
-        
+        const STREAMFLOW_LINK = "https://app.streamflow.finance/"; // Replace with your actual pool link
+
         let userBalance = 0, isVIP = false, walletConnected = false;
         let score = 0, isGameOver = false, speed = 4.5, lastX = 0; 
         const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
         let gameLoop, spawnLoop;
 
-        // PHANTOM CONNECTION
+        // --- PHANTOM CONNECTION ---
         async function connectPhantom() {
             const isPhantomInstalled = window.solana && window.solana.isPhantom;
             if (!isPhantomInstalled) {
@@ -174,12 +194,12 @@
                 btn.innerText = pubKey.slice(0, 4) + "..." + pubKey.slice(-4);
                 btn.style.background = "#10b981";
 
-                // Simulated balance check for now
+                // Simulated balance check - In production, use @solana/web3.js to fetch real balance
                 userBalance = 1500000; 
                 isVIP = userBalance >= 1000000;
                 updateTierUI();
             } catch (err) {
-                console.error("Connection cancelled by user");
+                console.error("Connection denied");
             }
         }
 
@@ -191,11 +211,11 @@
                 status.innerText = "VIP MODE ACTIVE"; status.style.color = "#fbbf24"; 
             } else { 
                 std.classList.add('active'); vip.style.opacity = "0.4"; 
-                status.innerText = "STANDARD MODE ACTIVE"; 
+                status.innerText = "STANDARD ACTIVE"; status.style.color = "#a78bfa";
             }
         }
 
-        // CONTROLS & MOVEMENT FIX
+        // --- CONTROLS & MOVEMENT FIX (PRECISION EDGE-TO-EDGE) ---
         const moveHandler = (e) => {
             if(isGameOver) return;
             const rect = frame.getBoundingClientRect();
@@ -217,7 +237,7 @@
             if(e.cancelable) e.preventDefault();
         };
 
-        // GAME LOGIC
+        // --- GAME CORE LOGIC ---
         function initGame() {
             if(walletConnected) updateTierUI();
             score = 0; isGameOver = false; speed = 4.5;
