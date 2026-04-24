@@ -11,6 +11,7 @@
         body { 
             background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; 
             margin: 0; overflow: hidden; touch-action: none;
+            display: flex; flex-direction: column; height: 100vh;
         }
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
@@ -18,8 +19,8 @@
         /* HEADER */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 20px; background: transparent;
-            position: relative; z-index: 50;
+            padding: 15px 20px; background: transparent;
+            flex-shrink: 0;
         }
 
         .logo-section { display: flex; align-items: center; gap: 10px; }
@@ -41,14 +42,13 @@
             border: 1px solid #3730a3; border-radius: 20px;
             padding: 5px 25px; display: inline-flex; align-items: center; gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            position: relative; z-index: 50;
         }
 
-        /* FRAME GAME - POSISI DINAIKKAN MAKSIMAL */
+        /* FRAME GAME - DIKECILIN UKURANNYA */
         #game-frame {
-            width: 90%; max-width: 400px; height: 75vh;
-            /* Margin atas dibuat 5px agar sangat dekat dengan badge di atasnya */
-            margin: 5px auto 20px; 
+            width: 85%; max-width: 380px; 
+            height: 55vh; /* TINGGI DIKURANGI BIAR GAK NABRAK ATAS/BAWAH */
+            margin: 20px auto; /* JARAK OTOMATIS ATAS & BAWAH */
             position: relative; overflow: hidden;
             border-radius: 30px; 
             border: 2px solid rgba(139, 92, 246, 0.3);
@@ -59,14 +59,14 @@
 
         /* GORILLA PLAYER */
         #gorilla { 
-            width: 100px; height: 100px; 
-            position: absolute; bottom: 40px; left: 50%; 
+            width: 80px; height: 80px; /* Ukuran monyet disesuaikan dikit biar pas frame kecil */
+            position: absolute; bottom: 30px; left: 50%; 
             transform: translateX(-50%); z-index: 20; 
         }
         
         #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
 
-        .banana { width: 45px; height: 45px; position: absolute; z-index: 15; }
+        .banana { width: 40px; height: 40px; position: absolute; z-index: 15; }
         .banana img { width: 100%; height: 100%; object-fit: contain; }
 
         .score-box {
@@ -143,7 +143,7 @@
             const b = document.createElement('div');
             b.className = 'banana';
             b.innerHTML = `<img src="banana.PNG">`;
-            const maxX = frame.offsetWidth - 50;
+            const maxX = frame.offsetWidth - 45;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
             b.style.top = '-50px';
             frame.appendChild(b);
@@ -173,7 +173,7 @@
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect(); const r2 = b.getBoundingClientRect();
-            return !(r1.right < r2.left + 15 || r1.left > r2.right - 15 || r1.bottom < r2.top + 15 || r1.top > r2.bottom - 15);
+            return !(r1.right < r2.left + 10 || r1.left > r2.right - 10 || r1.bottom < r2.top + 10 || r1.top > r2.bottom - 10);
         }
 
         function gameOver() {
