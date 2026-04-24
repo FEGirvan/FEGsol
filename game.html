@@ -3,120 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FEG SOL | Jungle King Edition</title>
+    <title>FEG SOL | Banana Farm Style</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap');
         
         body { 
-            background: #000; color: #fff; font-family: 'Inter', sans-serif; 
-            overflow: hidden; touch-action: none; margin: 0;
+            background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; 
+            margin: 0; overflow: hidden; touch-action: none;
         }
 
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-        /* VIEWPORT UTAMA DENGAN BACKGROUND HUTAN.JPG */
-        #game-container {
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-            /* MENGHUBUNGKAN KE FILE GAMBAR ABANG */
+        /* HEADER STYLE BANANA FARM */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; background: rgba(10, 10, 11, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo-text { font-size: 1.2rem; letter-spacing: -1px; }
+
+        /* BADGE EVOLUSI DI TENGAH */
+        .evolution-container {
+            display: flex; justify-content: center; margin-top: 10px;
+        }
+        .evolution-badge {
+            background: linear-gradient(45deg, #1e1b4b, #312e81);
+            padding: 8px 30px; border-radius: 99px; border: 1px solid rgba(124, 58, 237, 0.3);
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* FRAME GAME DENGAN BACKGROUND HUTAN.PNG */
+        #game-viewport {
+            width: 92%; max-width: 420px; height: 70vh;
+            margin: 20px auto; position: relative; overflow: hidden;
+            border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
+            /* HUBUNGKAN KE FILE HUTAN.PNG */
             background: url('hutan.PNG') no-repeat center center;
             background-size: cover;
-            border-left: 1px solid rgba(255,255,255,0.1);
-            border-right: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
-        /* Overlay halus agar UI lebih terbaca */
-        #game-container::before {
-            content: ""; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent 30%, rgba(0,0,0,0.4));
-            pointer-events: none;
-        }
-
-        /* KARAKTER GORILLA (G.PNG) */
+        /* KARAKTER GORILLA */
         #gorilla { 
-            width: 90px; height: 90px; 
-            position: absolute; bottom: 60px; left: 50%; 
+            width: 80px; height: 80px; 
+            position: absolute; bottom: 30px; left: 50%; 
             transform: translateX(-50%); z-index: 20;
-            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.6));
         }
         
-        /* PISANG YANG JATUH */
         .banana { 
-            width: 45px; height: 45px; 
+            width: 40px; height: 40px; 
             position: absolute; z-index: 15; 
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
         }
 
         #gorilla img, .banana img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* TAMPILAN SCORE & RANK (DI ATAS) */
-        .ui-panel {
-            position: absolute; top: 25px; left: 20px; right: 20px;
-            display: flex; justify-content: space-between; align-items: flex-start;
-            z-index: 30;
+        /* SKOR OVERLAY */
+        .score-display {
+            position: absolute; top: 20px; left: 20px; z-index: 30;
+            font-size: 1.5rem; color: #fbbf24; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .score-box { 
-            background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 12px; 
-            border: 1px solid rgba(255,215,0,0.4); backdrop-filter: blur(5px);
-        }
-        .rank-box { 
-            background: rgba(88, 28, 135, 0.6); padding: 8px 15px; border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px);
-        }
-
-        /* LAYAR GAME OVER */
+        /* GAME OVER */
         #game-over {
             position: absolute; inset: 0; z-index: 100;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.9); text-center: center; padding: 20px;
+            background: rgba(0,0,0,0.9); display: none;
+            flex-direction: column; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body onload="initGame()">
 
-    <main id="game-container">
-        <div class="ui-panel">
-            <div class="score-box">
-                <p class="text-[8px] font-orbitron text-yellow-400 uppercase tracking-widest">Score</p>
-                <p class="text-2xl font-bold font-orbitron text-white" id="score-val">0</p>
-            </div>
-            <div class="rank-box text-right">
-                <p class="text-[8px] font-orbitron text-purple-200 uppercase tracking-widest">Evolution</p>
-                <p id="live-rank" class="text-[10px] font-orbitron font-bold text-white uppercase italic">Baby Ape</p>
-            </div>
+    <nav>
+        <div class="logo-text font-orbitron font-bold">
+            FEG <span class="text-purple-500">SOL</span>
+        </div>
+        <button class="bg-purple-600 px-5 py-1.5 rounded-full font-orbitron text-[10px] uppercase font-bold tracking-wider shadow-lg">
+            Connect Wallet
+        </button>
+    </nav>
+
+    <div class="evolution-container">
+        <div class="evolution-badge">
+            <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Gorilla Rank</p>
+            <p id="live-rank" class="text-[11px] font-orbitron font-bold uppercase italic text-white">Baby Ape</p>
+        </div>
+    </div>
+
+    <main id="game-viewport">
+        <div class="score-display font-orbitron font-bold">
+            🍌 <span id="score-val">0</span>
         </div>
 
-        <div id="gorilla"><img src="G.PNG" alt="Ape"></div>
+        <div id="gorilla"><img src="G.PNG"></div>
 
         <div id="game-over">
-            <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-2 italic uppercase">Busted!</h2>
-            <p id="final-rank-info" class="font-orbitron text-lg text-yellow-400 mb-8 uppercase tracking-tighter"></p>
-            <button onclick="initGame()" class="bg-yellow-500 hover:bg-yellow-400 px-14 py-4 rounded-full font-orbitron text-xs font-bold text-black shadow-2xl transition-all active:scale-90">
+            <h2 class="font-orbitron text-3xl font-bold text-red-500 mb-2 italic">BUSTED!</h2>
+            <p id="final-rank" class="font-orbitron text-sm text-yellow-400 mb-8 uppercase"></p>
+            <button onclick="initGame()" class="bg-purple-600 px-10 py-3 rounded-full font-orbitron text-[10px] font-bold text-white shadow-xl">
                 PLAY AGAIN
             </button>
         </div>
     </main>
 
     <script>
-        let score = 0, isGameOver = false, speed = 5;
-        const container = document.getElementById('game-container');
+        let score = 0, isGameOver = false, speed = 4.5;
+        const viewport = document.getElementById('game-viewport');
         const gorilla = document.getElementById('gorilla');
         let gameLoop, spawnLoop;
 
         function initGame() {
-            score = 0; isGameOver = false; speed = 5;
+            score = 0; isGameOver = false; speed = 4.5;
             document.getElementById('score-val').innerText = "0";
             document.getElementById('game-over').style.display = 'none';
             document.getElementById('live-rank').innerText = "Baby Ape";
             document.getElementById('live-rank').style.color = "#fff";
             
-            // Hapus pisang yang masih ada di layar
             document.querySelectorAll('.banana').forEach(b => b.remove());
             
             clearInterval(gameLoop); clearInterval(spawnLoop);
@@ -128,12 +132,11 @@
             if(isGameOver) return;
             const b = document.createElement('div');
             b.className = 'banana';
-            // Pakai icon pisang HD
-            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png" alt="B">`;
-            const maxX = container.offsetWidth - 50;
+            b.innerHTML = `<img src="https://cdn-icons-png.flaticon.com/512/3143/3143641.png">`;
+            const maxX = viewport.offsetWidth - 45;
             b.style.left = Math.floor(Math.random() * maxX) + 'px';
-            b.style.top = '-60px';
-            container.appendChild(b);
+            b.style.top = '-50px';
+            viewport.appendChild(b);
         }
 
         function update() {
@@ -144,7 +147,6 @@
                 let top = parseInt(b.style.top);
                 b.style.top = (top + speed) + 'px';
 
-                // Cek Tabrakan (Collision)
                 if(checkCollision(gorilla, b)) {
                     score++;
                     document.getElementById('score-val').innerText = score;
@@ -152,8 +154,7 @@
                     b.remove();
                 }
 
-                // Jika pisang lewat bawah layar
-                if(top > container.offsetHeight) {
+                if(top > viewport.offsetHeight) {
                     gameOver();
                 }
             });
@@ -168,15 +169,12 @@
                 rank.innerText = "Silverback 🥈"; 
                 rank.style.color = "#e2e8f0"; 
             }
-            
-            // Tingkatkan kesulitan setiap 10 poin
-            if(s % 10 === 0 && s > 0) speed += 0.2;
+            if(s % 10 === 0 && s > 0) speed += 0.25;
         }
 
         function checkCollision(a, b) {
             const r1 = a.getBoundingClientRect();
             const r2 = b.getBoundingClientRect();
-            // Box deteksi tabrakan yang presisi
             return !(r1.right < r2.left + 10 || r1.left > r2.right - 10 || r1.bottom < r2.top + 10 || r1.top > r2.bottom - 10);
         }
 
@@ -184,33 +182,31 @@
             isGameOver = true;
             clearInterval(gameLoop); clearInterval(spawnLoop);
             document.getElementById('game-over').style.display = 'flex';
-            document.getElementById('final-rank-info').innerText = "Evolution: " + document.getElementById('live-rank').innerText;
+            document.getElementById('final-rank').innerText = document.getElementById('live-rank').innerText;
         }
 
-        // --- SISTEM SLIDE (GESER) ---
-        // Mendukung Desktop & Mobile
+        // --- FIX SLIDE POJOK KE POJOK ---
         const moveHandler = (e) => {
             if(isGameOver) return;
-            const rect = container.getBoundingClientRect();
+            const rect = viewport.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const touchX = clientX - rect.left;
             
             let newX = touchX - (gorilla.offsetWidth / 2);
 
-            // Batas agar monyet tidak keluar layar (Sangat Presisi)
             const minX = 0;
-            const maxX = container.offsetWidth - gorilla.offsetWidth;
+            const maxX = viewport.offsetWidth - gorilla.offsetWidth;
 
             if (newX < minX) newX = minX;
             if (newX > maxX) newX = maxX;
 
             gorilla.style.left = newX + 'px';
-            gorilla.style.transform = 'none'; // Pastikan tidak ada konflik transform
+            gorilla.style.transform = 'none';
             if(e.cancelable) e.preventDefault();
         };
 
-        container.addEventListener('touchmove', moveHandler, {passive: false});
-        container.addEventListener('mousemove', moveHandler);
+        viewport.addEventListener('touchmove', moveHandler, {passive: false});
+        viewport.addEventListener('mousemove', moveHandler);
 
     </script>
 </body>
