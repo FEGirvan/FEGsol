@@ -525,18 +525,19 @@
 
     // JUPITER TERMINAL INITIALIZATION
     window.Jupiter.init({
-    displayMode: "integrated",
-    integratedTargetId: "integrated-terminal",
-    endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
-    // TAMBAHKAN BARIS DI BAWAH INI
-    apiKey: JUP_API_KEY, 
-    strictTokenList: false,
-    defaultExplorer: "Solscan",
-    formProps: {
-        fixedOutputMint: true,
-        initialOutputMint: CA_KITA,
-    },
-});
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
+        endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+        apiKey: JUP_API_KEY, 
+        strictTokenList: false,
+        defaultExplorer: "Solscan",
+        formProps: {
+            fixedOutputMint: true,
+            initialOutputMint: CA_KITA,
+        },
+    });
+</script>
+
 
     function updateAllLinks() {
         // Link Pump.fun sudah tidak digunakan di section swap, tapi tetap diupdate untuk scan/launch
