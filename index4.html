@@ -398,8 +398,15 @@
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
             
-            <div id="integrated-terminal" style="width: 100%; min-height: 600px;"></div>
->
+            <div class="glass-morphism p-1 border-2 border-purple-500/30 overflow-hidden" style="border-radius: 16px;">
+    <iframe 
+        src="https://jup.ag/swap/SOL-49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump" 
+        width="100%" 
+        height="600px" 
+        style="border: none; border-radius: 12px; background: #000;">
+    </iframe>
+</div>
+
         </div>
     </section>
 
@@ -551,20 +558,20 @@
 window.Jupiter.init({
     displayMode: "integrated",
     integratedTargetId: "integrated-terminal",
-    endpoint: "https://api.mainnet-beta.solana.com", // Pakai rpc publik dulu biar stabil
-    strictTokenList: false, // Ini harus false
+    // PASTIKAN FORMATNYA BERSIH SEPERTI INI:
+    endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30", 
+    strictTokenList: false,
     apiKey: "jup_5e831486eae614c9662b90c6edf8dc5d308ae143886ad475707acb70e2bbc12b",
     
-    // TAMBAHKAN BAGIAN INI AGAR TOKEN KAMU DIPAKSA MUNCUL
-    preloadTokens: [
-        "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"
-    ],
+    // Ini penting supaya Helius kamu tidak diblokir saat loading awal
+    preloadTokens: ["49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"],
     
     formProps: {
         fixedOutputMint: true,
         initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
     },
 });
+
 
 
 
