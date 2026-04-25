@@ -551,20 +551,21 @@
 window.Jupiter.init({
     displayMode: "integrated",
     integratedTargetId: "integrated-terminal",
-    // Menggunakan RPC Publik dulu agar pasti jalan
-    endpoint: "https://api.mainnet-beta.solana.com", 
-    strictTokenList: false,
-    // API Key Jupiter milikmu
+    endpoint: "https://api.mainnet-beta.solana.com", // Pakai rpc publik dulu biar stabil
+    strictTokenList: false, // Ini harus false
     apiKey: "jup_5e831486eae614c9662b90c6edf8dc5d308ae143886ad475707acb70e2bbc12b",
-    // Memastikan tampilan muncul dengan benar di atas layer lain
-    containerStyles: {
-        zIndex: 50,
-    },
+    
+    // TAMBAHKAN BAGIAN INI AGAR TOKEN KAMU DIPAKSA MUNCUL
+    preloadTokens: [
+        "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"
+    ],
+    
     formProps: {
         fixedOutputMint: true,
         initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
     },
 });
+
 
 
     function revealWallet(id) {
