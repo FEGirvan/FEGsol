@@ -398,8 +398,8 @@
         <div class="max-w-md mx-auto text-center">
             <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
             
-            <div id="integrated-terminal" class="glass-morphism p-2 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)] min-h-[500px]">
-                </div>
+            <div id="integrated-terminal" style="width: 100%; min-height: 600px;"></div>
+>
         </div>
     </section>
 
@@ -547,15 +547,22 @@
     // ==========================================
     // JUPITER TERMINAL INITIALIZATION (UPDATED)
     // ==========================================
-    window.Jupiter.init({
+    
+window.Jupiter.init({
     displayMode: "integrated",
-    integratedTargetId: "integrated-terminal", // Pastikan ID ini sama dengan ID <div> tempat swap kamu
-    endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+    integratedTargetId: "integrated-terminal",
+    // Menggunakan RPC Publik dulu agar pasti jalan
+    endpoint: "https://api.mainnet-beta.solana.com", 
     strictTokenList: false,
+    // API Key Jupiter milikmu
     apiKey: "jup_5e831486eae614c9662b90c6edf8dc5d308ae143886ad475707acb70e2bbc12b",
+    // Memastikan tampilan muncul dengan benar di atas layer lain
+    containerStyles: {
+        zIndex: 50,
+    },
     formProps: {
         fixedOutputMint: true,
-        initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump", // CA FEGsol
+        initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
     },
 });
 
