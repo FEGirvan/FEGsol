@@ -548,18 +548,16 @@
     // JUPITER TERMINAL INITIALIZATION (UPDATED)
     // ==========================================
     window.Jupiter.init({
-        displayMode: "integrated",
-        integratedTargetId: "integrated-terminal",
-        // Menggunakan RPC Helius kustom kamu untuk kecepatan maksimal
-        endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
-        strictTokenList: false,
-        // Menambahkan API Key Jupiter kamu
-        apiKey: "jup_5e831486eae614c9662b90c6edf8dc5d308ae143886ad475707acb70e2bbc12b",
-        formProps: {
-            fixedOutputMint: true,
-            initialOutputMint: CA_KITA,
-        },
-    });
+    displayMode: "integrated",
+    integratedTargetId: "integrated-terminal", // Pastikan ID ini sama dengan ID <div> tempat swap kamu
+    endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+    strictTokenList: false,
+    apiKey: "jup_5e831486eae614c9662b90c6edf8dc5d308ae143886ad475707acb70e2bbc12b",
+    formProps: {
+        fixedOutputMint: true,
+        initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump", // CA FEGsol
+    },
+});
 
 
     function revealWallet(id) {
