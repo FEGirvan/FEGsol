@@ -1,289 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FEG SOL | Banana Grabber Official</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap');
-        
-        body { 
-            background: #0a0a0b; color: #fff; font-family: 'Inter', sans-serif; 
-            margin: 0; overflow: hidden; touch-action: none;
-            display: flex; flex-direction: column; height: 100vh;
-        }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 20px 5px; background: transparent; flex-shrink: 0;
-        }
-        .logo-section { display: flex; align-items: center; gap: 10px; }
-        .logo-circle { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #7c3aed; overflow: hidden; }
-        .logo-circle img { width: 100%; height: 100%; object-fit: cover; }
+<script>
+    // --- KONFIGURASI BLOCKCHAIN ---
+    const MINT_ADDRESS = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"; 
+    const HELIUS_RPC = "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30";
+    const connection = new solanaWeb3.Connection(HELIUS_RPC);
 
-        .btn-wallet {
-            background: #8b5cf6; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
-            padding: 8px 18px; border-radius: 99px;
-            font-size: 10px; font-weight: bold; text-transform: uppercase;
-            border: none; color: white; cursor: pointer;
+    let userBalance = 0, isVIP = false, isStandard = false, walletConnected = false;
+    let score = 0, isGameOver = true, speed = 4.5, lastX = 0;
+    
+    const frame = document.getElementById('game-frame');
+    const gorilla = document.getElementById('gorilla');
+    const connectBtn = document.getElementById('connect-btn');
+    const bgMusic = document.getElementById('bg-music');
+
+    // --- FUNGSI CONNECT YANG LEBIH STABIL ---
+    async function connectPhantom() {
+        // 1. Cek apakah Phantom terinstall
+        const isPhantomInstalled = window.solana && window.solana.isPhantom;
+
+        if (!isPhantomInstalled) {
+            Swal.fire('Wallet Tidak Ditemukan', 'Silakan install Phantom Wallet dulu ya, Dev!', 'warning');
+            window.open("https://phantom.app/", "_blank");
+            return;
         }
 
-        .badge-container { display: flex; justify-content: center; margin: 0 0 10px; }
-        .status-badge {
-            background: linear-gradient(180deg, #1e1b4b 0%, #111827 100%);
-            border: 1px solid #3730a3; border-radius: 20px;
-            padding: 5px 20px; display: inline-flex; align-items: center; gap: 8px;
-        }
-
-        #game-frame {
-            width: 88%; max-width: 380px; height: 46vh; margin: 0 auto;
-            position: relative; overflow: hidden; border-radius: 25px; 
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            background: url('hutan.PNG') no-repeat center center; background-size: cover;
-            box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6);
-        }
-
-        #gorilla { width: 80px; height: 80px; position: absolute; bottom: 20px; left: 0; z-index: 20; }
-        #gorilla-img { width: 100%; height: 100%; object-fit: contain; }
-        
-        .banana { position: absolute; z-index: 15; font-size: 35px; line-height: 1; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
-
-        .score-box {
-            position: absolute; top: 12px; left: 12px; z-index: 30;
-            background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 10px; backdrop-filter: blur(5px);
-        }
-
-        .tier-panel {
-            width: 88%; max-width: 380px; margin: 12px auto 0;
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
-            border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 20px; padding: 15px;
-        }
-        .tier-card {
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(139, 92, 246, 0.05); border-radius: 14px; 
-            padding: 10px 18px; margin-bottom: 8px; border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: 0.4s ease; opacity: 0.5;
-        }
-        .tier-card.active {
-            opacity: 1; border: 1px solid #8b5cf6;
-            background: linear-gradient(90deg, rgba(139, 92, 246, 0.25) 0%, rgba(30, 27, 75, 0.5) 100%);
-        }
-
-        #game-over {
-            position: absolute; inset: 0; z-index: 100;
-            background: rgba(0,0,0,0.94); display: none;
-            flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-    </style>
-</head>
-<body>
-
-    <audio id="bg-music" loop><source src="musik-game.mp3" type="audio/mpeg"></audio>
-    <audio id="sfx-collect"><source src="tangkap.mp3" type="audio/mpeg"></audio>
-
-    <nav>
-        <div class="logo-section">
-            <div class="logo-circle"><img src="G.PNG"></div>
-            <div class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-purple-500">SOL</span></div>
-        </div>
-        <button id="connect-btn" onclick="connectPhantom()" class="btn-wallet font-orbitron">Connect Wallet</button>
-    </nav>
-
-    <div class="badge-container">
-        <div class="status-badge">
-            <span class="text-yellow-500 text-xs">👑</span>
-            <div class="text-center">
-                <p class="text-[7px] font-orbitron text-purple-300 uppercase tracking-widest">Live Performance</p>
-                <p id="live-rank" class="text-[11px] font-orbitron font-bold uppercase italic text-white">Connect Wallet to Start</p>
-            </div>
-        </div>
-    </div>
-
-    <main id="game-frame">
-        <div class="score-box">
-            <span class="text-lg">🍌</span>
-            <span id="score-val" class="font-orbitron font-bold text-yellow-400 text-xl">0</span>
-        </div>
-        
-        <div id="gorilla"><img id="gorilla-img" src="monyet kanan.PNG"></div>
-        
-        <div id="game-over">
-            <h2 class="font-orbitron text-4xl font-bold text-red-500 mb-1 italic">BUSTED!</h2>
-            <div id="reward-display" class="font-orbitron text-yellow-400 text-3xl mb-6"></div>
-            <button id="claim-btn" onclick="window.open('https://app.streamflow.finance/', '_blank')" class="bg-[#fbbf24] text-black w-[240px] py-4 rounded-full font-bold font-orbitron text-[12px] mb-3 uppercase shadow-[0_0_20px_rgba(251,191,36,0.5)]">Claim Reward 🍌</button>
-            <button onclick="initGame()" class="border border-purple-500 text-white px-10 py-2 rounded-full font-orbitron text-[10px] uppercase">Play Again</button>
-        </div>
-    </main>
-
-    <div class="tier-panel font-orbitron">
-        <div id="tier-std" class="tier-card">
-            <div><p class="text-[9px] font-bold text-purple-400 uppercase">Standard Mode</p><p class="text-[7px] text-gray-500">Hold 1M+ FEG SOL</p></div>
-            <p class="text-[11px] font-bold">50 - 500 FEG</p>
-        </div>
-        <div id="tier-vip" class="tier-card">
-            <div><p class="text-[9px] font-bold text-yellow-500 uppercase">VIP Mode ✨</p><p class="text-[7px] text-gray-500">Hold 2M+ FEG SOL</p></div>
-            <p class="text-[11px] font-bold text-yellow-400">150 - 750 FEG</p>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        // --- KONFIGURASI BLOCKCHAIN ---
-        const MINT_ADDRESS = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"; 
-        const HELIUS_RPC = "https://mainnet-beta.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30";
-        const connection = new solanaWeb3.Connection(HELIUS_RPC);
-
-        let userBalance = 0, isVIP = false, isStandard = false, walletConnected = false;
-        let score = 0, isGameOver = true, speed = 4.5, lastX = 0;
-        const frame = document.getElementById('game-frame'), gorilla = document.getElementById('gorilla'), gorillaImg = document.getElementById('gorilla-img');
-        const bgMusic = document.getElementById('bg-music'), sfxCollect = document.getElementById('sfx-collect');
-        let gameLoop, spawnLoop;
-
-        // --- CEK TOKEN GATE ---
-        async function getFegBalance(walletAddr) {
-            try {
-                const pubKey = new solanaWeb3.PublicKey(walletAddr);
-                const tokenAccounts = await connection.getParsedTokenAccountsByOwner(pubKey, {
-                    mint: new solanaWeb3.PublicKey(MINT_ADDRESS)
-                });
-                if (tokenAccounts.value.length > 0) {
-                    return tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-                }
-                return 0;
-            } catch (e) { return 0; }
-        }
-
-        async function connectPhantom() {
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const response = await window.solana.connect();
-                    const addr = response.publicKey.toString();
-                    
-                    Swal.fire({ title: 'Verifying Holder Status...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-
-                    userBalance = await getFegBalance(addr);
-                    Swal.close();
-
-                    if (userBalance < 1000000) {
-                        Swal.fire({
-                            icon: 'error', title: 'Need 1M $FEGSOL',
-                            text: `Your balance: ${userBalance.toLocaleString()}. Buy more to unlock the game!`,
-                            confirmButtonText: 'Buy Now'
-                        }).then(() => window.open('https://jup.ag/swap/SOL-' + MINT_ADDRESS));
-                        return;
-                    }
-
-                    document.getElementById('connect-btn').innerText = addr.slice(0,4)+"..."+addr.slice(-4);
-                    walletConnected = true;
-                    isVIP = userBalance >= 2000000;
-                    isStandard = userBalance >= 1000000;
-                    
-                    updateTierUI();
-                    initGame();
-                } catch (err) { console.error(err); }
-            } else {
-                Swal.fire('Error', 'Phantom Wallet not detected!', 'warning');
-            }
-        }
-
-        function updateTierUI() {
-            const std = document.getElementById('tier-std'), vip = document.getElementById('tier-vip');
-            std.classList.remove('active'); vip.classList.remove('active');
-            if(isVIP) vip.classList.add('active'); else if(isStandard) std.classList.add('active');
-        }
-
-        // --- GAME CORE ---
-        function initGame() {
-            if(!walletConnected) return;
-            score = 0; isGameOver = false; speed = 4.5;
-            document.getElementById('score-val').innerText = "0";
-            document.getElementById('game-over').style.display = 'none';
-            document.querySelectorAll('.banana').forEach(b => b.remove());
-            gorilla.style.left = (frame.offsetWidth/2 - gorilla.offsetWidth/2) + 'px';
+        try {
+            // 2. Proses Connect
+            const resp = await window.solana.connect();
+            const walletAddr = resp.publicKey.toString();
             
-            clearInterval(gameLoop); clearInterval(spawnLoop);
-            gameLoop = setInterval(update, 20); 
-            spawnLoop = setInterval(createBanana, 1000);
-            bgMusic.play().catch(e=>{});
-        }
-
-        const moveHandler = (e) => {
-            if(isGameOver) return;
-            const rect = frame.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let relativeX = clientX - rect.left;
-            if (relativeX < lastX) gorillaImg.src = "monyet kiri.PNG";
-            else if (relativeX > lastX) gorillaImg.src = "monyet kanan.PNG";
-            lastX = relativeX;
-            let newX = relativeX - (gorilla.offsetWidth / 2);
-            let maxX = frame.offsetWidth - gorilla.offsetWidth;
-            if (newX < 0) newX = 0; if (newX > maxX) newX = maxX;
-            gorilla.style.left = newX + 'px';
-            if(e.cancelable) e.preventDefault();
-        };
-
-        function createBanana() {
-            if(isGameOver) return;
-            const b = document.createElement('div'); 
-            b.className = 'banana'; b.innerText = '🍌';
-            let maxX = frame.offsetWidth - 35; 
-            b.style.left = Math.floor(Math.random() * maxX) + 'px';
-            b.style.top = '-50px'; frame.appendChild(b);
-        }
-
-        function update() {
-            if(isGameOver) return;
-            document.querySelectorAll('.banana').forEach(b => {
-                let top = parseInt(b.style.top); 
-                b.style.top = (top + speed) + 'px';
-                if(checkCollision(gorilla, b)) {
-                    score++; document.getElementById('score-val').innerText = score;
-                    sfxCollect.currentTime = 0; sfxCollect.play().catch(e=>{});
-                    updateRank(score); b.remove();
-                }
-                if(top > frame.offsetHeight) gameOver();
+            // Tampilkan loading pas cek saldo
+            Swal.fire({
+                title: 'Sedang Mengecek Saldo...',
+                text: 'Memverifikasi status holder FEG SOL',
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
             });
-        }
 
-        function calculateReward(s) {
-            if (s < 50) return 0;
-            if (isVIP) {
-                if (s >= 150) return 750; if (s >= 100) return 500; return 150;
-            } else {
-                if (s >= 150) return 500; if (s >= 100) return 250; return 50;
+            // 3. Ambil Saldo Token FEG SOL
+            const balance = await getFegBalance(walletAddr);
+            userBalance = balance;
+            
+            Swal.close();
+
+            // 4. Logika Minimal 1 Juta Koin
+            if (userBalance < 1000000) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Saldo Tidak Cukup',
+                    text: `Koin kamu cuma ${userBalance.toLocaleString()}. Minimal butuh 1.000.000 FEG SOL buat main!`,
+                    confirmButtonText: 'Beli Koin Sekarang'
+                }).then(() => {
+                    window.open('https://jup.ag/swap/SOL-' + MINT_ADDRESS, '_blank');
+                });
+                return;
             }
-        }
 
-        function updateRank(s) {
-            const rank = document.getElementById('live-rank');
-            if (s >= 150) rank.innerText = "Level: Golden Kong 🏆";
-            else if (s >= 100) rank.innerText = "Level: Silverback 🥈";
-            else if (s >= 50) rank.innerText = "Level: Baby Ape 👶";
-            else rank.innerText = "Level: Trainee 🍼";
-            if(s % 10 === 0 && s > 0) speed += 0.2;
-        }
+            // 5. Berhasil Masuk
+            walletConnected = true;
+            isVIP = userBalance >= 2000000;
+            isStandard = userBalance >= 1000000;
 
-        function checkCollision(a, b) {
-            const r1 = a.getBoundingClientRect(), r2 = b.getBoundingClientRect();
-            return !(r1.right < r2.left + 5 || r1.left > r2.right - 5 || r1.bottom < r2.top + 5 || r1.top > r2.bottom - 5);
-        }
+            connectBtn.innerText = walletAddr.slice(0,4) + "..." + walletAddr.slice(-4);
+            connectBtn.style.background = "#22c55e"; // Berubah hijau kalau sukses
+            
+            updateTierUI();
+            initGame(); // Mulai game otomatis
 
-        function gameOver() {
-            isGameOver = true; clearInterval(gameLoop); clearInterval(spawnLoop);
-            bgMusic.pause(); bgMusic.currentTime = 0;
-            const finalReward = calculateReward(score);
-            document.getElementById('game-over').style.display = 'flex';
-            document.getElementById('reward-display').innerText = `+${finalReward} FEG SOL`;
-            document.getElementById('claim-btn').style.display = finalReward > 0 ? 'block' : 'none';
+        } catch (err) {
+            console.error("Connect Error:", err);
+            Swal.fire('Gagal Connect', 'Coba refresh halaman atau cek koneksi Phantom kamu.', 'error');
         }
+    }
 
-        frame.addEventListener('touchmove', moveHandler, {passive: false});
-        frame.addEventListener('mousemove', moveHandler);
-    </script>
-</body>
-</html>
+    // --- FUNGSI AMBIL SALDO (Paling Akurat) ---
+    async function getFegBalance(walletAddr) {
+        try {
+            const pubKey = new solanaWeb3.PublicKey(walletAddr);
+            const tokenAccounts = await connection.getParsedTokenAccountsByOwner(pubKey, {
+                mint: new solanaWeb3.PublicKey(MINT_ADDRESS)
+            });
+
+            if (tokenAccounts.value.length > 0) {
+                // Ambil jumlah token (sudah dibagi decimal-nya otomatis)
+                return tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+            }
+            return 0;
+        } catch (e) {
+            console.error("Gagal ambil saldo:", e);
+            return 0;
+        }
+    }
+
+    // --- TAMPILAN TIER ---
+    function updateTierUI() {
+        const std = document.getElementById('tier-std');
+        const vip = document.getElementById('tier-vip');
+        std.classList.remove('active');
+        vip.classList.remove('active');
+
+        if (isVIP) {
+            vip.classList.add('active');
+            Swal.fire('Mode VIP Aktif!', 'Kamu main dengan reward maksimal 750 FEG.', 'success');
+        } else {
+            std.classList.add('active');
+            Swal.fire('Mode Standar Aktif!', 'Kumpulkan 2 Juta koin untuk Mode VIP!', 'info');
+        }
+    }
+
+    // Sisa kode game (initGame, createBanana, update, dll) tetap pakai yang sebelumnya ya, Dev.
+    // Pastikan fungsi moveHandler tetap aktif supaya monyetnya bisa gerak.
+</script>
