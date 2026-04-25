@@ -398,15 +398,25 @@
     <div class="max-w-md mx-auto text-center">
         <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade $FEGSOL</h2>
         
-        <div class="glass-morphism p-1 border-2 border-purple-500/30 overflow-hidden" style="border-radius: 16px; background: #000; min-height: 600px;">
-            <iframe 
-                src="https://jup.ag/swap?sell=So11111111111111111111111111111111111111112&buy=49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump&rpcUrl=https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30" 
-                width="100%" 
-                height="600px" 
-                style="border: none; border-radius: 12px;"
-                allow="clipboard-read; clipboard-write; payment"
-                loading="lazy">
-            </iframe>
+        <div class="glass-morphism p-8 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.2)] flex flex-col items-center">
+            <div class="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center mb-6 border border-purple-500/50">
+                <img src="https://jup.ag/svg/jupiter-logo.svg" alt="Jupiter" class="w-12 h-12">
+            </div>
+            <h3 class="font-orbitron text-lg font-bold text-white mb-4">Fast Swap via Jupiter</h3>
+            <p class="text-gray-400 text-xs mb-8 uppercase tracking-widest leading-relaxed">
+                Experience the best rates and lightning fast execution for $FEGSOL.
+            </p>
+            
+            <a href="https://jup.ag/swap/SOL-49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump" 
+               target="_blank" 
+               class="w-full btn-primary py-4 rounded-2xl font-orbitron text-sm font-bold tracking-[0.2em] uppercase text-center text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:scale-105 transition-transform">
+                Open Jupiter Terminal <i class="fas fa-external-link-alt ml-2 text-[10px]"></i>
+            </a>
+            
+            <div class="mt-6 flex items-center gap-2 opacity-50">
+                <i class="fas fa-shield-alt text-green-400 text-[10px]"></i>
+                <span class="text-[8px] font-orbitron text-gray-500 uppercase tracking-widest">Secured by Solana Mainnet</span>
+            </div>
         </div>
     </div>
 </section>
@@ -524,125 +534,80 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-<script>
+<script src="https://terminal.jup.ag/main-v3.js"></script> <script>
     // ==========================================
-    // TANDAI: GANTI CA FEGSOL DI BAWAH INI
+    // 1. KONFIGURASI UTAMA
     // ==========================================
     const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+
     // ==========================================
+    // 2. JUPITER TERMINAL INITIALIZATION
+    // ==========================================
+    // Fungsi ini akan menjalankan Jupiter Terminal di dalam elemen id="integrated-terminal"
+    function initJupiter() {
+        if (window.Jupiter) {
+            window.Jupiter.init({
+                displayMode: "integrated",
+                integratedTargetId: "integrated-terminal",
+                endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+                strictTokenList: false,
+                formProps: {
+                    fixedOutputMint: true,
+                    initialOutputMint: CA_KITA,
+                },
+            });
+        }
+    }
 
+    // ==========================================
+    // 3. UPDATE SEMUA LINK OTOMATIS
+    // ==========================================
     function updateAllLinks() {
-        const pumpLink = document.getElementById('pump-link');
-        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
-
+        // Link untuk Iframe DexScreener (jika ada)
         const dexIframe = document.getElementById('dex-iframe');
         if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
         
+        // Link Icon Chart
         const chartIcon = document.getElementById('chart-link-1');
         if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
 
+        // Link Solscan
         const scanLink = document.getElementById('scan-link');
         if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
 
+        // Link Tombol Swap (ke website Jupiter langsung)
         const swapLink = document.getElementById('swap-link');
         if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
 
+        // Link Pump.fun
         const launchLink = document.getElementById('launch-link');
         if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
-    updateAllLinks();
+    // Jalankan fungsi saat window dimuat
+    window.onload = function() {
+        updateAllLinks();
+        initJupiter();
+    };
 
-
+    // ==========================================
+    // 4. FITUR REVEAL WALLET ADDRESS
+    // ==========================================
     function revealWallet(id) {
         const el = document.getElementById(id);
         const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
         allWallets.forEach(walletId => {
-            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
-        });
-        el.classList.toggle('hidden');
-    }
-
-    window.onscroll = function() {
-        const btn = document.getElementById("toTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-            btn.classList.remove("hidden");
-        } else {
-            btn.classList.add("hidden");
-        }
-    };
-
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    if(menuBtn) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-                menuBtn.classList.add('border-purple-500/30');
-            } else {
-                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
+            if(walletId !== id) {
+                const other = document.getElementById(walletId);
+                if(other) other.classList.add('hidden');
             }
         });
+        if(el) el.classList.toggle('hidden');
     }
 
-    document.addEventListener('click', () => { 
-        if(menu && !menu.classList.contains('hidden')) {
-            menu.classList.add('hidden');
-            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            menuBtn.classList.add('border-purple-500/30');
-        }
-    });
-
-    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    const timer = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }
-
-        if (distance < 0) { 
-            clearInterval(timer); 
-            const timerContainer = document.querySelector('.grid.grid-cols-4');
-            if(timerContainer) {
-                timerContainer.parentElement.innerHTML = `
-                    <div class="col-span-4 glass-morphism p-1 border-2 border-yellow-500 animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)] flex items-center justify-center overflow-hidden rounded-2xl">
-                        <img src="LIVE-STONE-FINAL.jpg" alt="FEGSOL IS LIVE" class="w-full h-auto">
-                    </div>
-                `;
-            }
-            const labels = document.querySelectorAll('p.text-purple-400, p.text-gray-600');
-            labels.forEach(p => { if(p.innerText.includes('Launch')) p.style.display = 'none'; });
-        }
-    }, 1000);
-
-    const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000;
-    let currentSupply = 0;
-
-    const updateCount = () => {
-        const increment = supplyTarget / 80;
-        if (currentSupply < supplyTarget) {
-            currentSupply += increment;
-            if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-            setTimeout(updateCount, 25);
-        } else {
-            supplyCount.innerText = supplyTarget.toLocaleString();
-        }
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-    }, { threshold: 0.5 });
-    
-    if(supplyCount) observer.observe(supplyCount);
-
+    // ==========================================
+    // 5. COPY CONTRACT ADDRESS
+    // ==========================================
     function copyCA() {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
@@ -659,15 +624,91 @@
 
     function handleCopySuccess() {
         const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
+        if(btnText) {
+            btnText.innerText = "CA Copied!";
+            btnText.classList.add('text-green-400');
+            setTimeout(() => {
+                btnText.innerText = "Copy Contract Address";
+                btnText.classList.remove('text-green-400');
+            }, 2000);
+        }
+    }
+
+    // ==========================================
+    // 6. UI LOGIC (MENU, SCROLL, COUNTDOWN)
+    // ==========================================
+    window.onscroll = function() {
+        const btn = document.getElementById("toTop");
+        if (btn) {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        }
+    };
+
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    if(menuBtn && menu) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('hidden');
+        });
+    }
+
+    document.addEventListener('click', () => { 
+        if(menu && !menu.classList.contains('hidden')) menu.classList.add('hidden');
+    });
+
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+        
+        if(document.getElementById("days")) {
+            document.getElementById("days").innerHTML = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24))).toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000)).toString().padStart(2, '0');
+        }
+
+        if (distance < 0) { 
+            clearInterval(timer); 
+            const timerContainer = document.querySelector('.grid.grid-cols-4');
+            if(timerContainer) {
+                timerContainer.parentElement.innerHTML = `
+                    <div class="col-span-4 glass-morphism p-1 border-2 border-yellow-500 animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)] flex items-center justify-center overflow-hidden rounded-2xl">
+                        <img src="LIVE-STONE-FINAL.jpg" alt="FEGSOL IS LIVE" class="w-full h-auto">
+                    </div>
+                `;
+            }
+        }
+    }, 1000);
+
+    // Tokenomics Animation
+    const supplyCount = document.getElementById('supply-count');
+    if(supplyCount) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                let current = 0;
+                const target = 1000000000;
+                const step = () => {
+                    current += target / 50;
+                    if (current < target) {
+                        supplyCount.innerText = Math.floor(current).toLocaleString();
+                        requestAnimationFrame(step);
+                    } else {
+                        supplyCount.innerText = target.toLocaleString();
+                    }
+                };
+                step();
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+        observer.observe(supplyCount);
     }
 </script>
-
 
 </body>
 </html>
