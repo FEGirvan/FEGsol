@@ -525,16 +525,19 @@
 
     // JUPITER TERMINAL INITIALIZATION
     window.Jupiter.init({
-        displayMode: "integrated",
-        integratedTargetId: "integrated-terminal",
-        endpoint: "https://api.mainnet-beta.solana.com",
-        strictTokenList: false,
-        defaultExplorer: "Solscan",
-        formProps: {
-            fixedOutputMint: true,
-            initialOutputMint: CA_KITA,
-        },
-    });
+    displayMode: "integrated",
+    integratedTargetId: "integrated-terminal",
+    // Ganti ke RPC alternatif supaya tidak error "Not Responding"
+    endpoint: "https://solana-mainnet.rpc.extrnode.com",
+    // Masukkan variabel API Key yang sudah kamu buat di baris 523
+    apiKey: JUP_API_KEY,
+    strictTokenList: false,
+    defaultExplorer: "Solscan",
+    formProps: {
+        fixedOutputMint: true,
+        initialOutputMint: CA_KITA,
+    },
+});
 
     function updateAllLinks() {
         // Link Pump.fun sudah tidak digunakan di section swap, tapi tetap diupdate untuk scan/launch
