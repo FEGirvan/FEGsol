@@ -5,266 +5,193 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FEGsol | Official Ecosystem</title>
 
-    <meta name="description" content="FEGsol is the ultimate architecture on Solana. Built to Fortify Every Gorilla.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://terminal.jup.ag/main-v2.js"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
         
-        body { background-color: #060607; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        body { 
+            background-color: #060607; 
+            color: #ffffff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* WALLPAPER BACKGROUND (Restored) */
+        .wallpaper-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('G.PNG'); /* Menggunakan asset kamu sebagai wallpaper low opacity */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            z-index: -1;
+            filter: blur(5px);
+        }
+
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        
-        /* UI Elements */
-        .glass-box { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
-        .hero-gradient { background: radial-gradient(circle at 50% -20%, #3b0764 0%, #060607 70%); }
-        .gold-glow { box-shadow: 0 0 40px rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.25); }
+        .glass-box { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
         .gold-text { background: linear-gradient(to right, #fde047, #eab308); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .input-box { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
-        .input-box:focus-within { border-color: rgba(234, 179, 8, 0.5); }
         
-        /* Partner Logo Style */
-        .partner-logo { filter: grayscale(100%) opacity(0.4); transition: all 0.4s ease; }
-        .partner-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
+        /* JUPITER TERMINAL STYLING */
+        #jupiter-terminal { 
+            width: 100%; 
+            min-height: 550px; 
+            border-radius: 28px; 
+            overflow: hidden; 
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
 
-        /* Roadmap */
-        .roadmap-card { background: rgba(255, 255, 255, 0.02); border-left: 4px solid #ca8a04; transition: all 0.3s ease; }
-        .roadmap-card:hover { background: rgba(202, 138, 4, 0.05); transform: translateX(10px); }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
+        .btn-action {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(234, 179, 8, 0.2); }
     </style>
 </head>
-<body class="hero-gradient">
+<body>
 
-    <nav class="fixed w-full z-[100] px-4 md:px-6 py-6">
-        <div class="max-w-6xl mx-auto flex justify-between items-center glass-box px-6 py-3 border-white/5 bg-black/40">
+    <div class="wallpaper-bg"></div>
+
+    <nav class="fixed w-full z-[100] px-4 py-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center glass-box px-6 py-3 bg-black/40 border-white/5">
             <div class="flex items-center space-x-3">
-                <img src="G.PNG" class="w-8 h-8 rounded-full border border-yellow-500/50">
-                <span class="font-orbitron font-bold text-lg tracking-tighter">FEG<span class="text-yellow-500">SOL</span></span>
+                <img src="G.PNG" class="w-10 h-10 rounded-full border border-yellow-500/50 shadow-lg">
+                <span class="font-orbitron font-bold text-xl tracking-tighter">FEG<span class="text-yellow-500">SOL</span></span>
             </div>
             
-            <div class="flex items-center gap-2 md:gap-6">
-                <a href="farm.html" class="hidden md:block text-[10px] font-orbitron font-bold text-yellow-500 hover:text-white transition uppercase">Banana Farm</a>
-                <a href="story.html" class="hidden md:block text-[10px] font-orbitron font-bold text-gray-400 hover:text-white transition uppercase tracking-widest">Story</a>
-                <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="bg-yellow-500 text-black px-4 py-2 rounded-full font-orbitron text-[10px] font-bold hover:scale-105 transition">JOIN TELEGRAM</a>
+            <div class="hidden md:flex items-center gap-8 font-orbitron text-[10px] font-bold tracking-widest">
+                <a href="farm.html" class="text-yellow-500 hover:text-white transition">BANANA FARM</a>
+                <a href="story.html" class="text-gray-400 hover:text-white transition">STORY</a>
+                <a href="#tokenomics" class="text-gray-400 hover:text-white transition">TOKENOMICS</a>
+                <a href="whitepaper.html" class="text-gray-400 hover:text-white transition">WHITEPAPER</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-white hover:text-yellow-500 transition text-lg"><i class="fab fa-telegram"></i></a>
+                <a href="https://x.com/fegsol_official" target="_blank" class="text-white hover:text-yellow-500 transition text-lg"><i class="fab fa-twitter"></i></a>
             </div>
         </div>
     </nav>
 
-    <section class="relative pt-36 pb-20 px-6">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section class="pt-36 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            <div class="text-center lg:text-left">
+            <div>
                 <div class="inline-block px-4 py-1 rounded-full border border-yellow-500/20 bg-yellow-500/5 text-[9px] font-orbitron text-yellow-500 mb-6 tracking-[0.3em]">
                     SOLANA ARCHITECTURE V2
                 </div>
-                <h1 class="text-5xl md:text-8xl font-orbitron font-bold mb-6 leading-[1.0]">
-                    FORTIFY <br> <span class="gold-text">THE TRIBE.</span>
+                <h1 class="text-6xl md:text-8xl font-orbitron font-bold mb-6 leading-none">
+                    FORTIFY <br> <span class="gold-text">EVERY GORILLA.</span>
                 </h1>
-                <p class="text-gray-400 text-sm md:text-base max-w-md mx-auto lg:mx-0 mb-10 font-light leading-relaxed uppercase tracking-widest">
-                    Engineering excellence for the strongest gorillas. <br>
-                    <span class="text-white font-semibold">STAKE. SWAP. EVOLVE.</span>
-                </p>
                 
-                <div class="flex flex-wrap justify-center lg:justify-start gap-4">
-                    <button onclick="copyCA()" class="glass-box px-8 py-4 text-[10px] font-orbitron font-bold border-white/10 hover:border-yellow-500/50 transition">
-                        <span id="ca-text">COPY CONTRACT ADDRESS</span> <i class="fas fa-copy ml-2 opacity-50"></i>
+                <div class="flex flex-col gap-4 mt-10">
+                    <div class="grid grid-cols-2 gap-4 max-w-md">
+                        <a href="farm.html" class="btn-action glass-box py-4 text-center text-[10px] text-yellow-500 border-yellow-500/30 hover:bg-yellow-500/10">
+                            <i class="fas fa-seedling mr-2"></i> Banana Farm
+                        </a>
+                        <a href="grab.html" class="btn-action glass-box py-4 text-center text-[10px] text-green-500 border-green-500/30 hover:bg-green-500/10">
+                            <i class="fas fa-gamepad mr-2"></i> Banana Grab
+                        </a>
+                    </div>
+                    
+                    <button onclick="copyCA()" class="btn-action glass-box py-4 text-[10px] font-bold border-white/10 hover:border-white/40">
+                        <span id="ca-text">CA: 49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump</span> <i class="fas fa-copy ml-2 opacity-50"></i>
                     </button>
                 </div>
             </div>
 
-            <div>
-                <div class="glass-box p-6 gold-glow max-w-[420px] mx-auto bg-black/40 border-yellow-500/20">
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="font-orbitron text-[10px] font-bold text-white/50 tracking-widest">DIRECT SWAP PORTAL</span>
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                            <span class="text-[8px] font-orbitron font-bold text-green-500 tracking-tighter">LIQUIDITY LIVE</span>
-                        </div>
-                    </div>
-
-                    <div class="input-box p-5 rounded-2xl mb-1">
-                        <div class="flex justify-between text-[9px] font-orbitron text-gray-500 mb-3 uppercase">
-                            <span>You Pay</span>
-                            <span>Balance: 0.00 SOL</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <input type="number" id="swap-sol-in" oninput="calculateSwap()" placeholder="0.0" class="bg-transparent w-full text-2xl font-bold font-orbitron focus:outline-none text-white">
-                            <div class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-xl border border-white/10">
-                                <img src="https://cryptologos.cc/logos/solana-sol-logo.png" class="w-5 h-5">
-                                <span class="text-xs font-bold font-orbitron uppercase">SOL</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center -my-4 relative z-10">
-                        <div class="bg-[#0a0a0b] border border-yellow-500/30 w-10 h-10 rounded-2xl flex items-center justify-center shadow-2xl">
-                            <i class="fas fa-arrow-down text-xs text-yellow-500"></i>
-                        </div>
-                    </div>
-
-                    <div class="input-box p-5 rounded-2xl mt-1 mb-6">
-                        <div class="flex justify-between text-[9px] font-orbitron text-gray-500 mb-3 uppercase">
-                            <span>You Receive (Est.)</span>
-                            <span class="text-yellow-500/50">Bonus Active</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <input type="text" id="swap-feg-out" readonly placeholder="0" class="bg-transparent w-full text-2xl font-bold font-orbitron focus:outline-none text-yellow-500">
-                            <div class="flex items-center gap-2 bg-yellow-500/10 px-3 py-1.5 rounded-xl border border-yellow-500/20">
-                                <img src="G.PNG" class="w-5 h-5 rounded-full">
-                                <span class="text-xs font-bold font-orbitron text-yellow-500 uppercase">FES</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button onclick="executeSwap()" class="w-full bg-gradient-to-r from-yellow-600 to-yellow-400 py-4 rounded-2xl font-orbitron font-bold text-black shadow-lg shadow-yellow-500/20 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest">
-                        Execute Purchase
-                    </button>
-                    
-                    <div class="mt-4 flex justify-between px-1">
-                        <span class="text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Rate: 1 SOL = 5M FES</span>
-                        <span class="text-[8px] font-orbitron text-gray-600 uppercase tracking-widest">Slippage: 1%</span>
-                    </div>
+            <div class="relative">
+                <div id="jupiter-terminal"></div>
+                <div class="mt-4 flex justify-between px-2">
+                    <span class="text-[8px] font-orbitron text-gray-600 tracking-widest uppercase">Official Swap Interface</span>
+                    <span class="text-[8px] font-orbitron text-green-600 tracking-widest uppercase animate-pulse">Slippage Optimized</span>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="py-10 px-6 max-w-6xl mx-auto">
-        <h2 class="font-orbitron text-center text-xl font-bold mb-8 gold-text uppercase tracking-widest">Real-time Analytics</h2>
-        <div class="glass-box p-2 border-white/5 shadow-2xl overflow-hidden">
-             <iframe src="https://dexscreener.com/solana/49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump?embed=1&theme=dark&trades=0&info=0" style="width:100%; height:500px; border:none; border-radius:18px;"></iframe>
+        <div class="glass-box p-2 border-white/5 overflow-hidden shadow-2xl">
+             <iframe src="https://dexscreener.com/solana/49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump?embed=1&theme=dark&trades=0&info=0" style="width:100%; height:550px; border:none; border-radius:18px;"></iframe>
         </div>
     </section>
 
-    <section class="py-20 px-6 border-t border-white/5">
-        <div class="max-w-6xl mx-auto flex flex-wrap justify-center gap-12 md:gap-24">
-            <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="h-6 partner-logo">
-            <img src="https://jup.ag/svg/jupiter-logo.svg" class="h-6 partner-logo">
-            <img src="https://dexscreener.com/favicon.ico" class="h-6 partner-logo">
-            <div class="flex items-center gap-2 partner-logo">
-                <i class="fas fa-shield-alt text-xl text-gray-400"></i>
-                <span class="text-[10px] font-orbitron font-bold text-gray-400 uppercase">RugCheck Verified</span>
+    <section id="tokenomics" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <h2 class="font-orbitron text-3xl font-bold text-center mb-16 gold-text tracking-widest uppercase">Tokenomics</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-box p-6 text-center">
+                <p class="text-[9px] text-gray-500 font-orbitron mb-2 uppercase">Total Supply</p>
+                <p class="text-xl font-bold font-orbitron">1,000,000,000</p>
             </div>
-        </div>
-    </section>
-
-    <section id="tokenomics" class="py-24 px-6 max-w-5xl mx-auto">
-        <div class="text-center mb-16">
-            <h2 class="font-orbitron text-3xl font-bold gold-text uppercase tracking-widest">Engineered Scarcity</h2>
-            <p class="text-[10px] font-orbitron text-gray-500 uppercase mt-2 tracking-[0.5em]">Fixed Supply. Fair Entry.</p>
-        </div>
-        
-        <div class="glass-box p-8 md:p-12 mb-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
-                <div class="border-b border-white/5 pb-6">
-                    <span class="text-[9px] font-orbitron text-gray-500 uppercase">Total Supply</span>
-                    <h3 class="text-3xl font-orbitron font-bold mt-1 tracking-tighter">1,000,000,000</h3>
-                </div>
-                <div class="border-b border-white/5 pb-6">
-                    <span class="text-[9px] font-orbitron text-gray-500 uppercase">Launch Protocol</span>
-                    <h3 class="text-3xl font-orbitron font-bold mt-1 text-purple-400">PUMP.FUN</h3>
-                </div>
+            <div class="glass-box p-6 text-center border-yellow-500/20">
+                <p class="text-[9px] text-yellow-500 font-orbitron mb-2 uppercase">Tax</p>
+                <p class="text-xl font-bold font-orbitron">0%</p>
             </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onclick="revealWallet('m-addr')" class="glass-box p-4 text-center hover:border-yellow-500/50 transition duration-500">
-                    <i class="fas fa-bullhorn text-yellow-500 mb-3 block"></i>
-                    <span class="block text-[8px] font-orbitron text-gray-500 uppercase">Marketing</span>
-                </button>
-                <button onclick="revealWallet('b-addr')" class="glass-box p-4 text-center hover:border-yellow-500/50 transition duration-500">
-                    <i class="fas fa-fire text-red-500 mb-3 block"></i>
-                    <span class="block text-[8px] font-orbitron text-gray-500 uppercase">Burn Queue</span>
-                </button>
-                <button onclick="revealWallet('d-addr')" class="glass-box p-4 text-center hover:border-yellow-500/50 transition duration-500">
-                    <i class="fas fa-code text-purple-400 mb-3 block"></i>
-                    <span class="block text-[8px] font-orbitron text-gray-500 uppercase">Developer</span>
-                </button>
-                <button onclick="revealWallet('s-addr')" class="glass-box p-4 text-center hover:border-yellow-500/50 transition duration-500">
-                    <i class="fas fa-leaf text-green-400 mb-3 block"></i>
-                    <span class="block text-[8px] font-orbitron text-gray-500 uppercase">Banana Farm</span>
-                </button>
+            <div class="glass-box p-6 text-center">
+                <p class="text-[9px] text-gray-500 font-orbitron mb-2 uppercase">Liquidity</p>
+                <p class="text-xl font-bold font-orbitron text-green-500 uppercase">Burned</p>
             </div>
-            
-            <div id="wallet-display" class="hidden mt-6 p-4 bg-black/60 rounded-xl border border-white/5 text-center font-mono text-[9px] text-yellow-500/70 break-all">
-                Select an address above
+            <div class="glass-box p-6 text-center">
+                <p class="text-[9px] text-gray-500 font-orbitron mb-2 uppercase">Mint</p>
+                <p class="text-xl font-bold font-orbitron text-red-500 uppercase">Revoked</p>
             </div>
         </div>
     </section>
 
-    <section class="py-24 px-6 max-w-4xl mx-auto border-t border-white/5">
-        <h2 class="text-center font-orbitron text-3xl font-bold mb-16 gold-text uppercase tracking-widest">Roadmap</h2>
+    <section id="roadmap" class="py-24 px-6 max-w-4xl mx-auto border-t border-white/5">
+        <h2 class="font-orbitron text-center text-3xl font-bold mb-16 tracking-widest uppercase">Ecosystem Roadmap</h2>
         <div class="space-y-6">
-            <div class="roadmap-card p-8 rounded-r-2xl">
-                <span class="text-yellow-500 font-orbitron text-[10px] font-bold uppercase tracking-widest">Phase 1: Genesis</span>
-                <h4 class="text-xl font-bold mt-2">Architecture Setup</h4>
-                <p class="text-gray-400 text-xs mt-2 leading-relaxed">Website deployment, Social media launch, Organic tribe building.</p>
+            <div class="glass-box p-8 border-l-4 border-yellow-500 rounded-none rounded-r-3xl">
+                <span class="text-yellow-500 font-orbitron text-[10px] font-bold">PHASE 01</span>
+                <h4 class="text-xl font-bold mt-2 uppercase font-orbitron">Genesis</h4>
+                <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest leading-relaxed">Website launch, Marketing raids, and Tribal assembly on Telegram.</p>
             </div>
-            <div class="roadmap-card p-8 rounded-r-2xl border-purple-500">
-                <span class="text-purple-400 font-orbitron text-[10px] font-bold uppercase tracking-widest">Phase 2: Ignition</span>
-                <h4 class="text-xl font-bold mt-2">Fair Launch Expansion</h4>
-                <p class="text-gray-400 text-xs mt-2 leading-relaxed">Pump.fun listing, Global marketing raids, CMC/CG applications.</p>
-            </div>
-            <div class="roadmap-card p-8 rounded-r-2xl border-blue-500">
-                <span class="text-blue-400 font-orbitron text-[10px] font-bold uppercase tracking-widest">Phase 3: Evolution</span>
-                <h4 class="text-xl font-bold mt-2">Ecosystem Rewards</h4>
-                <p class="text-gray-400 text-xs mt-2 leading-relaxed">Banana Farm (Staking) Release, DAO Governance, Tier-1 CEX Listings.</p>
+            <div class="glass-box p-8 border-l-4 border-green-500 rounded-none rounded-r-3xl">
+                <span class="text-green-500 font-orbitron text-[10px] font-bold">PHASE 02</span>
+                <h4 class="text-xl font-bold mt-2 uppercase font-orbitron">Gamification</h4>
+                <p class="text-gray-400 text-xs mt-2 uppercase tracking-widest leading-relaxed">Banana Grab (Mini-game) release, Community rewards, Staking pool activation.</p>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 text-center border-t border-white/5 bg-black/40">
-        <div class="flex justify-center gap-10 mb-10">
-            <a href="https://x.com/fegsol_official" target="_blank" class="text-gray-500 hover:text-white transition text-3xl hover:scale-125 duration-300"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-500 hover:text-white transition text-3xl hover:scale-125 duration-300"><i class="fab fa-telegram"></i></a>
+    <footer class="py-20 border-t border-white/5 bg-black/40 text-center">
+        <div class="flex justify-center gap-12 mb-10">
+            <a href="https://x.com/fegsol_official" target="_blank" class="text-gray-500 hover:text-white transition text-3xl"><i class="fab fa-twitter"></i></a>
+            <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-500 hover:text-white transition text-3xl"><i class="fab fa-telegram"></i></a>
+            <a href="whitepaper.html" class="text-gray-500 hover:text-white transition text-3xl"><i class="fas fa-file-alt"></i></a>
         </div>
-        <p class="text-[10px] font-orbitron text-gray-700 uppercase tracking-[0.3em]">FEGSOL Official &copy; 2026 | Financial Freedom for Gorillas</p>
+        <p class="text-[10px] font-orbitron text-gray-700 uppercase tracking-[0.4em]">FEGSOL Ecosystem &copy; 2026 | Built for the Tribe</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
-        const RATE = 5000000;
-
-        const WALLETS = {
-            'm-addr': 'D2B49ZRfQCiVXFCocXj5mh5M2pLYZmozcqEia7wXMmVt',
-            'b-addr': '92HeH8d3g3UfwsUYwA3w7idmj5XzQFngmtQ6fibqky3T',
-            'd-addr': 'DiuZaggy69F6mkx9Z5ckZX3msuxedK6URk3mux5XnL93',
-            's-addr': 'Hu1atW9tL8THFWBWvayjoMLrpLaGrfb7XssJh4o5XFta'
-        };
-
-        function revealWallet(key) {
-            const display = document.getElementById('wallet-display');
-            display.classList.remove('hidden');
-            display.innerText = WALLETS[key];
-        }
-
-        function calculateSwap() {
-            const val = document.getElementById('swap-sol-in').value;
-            const output = document.getElementById('swap-feg-out');
-            output.value = val > 0 ? (val * RATE).toLocaleString() : "0";
-        }
-
-        function executeSwap() {
-            Swal.fire({
-                title: 'Confirm Swap',
-                text: "You will be redirected to Jupiter Aggregator for a safe transaction.",
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#eab308',
-                confirmButtonText: 'Swap Now',
-                background: '#0a0a0b',
-                color: '#fff'
-            }).then((res) => { if (res.isConfirmed) window.open(`https://jup.ag/swap/SOL-${CA_KITA}`, '_blank'); });
-        }
+        // INISIALISASI JUPITER NATIVE SWAP
+        window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "jupiter-terminal",
+            endpoint: "https://api.mainnet-beta.solana.com",
+            strictTokenList: false,
+            formProps: {
+                initialOutputMint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
+                fixedOutputMint: true,
+            },
+        });
 
         function copyCA() {
-            navigator.clipboard.writeText(CA_KITA);
-            const t = document.getElementById('ca-text');
-            t.innerText = "COPIED!";
-            setTimeout(() => { t.innerText = "COPY CONTRACT ADDRESS"; }, 2000);
+            navigator.clipboard.writeText("49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump");
+            document.getElementById('ca-text').innerText = "COPIED TO CLIPBOARD!";
+            setTimeout(() => { document.getElementById('ca-text').innerText = "CA: 49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump"; }, 2000);
         }
     </script>
 </body>
 </html>
+>
