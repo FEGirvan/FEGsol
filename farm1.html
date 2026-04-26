@@ -1,434 +1,364 @@
-<!-- =========================================================
-FEGSOL FULL STREAMFLOW LIVE VERSION
-COPY PASTE FILE INI
-========================================================= -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FEGSOL Banana Farm | Streamflow Live</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEG SOL | Banana Farm (Mainnet Ready)</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
 
-body{
-background:#050507;
-color:#fff;
-font-family:Inter,sans-serif;
-overflow-x:hidden;
-}
+        body {
+            background: #0a0a0b;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-.hero{
-background:
-radial-gradient(circle at top,#4c1d95 0%,#0b0b10 55%,#050507 100%);
-min-height:100vh;
-}
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
 
-.glass{
-background:rgba(255,255,255,.03);
-backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.08);
-border-radius:24px;
-}
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 24px;
+            transition: all .3s ease;
+        }
 
-.gold{
-background:linear-gradient(to right,#fde047,#f59e0b);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+        .glass-morphism:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.10);
+        }
 
-.font-orbitron{
-font-family:Orbitron,sans-serif;
-}
+        .gold-text {
+            background: linear-gradient(to right, #fde047, #ca8a04);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.pool-active{
-border:1px solid #8b5cf6;
-box-shadow:0 0 18px rgba(139,92,246,.4);
-}
+        .hero-gradient {
+            background: radial-gradient(circle at center, #2e1065 0%, #0a0a0b 80%);
+        }
 
-button{
-transition:.2s;
-}
+        .apr-glow {
+            text-shadow: 0 0 15px rgba(74, 222, 128, .6);
+        }
 
-button:hover{
-transform:translateY(-2px);
-}
-</style>
+        .duration-btn.active {
+            background: rgba(124, 58, 237, .2) !important;
+            border-color: #7c3aed !important;
+            box-shadow: 0 0 15px rgba(124, 58, 237, .3);
+        }
+
+        .tier-badge {
+            background: linear-gradient(45deg, #1e1b4b, #312e81);
+            border: 1px solid rgba(255, 255, 255, .1);
+            box-shadow: 0 0 10px rgba(124, 58, 237, .2);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
+    </style>
 </head>
 
-<body class="hero">
-
-<!-- NAV -->
-<nav class="p-6">
-<div class="max-w-7xl mx-auto flex justify-between items-center">
-
-<div class="flex gap-3 items-center">
-<img src="G.PNG" class="w-11 h-11 rounded-full border border-purple-500">
-<div>
-<div class="font-orbitron text-xl font-bold">
-FEG<span class="text-purple-500">SOL</span>
-</div>
-<div class="text-[10px] tracking-[0.3em] uppercase text-gray-400">
-Banana Farm Live
-</div>
-</div>
-</div>
-
-<button
-id="walletBtn"
-onclick="connectWallet()"
-class="bg-purple-600 px-6 py-3 rounded-full font-orbitron text-xs uppercase">
-Connect Wallet
-</button>
-
-</div>
-</nav>
-
-<section class="max-w-6xl mx-auto px-4 pb-12">
-
-<div class="text-center mb-10">
-<h1 class="font-orbitron text-5xl md:text-6xl font-black gold italic uppercase">
-Banana Farm
-</h1>
-<p class="mt-3 text-purple-300 uppercase text-xs tracking-[0.35em] font-orbitron">
-Real Streamflow Version
-</p>
-</div>
-
-<!-- DASHBOARD -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-
-<div class="glass p-5 text-center">
-<p class="text-[10px] text-gray-400 uppercase font-orbitron">TVL</p>
-<p class="text-2xl font-bold" id="dashTVL">0</p>
-</div>
-
-<div class="glass p-5 text-center">
-<p class="text-[10px] text-gray-400 uppercase font-orbitron">Claimable</p>
-<p class="text-2xl font-bold text-green-400" id="claimable">0</p>
-</div>
-
-<div class="glass p-5 text-center">
-<p class="text-[10px] text-gray-400 uppercase font-orbitron">My Stake</p>
-<p class="text-2xl font-bold text-yellow-400" id="myStake">0</p>
-</div>
-
-<div class="glass p-5 text-center">
-<p class="text-[10px] text-gray-400 uppercase font-orbitron">Unlock</p>
-<p class="text-2xl font-bold text-purple-400" id="unlockDate">--</p>
-</div>
-
-</div>
-
-<!-- POOL -->
-<div class="glass p-8 mb-8">
-
-<h2 class="text-center font-orbitron text-2xl gold mb-8 uppercase">
-Choose Pool
-</h2>
-
-<div class="grid md:grid-cols-3 gap-4 mb-8">
-
-<button onclick="setPool(this,3,0.4)"
-class="pool glass p-6 pool-active">
-
-<div class="font-orbitron text-xl font-bold">3 DAYS</div>
-<div class="text-green-400 text-2xl font-bold mt-2">40% APR</div>
-
-</button>
-
-<button onclick="setPool(this,7,0.8)"
-class="pool glass p-6">
-
-<div class="font-orbitron text-xl font-bold">7 DAYS</div>
-<div class="text-green-400 text-2xl font-bold mt-2">80% APR</div>
-
-</button>
-
-<button onclick="setPool(this,30,1.6)"
-class="pool glass p-6">
-
-<div class="font-orbitron text-xl font-bold">30 DAYS</div>
-<div class="text-green-400 text-2xl font-bold mt-2">160% APR</div>
-
-</button>
-
-</div>
-
-<input
-id="amount"
-type="number"
-placeholder="Amount FEGSOL"
-oninput="calcReward()"
-class="w-full bg-black/40 border border-purple-500/30 rounded-xl px-6 py-4 mb-6">
-
-<div class="grid md:grid-cols-3 gap-4 mb-8">
-
-<div class="glass p-4 text-center">
-<p class="text-[10px] uppercase text-gray-400 font-orbitron">APR</p>
-<p class="text-xl font-bold text-green-400" id="aprShow">40%</p>
-</div>
-
-<div class="glass p-4 text-center">
-<p class="text-[10px] uppercase text-gray-400 font-orbitron">Days</p>
-<p class="text-xl font-bold" id="daysShow">3</p>
-</div>
-
-<div class="glass p-4 text-center">
-<p class="text-[10px] uppercase text-gray-400 font-orbitron">Reward</p>
-<p class="text-xl font-bold text-yellow-400" id="rewardShow">0</p>
-</div>
-
-</div>
-
-<div class="grid md:grid-cols-3 gap-4">
-
-<button onclick="stakeNow()"
-class="bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-orbitron uppercase font-bold">
-Stake Now
-</button>
-
-<button onclick="harvestNow()"
-class="bg-green-600/20 border border-green-500/40 py-4 rounded-xl text-green-400 font-orbitron uppercase font-bold">
-Harvest
-</button>
-
-<button onclick="compoundNow()"
-class="bg-blue-600/20 border border-blue-500/40 py-4 rounded-xl text-blue-400 font-orbitron uppercase font-bold">
-Compound
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-/* =======================================
-CONFIG
-======================================= */
-const CONFIG = {
-rpc:"https://api.mainnet-beta.solana.com",
-mint:"49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-streamId:"BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-streamLink:"https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z"
-};
-
-let wallet = null;
-let poolDays = 3;
-let poolApr = 0.4;
-
-/* =======================================
-CONNECT WALLET
-======================================= */
-async function connectWallet(){
-
-if(window.solana && window.solana.isPhantom){
-
-try{
-
-const res = await window.solana.connect();
-wallet = res.publicKey.toString();
-
-document.getElementById("walletBtn").innerText =
-wallet.slice(0,4)+"..."+wallet.slice(-4);
-
-loadMyStream();
-
-}catch(err){}
-
-}else{
-window.open("https://phantom.app","_blank");
-}
-
-}
-
-/* =======================================
-SET POOL
-======================================= */
-function setPool(el,days,apr){
-
-document.querySelectorAll(".pool").forEach(x=>{
-x.classList.remove("pool-active");
-});
-
-el.classList.add("pool-active");
-
-poolDays = days;
-poolApr = apr;
-
-document.getElementById("aprShow").innerText =
-(apr*100)+"%";
-
-document.getElementById("daysShow").innerText =
-days;
-
-calcReward();
-}
-
-/* =======================================
-CALCULATOR
-======================================= */
-function calcReward(){
-
-let amount =
-parseFloat(document.getElementById("amount").value)||0;
-
-let reward =
-amount * poolApr * (poolDays/365);
-
-document.getElementById("rewardShow").innerText =
-reward.toLocaleString(undefined,{
-maximumFractionDigits:2
-});
-}
-
-/* =======================================
-STAKE REAL (OPEN STREAMFLOW)
-======================================= */
-async function stakeNow(){
-
-if(!wallet){
-connectWallet();
-return;
-}
-
-let amount =
-parseFloat(document.getElementById("amount").value)||0;
-
-if(amount<=0){
-alert("Input amount");
-return;
-}
-
-Swal.fire({
-icon:"info",
-title:"Approve Stake",
-text:"Continue to Streamflow staking page",
-background:"#0b0b10",
-color:"#fff"
-}).then(()=>{
-window.open(CONFIG.streamLink,"_blank");
-});
-
-}
-
-/* =======================================
-HARVEST REAL
-======================================= */
-async function harvestNow(){
-
-if(!wallet){
-connectWallet();
-return;
-}
-
-Swal.fire({
-icon:"success",
-title:"Claim Reward",
-text:"Approve claim in Phantom wallet",
-background:"#0b0b10",
-color:"#fff"
-});
-
-/* nanti bisa pakai SDK claim instruction */
-
-}
-
-/* =======================================
-COMPOUND
-======================================= */
-async function compoundNow(){
-
-if(!wallet){
-connectWallet();
-return;
-}
-
-Swal.fire({
-icon:"success",
-title:"Compound Request",
-text:"Approve in Phantom wallet",
-background:"#0b0b10",
-color:"#fff"
-});
-
-}
-
-/* =======================================
-LOAD USER STREAM
-======================================= */
-async function loadMyStream(){
-
-/* nanti scan streamflow wallet */
-
-document.getElementById("myStake").innerText =
-"100,000";
-
-document.getElementById("claimable").innerText =
-"1,534";
-
-document.getElementById("unlockDate").innerText =
-"7D";
-
-}
-
-/* =======================================
-LIVE TVL
-======================================= */
-async function loadTVL(){
-
-try{
-
-const connection =
-new solanaWeb3.Connection(CONFIG.rpc);
-
-const owner =
-new solanaWeb3.PublicKey(CONFIG.streamId);
-
-const mint =
-new solanaWeb3.PublicKey(CONFIG.mint);
-
-const accs =
-await connection.getTokenAccountsByOwner(
-owner,
-{mint:mint}
-);
-
-let total = 0;
-
-for(const a of accs.value){
-
-const bal =
-await connection.getTokenAccountBalance(a.pubkey);
-
-total += Number(bal.value.uiAmount||0);
-
-}
-
-document.getElementById("dashTVL").innerText =
-total.toLocaleString();
-
-}catch(e){
-
-document.getElementById("dashTVL").innerText =
-"24,500,000";
-
-}
-
-}
-
-loadTVL();
-setInterval(loadTVL,10000);
-
-</script>
-
+<body class="hero-gradient min-h-screen">
+
+    <nav class="p-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-3 text-white no-underline">
+                <img src="G.PNG" class="w-10 h-10 rounded-full border border-purple-500" alt="Logo">
+                <span class="font-orbitron text-xl font-bold uppercase tracking-tighter">
+                    FEG<span class="text-purple-500">SOL</span>
+                </span>
+            </a>
+
+            <button id="wallet-adapter-btn" onclick="handleWalletAction()"
+                class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full font-orbitron text-[10px] border border-purple-400/50 text-white uppercase transition-all">
+                Connect Wallet
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 pt-10 pb-10">
+
+        <header class="text-center mb-12">
+            <h1 class="font-orbitron text-4xl md:text-6xl font-bold gold-text mb-4 uppercase italic">
+                Banana Farm
+            </h1>
+            <p class="text-purple-400 font-orbitron text-[10px] tracking-[0.3em] uppercase italic">
+                Staking Status: <span class="text-green-400">ONLINE</span>
+            </p>
+        </header>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="glass-morphism p-4 text-center">
+                <p class="text-[9px] text-gray-500 uppercase font-orbitron italic">Total Value Locked</p>
+                <p class="text-xl font-bold font-orbitron text-white">$<span id="tvl-stat">0</span></p>
+            </div>
+            <div class="glass-morphism p-4 text-center">
+                <p class="text-[9px] text-gray-500 uppercase font-orbitron italic">Total Rewards Paid</p>
+                <p class="text-xl font-bold font-orbitron text-green-400"><span id="rewards-paid-stat">0</span></p>
+            </div>
+        </div>
+
+        <div class="mb-10 text-center">
+            <div class="inline-block tier-badge px-6 py-2 rounded-full">
+                <p class="text-[8px] font-orbitron text-purple-300 uppercase mb-1">Your Gorilla Status</p>
+                <p class="text-xs font-bold font-orbitron text-white italic">
+                    <i class="fas fa-crown text-yellow-500 mr-2"></i> LEVEL: <span id="gorilla-level" class="text-yellow-400">BABY APE</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="glass-morphism p-6 text-center border-b-4 border-yellow-500">
+                <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Total Staked</p>
+                <p class="text-2xl font-bold font-orbitron"><span id="total-staked">0</span></p>
+            </div>
+            <div class="glass-morphism p-6 text-center border-b-4 border-purple-500">
+                <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Selected APR</p>
+                <p class="text-2xl font-bold font-orbitron text-green-400 apr-glow" id="display-apr">80%</p>
+            </div>
+            <div class="glass-morphism p-6 text-center border-b-4 border-blue-500">
+                <p class="text-[10px] text-gray-400 uppercase font-orbitron mb-2">Your Rewards</p>
+                <p class="text-2xl font-bold font-orbitron text-yellow-500"><span id="live-rewards">0</span></p>
+            </div>
+        </div>
+
+        <div class="glass-morphism p-8 md:p-12 border-t-2 border-purple-500/30">
+            
+            <div class="mb-8">
+                <label class="text-[9px] font-orbitron text-gray-500 uppercase block mb-4">1. Choose Staking Duration</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="setDuration(3,0.4,this)" class="duration-btn glass-morphism py-3 text-[10px] font-orbitron border text-white">
+                        3 Days <br><span class="text-green-400">40% APR</span>
+                    </button>
+                    <button onclick="setDuration(7,0.8,this)" class="duration-btn active glass-morphism py-3 text-[10px] font-orbitron border text-white">
+                        7 Days <br><span class="text-green-400">80% APR</span>
+                    </button>
+                    <button onclick="setDuration(30,1.6,this)" class="duration-btn glass-morphism py-3 text-[10px] font-orbitron border text-white">
+                        30 Days <br><span class="text-green-400">160% APR</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="w-full">
+                    <div class="flex justify-between mb-2 text-[9px] font-orbitron uppercase">
+                        <label class="text-gray-500">2. Amount to Stake</label>
+                        <span id="user-balance" class="text-purple-400 font-bold">Balance: 0 $FEGSOL</span>
+                    </div>
+                    <div class="relative">
+                        <input type="number" id="stake-input" oninput="calculateReward()" placeholder="0.0"
+                            class="w-full bg-black/40 border border-purple-500/30 rounded-xl px-6 py-4 text-white focus:outline-none focus:border-purple-500 transition-all">
+                        <button onclick="maxAmount()" class="absolute right-4 top-4 text-[10px] font-orbitron text-purple-400 uppercase font-bold">Max</button>
+                    </div>
+
+                    <div class="mt-6 flex gap-3">
+                        <button onclick="executeAction('Harvest')" class="flex-1 bg-green-600/20 hover:bg-green-600/40 border border-green-500/50 text-green-400 py-3 rounded-xl font-orbitron text-[10px] uppercase transition-all">
+                            <i class="fas fa-seedling mr-2"></i> Harvest
+                        </button>
+                        <button onclick="executeAction('Compound')" class="flex-1 bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/50 text-blue-400 py-3 rounded-xl font-orbitron text-[10px] uppercase transition-all">
+                            <i class="fas fa-sync-alt mr-2"></i> Compound
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-auto">
+                    <button onclick="executeAction('Stake')"
+                        class="w-full md:w-48 bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 active:scale-95 py-4 rounded-xl font-orbitron font-bold uppercase text-white shadow-lg transition-all">
+                        Stake Now
+                    </button>
+                </div>
+            </div>
+
+            <div id="reward-display" class="mt-8 grid grid-cols-2 gap-4 hidden">
+                <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
+                    <p class="text-[8px] text-gray-400 font-orbitron uppercase">Daily Reward</p>
+                    <p class="text-xs font-bold font-orbitron text-green-400">+ <span id="daily-reward">0</span> $FEGSOL</p>
+                </div>
+                <div class="bg-purple-900/10 border border-purple-500/10 p-3 rounded-lg text-center">
+                    <p class="text-[8px] text-gray-400 font-orbitron uppercase">Total Reward (<span id="calc-days">7</span>d)</p>
+                    <p class="text-xs font-bold font-orbitron text-yellow-500">+ <span id="period-reward">0</span> $FEGSOL</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const CONFIG = {
+            ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
+            poolAddress: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+            // Dashboard untuk Harvest/Compound
+            poolLink: "https://app.streamflow.finance/dashboard",
+            // Link spesifik untuk Deposit/Stake
+            depositLink: "https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+            rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+            estimatedPrice: 0.00001
+        };
+
+        let userWallet = null;
+        let userBalance = 0;
+        let currentAPR = 0.8;
+        let currentDays = 7;
+
+        const connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
+
+        /* 1. CONNECT WALLET */
+        async function handleWalletAction() {
+            if (!window.solana || !window.solana.isPhantom) {
+                window.open("https://phantom.app/", "_blank");
+                return;
+            }
+
+            try {
+                const resp = await window.solana.connect();
+                userWallet = resp.publicKey.toString();
+
+                const btn = document.getElementById("wallet-adapter-btn");
+                btn.innerText = userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
+                btn.classList.replace("bg-purple-600", "bg-green-600");
+
+                await fetchUserBalance();
+
+                Swal.fire({
+                    title: "Connected!",
+                    text: "Banana Farm is ready, Gorilla!",
+                    icon: "success",
+                    background: "#0a0a0b",
+                    color: "#fff",
+                    confirmButtonColor: "#7c3aed"
+                });
+
+            } catch (e) {
+                console.error("Connection error:", e);
+            }
+        }
+
+        /* 2. FETCH USER DATA */
+        async function fetchUserBalance() {
+            if (!userWallet) return;
+            try {
+                const owner = new solanaWeb3.PublicKey(userWallet);
+                const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+                const res = await connection.getParsedTokenAccountsByOwner(owner, { mint: mint });
+                userBalance = 0;
+
+                if (res.value.length > 0) {
+                    userBalance = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+                }
+
+                document.getElementById("user-balance").innerText = "Balance: " + Number(userBalance).toLocaleString() + " $FEGSOL";
+            } catch (err) {
+                console.error("Balance fetch error:", err);
+            }
+        }
+
+        /* 3. FETCH GLOBAL STATS */
+        async function fetchBlockchainStats() {
+            try {
+                const owner = new solanaWeb3.PublicKey(CONFIG.poolAddress);
+                const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+                const res = await connection.getParsedTokenAccountsByOwner(owner, { mint: mint });
+                let amount = 0;
+
+                if (res.value.length > 0) {
+                    amount = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+                }
+
+                document.getElementById("total-staked").innerText = Number(amount).toLocaleString();
+                document.getElementById("tvl-stat").innerText = (Number(amount) * CONFIG.estimatedPrice).toLocaleString();
+                document.getElementById("rewards-paid-stat").innerText = (Number(amount) * 0.05).toLocaleString(); // Estimated rewards
+            } catch (err) {
+                console.error("Stats fetch error:", err);
+            }
+        }
+
+        /* 4. EXECUTE ACTIONS (STAKE/HARVEST) */
+        function executeAction(action) {
+            if (!userWallet) {
+                Swal.fire({
+                    title: "Connect Wallet",
+                    text: "Identify yourself first, Ape!",
+                    icon: "warning",
+                    background: "#0a0a0b",
+                    color: "#fff"
+                });
+                return;
+            }
+
+            // Pilih link tujuan
+            const targetLink = (action === 'Stake') ? CONFIG.depositLink : CONFIG.poolLink;
+
+            Swal.fire({
+                title: `${action} Request`,
+                text: `Redirecting to Streamflow to sign your ${action} transaction...`,
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Continue",
+                background: "#0a0a0b",
+                color: "#fff",
+                confirmButtonColor: "#7c3aed"
+            }).then((r) => {
+                if (r.isConfirmed) {
+                    // Gunakan location.href agar mulus di Phantom Browser
+                    window.location.href = targetLink;
+                }
+            });
+        }
+
+        /* 5. UI CALCULATIONS */
+        function setDuration(days, apr, el) {
+            currentDays = days;
+            currentAPR = apr;
+            document.getElementById("display-apr").innerText = (apr * 100) + "%";
+            document.getElementById("calc-days").innerText = days;
+            document.querySelectorAll(".duration-btn").forEach(btn => btn.classList.remove("active"));
+            el.classList.add("active");
+            calculateReward();
+        }
+
+        function calculateReward() {
+            const amount = parseFloat(document.getElementById("stake-input").value || 0);
+            const box = document.getElementById("reward-display");
+            const level = document.getElementById("gorilla-level");
+
+            if (amount <= 0) {
+                box.classList.add("hidden");
+                level.innerText = "BABY APE";
+                return;
+            }
+
+            box.classList.remove("hidden");
+            const daily = (amount * currentAPR) / 365;
+            const total = daily * currentDays;
+
+            document.getElementById("daily-reward").innerText = daily.toLocaleString(undefined, { maximumFractionDigits: 2 });
+            document.getElementById("period-reward").innerText = total.toLocaleString(undefined, { maximumFractionDigits: 2 });
+            document.getElementById("live-rewards").innerText = total.toLocaleString(undefined, { maximumFractionDigits: 2 });
+
+            if (amount >= 1000000) level.innerText = "GOLDEN KONG";
+            else if (amount >= 100000) level.innerText = "SILVERBACK";
+            else level.innerText = "BABY APE";
+        }
+
+        function maxAmount() {
+            document.getElementById("stake-input").value = userBalance;
+            calculateReward();
+        }
+
+        // AUTO REFRESH
+        fetchBlockchainStats();
+        setInterval(fetchBlockchainStats, 60000); // Update stats every minute
+        setInterval(fetchUserBalance, 15000);     // Update balance every 15s
+    </script>
 </body>
 </html>
