@@ -194,21 +194,58 @@
         fetchBlockchainStats();
         setInterval(fetchBlockchainStats, 60000); // Refresh tiap 1 menit
 
-        // --- WALLET & ACTIONS ---
+               // --- WALLET & ACTIONS (Mobile Optimized) ---
         async function handleWalletAction() {
-            const isPhantom = window.solana && window.solana.isPhantom;
-            if (isPhantom) {
+            // Deteksi provider dengan lebih luas
+            const getProvider = () => {
+                if ('solana' in window) {
+                    const provider = window.solana;
+                    if (provider.isPhantom) return provider;
+                }
+                return null;
+            };
+
+            const provider = getProvider();
+
+            if (provider) {
                 try {
-                    const resp = await window.solana.connect();
+                    // Gunakan mode connect yang lebih stabil
+                    const resp = await provider.connect();
                     userWallet = resp.publicKey.toString();
-                    document.getElementById('wallet-adapter-btn').innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
-                    document.getElementById('wallet-adapter-btn').classList.replace('bg-purple-600', 'bg-green-600');
-                    Swal.fire({ title: 'Connected!', text: 'Wallet linked to Banana Farm', icon: 'success', background: '#0a0a0b', color: '#fff' });
-                } catch (e) { console.log("Rejected"); }
+                    
+                    const btn = document.getElementById('wallet-adapter-btn');
+                    btn.innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
+                    btn.classList.remove('bg-purple-600');
+                    btn.classList.add('bg-green-600');
+                    
+                    Swal.fire({ 
+                        title: 'Connected!', 
+                        text: 'Wallet linked to Banana Farm', 
+                        icon: 'success', 
+                        background: '#0a0a0b', 
+                        color: '#fff',
+                        confirmButtonColor: '#7c3aed'
+                    });
+                    
+                    // Setelah connect, refresh data balance
+                    fetchBlockchainStats();
+                } catch (err) {
+                    console.warn("User cancelled connection");
+                }
             } else {
-                window.open('https://phantom.app/', '_blank');
+                // Jika dibuka di browser biasa (bukan DApp browser)
+                Swal.fire({
+                    title: 'Phantom Not Found',
+                    text: 'Please open this site inside Phantom Wallet Browser or install Phantom extension.',
+                    icon: 'warning',
+                    background: '#0a0a0b',
+                    color: '#fff'
+                }).then(() => {
+                    window.open('https://phantom.app/', '_blank');
+                });
             }
         }
+
 
         function executeAction(actionName) {
             if (!userWallet) {
