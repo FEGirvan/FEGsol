@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@streamflow/stream/dist/browser/streamflow.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FEG SOL | Banana Farm (Mainnet Ready)</title>
@@ -193,16 +194,16 @@
 
     <script>
 /* =========================
-   STREAMFLOW CONFIG SLOT
+   STREAMFLOW CONFIG
 ========================= */
 const CONFIG = {
     ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
 
-    // 🔥 STREAMFLOW CORE ID (WAJIB KAMU ISI DARI DASHBOARD)
     streamflow: {
-        poolId: "PASTE_STREAMFLOW_POOL_ID",
-        vault: "PASTE_VAULT_ID",
-        programId: "PASTE_STREAMFLOW_PROGRAM_ID"
+        // 🔥 ISI DARI DASHBOARD STREAMFLOW KAMU
+        poolId: "PASTE_POOL_ID",
+        vault: "PASTE_VAULT_ADDRESS",
+        programId: "PASTE_PROGRAM_ID"
     },
 
     rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
@@ -231,9 +232,8 @@ async function handleWalletAction() {
     const resp = await window.solana.connect();
     userWallet = resp.publicKey.toString();
 
-    const btn = document.getElementById("wallet-adapter-btn");
-    btn.innerText = userWallet.slice(0,4) + "..." + userWallet.slice(-4);
-    btn.classList.add("bg-green-600");
+    document.getElementById("wallet-adapter-btn").innerText =
+        userWallet.slice(0,4) + "..." + userWallet.slice(-4);
 
     await fetchUserBalance();
 }
@@ -259,35 +259,104 @@ async function fetchUserBalance() {
 }
 
 /* =========================
-   STATS (POOL)
+   STAKE (FULL STREAMFLOW ON-CHAIN)
 ========================= */
-async function fetchBlockchainStats() {
+async function stake(amount) {
+    if (!amount || amount <= 0) return;
+
     try {
-        const owner = new solanaWeb3.PublicKey(CONFIG.streamflow.poolId);
-        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+        const provider = window.solana;
 
-        const res = await connection.getParsedTokenAccountsByOwner(owner, { mint });
+        // 🔥 Streamflow SDK init
+        const { StreamflowSolana } = window.Streamflow;
 
-        let amount = 0;
-        if (res.value.length > 0) {
-            amount = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-        }
+        const streamflow = new StreamflowSolana.StreamClient({
+            clusterUrl: CONFIG.rpc,
+            cluster: "mainnet-beta"
+        });
 
-        document.getElementById("total-staked").innerText = amount.toLocaleString();
-        document.getElementById("tvl-stat").innerText = (amount * CONFIG.estimatedPrice).toLocaleString();
-        document.getElementById("rewards-paid-stat").innerText = (amount * 0.05).toLocaleString();
+        // 🔥 CREATE STAKE / STREAM
+        const result = await streamflow.create({
+            sender: new solanaWeb3.PublicKey(userWallet),
+            recipient: new solanaWeb3.PublicKey(CONFIG.streamflow.vault),
 
-    } catch (e) {
-        console.log(e);
+            mint: new solanaWeb3.PublicKey(CONFIG.ca),
+
+            amount: amount,
+
+            start: Math.floor(Date.now() / 1000),
+            period: currentDays * 24 * 60 * 60,
+
+            cliff: 0,
+
+            cancelableBySender: false,
+            cancelableByRecipient: false,
+
+            transferableBySender: false,
+            transferableByRecipient: false,
+
+            automaticWithdrawal: false,
+
+            // optional metadata
+            partner: "FEG-SOL-BANANA-FARM"
+        });
+
+        await provider.signAndSendTransaction(result.tx);
+
+        Swal.fire("Success", "Staked to Streamflow 🚀", "success");
+
+        fetchBlockchainStats();
+
+    } catch (err) {
+        console.log(err);
+        Swal.fire("Error", "Stake failed", "error");
     }
 }
 
 /* =========================
-   MAIN ACTION ROUTER
+   HARVEST (STREAMFLOW WITHDRAW)
+========================= */
+async function harvest() {
+    try {
+        const { StreamflowSolana } = window.Streamflow;
+
+        const streamflow = new StreamflowSolana.StreamClient({
+            clusterUrl: CONFIG.rpc,
+            cluster: "mainnet-beta"
+        });
+
+        const result = await streamflow.withdraw({
+            streamId: CONFIG.streamflow.poolId,
+            receiver: new solanaWeb3.PublicKey(userWallet)
+        });
+
+        await window.solana.signAndSendTransaction(result.tx);
+
+        Swal.fire("Harvested", "Reward claimed 🍌", "success");
+
+    } catch (e) {
+        console.log(e);
+        Swal.fire("Error", "Harvest failed", "error");
+    }
+}
+
+/* =========================
+   COMPOUND (RESTAKE LOGIC)
+========================= */
+async function compound() {
+    const amount = parseFloat(document.getElementById("stake-input").value || 0);
+
+    if (!amount) return;
+
+    await stake(amount); // auto restake
+}
+
+/* =========================
+   ACTION ROUTER
 ========================= */
 function executeAction(action) {
     if (!userWallet) {
-        Swal.fire("Connect Wallet dulu");
+        Swal.fire("Connect wallet dulu");
         return;
     }
 
@@ -295,105 +364,11 @@ function executeAction(action) {
 
     if (action === "Stake") return stake(amount);
     if (action === "Harvest") return harvest();
-    if (action === "Compound") return compound(amount);
+    if (action === "Compound") return compound();
 }
 
 /* =========================
-   STREAMFLOW STAKE (READY SLOT)
-========================= */
-async function stake(amount) {
-    if (!amount || amount <= 0) return;
-
-    if (amount > 100000) {
-        return Swal.fire("Max stake limit reached");
-    }
-
-    try {
-        const tx = new solanaWeb3.Transaction();
-
-        // 🔥 STREAMFLOW PLACEHOLDER INSTRUCTION
-        const ix = new solanaWeb3.TransactionInstruction({
-            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
-            keys: [
-                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
-                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
-            ],
-            data: new Uint8Array([1, ...new Uint8Array(new Float64Array([amount]).buffer)])
-        });
-
-        tx.add(ix);
-
-        const sig = await window.solana.signAndSendTransaction(tx);
-        await connection.confirmTransaction(sig);
-
-        Swal.fire("Staked!", "Banana growing 🍌", "success");
-
-    } catch (e) {
-        console.log(e);
-        Swal.fire("Error staking");
-    }
-}
-
-/* =========================
-   HARVEST
-========================= */
-async function harvest() {
-    try {
-        const tx = new solanaWeb3.Transaction();
-
-        const ix = new solanaWeb3.TransactionInstruction({
-            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
-            keys: [
-                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
-                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
-            ],
-            data: new Uint8Array([2])
-        });
-
-        tx.add(ix);
-
-        const sig = await window.solana.signAndSendTransaction(tx);
-        await connection.confirmTransaction(sig);
-
-        Swal.fire("Harvested!", "Reward claimed 🍌", "success");
-
-    } catch (e) {
-        console.log(e);
-        Swal.fire("Harvest failed");
-    }
-}
-
-/* =========================
-   COMPOUND
-========================= */
-async function compound(amount) {
-    try {
-        const tx = new solanaWeb3.Transaction();
-
-        const ix = new solanaWeb3.TransactionInstruction({
-            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
-            keys: [
-                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
-                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
-            ],
-            data: new Uint8Array([3])
-        });
-
-        tx.add(ix);
-
-        const sig = await window.solana.signAndSendTransaction(tx);
-        await connection.confirmTransaction(sig);
-
-        Swal.fire("Compounded!", "Reinvest success 🚀", "success");
-
-    } catch (e) {
-        console.log(e);
-        Swal.fire("Compound failed");
-    }
-}
-
-/* =========================
-   UI CALC (ESTIMATED APR ONLY)
+   UI CALC (TETAP)
 ========================= */
 function setDuration(days, apr, el) {
     currentDays = days;
@@ -411,7 +386,7 @@ function setDuration(days, apr, el) {
 function calculateReward() {
     const amount = parseFloat(document.getElementById("stake-input").value || 0);
 
-    if (amount <= 0) return;
+    if (!amount) return;
 
     const daily = (amount * currentAPR) / 365;
     const total = daily * currentDays;
@@ -427,12 +402,30 @@ function maxAmount() {
 }
 
 /* =========================
-   AUTO REFRESH
+   STATS LOOP
 ========================= */
+async function fetchBlockchainStats() {
+    try {
+        const owner = new solanaWeb3.PublicKey(CONFIG.streamflow.poolId);
+        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+        const res = await connection.getParsedTokenAccountsByOwner(owner, { mint });
+
+        let amount = 0;
+        if (res.value.length > 0) {
+            amount = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+        }
+
+        document.getElementById("total-staked").innerText = amount.toLocaleString();
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 fetchBlockchainStats();
 setInterval(fetchBlockchainStats, 60000);
 setInterval(fetchUserBalance, 15000);
-
 </script>
 </body>
 </html>
