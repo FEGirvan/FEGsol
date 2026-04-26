@@ -52,61 +52,93 @@
 </main>
 
 <script>
-/* ================= CONFIG ================= */
+/* =========================
+   CONFIG
+========================= */
 const CONFIG = {
     ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-    rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
 
     streamflow: {
         poolId: "PASTE_POOL_ID",
         vault: "PASTE_VAULT_ADDRESS"
-    }
+    },
+
+    rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+
+    decimals: 6
 };
 
-/* ================= STATE ================= */
+/* =========================
+   STATE SAFE MODE
+========================= */
 let wallet = null;
 let connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
-
-/* STREAM TRACKING (IMPORTANT FIX) */
+let isProcessing = false;
 let userStreamId = localStorage.getItem("streamId") || null;
 
-/* ================= WALLET ================= */
+/* =========================
+   ADMIN APR SYSTEM (NEW)
+   - bisa diubah dari browser admin
+========================= */
+const DEFAULT_APR = {
+    3: 0.4,
+    7: 0.8,
+    30: 1.6
+};
+
+let APR_CONFIG = JSON.parse(localStorage.getItem("apr_config")) || DEFAULT_APR;
+
+function setAPR(days, value){
+    APR_CONFIG[days] = value;
+    localStorage.setItem("apr_config", JSON.stringify(APR_CONFIG));
+}
+
+/* OPTIONAL ADMIN PANEL */
+function adminSetAPR(){
+    const pass = prompt("Admin password:");
+    if(pass !== "feg-admin") return alert("Unauthorized");
+
+    const d = prompt("Days (3/7/30):");
+    const v = parseFloat(prompt("APR decimal (0.4 = 40%)"));
+
+    setAPR(d, v);
+    alert("APR updated!");
+}
+
+/* =========================
+   WALLET SAFE CONNECT
+========================= */
 async function handleWalletAction(){
-    if(!window.solana?.isPhantom){
-        window.open("https://phantom.app/");
-        return;
+    try{
+        if(!window.solana?.isPhantom){
+            window.open("https://phantom.app/");
+            return;
+        }
+
+        const resp = await window.solana.connect();
+        wallet = resp.publicKey.toString();
+
+        document.getElementById("wallet-adapter-btn").innerText =
+            wallet.slice(0,4)+"..."+wallet.slice(-4);
+
+        await fetchBalance();
+        await fetchStaked();
+
+    }catch(e){
+        console.log(e);
+        alert("Wallet connect failed");
     }
-
-    const resp = await window.solana.connect();
-    wallet = resp.publicKey.toString();
-
-    document.getElementById("wallet").innerText = wallet.slice(0,4)+"..."+wallet.slice(-4);
-
-    await fetchBalance();
-    await fetchStaked();
 }
 
-/* ================= BALANCE ================= */
-async function fetchBalance(){
-    if(!wallet) return;
-
-    const owner = new solanaWeb3.PublicKey(wallet);
-    const mint = new solanaWeb3.PublicKey(CONFIG.ca);
-
-    const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
-
-    let bal = 0;
-    if(res.value.length){
-        bal = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-    }
-
-    document.getElementById("balance").innerText = bal;
-}
-
-/* ================= STREAMFLOW INIT SAFE ================= */
+/* =========================
+   STREAMFLOW SAFE INIT
+========================= */
 function getStreamflow(){
     const sf = window.Streamflow?.StreamflowSolana;
-    if(!sf) throw new Error("Streamflow SDK not loaded");
+
+    if(!sf){
+        throw new Error("Streamflow SDK not loaded");
+    }
 
     return new sf.StreamClient({
         clusterUrl: CONFIG.rpc,
@@ -114,11 +146,17 @@ function getStreamflow(){
     });
 }
 
-/* ================= STAKE ================= */
+/* =========================
+   STAKE (HARDENED)
+========================= */
 async function stake(amount){
-    if(!amount || !wallet) return;
+    if(isProcessing) return;
+    if(!wallet) return alert("Connect wallet dulu");
+    if(!amount || amount <= 0) return;
 
-    try {
+    try{
+        isProcessing = true;
+
         const streamflow = getStreamflow();
 
         const tx = await streamflow.create({
@@ -126,42 +164,49 @@ async function stake(amount){
             recipient: new solanaWeb3.PublicKey(CONFIG.streamflow.vault),
             mint: new solanaWeb3.PublicKey(CONFIG.ca),
 
-            amount: amount * 1e6, // ⚠️ adjust decimals if needed
+            amount: Math.floor(amount * (10 ** CONFIG.decimals)),
 
             start: Math.floor(Date.now()/1000),
             period: 7 * 24 * 60 * 60,
 
             cancelableBySender:false,
-            cancelableByRecipient:false
+            cancelableByRecipient:false,
+            automaticWithdrawal:false
         });
 
         const signed = await window.solana.signTransaction(tx.tx || tx);
         const sig = await connection.sendRawTransaction(signed.serialize());
 
-        await connection.confirmTransaction(sig);
+        await connection.confirmTransaction(sig, "confirmed");
 
-        /* SAVE STREAM ID (CRITICAL FIX) */
-        if(tx.streamId){
+        // SAFE STREAM ID HANDLING
+        if(tx?.streamId){
             userStreamId = tx.streamId;
             localStorage.setItem("streamId", userStreamId);
         }
 
-        Swal.fire("Success","Staked On-chain","success");
+        alert("Staked successfully 🚀");
 
         fetchStaked();
 
-    } catch(e){
+    }catch(e){
         console.log(e);
-        Swal.fire("Error","Stake failed","error");
+        alert("Stake failed");
+    }finally{
+        isProcessing = false;
     }
 }
 
-/* ================= HARVEST ================= */
+/* =========================
+   HARVEST SAFE
+========================= */
 async function harvest(){
+    if(isProcessing) return;
+
     try{
-        if(!userStreamId){
-            return Swal.fire("No Stream","No active stake found","error");
-        }
+        if(!userStreamId) return alert("No active stake");
+
+        isProcessing = true;
 
         const streamflow = getStreamflow();
 
@@ -173,23 +218,29 @@ async function harvest(){
         const signed = await window.solana.signTransaction(tx.tx || tx);
         const sig = await connection.sendRawTransaction(signed.serialize());
 
-        await connection.confirmTransaction(sig);
+        await connection.confirmTransaction(sig, "confirmed");
 
-        Swal.fire("Success","Harvest done","success");
+        alert("Harvest success 🍌");
 
     }catch(e){
         console.log(e);
-        Swal.fire("Error","Harvest failed","error");
+        alert("Harvest failed");
+    }finally{
+        isProcessing = false;
     }
 }
 
-/* ================= COMPOUND ================= */
+/* =========================
+   COMPOUND
+========================= */
 async function compound(){
     const amount = parseFloat(document.getElementById("stake-input").value || 0);
     await stake(amount);
 }
 
-/* ================= ROUTER ================= */
+/* =========================
+   ROUTER
+========================= */
 function executeAction(type){
     const amount = parseFloat(document.getElementById("stake-input").value || 0);
 
@@ -198,7 +249,69 @@ function executeAction(type){
     if(type==="Compound") return compound();
 }
 
-/* ================= STAKED FETCH ================= */
+/* =========================
+   APR CALC (NOW ADMIN CONTROLLED)
+========================= */
+let currentDays = 7;
+
+function setDuration(days, _, el){
+    currentDays = days;
+
+    const apr = APR_CONFIG[days];
+
+    document.getElementById("display-apr").innerText = (apr*100)+"%";
+    document.getElementById("calc-days").innerText = days;
+
+    document.querySelectorAll(".duration-btn").forEach(b=>b.classList.remove("active"));
+    el.classList.add("active");
+
+    calculateReward();
+}
+
+/* =========================
+   REWARD CALC SAFE
+========================= */
+function calculateReward(){
+    const amount = parseFloat(document.getElementById("stake-input").value || 0);
+    if(!amount) return;
+
+    const apr = APR_CONFIG[currentDays];
+
+    const daily = (amount * apr) / 365;
+    const total = daily * currentDays;
+
+    document.getElementById("daily-reward").innerText = daily.toFixed(2);
+    document.getElementById("period-reward").innerText = total.toFixed(2);
+    document.getElementById("live-rewards").innerText = total.toFixed(2);
+}
+
+/* =========================
+   BALANCE SAFE
+========================= */
+async function fetchBalance(){
+    if(!wallet) return;
+
+    try{
+        const owner = new solanaWeb3.PublicKey(wallet);
+        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+        const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
+
+        let bal = 0;
+        if(res.value.length){
+            bal = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+        }
+
+        document.getElementById("balance").innerText = bal;
+
+    }catch(e){
+        console.log(e);
+    }
+}
+
+/* =========================
+   STAKED FETCH SAFE
+========================= */
 async function fetchStaked(){
     if(!wallet) return;
 
@@ -220,11 +333,21 @@ async function fetchStaked(){
     }
 }
 
-/* ================= LOOP ================= */
+/* =========================
+   LOOP SAFE
+========================= */
 setInterval(fetchBalance,10000);
 setInterval(fetchStaked,15000);
 
+/* =========================
+   ADMIN HOTKEY (OPTIONAL)
+   CTRL + SHIFT + A
+========================= */
+document.addEventListener("keydown",(e)=>{
+    if(e.ctrlKey && e.shiftKey && e.key==="A"){
+        adminSetAPR();
+    }
+});
 </script>
-
 </body>
 </html>
