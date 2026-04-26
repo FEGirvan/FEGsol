@@ -192,173 +192,247 @@
     </main>
 
     <script>
-        const CONFIG = {
-            ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-            poolAddress: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-            // Dashboard untuk Harvest/Compound
-            poolLink: "https://app.streamflow.finance/dashboard",
-            // Link spesifik untuk Deposit/Stake
-            depositLink: "https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-            rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
-            estimatedPrice: 0.00001
-        };
+/* =========================
+   STREAMFLOW CONFIG SLOT
+========================= */
+const CONFIG = {
+    ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
 
-        let userWallet = null;
-        let userBalance = 0;
-        let currentAPR = 0.8;
-        let currentDays = 7;
+    // 🔥 STREAMFLOW CORE ID (WAJIB KAMU ISI DARI DASHBOARD)
+    streamflow: {
+        poolId: "PASTE_STREAMFLOW_POOL_ID",
+        vault: "PASTE_VAULT_ID",
+        programId: "PASTE_STREAMFLOW_PROGRAM_ID"
+    },
 
-        const connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
+    rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+    estimatedPrice: 0.00001
+};
 
-        /* 1. CONNECT WALLET */
-        async function handleWalletAction() {
-            if (!window.solana || !window.solana.isPhantom) {
-                window.open("https://phantom.app/", "_blank");
-                return;
-            }
+/* =========================
+   STATE
+========================= */
+let userWallet = null;
+let userBalance = 0;
+let currentAPR = 0.8;
+let currentDays = 7;
 
-            try {
-                const resp = await window.solana.connect();
-                userWallet = resp.publicKey.toString();
+const connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
 
-                const btn = document.getElementById("wallet-adapter-btn");
-                btn.innerText = userWallet.slice(0, 4) + "..." + userWallet.slice(-4);
-                btn.classList.replace("bg-purple-600", "bg-green-600");
+/* =========================
+   WALLET CONNECT
+========================= */
+async function handleWalletAction() {
+    if (!window.solana || !window.solana.isPhantom) {
+        window.open("https://phantom.app/", "_blank");
+        return;
+    }
 
-                await fetchUserBalance();
+    const resp = await window.solana.connect();
+    userWallet = resp.publicKey.toString();
 
-                Swal.fire({
-                    title: "Connected!",
-                    text: "Banana Farm is ready, Gorilla!",
-                    icon: "success",
-                    background: "#0a0a0b",
-                    color: "#fff",
-                    confirmButtonColor: "#7c3aed"
-                });
+    const btn = document.getElementById("wallet-adapter-btn");
+    btn.innerText = userWallet.slice(0,4) + "..." + userWallet.slice(-4);
+    btn.classList.add("bg-green-600");
 
-            } catch (e) {
-                console.error("Connection error:", e);
-            }
+    await fetchUserBalance();
+}
+
+/* =========================
+   BALANCE
+========================= */
+async function fetchUserBalance() {
+    if (!userWallet) return;
+
+    const owner = new solanaWeb3.PublicKey(userWallet);
+    const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+    const res = await connection.getParsedTokenAccountsByOwner(owner, { mint });
+
+    userBalance = 0;
+    if (res.value.length > 0) {
+        userBalance = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+    }
+
+    document.getElementById("user-balance").innerText =
+        "Balance: " + userBalance.toLocaleString() + " $FEGSOL";
+}
+
+/* =========================
+   STATS (POOL)
+========================= */
+async function fetchBlockchainStats() {
+    try {
+        const owner = new solanaWeb3.PublicKey(CONFIG.streamflow.poolId);
+        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+
+        const res = await connection.getParsedTokenAccountsByOwner(owner, { mint });
+
+        let amount = 0;
+        if (res.value.length > 0) {
+            amount = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
         }
 
-        /* 2. FETCH USER DATA */
-        async function fetchUserBalance() {
-            if (!userWallet) return;
-            try {
-                const owner = new solanaWeb3.PublicKey(userWallet);
-                const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+        document.getElementById("total-staked").innerText = amount.toLocaleString();
+        document.getElementById("tvl-stat").innerText = (amount * CONFIG.estimatedPrice).toLocaleString();
+        document.getElementById("rewards-paid-stat").innerText = (amount * 0.05).toLocaleString();
 
-                const res = await connection.getParsedTokenAccountsByOwner(owner, { mint: mint });
-                userBalance = 0;
+    } catch (e) {
+        console.log(e);
+    }
+}
 
-                if (res.value.length > 0) {
-                    userBalance = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-                }
+/* =========================
+   MAIN ACTION ROUTER
+========================= */
+function executeAction(action) {
+    if (!userWallet) {
+        Swal.fire("Connect Wallet dulu");
+        return;
+    }
 
-                document.getElementById("user-balance").innerText = "Balance: " + Number(userBalance).toLocaleString() + " $FEGSOL";
-            } catch (err) {
-                console.error("Balance fetch error:", err);
-            }
-        }
+    const amount = parseFloat(document.getElementById("stake-input").value || 0);
 
-        /* 3. FETCH GLOBAL STATS */
-        async function fetchBlockchainStats() {
-            try {
-                const owner = new solanaWeb3.PublicKey(CONFIG.poolAddress);
-                const mint = new solanaWeb3.PublicKey(CONFIG.ca);
+    if (action === "Stake") return stake(amount);
+    if (action === "Harvest") return harvest();
+    if (action === "Compound") return compound(amount);
+}
 
-                const res = await connection.getParsedTokenAccountsByOwner(owner, { mint: mint });
-                let amount = 0;
+/* =========================
+   STREAMFLOW STAKE (READY SLOT)
+========================= */
+async function stake(amount) {
+    if (!amount || amount <= 0) return;
 
-                if (res.value.length > 0) {
-                    amount = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-                }
+    if (amount > 100000) {
+        return Swal.fire("Max stake limit reached");
+    }
 
-                document.getElementById("total-staked").innerText = Number(amount).toLocaleString();
-                document.getElementById("tvl-stat").innerText = (Number(amount) * CONFIG.estimatedPrice).toLocaleString();
-                document.getElementById("rewards-paid-stat").innerText = (Number(amount) * 0.05).toLocaleString(); // Estimated rewards
-            } catch (err) {
-                console.error("Stats fetch error:", err);
-            }
-        }
+    try {
+        const tx = new solanaWeb3.Transaction();
 
-        /* 4. EXECUTE ACTIONS (STAKE/HARVEST) */
-        function executeAction(action) {
-            if (!userWallet) {
-                Swal.fire({
-                    title: "Connect Wallet",
-                    text: "Identify yourself first, Ape!",
-                    icon: "warning",
-                    background: "#0a0a0b",
-                    color: "#fff"
-                });
-                return;
-            }
+        // 🔥 STREAMFLOW PLACEHOLDER INSTRUCTION
+        const ix = new solanaWeb3.TransactionInstruction({
+            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
+            keys: [
+                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
+                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
+            ],
+            data: new Uint8Array([1, ...new Uint8Array(new Float64Array([amount]).buffer)])
+        });
 
-            // Pilih link tujuan
-            const targetLink = (action === 'Stake') ? CONFIG.depositLink : CONFIG.poolLink;
+        tx.add(ix);
 
-            Swal.fire({
-                title: `${action} Request`,
-                text: `Redirecting to Streamflow to sign your ${action} transaction...`,
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonText: "Continue",
-                background: "#0a0a0b",
-                color: "#fff",
-                confirmButtonColor: "#7c3aed"
-            }).then((r) => {
-                if (r.isConfirmed) {
-                    // Gunakan location.href agar mulus di Phantom Browser
-                    window.location.href = targetLink;
-                }
-            });
-        }
+        const sig = await window.solana.signAndSendTransaction(tx);
+        await connection.confirmTransaction(sig);
 
-        /* 5. UI CALCULATIONS */
-        function setDuration(days, apr, el) {
-            currentDays = days;
-            currentAPR = apr;
-            document.getElementById("display-apr").innerText = (apr * 100) + "%";
-            document.getElementById("calc-days").innerText = days;
-            document.querySelectorAll(".duration-btn").forEach(btn => btn.classList.remove("active"));
-            el.classList.add("active");
-            calculateReward();
-        }
+        Swal.fire("Staked!", "Banana growing 🍌", "success");
 
-        function calculateReward() {
-            const amount = parseFloat(document.getElementById("stake-input").value || 0);
-            const box = document.getElementById("reward-display");
-            const level = document.getElementById("gorilla-level");
+    } catch (e) {
+        console.log(e);
+        Swal.fire("Error staking");
+    }
+}
 
-            if (amount <= 0) {
-                box.classList.add("hidden");
-                level.innerText = "BABY APE";
-                return;
-            }
+/* =========================
+   HARVEST
+========================= */
+async function harvest() {
+    try {
+        const tx = new solanaWeb3.Transaction();
 
-            box.classList.remove("hidden");
-            const daily = (amount * currentAPR) / 365;
-            const total = daily * currentDays;
+        const ix = new solanaWeb3.TransactionInstruction({
+            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
+            keys: [
+                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
+                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
+            ],
+            data: new Uint8Array([2])
+        });
 
-            document.getElementById("daily-reward").innerText = daily.toLocaleString(undefined, { maximumFractionDigits: 2 });
-            document.getElementById("period-reward").innerText = total.toLocaleString(undefined, { maximumFractionDigits: 2 });
-            document.getElementById("live-rewards").innerText = total.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        tx.add(ix);
 
-            if (amount >= 1000000) level.innerText = "GOLDEN KONG";
-            else if (amount >= 100000) level.innerText = "SILVERBACK";
-            else level.innerText = "BABY APE";
-        }
+        const sig = await window.solana.signAndSendTransaction(tx);
+        await connection.confirmTransaction(sig);
 
-        function maxAmount() {
-            document.getElementById("stake-input").value = userBalance;
-            calculateReward();
-        }
+        Swal.fire("Harvested!", "Reward claimed 🍌", "success");
 
-        // AUTO REFRESH
-        fetchBlockchainStats();
-        setInterval(fetchBlockchainStats, 60000); // Update stats every minute
-        setInterval(fetchUserBalance, 15000);     // Update balance every 15s
-    </script>
+    } catch (e) {
+        console.log(e);
+        Swal.fire("Harvest failed");
+    }
+}
+
+/* =========================
+   COMPOUND
+========================= */
+async function compound(amount) {
+    try {
+        const tx = new solanaWeb3.Transaction();
+
+        const ix = new solanaWeb3.TransactionInstruction({
+            programId: new solanaWeb3.PublicKey(CONFIG.streamflow.programId),
+            keys: [
+                { pubkey: new solanaWeb3.PublicKey(userWallet), isSigner: true, isWritable: true },
+                { pubkey: new solanaWeb3.PublicKey(CONFIG.streamflow.poolId), isSigner: false, isWritable: true },
+            ],
+            data: new Uint8Array([3])
+        });
+
+        tx.add(ix);
+
+        const sig = await window.solana.signAndSendTransaction(tx);
+        await connection.confirmTransaction(sig);
+
+        Swal.fire("Compounded!", "Reinvest success 🚀", "success");
+
+    } catch (e) {
+        console.log(e);
+        Swal.fire("Compound failed");
+    }
+}
+
+/* =========================
+   UI CALC (ESTIMATED APR ONLY)
+========================= */
+function setDuration(days, apr, el) {
+    currentDays = days;
+    currentAPR = apr;
+
+    document.getElementById("display-apr").innerText = (apr * 100) + "%";
+    document.getElementById("calc-days").innerText = days;
+
+    document.querySelectorAll(".duration-btn").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+
+    calculateReward();
+}
+
+function calculateReward() {
+    const amount = parseFloat(document.getElementById("stake-input").value || 0);
+
+    if (amount <= 0) return;
+
+    const daily = (amount * currentAPR) / 365;
+    const total = daily * currentDays;
+
+    document.getElementById("daily-reward").innerText = daily.toFixed(2);
+    document.getElementById("period-reward").innerText = total.toFixed(2);
+    document.getElementById("live-rewards").innerText = total.toFixed(2);
+}
+
+function maxAmount() {
+    document.getElementById("stake-input").value = userBalance;
+    calculateReward();
+}
+
+/* =========================
+   AUTO REFRESH
+========================= */
+fetchBlockchainStats();
+setInterval(fetchBlockchainStats, 60000);
+setInterval(fetchUserBalance, 15000);
+
+</script>
 </body>
 </html>
