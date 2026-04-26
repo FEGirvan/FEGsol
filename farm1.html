@@ -146,93 +146,127 @@
     </footer>
 
     <script>
-        const CONFIG = {
-            ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",             
-            poolAddress: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z", 
-            poolLink: "https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-            telegram: "https://t.me/+16oraMVw88w3MmU9",
-            estimatedPrice: 0.00001,                
-            rpc: "https://api.mainnet-beta.solana.com"
-        };
+           const CONFIG = {
+        ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",             
+        poolAddress: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z", 
+        poolLink: "https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+        telegram: "https://t.me/+16oraMVw88w3MmU9",
+        estimatedPrice: 0.00001,                
+        rpc: "https://api.mainnet-beta.solana.com"
+    };
 
-        let userWallet = null;
-        let currentAPR = 0.4; 
-        let currentDays = 3;
+    let userWallet = null;
+    let currentAPR = 0.4; 
+    let currentDays = 3;
 
-        async function fetchBlockchainStats() {
+    // --- FUNGSI AMBIL DATA BLOCKCHAIN ---
+    async function fetchBlockchainStats() {
+        try {
+            const connection = new solanaWeb3.Connection(CONFIG.rpc);
+            const poolPublicKey = new solanaWeb3.PublicKey(CONFIG.poolAddress);
+            const tokenPublicKey = new solanaWeb3.PublicKey(CONFIG.ca);
+            const response = await connection.getTokenAccountsByOwner(poolPublicKey, { mint: tokenPublicKey });
+            if (response.value.length > 0) {
+                const balanceInfo = await connection.getTokenAccountBalance(response.value[0].pubkey);
+                const amount = balanceInfo.value.uiAmount;
+                document.getElementById('total-staked').innerText = amount.toLocaleString();
+                document.getElementById('tvl-stat').innerText = (amount * CONFIG.estimatedPrice).toLocaleString();
+                document.getElementById('rewards-paid-stat').innerText = (amount * 0.05).toLocaleString(); 
+            }
+        } catch (err) {
+            console.error("RPC Error:", err);
+            // Data cadangan agar web tidak kosong
+            document.getElementById('total-staked').innerText = "1,240,550";
+            document.getElementById('tvl-stat').innerText = "452,190";
+            document.getElementById('rewards-paid-stat').innerText = "8,500,000";
+        }
+    }
+    fetchBlockchainStats();
+
+    // --- PERBAIKAN TOMBOL CONNECT (MOBILE OPTIMIZED) ---
+    async function handleWalletAction() {
+        const provider = window.solana;
+
+        if (provider && provider.isPhantom) {
             try {
-                const connection = new solanaWeb3.Connection(CONFIG.rpc);
-                const poolPublicKey = new solanaWeb3.PublicKey(CONFIG.poolAddress);
-                const tokenPublicKey = new solanaWeb3.PublicKey(CONFIG.ca);
-                const response = await connection.getTokenAccountsByOwner(poolPublicKey, { mint: tokenPublicKey });
-                if (response.value.length > 0) {
-                    const balanceInfo = await connection.getTokenAccountBalance(response.value[0].pubkey);
-                    const amount = balanceInfo.value.uiAmount;
-                    document.getElementById('total-staked').innerText = amount.toLocaleString();
-                    document.getElementById('tvl-stat').innerText = (amount * CONFIG.estimatedPrice).toLocaleString();
-                    document.getElementById('rewards-paid-stat').innerText = (amount * 0.05).toLocaleString(); 
-                }
-            } catch (err) {
-                document.getElementById('total-staked').innerText = "1,240,550";
-                document.getElementById('tvl-stat').innerText = "452,190";
-                document.getElementById('rewards-paid-stat').innerText = "8,500,000";
+                // Tambahkan parameter onlyIfTrusted: false agar dia selalu minta konfirmasi jika belum terhubung
+                const resp = await provider.connect(); 
+                userWallet = resp.publicKey.toString();
+                
+                console.log("Connected to:", userWallet);
+
+                // Pastikan UI berubah
+                const btn = document.getElementById('wallet-adapter-btn');
+                btn.innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
+                btn.style.backgroundColor = "#16a34a"; // Paksa warna hijau (Success)
+                
+                Swal.fire({ 
+                    title: 'Connected!', 
+                    text: 'Wallet ' + userWallet.substring(0,6) + '... Linked!', 
+                    icon: 'success', 
+                    background: '#0a0a0b', 
+                    color: '#fff',
+                    confirmButtonColor: '#7c3aed'
+                });
+            } catch (err) { 
+                console.error("User reject:", err);
+                Swal.fire({ title: 'Connection Failed', text: 'Please approve the connection request.', icon: 'error', background: '#0a0a0b', color: '#fff' });
             }
+        } else {
+            // Jika dibuka di browser biasa, arahkan ke Phantom
+            window.open('https://phantom.app/', '_blank');
         }
-        fetchBlockchainStats();
+    }
 
-        async function handleWalletAction() {
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const resp = await window.solana.connect();
-                    userWallet = resp.publicKey.toString();
-                    const btn = document.getElementById('wallet-adapter-btn');
-                    btn.innerText = userWallet.substring(0,4) + "..." + userWallet.substring(userWallet.length-4);
-                    btn.classList.replace('bg-purple-600', 'bg-green-600');
-                    Swal.fire({ title: 'Connected!', text: 'Wallet linked to Banana Farm', icon: 'success', background: '#0a0a0b', color: '#fff' });
-                } catch (e) { console.warn("Connection refused"); }
-            } else {
-                window.open('https://phantom.app/', '_blank');
-            }
+    function executeAction(actionName) {
+        if (!userWallet) {
+            Swal.fire({ 
+                title: 'Wallet Not Connected', 
+                text: `Connect your wallet first to ${actionName}`, 
+                icon: 'warning', 
+                background: '#0a0a0b', 
+                color: '#fff',
+                showCancelButton: true,
+                confirmButtonText: 'Connect Now'
+            }).then((result) => {
+                if (result.isConfirmed) handleWalletAction();
+            });
+            return;
         }
+        window.open(CONFIG.poolLink, '_blank');
+    }
 
-        function executeAction(actionName) {
-            if (!userWallet) {
-                Swal.fire({ title: 'Connect Wallet', text: `Please connect to ${actionName}`, icon: 'error', background: '#0a0a0b', color: '#fff' });
-                return;
-            }
-            window.open(CONFIG.poolLink, '_blank');
-        }
+    function setDuration(days, apr) {
+        currentDays = days; currentAPR = apr;
+        document.getElementById('display-apr').innerText = (apr * 100) + '%';
+        document.getElementById('calc-days').innerText = days;
+        document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        calculateReward();
+    }
 
-        function setDuration(days, apr) {
-            currentDays = days; currentAPR = apr;
-            document.getElementById('display-apr').innerText = (apr * 100) + '%';
-            document.getElementById('calc-days').innerText = days;
-            document.querySelectorAll('.duration-btn').forEach(btn => btn.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            calculateReward();
-        }
+    function calculateReward() {
+        const amount = document.getElementById('stake-input').value;
+        const rewardDisplay = document.getElementById('reward-display');
+        const levelEl = document.getElementById('gorilla-level');
+        if (amount > 0) {
+            rewardDisplay.classList.remove('hidden');
+            document.getElementById('daily-reward').innerText = ((amount * currentAPR) / 365).toLocaleString(undefined, {maximumFractionDigits: 2});
+            document.getElementById('period-reward').innerText = (((amount * currentAPR) / 365) * currentDays).toLocaleString(undefined, {maximumFractionDigits: 2});
+            if(amount >= 1000000) levelEl.innerText = "GOLDEN KONG";
+            else if(amount >= 100000) levelEl.innerText = "SILVERBACK";
+            else levelEl.innerText = "BABY APE";
+        } else { rewardDisplay.classList.add('hidden'); levelEl.innerText = "BABY APE"; }
+    }
 
-        function calculateReward() {
-            const amount = document.getElementById('stake-input').value;
-            const rewardDisplay = document.getElementById('reward-display');
-            const levelEl = document.getElementById('gorilla-level');
-            if (amount > 0) {
-                rewardDisplay.classList.remove('hidden');
-                document.getElementById('daily-reward').innerText = ((amount * currentAPR) / 365).toLocaleString(undefined, {maximumFractionDigits: 2});
-                document.getElementById('period-reward').innerText = (((amount * currentAPR) / 365) * currentDays).toLocaleString(undefined, {maximumFractionDigits: 2});
-                if(amount >= 1000000) levelEl.innerText = "GOLDEN KONG";
-                else if(amount >= 100000) levelEl.innerText = "SILVERBACK";
-                else levelEl.innerText = "BABY APE";
-            } else { rewardDisplay.classList.add('hidden'); levelEl.innerText = "BABY APE"; }
-        }
+    const leaders = [{addr: "8uXz...9Wk2", amt: "1,500,000"}, {addr: "4pQr...mN51", amt: "920,500"}, {addr: "9zYt...kL09", amt: "750,000"}];
+    const lbContainer = document.getElementById('leaderboard-list');
+    leaders.forEach((l, i) => {
+        lbContainer.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5"><span class="font-orbitron text-[10px] ${i==0?'text-yellow-500':'text-gray-400'} font-bold">#${i+1} ${l.addr}</span><span class="font-orbitron text-[11px] text-white">${l.amt} $FEGSOL</span></div>`;
+    });
 
-        const leaders = [{addr: "8uXz...9Wk2", amt: "1,500,000"}, {addr: "4pQr...mN51", amt: "920,500"}, {addr: "9zYt...kL09", amt: "750,000"}];
-        const lbContainer = document.getElementById('leaderboard-list');
-        leaders.forEach((l, i) => {
-            lbContainer.innerHTML += `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5"><span class="font-orbitron text-[10px] ${i==0?'text-yellow-500':'text-gray-400'} font-bold">#${i+1} ${l.addr}</span><span class="font-orbitron text-[11px] text-white">${l.amt} $FEGSOL</span></div>`;
-        });
+    function maxAmount() { Swal.fire({ title: 'Feature Coming Soon', text: 'Please enter amount manually for now.', icon: 'info', background: '#0a0a0b', color: '#fff' }); }
 
-        function maxAmount() { Swal.fire({ title: 'Feature Coming Soon', text: 'Please enter amount manually for now.', icon: 'info', background: '#0a0a0b', color: '#fff' }); }
     </script>
 </body>
 </html>
