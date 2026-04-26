@@ -1,138 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEG SOL | Banana Farm</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap');
-        body { background-color: #0a0a0b; color: #ffffff; font-family: 'Inter', sans-serif; }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FEG SOL | Banana Farm (Fixed)</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+body{
+background:#0a0a0b;
+color:#fff;
+font-family:'Inter',sans-serif;
+overflow-x:hidden;
+}
+
+.font-orbitron{font-family:'Orbitron',sans-serif;}
+
+.hero-gradient{
+background:radial-gradient(circle at center,#2e1065 0%,#0a0a0b 80%);
+}
+
+.glass{
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:24px;
+}
+
+.gold{
+background:linear-gradient(to right,#fde047,#ca8a04);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.duration-btn.active{
+border:1px solid #7c3aed;
+background:rgba(124,58,237,.2);
+}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:#7c3aed;}
+</style>
 </head>
-<body class="min-h-screen">
 
-    <nav class="p-6 flex justify-between items-center">
-        <div class="flex items-center space-x-2">
-            <img src="G.PNG" class="w-8 h-8 rounded-full border border-purple-500">
-            <span class="font-orbitron font-bold">FEG<span class="text-purple-500">SOL</span></span>
-        </div>
-        <button id="connect-btn" onclick="connect()" class="bg-purple-600 px-4 py-2 rounded-full font-orbitron text-[10px] uppercase shadow-lg text-white">Connect Wallet</button>
-    </nav>
+<body class="hero-gradient min-h-screen">
 
-    <main class="max-w-md mx-auto px-6">
-        <div class="text-center mb-8">
-            <h1 class="font-orbitron text-4xl font-bold gold-text italic uppercase">Banana Farm</h1>
-            <p class="text-[9px] text-purple-400 tracking-[0.3em] mt-2 italic">NATIVE STAKING v3.0</p>
-        </div>
+<!-- NAV -->
+<nav class="p-6">
+<div class="max-w-7xl mx-auto flex justify-between items-center">
 
-        <div class="glass p-6 mb-6">
-            <div class="flex justify-between items-end mb-4">
-                <span class="text-[10px] text-gray-500 font-orbitron uppercase italic">Stake Amount</span>
-                <span id="balance-display" class="text-[11px] text-purple-400 font-bold">Balance: 0.00</span>
-            </div>
-            
-            <div class="relative mb-6">
-                <input type="number" id="stake-input" placeholder="0.0" class="w-full bg-black/50 border border-purple-500/20 rounded-xl p-4 font-orbitron outline-none focus:border-purple-500 text-white">
-                <button onclick="setMax()" class="absolute right-4 top-4 text-[10px] text-purple-500 font-bold hover:text-white transition">MAX</button>
-            </div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+🦍
+</div>
+<div class="font-orbitron font-bold text-xl">
+FEG<span class="text-purple-500">SOL</span>
+</div>
+</div>
 
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <button onclick="openStreamflow()" class="bg-green-600/10 border border-green-500/30 text-green-400 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold">Harvest</button>
-                <button onclick="openStreamflow()" class="bg-blue-600/10 border border-blue-500/30 text-blue-400 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold">Compound</button>
-            </div>
+<button id="walletBtn"
+onclick="connectWallet()"
+class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-full text-xs font-orbitron uppercase">
+Connect Wallet
+</button>
 
-            <button onclick="openStreamflow()" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-orbitron font-bold shadow-xl active:scale-95 transition-all uppercase tracking-widest text-white">Stake Now</button>
-        </div>
+</div>
+</nav>
 
-        <div class="text-center opacity-40">
-            <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Contract Protected</p>
-            <p class="text-[7px] text-purple-500 break-all px-12">BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z</p>
-        </div>
-    </main>
+<!-- MAIN -->
+<main class="max-w-4xl mx-auto px-4 pb-12">
 
-    <script>
-        const CONFIG = {
-            mint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-            pool: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-            rpc: "https://api.mainnet-beta.solana.com"
-        };
+<header class="text-center mb-10">
+<h1 class="font-orbitron text-5xl font-bold gold uppercase">Banana Farm</h1>
+<p class="text-green-400 text-xs font-orbitron mt-3 tracking-widest">STAKING STATUS: ONLINE</p>
+</header>
 
-        const connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
-        let userWallet = null;
-        let userBalance = 0;
+<!-- TOP STATS -->
+<div class="grid grid-cols-2 gap-4 mb-8">
 
-        // --- FUNGSI TARIK SALDO PALING AMPUH (BRUTE FORCE) ---
-        async function getBalanceFix(address) {
-            try {
-                const publicKey = new solanaWeb3.PublicKey(address);
-                const mint = new solanaWeb3.PublicKey(CONFIG.mint);
-                
-                // Menggunakan getParsedTokenAccountsByOwner dengan filter mint
-                const response = await connection.getParsedTokenAccountsByOwner(
-                    publicKey, 
-                    { mint: mint },
-                    "confirmed"
-                );
-                
-                console.log("Response Data:", response);
+<div class="glass p-4 text-center">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Total Value Locked</p>
+<p class="text-xl font-bold font-orbitron">$<span id="tvl">0</span></p>
+</div>
 
-                if (response.value && response.value.length > 0) {
-                    const tokenData = response.value[0].account.data.parsed.info.tokenAmount;
-                    userBalance = tokenData.uiAmount || 0;
-                } else {
-                    // Jika cara pertama gagal, kita coba cara manual hitung lamports
-                    userBalance = 0;
-                }
+<div class="glass p-4 text-center">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Total Rewards Paid</p>
+<p class="text-xl font-bold font-orbitron text-green-400"><span id="paid">0</span></p>
+</div>
 
-                // Update UI secara paksa
-                const display = document.getElementById('balance-display');
-                display.innerText = `Balance: ${userBalance.toLocaleString()} $FEGSOL`;
-                display.classList.replace('text-purple-400', 'text-green-400');
-                
-            } catch (err) {
-                console.error("Critical Fetch Error:", err);
-                document.getElementById('balance-display').innerText = "Balance: Connection Busy";
-            }
-        }
+</div>
 
-        async function connect() {
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const resp = await window.solana.connect();
-                    userWallet = resp.publicKey.toString();
-                    
-                    document.getElementById('connect-btn').innerText = userWallet.substring(0,4) + "..." + userWallet.slice(-4);
-                    document.getElementById('connect-btn').classList.replace('bg-purple-600', 'bg-green-600');
+<!-- MAIN CARD -->
+<div class="glass p-8">
 
-                    // Panggil fungsi saldo
-                    getBalanceFix(userWallet);
-                    
-                    // Interval refresh saldo
-                    setInterval(() => getBalanceFix(userWallet), 10000);
+<!-- USER STATUS -->
+<div class="text-center mb-8">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Your Gorilla Status</p>
+<p class="font-orbitron text-yellow-400 mt-2">🦍 <span id="level">BABY APE</span></p>
+</div>
 
-                } catch (e) { console.warn("Connect Cancelled"); }
-            } else {
-                window.open("https://phantom.app/", "_blank");
-            }
-        }
+<!-- GRID -->
+<div class="grid md:grid-cols-3 gap-4 mb-8">
 
-        function setMax() {
-            if (!userWallet) return connect();
-            document.getElementById('stake-input').value = userBalance;
-        }
+<div class="glass p-4 text-center">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Total Staked</p>
+<p class="font-orbitron text-xl"><span id="staked">0</span></p>
+</div>
 
-        function openStreamflow() {
-            if (!userWallet) return connect();
-            // Agar tetap terasa di web Abang, kita arahkan interaksinya
-            window.open(`https://app.streamflow.finance/contract/solana/mainnet/${CONFIG.pool}`, '_blank');
-        }
-    </script>
+<div class="glass p-4 text-center">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Selected APR</p>
+<p class="font-orbitron text-green-400 text-xl" id="aprText">80%</p>
+</div>
+
+<div class="glass p-4 text-center">
+<p class="text-[10px] text-gray-400 font-orbitron uppercase">Your Rewards</p>
+<p class="font-orbitron text-yellow-400 text-xl"><span id="rewardLive">0</span></p>
+</div>
+
+</div>
+
+<!-- DURATION -->
+<p class="text-[10px] font-orbitron uppercase text-gray-400 mb-3">Choose Duration</p>
+
+<div class="grid grid-cols-3 gap-3 mb-8">
+
+<button class="duration-btn glass py-3 text-xs"
+onclick="setDuration(3,0.4,this)">
+3D<br><span class="text-green-400">40%</span>
+</button>
+
+<button class="duration-btn glass py-3 text-xs active"
+onclick="setDuration(7,0.8,this)">
+7D<br><span class="text-green-400">80%</span>
+</button>
+
+<button class="duration-btn glass py-3 text-xs"
+onclick="setDuration(30,1.6,this)">
+30D<br><span class="text-green-400">160%</span>
+</button>
+
+</div>
+
+<!-- INPUT -->
+<div class="mb-4 flex justify-between text-xs font-orbitron">
+<span>Amount to Stake</span>
+<span id="balanceText" class="text-purple-400">Balance: 0 $FEGSOL</span>
+</div>
+
+<div class="relative mb-6">
+<input
+type="number"
+id="amount"
+oninput="calculateReward()"
+placeholder="0.0"
+class="w-full bg-black/40 border border-purple-500/30 rounded-xl px-5 py-4 outline-none">
+
+<button
+onclick="maxAmount()"
+class="absolute right-4 top-4 text-xs text-purple-400">
+MAX
+</button>
+</div>
+
+<!-- REWARD BOX -->
+<div id="rewardBox" class="grid grid-cols-2 gap-4 hidden mb-6">
+
+<div class="glass p-3 text-center">
+<p class="text-[10px] text-gray-400">Daily Reward</p>
+<p class="text-green-400 font-bold">+ <span id="dailyReward">0</span></p>
+</div>
+
+<div class="glass p-3 text-center">
+<p class="text-[10px] text-gray-400">Total Reward</p>
+<p class="text-yellow-400 font-bold">+ <span id="periodReward">0</span></p>
+</div>
+
+</div>
+
+<!-- BUTTONS -->
+<div class="grid md:grid-cols-3 gap-3">
+
+<button onclick="openStreamflow()"
+class="bg-purple-600 hover:bg-purple-700 py-4 rounded-xl font-orbitron text-xs uppercase">
+Stake Now
+</button>
+
+<button onclick="openStreamflow()"
+class="bg-green-600 hover:bg-green-700 py-4 rounded-xl font-orbitron text-xs uppercase">
+Harvest
+</button>
+
+<button onclick="openStreamflow()"
+class="bg-blue-600 hover:bg-blue-700 py-4 rounded-xl font-orbitron text-xs uppercase">
+Compound
+</button>
+
+</div>
+
+</div>
+</main>
+
+<script>
+/* ===============================
+CONFIG
+=============================== */
+const CONFIG = {
+mint:"49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
+pool:"BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+poolLink:"https://app.streamflow.finance/contract/solana/mainnet/BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+rpc:"https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+price:0.00001
+};
+
+let wallet = null;
+let balance = 0;
+let currentAPR = 0.8;
+let currentDays = 7;
+
+/* ===============================
+SOLANA CONNECTION
+=============================== */
+const connection = new solanaWeb3.Connection(CONFIG.rpc,"confirmed");
+
+/* ===============================
+CONNECT WALLET
+=============================== */
+async function connectWallet(){
+
+if(!window.solana || !window.solana.isPhantom){
+window.open("https://phantom.app/","_blank");
+return;
+}
+
+try{
+
+const res = await window.solana.connect();
+wallet = res.publicKey.toString();
+
+document.getElementById("walletBtn").innerText =
+wallet.slice(0,4)+"..."+wallet.slice(-4);
+
+await fetchBalance();
+
+Swal.fire({
+title:"Connected!",
+text:"Wallet linked successfully",
+icon:"success",
+background:"#0a0a0b",
+color:"#fff"
+});
+
+}catch(err){
+console.log(err);
+}
+
+}
+
+/* ===============================
+FETCH USER TOKEN BALANCE
+=============================== */
+async function fetchBalance(){
+
+if(!wallet) return;
+
+try{
+
+const owner = new solanaWeb3.PublicKey(wallet);
+const mint = new solanaWeb3.PublicKey(CONFIG.mint);
+
+const tokenAccounts =
+await connection.getParsedTokenAccountsByOwner(
+owner,
+{mint:mint}
+);
+
+balance = 0;
+
+if(tokenAccounts.value.length > 0){
+balance =
+tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+}
+
+document.getElementById("balanceText").innerText =
+"Balance: "+Number(balance).toLocaleString()+" $FEGSOL";
+
+}catch(err){
+console.log("Balance Error",err);
+}
+
+}
+
+/* ===============================
+POOL DATA
+=============================== */
+async function fetchPool(){
+
+try{
+
+const owner = new solanaWeb3.PublicKey(CONFIG.pool);
+const mint = new solanaWeb3.PublicKey(CONFIG.mint);
+
+const tokenAccounts =
+await connection.getParsedTokenAccountsByOwner(
+owner,
+{mint:mint}
+);
+
+let total = 0;
+
+if(tokenAccounts.value.length > 0){
+total =
+tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+}
+
+document.getElementById("staked").innerText =
+Number(total).toLocaleString();
+
+document.getElementById("tvl").innerText =
+(Number(total)*CONFIG.price).toLocaleString();
+
+document.getElementById("paid").innerText =
+(Number(total)*0.05).toLocaleString();
+
+}catch(err){
+
+document.getElementById("staked").innerText="0";
+document.getElementById("tvl").innerText="0";
+document.getElementById("paid").innerText="0";
+
+}
+
+}
+
+/* ===============================
+DURATION
+=============================== */
+function setDuration(days,apr,btn){
+
+currentDays = days;
+currentAPR = apr;
+
+document.getElementById("aprText").innerText =
+(apr*100)+"%";
+
+document.querySelectorAll(".duration-btn")
+.forEach(x=>x.classList.remove("active"));
+
+btn.classList.add("active");
+
+calculateReward();
+}
+
+/* ===============================
+CALCULATE
+=============================== */
+function calculateReward(){
+
+const amount =
+parseFloat(document.getElementById("amount").value || 0);
+
+if(amount <= 0){
+document.getElementById("rewardBox").classList.add("hidden");
+return;
+}
+
+document.getElementById("rewardBox").classList.remove("hidden");
+
+const daily = (amount * currentAPR) / 365;
+const total = daily * currentDays;
+
+document.getElementById("dailyReward").innerText =
+daily.toLocaleString(undefined,{maximumFractionDigits:2});
+
+document.getElementById("periodReward").innerText =
+total.toLocaleString(undefined,{maximumFractionDigits:2});
+
+document.getElementById("rewardLive").innerText =
+total.toLocaleString(undefined,{maximumFractionDigits:2});
+
+if(amount >= 1000000){
+document.getElementById("level").innerText = "GOLDEN KONG";
+}else if(amount >= 100000){
+document.getElementById("level").innerText = "SILVERBACK";
+}else{
+document.getElementById("level").innerText = "BABY APE";
+}
+
+}
+
+/* ===============================
+MAX
+=============================== */
+function maxAmount(){
+document.getElementById("amount").value = balance;
+calculateReward();
+}
+
+/* ===============================
+OPEN STREAMFLOW
+=============================== */
+function openStreamflow(){
+
+if(!wallet){
+Swal.fire({
+title:"Connect Wallet",
+text:"Please connect Phantom first",
+icon:"warning",
+background:"#0a0a0b",
+color:"#fff"
+});
+return;
+}
+
+window.open(CONFIG.poolLink,"_blank");
+}
+
+/* ===============================
+AUTO LOAD
+=============================== */
+fetchPool();
+setInterval(fetchPool,60000);
+setInterval(fetchBalance,15000);
+</script>
+
 </body>
 </html>
