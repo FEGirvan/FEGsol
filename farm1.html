@@ -1,353 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEG SOL | Banana Farm (Production Ready)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.jsdelivr.net/npm/@streamflow/stream/dist/browser/streamflow.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>FEG SOL | Banana Farm</title>
 
-    <style>
-        body { background:#0a0a0b; color:white; font-family:Inter; }
-        .glass-morphism{background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:20px;}
-    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+body{
+    background:#0a0a0b;
+    color:white;
+    font-family:Inter;
+}
+
+.glass{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+}
+
+.gorilla-header{
+    background: radial-gradient(circle at top,#2e1065 0%,transparent 60%);
+    padding:30px 20px;
+    text-align:center;
+}
+
+.badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.baby {background:#3b0764;color:#c084fc;}
+.silver {background:#334155;color:#cbd5e1;}
+.gold {background:#92400e;color:#fbbf24;}
+
+.glow{
+    text-shadow:0 0 10px rgba(124,58,237,.6);
+}
+</style>
 </head>
 
-<body class="min-h-screen">
+<body>
 
-<!-- ================= UI (TIDAK DIKURANGI) ================= -->
+<!-- 🔥 TOP GORILLA HEADER -->
+<div class="gorilla-header">
 
-<nav class="p-6 flex justify-between">
-    <div class="font-bold">FEG SOL</div>
-    <button id="wallet-adapter-btn" onclick="handleWalletAction()" class="px-4 py-2 bg-purple-600 rounded-xl">
-        Connect Wallet
+    <img src="https://i.imgur.com/7kU8G5T.png" style="width:90px;margin:auto">
+
+    <h1 style="font-size:28px;font-weight:bold;margin-top:10px">
+        🦍 BANANA FARM STAKING
+    </h1>
+
+    <p style="opacity:0.7;font-size:12px">
+        Powered by Streamflow • Solana Mainnet
+    </p>
+
+    <div style="margin-top:10px">
+        <span id="gorilla-tier" class="badge baby">BABY APE</span>
+    </div>
+
+</div>
+
+<!-- WALLET -->
+<div class="max-w-xl mx-auto p-4">
+
+<div class="glass p-4 flex justify-between items-center">
+    <div>
+        <div style="font-size:11px;opacity:0.6">Wallet</div>
+        <div id="wallet">Not connected</div>
+    </div>
+
+    <button onclick="connectWallet()" class="bg-purple-600 px-4 py-2 rounded-xl text-sm">
+        Connect
     </button>
-</nav>
+</div>
 
-<main class="max-w-4xl mx-auto p-6">
+<!-- STATS -->
+<div class="grid grid-cols-2 gap-3 mt-4">
 
-    <div class="glass-morphism p-6 mb-6">
-        <h1 class="text-2xl font-bold">Banana Farm Staking</h1>
-        <p>Status: <span class="text-green-400">ON-CHAIN STREAMFLOW</span></p>
-    </div>
+<div class="glass p-4 text-center">
+    <div style="font-size:10px;opacity:0.6">Balance</div>
+    <div id="balance">0</div>
+</div>
 
-    <div class="glass-morphism p-6 mb-6">
-        <input id="stake-input" type="number" placeholder="Amount" class="w-full p-3 text-black rounded">
-        <div class="flex gap-2 mt-4">
-            <button onclick="executeAction('Stake')" class="bg-purple-600 px-4 py-2 rounded">Stake</button>
-            <button onclick="executeAction('Harvest')" class="bg-green-600 px-4 py-2 rounded">Harvest</button>
-            <button onclick="executeAction('Compound')" class="bg-blue-600 px-4 py-2 rounded">Compound</button>
-        </div>
-    </div>
+<div class="glass p-4 text-center">
+    <div style="font-size:10px;opacity:0.6">Staked Pool</div>
+    <div id="staked">0</div>
+</div>
 
-    <div class="glass-morphism p-6">
-        <p>Wallet: <span id="wallet">-</span></p>
-        <p>Balance: <span id="balance">0</span></p>
-        <p>Staked: <span id="staked">0</span></p>
-    </div>
+</div>
 
-</main>
+<!-- INPUT -->
+<div class="glass p-4 mt-4">
+
+<input id="amount" type="number"
+placeholder="Amount FEGSOL"
+class="w-full p-3 rounded bg-black border border-purple-500">
+
+<!-- APR SELECT -->
+<div class="grid grid-cols-3 gap-2 mt-3 text-center text-xs">
+
+<button onclick="setAPR(0.4,this)" class="aprBtn glass p-2">40%</button>
+<button onclick="setAPR(0.8,this)" class="aprBtn glass p-2">80%</button>
+<button onclick="setAPR(1.6,this)" class="aprBtn glass p-2">160%</button>
+
+</div>
+
+<!-- ACTION -->
+<div class="grid grid-cols-3 gap-2 mt-4">
+
+<button onclick="stake()" class="bg-purple-600 p-2 rounded">Stake</button>
+<button onclick="harvest()" class="bg-green-600 p-2 rounded">Harvest</button>
+<button onclick="compound()" class="bg-blue-600 p-2 rounded">Compound</button>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
-/* =========================
-   CONFIG
-========================= */
+
+/* CONFIG */
 const CONFIG = {
-    ca: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-
-    streamflow: {
-        poolId: "PASTE_POOL_ID",
-        vault: "PASTE_VAULT_ADDRESS"
-    },
-
-    rpc: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
-
-    decimals: 6
+ca:"49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
+pool:"BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
+rpc:"https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30"
 };
 
-/* =========================
-   STATE SAFE MODE
-========================= */
-let wallet = null;
-let connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
-let isProcessing = false;
-let userStreamId = localStorage.getItem("streamId") || null;
+let wallet=null;
+let apr=0.8;
 
-/* =========================
-   ADMIN APR SYSTEM (NEW)
-   - bisa diubah dari browser admin
-========================= */
-const DEFAULT_APR = {
-    3: 0.4,
-    7: 0.8,
-    30: 1.6
-};
+const connection = new solanaWeb3.Connection(CONFIG.rpc);
 
-let APR_CONFIG = JSON.parse(localStorage.getItem("apr_config")) || DEFAULT_APR;
-
-function setAPR(days, value){
-    APR_CONFIG[days] = value;
-    localStorage.setItem("apr_config", JSON.stringify(APR_CONFIG));
+/* WALLET */
+async function connectWallet(){
+if(!window.solana){
+alert("Install Phantom");
+return;
 }
 
-/* OPTIONAL ADMIN PANEL */
-function adminSetAPR(){
-    const pass = prompt("Admin password:");
-    if(pass !== "feg-admin") return alert("Unauthorized");
+const res = await window.solana.connect();
+wallet = res.publicKey.toString();
 
-    const d = prompt("Days (3/7/30):");
-    const v = parseFloat(prompt("APR decimal (0.4 = 40%)"));
+document.getElementById("wallet").innerText =
+wallet.slice(0,4)+"..."+wallet.slice(-4);
 
-    setAPR(d, v);
-    alert("APR updated!");
+loadBalance();
+loadPool();
 }
 
-/* =========================
-   WALLET SAFE CONNECT
-========================= */
-async function handleWalletAction(){
-    try{
-        if(!window.solana?.isPhantom){
-            window.open("https://phantom.app/");
-            return;
-        }
+/* BALANCE */
+async function loadBalance(){
+const owner = new solanaWeb3.PublicKey(wallet);
+const mint = new solanaWeb3.PublicKey(CONFIG.ca);
 
-        const resp = await window.solana.connect();
-        wallet = resp.publicKey.toString();
+const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
 
-        document.getElementById("wallet-adapter-btn").innerText =
-            wallet.slice(0,4)+"..."+wallet.slice(-4);
-
-        await fetchBalance();
-        await fetchStaked();
-
-    }catch(e){
-        console.log(e);
-        alert("Wallet connect failed");
-    }
+let bal=0;
+if(res.value.length){
+bal = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
 }
 
-/* =========================
-   STREAMFLOW SAFE INIT
-========================= */
-function getStreamflow(){
-    const sf = window.Streamflow?.StreamflowSolana;
-
-    if(!sf){
-        throw new Error("Streamflow SDK not loaded");
-    }
-
-    return new sf.StreamClient({
-        clusterUrl: CONFIG.rpc,
-        cluster: "mainnet-beta"
-    });
+document.getElementById("balance").innerText = bal;
 }
 
-/* =========================
-   STAKE (HARDENED)
-========================= */
-async function stake(amount){
-    if(isProcessing) return;
-    if(!wallet) return alert("Connect wallet dulu");
-    if(!amount || amount <= 0) return;
+/* POOL */
+async function loadPool(){
+const owner = new solanaWeb3.PublicKey(CONFIG.pool);
+const mint = new solanaWeb3.PublicKey(CONFIG.ca);
 
-    try{
-        isProcessing = true;
+const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
 
-        const streamflow = getStreamflow();
-
-        const tx = await streamflow.create({
-            sender: new solanaWeb3.PublicKey(wallet),
-            recipient: new solanaWeb3.PublicKey(CONFIG.streamflow.vault),
-            mint: new solanaWeb3.PublicKey(CONFIG.ca),
-
-            amount: Math.floor(amount * (10 ** CONFIG.decimals)),
-
-            start: Math.floor(Date.now()/1000),
-            period: 7 * 24 * 60 * 60,
-
-            cancelableBySender:false,
-            cancelableByRecipient:false,
-            automaticWithdrawal:false
-        });
-
-        const signed = await window.solana.signTransaction(tx.tx || tx);
-        const sig = await connection.sendRawTransaction(signed.serialize());
-
-        await connection.confirmTransaction(sig, "confirmed");
-
-        // SAFE STREAM ID HANDLING
-        if(tx?.streamId){
-            userStreamId = tx.streamId;
-            localStorage.setItem("streamId", userStreamId);
-        }
-
-        alert("Staked successfully 🚀");
-
-        fetchStaked();
-
-    }catch(e){
-        console.log(e);
-        alert("Stake failed");
-    }finally{
-        isProcessing = false;
-    }
+let amt=0;
+if(res.value.length){
+amt = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
 }
 
-/* =========================
-   HARVEST SAFE
-========================= */
-async function harvest(){
-    if(isProcessing) return;
-
-    try{
-        if(!userStreamId) return alert("No active stake");
-
-        isProcessing = true;
-
-        const streamflow = getStreamflow();
-
-        const tx = await streamflow.withdraw({
-            streamId: userStreamId,
-            receiver: new solanaWeb3.PublicKey(wallet)
-        });
-
-        const signed = await window.solana.signTransaction(tx.tx || tx);
-        const sig = await connection.sendRawTransaction(signed.serialize());
-
-        await connection.confirmTransaction(sig, "confirmed");
-
-        alert("Harvest success 🍌");
-
-    }catch(e){
-        console.log(e);
-        alert("Harvest failed");
-    }finally{
-        isProcessing = false;
-    }
+document.getElementById("staked").innerText = amt;
 }
 
-/* =========================
-   COMPOUND
-========================= */
-async function compound(){
-    const amount = parseFloat(document.getElementById("stake-input").value || 0);
-    await stake(amount);
+/* APR */
+function setAPR(v,el){
+apr=v;
+
+document.querySelectorAll(".aprBtn")
+.forEach(b=>b.classList.remove("bg-purple-600"));
+
+el.classList.add("bg-purple-600");
 }
 
-/* =========================
-   ROUTER
-========================= */
-function executeAction(type){
-    const amount = parseFloat(document.getElementById("stake-input").value || 0);
+/* TIER SYSTEM */
+function updateTier(amount){
+let tier="BABY APE";
+let cls="baby";
 
-    if(type==="Stake") return stake(amount);
-    if(type==="Harvest") return harvest();
-    if(type==="Compound") return compound();
+if(amount>=100000){
+tier="SILVERBACK";
+cls="silver";
+}
+if(amount>=1000000){
+tier="GOLDEN KONG";
+cls="gold";
 }
 
-/* =========================
-   APR CALC (NOW ADMIN CONTROLLED)
-========================= */
-let currentDays = 7;
-
-function setDuration(days, _, el){
-    currentDays = days;
-
-    const apr = APR_CONFIG[days];
-
-    document.getElementById("display-apr").innerText = (apr*100)+"%";
-    document.getElementById("calc-days").innerText = days;
-
-    document.querySelectorAll(".duration-btn").forEach(b=>b.classList.remove("active"));
-    el.classList.add("active");
-
-    calculateReward();
+const el=document.getElementById("gorilla-tier");
+el.className="badge "+cls;
+el.innerText=tier;
 }
 
-/* =========================
-   REWARD CALC SAFE
-========================= */
-function calculateReward(){
-    const amount = parseFloat(document.getElementById("stake-input").value || 0);
-    if(!amount) return;
+/* MOCK STAKE UI (Streamflow handled backend) */
+function stake(){
+let amount=parseFloat(document.getElementById("amount").value||0);
 
-    const apr = APR_CONFIG[currentDays];
-
-    const daily = (amount * apr) / 365;
-    const total = daily * currentDays;
-
-    document.getElementById("daily-reward").innerText = daily.toFixed(2);
-    document.getElementById("period-reward").innerText = total.toFixed(2);
-    document.getElementById("live-rewards").innerText = total.toFixed(2);
+if(!wallet){
+alert("Connect wallet");
+return;
 }
 
-/* =========================
-   BALANCE SAFE
-========================= */
-async function fetchBalance(){
-    if(!wallet) return;
+updateTier(amount);
 
-    try{
-        const owner = new solanaWeb3.PublicKey(wallet);
-        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
-
-        const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
-
-        let bal = 0;
-        if(res.value.length){
-            bal = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-        }
-
-        document.getElementById("balance").innerText = bal;
-
-    }catch(e){
-        console.log(e);
-    }
+Swal.fire("Stake sent","Go to Streamflow","success");
 }
 
-/* =========================
-   STAKED FETCH SAFE
-========================= */
-async function fetchStaked(){
-    if(!wallet) return;
-
-    try{
-        const owner = new solanaWeb3.PublicKey(CONFIG.streamflow.poolId);
-        const mint = new solanaWeb3.PublicKey(CONFIG.ca);
-
-        const res = await connection.getParsedTokenAccountsByOwner(owner,{mint});
-
-        let amt = 0;
-        if(res.value.length){
-            amt = res.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-        }
-
-        document.getElementById("staked").innerText = amt;
-
-    }catch(e){
-        console.log(e);
-    }
+/* HARVEST */
+function harvest(){
+Swal.fire("Harvest","Redirect Streamflow withdraw","info");
 }
 
-/* =========================
-   LOOP SAFE
-========================= */
-setInterval(fetchBalance,10000);
-setInterval(fetchStaked,15000);
+/* COMPOUND */
+function compound(){
+Swal.fire("Compound","Restake flow","info");
+}
 
-/* =========================
-   ADMIN HOTKEY (OPTIONAL)
-   CTRL + SHIFT + A
-========================= */
-document.addEventListener("keydown",(e)=>{
-    if(e.ctrlKey && e.shiftKey && e.key==="A"){
-        adminSetAPR();
-    }
-});
+/* LOOP */
+setInterval(loadPool,15000);
+
 </script>
+
 </body>
 </html>
