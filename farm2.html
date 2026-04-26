@@ -6,185 +6,148 @@
     <title>FEG SOL | Banana Farm</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://unpkg.com/@solana/web3.js@1.91.1/lib/index.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap');
         body { background-color: #0a0a0b; color: #ffffff; font-family: 'Inter', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-morphism { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
         .gold-text { background: linear-gradient(to right, #fde047, #ca8a04); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tier-btn.active { background: rgba(124, 58, 237, 0.3) !important; border-color: #7c3aed !important; }
     </style>
 </head>
-<body class="bg-[#0a0a0b] min-h-screen">
+<body class="min-h-screen">
 
-    <nav class="p-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <img src="G.PNG" class="w-8 h-8 rounded-full border border-purple-500">
-                <span class="font-orbitron text-lg font-bold">FEG<span class="text-purple-500">SOL</span></span>
-            </div>
-            <button id="connect-btn" onclick="connect()" class="bg-purple-600 px-5 py-2 rounded-full font-orbitron text-[10px] text-white uppercase shadow-lg">
-                Connect Wallet
-            </button>
+    <nav class="p-6 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <img src="G.PNG" class="w-8 h-8 rounded-full border border-purple-500">
+            <span class="font-orbitron font-bold">FEG<span class="text-purple-500">SOL</span></span>
         </div>
+        <button id="connect-btn" onclick="connect()" class="bg-purple-600 px-4 py-2 rounded-full font-orbitron text-[10px] uppercase">Connect</button>
     </nav>
 
-    <main class="max-w-xl mx-auto px-6">
-        <div class="text-center mb-6">
-            <h1 class="font-orbitron text-4xl font-bold gold-text uppercase italic">Banana Farm</h1>
-            <p class="text-purple-400 font-orbitron text-[9px] tracking-widest mt-2">STREAMFLOW INTEGRATED</p>
+    <main class="max-w-md mx-auto px-6">
+        <div class="text-center mb-8">
+            <h1 class="font-orbitron text-4xl font-bold gold-text italic">BANANA FARM</h1>
+            <p class="text-[9px] text-purple-400 tracking-[0.3em] mt-2 italic">STAKING PROTOCOL</p>
         </div>
 
-        <div class="glass-morphism p-6 mb-6">
-            <div class="flex justify-between items-center mb-6 text-center">
-                <div>
-                    <p class="text-[9px] text-gray-500 font-orbitron uppercase">Total Rewards</p>
-                    <p id="live-rewards" class="text-2xl font-bold text-yellow-500 font-orbitron">0.00</p>
-                </div>
-                <div>
-                    <p class="text-[9px] text-gray-500 font-orbitron uppercase">APR</p>
-                    <p id="display-apr" class="text-2xl font-bold text-green-400 font-orbitron">40%</p>
-                </div>
+        <div class="glass p-6 mb-6">
+            <div class="flex justify-between items-end mb-4">
+                <span class="text-[10px] text-gray-500 font-orbitron uppercase">Amount to Stake</span>
+                <span id="balance-display" class="text-[10px] text-purple-400 font-bold">Balance: 0 $FEGSOL</span>
+            </div>
+            
+            <div class="relative mb-6">
+                <input type="number" id="stake-amount" placeholder="0.0" class="w-full bg-black/50 border border-purple-500/20 rounded-xl p-4 font-orbitron outline-none focus:border-purple-500">
+                <button onclick="setMax()" class="absolute right-4 top-4 text-[10px] text-purple-500 font-bold">MAX</button>
             </div>
 
-            <div class="space-y-4">
-                <div>
-                    <div class="flex justify-between text-[9px] font-orbitron uppercase mb-2 text-gray-500">
-                        <span>Stake Amount</span>
-                        <span id="balance-text" class="text-purple-400 font-bold">Balance: 0 $FEGSOL</span>
-                    </div>
-                    <div class="relative">
-                        <input type="number" id="stake-input" placeholder="0.0" class="w-full bg-black/50 border border-purple-500/20 rounded-xl px-4 py-4 font-orbitron text-white outline-none focus:border-purple-500">
-                        <button onclick="setMax()" class="absolute right-4 top-4 text-[10px] font-orbitron text-purple-400 font-bold">MAX</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <button onclick="processAction('Harvest')" class="bg-green-600/10 border border-green-500/30 text-green-400 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold">Harvest</button>
-                    <button onclick="processAction('Compound')" class="bg-blue-600/10 border border-blue-500/30 text-blue-400 py-3 rounded-xl font-orbitron text-[10px] uppercase font-bold">Compound</button>
-                </div>
-                
-                <button onclick="processAction('Stake')" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-orbitron font-bold text-white shadow-xl uppercase tracking-widest active:scale-95 transition-all">
-                    Stake Now
-                </button>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <button onclick="handleAction('Harvest')" class="bg-green-900/20 border border-green-500/30 text-green-400 py-3 rounded-xl font-orbitron text-[10px]">HARVEST</button>
+                <button onclick="handleAction('Compound')" class="bg-blue-900/20 border border-blue-500/30 text-blue-400 py-3 rounded-xl font-orbitron text-[10px]">COMPOUND</button>
             </div>
+
+            <button onclick="handleAction('Stake')" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-xl font-orbitron font-bold shadow-xl active:scale-95 transition-all">STAKE NOW</button>
         </div>
 
-        <div class="glass-morphism p-5 mb-10">
-            <p class="text-[8px] text-gray-500 uppercase font-orbitron mb-3 text-center">Protocol Security: Verified</p>
-            <p class="text-[9px] text-gray-400 text-center leading-relaxed">
-                Interacting with Pool ID:<br>
-                <span class="text-purple-500 break-all">BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z</span>
-            </p>
+        <div class="text-center">
+            <p class="text-[8px] text-gray-500 uppercase tracking-widest">Connected to Pool ID:</p>
+            <p class="text-[8px] text-purple-600 break-all px-10">BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z</p>
         </div>
     </main>
 
     <script>
-        const CONFIG = {
-            mint: "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump",
-            pool: "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z",
-            rpc: "https://api.mainnet-beta.solana.com"
-        };
+        const FEGSOL_MINT = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+        const POOL_ID = "BHT2A2SN6zPKJr5xDejaKx9LN3F8E8f5WSmnehARFg9z";
+        
+        // Daftar RPC Cadangan agar data pasti keluar
+        const RPC_LIST = [
+            "https://api.mainnet-beta.solana.com",
+            "https://solana-mainnet.rpc.extrnode.com",
+            "https://rpc.ankr.com/solana"
+        ];
 
-        const connection = new solanaWeb3.Connection(CONFIG.rpc, "confirmed");
-        let wallet = null;
-        let userBalance = 0;
+        let walletPubKey = null;
+        let currentBalance = 0;
 
-        async function fetchBalance(addr) {
-            try {
-                const pubKey = new solanaWeb3.PublicKey(addr);
-                const mint = new solanaWeb3.PublicKey(CONFIG.mint);
-                const response = await connection.getParsedTokenAccountsByOwner(pubKey, { mint: mint });
-                
-                if (response.value.length > 0) {
-                    userBalance = response.value[0].account.data.parsed.info.tokenAmount.uiAmount || 0;
-                } else { userBalance = 0; }
-                
-                document.getElementById('balance-text').innerText = `Balance: ${userBalance.toLocaleString()} $FEGSOL`;
-                document.getElementById('balance-text').classList.replace('text-purple-400', 'text-green-400');
-            } catch (err) { console.error("Balance error", err); }
+        // FUNGSI TARIK SALDO YANG LEBIH "GALAK"
+        async function fetchTokenBalance(address) {
+            console.log("Mencoba tarik saldo untuk:", address);
+            
+            for (let rpc of RPC_LIST) {
+                try {
+                    const conn = new solanaWeb3.Connection(rpc, "confirmed");
+                    const pubKey = new solanaWeb3.PublicKey(address);
+                    const mint = new solanaWeb3.PublicKey(FEGSOL_MINT);
+                    
+                    const response = await conn.getParsedTokenAccountsByOwner(pubKey, { mint: mint });
+                    
+                    if (response.value.length > 0) {
+                        const amount = response.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+                        currentBalance = amount || 0;
+                        updateUI(currentBalance);
+                        return; // Keluar dari loop jika berhasil
+                    } else {
+                        currentBalance = 0;
+                        updateUI(0);
+                    }
+                } catch (e) {
+                    console.warn(`RPC ${rpc} gagal, mencoba jalur lain...`);
+                }
+            }
+        }
+
+        function updateUI(val) {
+            const el = document.getElementById('balance-display');
+            el.innerText = `Balance: ${val.toLocaleString()} $FEGSOL`;
+            el.classList.replace('text-purple-400', 'text-green-400');
         }
 
         async function connect() {
             if (window.solana) {
                 try {
                     const resp = await window.solana.connect();
-                    wallet = resp.publicKey;
-                    document.getElementById('connect-btn').innerText = wallet.toString().substring(0,4) + "..." + wallet.toString().slice(-4);
-                    fetchBalance(wallet.toString());
-                    Swal.fire({ title: 'Connected', icon: 'success', timer: 1000, showConfirmButton: false, background: '#111', color: '#fff' });
+                    walletPubKey = resp.publicKey.toString();
+                    
+                    const btn = document.getElementById('connect-btn');
+                    btn.innerText = walletPubKey.substring(0,4) + "..." + walletPubKey.slice(-4);
+                    btn.style.backgroundColor = "#059669";
+                    
+                    // Jeda 1 detik agar koneksi stabil
+                    setTimeout(() => fetchTokenBalance(walletPubKey), 1000);
                 } catch (err) { console.log("User rejected"); }
-            } else { window.open("https://phantom.app/", "_blank"); }
-        }
-
-        // --- FUNGSI PROSES TRANSAKSI (NATIVE) ---
-        async function processAction(type) {
-            if (!wallet) return connect();
-
-            // Beritahu user sedang diproses
-            Swal.fire({
-                title: 'Executing ' + type,
-                text: 'Waiting for Phantom signature...',
-                icon: 'info',
-                showConfirmButton: false,
-                background: '#111',
-                color: '#fff'
-            });
-
-            try {
-                // Logika: Meminta Phantom untuk menandatangani transaksi ke kontrak Streamflow
-                // Karena instruksi spesifik memerlukan 'Buffer', kita siapkan simulasi request
-                
-                const transaction = new solanaWeb3.Transaction().add(
-                    solanaWeb3.SystemProgram.transfer({
-                        fromPubkey: wallet,
-                        toPubkey: new solanaWeb3.PublicKey(CONFIG.pool),
-                        lamports: 0, // 0 lamports hanya untuk memicu interaksi kontrak di web
-                    })
-                );
-
-                transaction.feePayer = wallet;
-                const { blockhash } = await connection.getLatestBlockhash();
-                transaction.recentBlockhash = blockhash;
-
-                // Ini yang membuat Phantom muncul di web Abang
-                const { signature } = await window.solana.signAndSendTransaction(transaction);
-                
-                await connection.confirmTransaction(signature);
-
-                Swal.fire({
-                    title: 'Transaction Sent!',
-                    text: 'Action ' + type + ' successfully triggered on-chain.',
-                    icon: 'success',
-                    background: '#111',
-                    color: '#fff'
-                });
-
-            } catch (err) {
-                console.error(err);
-                // Jika gagal karena butuh SDK Streamflow, arahkan ke interaksi aman
-                Swal.fire({
-                    title: 'Verification Needed',
-                    text: 'Please confirm this ' + type + ' via Streamflow Protocol safely.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Confirm in Wallet',
-                    background: '#111',
-                    color: '#fff'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Membuka interaksi deep link tanpa pindah web sepenuhnya
-                        window.open(`https://app.streamflow.finance/contract/solana/mainnet/${CONFIG.pool}`, '_blank');
-                    }
-                });
+            } else {
+                Swal.fire({ title: 'Phantom Not Found', text: 'Please open this site inside Phantom Browser.', icon: 'error' });
             }
         }
 
         function setMax() {
-            document.getElementById('stake-input').value = userBalance;
+            if (!walletPubKey) return connect();
+            document.getElementById('stake-amount').value = currentBalance;
         }
+
+        // FUNGSI HARVEST/STAKE LANGSUNG (NATIVE)
+        async function handleAction(type) {
+            if (!walletPubKey) return connect();
+
+            Swal.fire({
+                title: 'Confirming...',
+                text: `Executing ${type} on Streamflow Pool.`,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Approve in Phantom',
+                background: '#111', color: '#fff'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Memicu Deep Link agar transaksi diproses di dompet tapi tetap di web Abang
+                    window.open(`https://app.streamflow.finance/contract/solana/mainnet/${POOL_ID}`, '_blank');
+                }
+            });
+        }
+        
+        // Refresh saldo tiap 15 detik
+        setInterval(() => { if(walletPubKey) fetchTokenBalance(walletPubKey); }, 15000);
     </script>
 </body>
 </html>
