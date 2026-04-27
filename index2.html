@@ -698,12 +698,45 @@ function initJupiter() {
     box.innerHTML = "";
 
     try {
-   window.Jupiter.init({
-      ...
-   });
-} catch(e){
-   console.log(e);
-}{
+
+        window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "integrated-terminal",
+
+            endpoint: "https://api.mainnet-beta.solana.com",
+
+            formProps: {
+                initialInputMint: "So11111111111111111111111111111111111111112",
+                initialOutputMint: CA_KITA,
+                fixedInputMint: true,
+                fixedOutputMint: true
+            },
+
+            strictTokenList: false,
+            defaultExplorer: "Solscan",
+
+            containerStyles: {
+                borderRadius: "20px",
+                minHeight: "630px",
+                width: "100%"
+            },
+
+            branding: {
+                name: "FEGSOL Official Swap"
+            }
+        });
+
+    } catch (e) {
+        console.log(e);
+
+        box.innerHTML = `
+            <div style="padding:25px;text-align:center;color:white">
+                Swap gagal dimuat.<br>
+                Refresh halaman.
+            </div>
+        `;
+    }
+}
         displayMode: "integrated",
         integratedTargetId: "integrated-terminal",
 
