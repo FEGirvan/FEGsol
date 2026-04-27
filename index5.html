@@ -20,6 +20,8 @@
     <meta property="twitter:description" content="Engineering excellence for the strongest tribe on Solana. Join the $FEGSOL movement.">
     <meta property="twitter:image" content="https://fegirvan.github.io/FEGsol/G.PNG">
 
+    <script src="https://terminal.jup.ag/main-v3.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -393,64 +395,14 @@
         </div>
     </section>
 
-    <section id="swap-section" class="py-20 px-6 relative overflow-hidden">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-600/10 blur-[100px] rounded-full"></div>
-
-    <div class="max-w-md mx-auto relative z-10">
-        <div class="text-center mb-8">
-            <h2 class="font-orbitron text-2xl md:text-3xl font-bold gold-text uppercase tracking-widest">Instant Swap</h2>
-            <p class="text-gray-400 text-[10px] font-orbitron uppercase tracking-[0.3em] mt-2">Powered by Jupiter Aggregator</p>
-        </div>
+<section id="swap-section" class="py-20 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="font-orbitron text-2xl md:text-3xl font-bold gold-text uppercase tracking-widest mb-4">Official Swap</h2>
+        <p class="text-gray-400 text-[10px] font-orbitron uppercase tracking-[0.3em] mb-10">Direct Access to Jupiter Liquidity</p>
         
-        <div class="glass-morphism p-6 border-2 border-purple-500/20 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
-            <div class="bg-[#0a0a0b] p-4 rounded-xl border border-white/10 mb-2">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">You Pay</span>
-                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">Balance: <span id="sol-balance">0.00</span></span>
+        <div class="flex justify-center">
+            <div id="integrated-terminal" class="glass-morphism overflow-hidden border-2 border-purple-500/20 shadow-[0_0_50px_rgba(124,58,237,0.1)]" style="width: 420px; height: 560px;">
                 </div>
-                <div class="flex items-center gap-3">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="w-6 h-6 rounded-full" alt="SOL">
-                    <input id="swapAmount" type="number" placeholder="0.0" 
-                        class="bg-transparent w-full text-2xl font-bold font-orbitron outline-none focus:text-purple-400 transition-colors"
-                        oninput="calculateOutput()">
-                    <span class="font-orbitron font-bold text-sm text-gray-400">SOL</span>
-                </div>
-            </div>
-
-            <div class="flex justify-center -my-3 relative z-20">
-                <div class="bg-purple-600 p-2 rounded-lg border-4 border-[#0a0a0b] text-white text-xs">
-                    <i class="fas fa-arrow-down"></i>
-                </div>
-            </div>
-
-            <div class="bg-[#0a0a0b] p-4 rounded-xl border border-white/10 mt-2 mb-6">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">You Receive</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <img src="G.PNG" class="w-6 h-6 rounded-full border border-purple-500/50" alt="FEGSOL">
-                    <input id="receiveAmount" type="text" placeholder="0.0" readonly
-                        class="bg-transparent w-full text-2xl font-bold font-orbitron outline-none text-purple-400">
-                    <span class="font-orbitron font-bold text-sm text-purple-500">$FEGSOL</span>
-                </div>
-            </div>
-
-            <button onclick="swapNow()" 
-                class="w-full bg-gradient-to-r from-purple-600 to-green-500 hover:from-purple-500 hover:to-green-400 text-white font-orbitron font-bold py-5 rounded-xl transition-all shadow-lg transform active:scale-95 uppercase tracking-widest text-sm flex items-center justify-center gap-3">
-                <i class="fas fa-bolt"></i>
-                <span id="swap-btn-text">Swap Now</span>
-            </button>
-
-            <div id="swapStatus" class="mt-4 text-[9px] font-orbitron text-gray-500 text-center uppercase tracking-widest min-h-[12px]"></div>
-        </div>
-        
-        <div class="mt-6 flex justify-between px-2">
-            <a href="https://pump.fun/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" target="_blank" class="text-[9px] font-orbitron text-gray-600 hover:text-yellow-500 transition-colors uppercase tracking-widest">
-                <i class="fas fa-pills mr-1"></i> Pump.fun
-            </a>
-            <a href="https://dexscreener.com/solana/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" target="_blank" class="text-[9px] font-orbitron text-gray-600 hover:text-blue-500 transition-colors uppercase tracking-widest">
-                <i class="fas fa-chart-line mr-1"></i> DexScreener
-            </a>
         </div>
     </div>
 </section>
@@ -596,26 +548,21 @@
 
     updateAllLinks();
 
-            async function calculateOutput() {
-    const amount = document.getElementById("swapAmount").value;
-    const receiveInput = document.getElementById("receiveAmount");
-    
-    if (!amount || amount <= 0) {
-        receiveInput.value = "0.0";
-        return;
-    }
+            window.onload = function() {
+    // Inisialisasi Jupiter Terminal
+    window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
+        endpoint: "https://api.mainnet-beta.solana.com",
+        strictTokenList: false,
+        formProps: {
+            fixedOutputMint: true, // Mengunci token tujuan agar tidak bisa diganti
+            initialInputMint: "So11111111111111111111111111111111111111112", // SOL
+            initialOutputMint: "DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263", // FEGSOL CA
+        },
+    });
+};
 
-    try {
-        const res = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${SOL_MINT}&outputMint=${CA_KITA}&amount=${amount * 1e9}&slippageBps=100`);
-        const data = await res.json();
-        if (data.outAmount) {
-            // Konversi dari lamports (9 desimal) ke angka biasa
-            receiveInput.value = (data.outAmount / 1e9).toLocaleString(undefined, {maximumFractionDigits: 2});
-        }
-    } catch (e) {
-        console.log("Error fetching quote");
-    }
-}
 
 
     function revealWallet(id) {
