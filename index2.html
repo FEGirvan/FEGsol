@@ -535,31 +535,29 @@
     const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
     // ==========================================
 
-    functione updateAllLinks() {
-        const pumpLink = document.getElementById('pump-link');
-        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+    function updateAllLinks() {
 
-          const dexIframe = document.getElementById("dex-iframe");
+    const pumpLink = document.getElementById('pump-link');
+    if (pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-if (dexIframe) {
-    dexIframe.src =
-    "https://dexscreener.com/solana/49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump?embed=1&theme=dark&trades=0&info=0";
-}
-
-
-        
-        const chartIcon = document.getElementById('chart-link-1');
-        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
-
-        const scanLink = document.getElementById('scan-link');
-        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-        const swapLink = document.getElementById('swap-link');
-        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-
-        const launchLink = document.getElementById('launch-link');
-        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+    const dexIframe = document.getElementById("dex-iframe");
+    if (dexIframe) {
+        dexIframe.src =
+        "https://dexscreener.com/solana/49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump?embed=1&theme=dark&trades=0&info=0";
     }
+
+    const chartIcon = document.getElementById('chart-link-1');
+    if (chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+
+    const scanLink = document.getElementById('scan-link');
+    if (scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+    const swapLink = document.getElementById('swap-link');
+    if (swapLink) swapLink.href = "#swap-section";
+
+    const launchLink = document.getElementById('launch-link');
+    if (launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+}
 
     updateAllLinks();
 
