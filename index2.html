@@ -539,8 +539,17 @@
         const pumpLink = document.getElementById('pump-link');
         if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-        const dexIframe = document.getElementById('dex-iframe');
-        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+          const dexIframe = document.getElementById("dex-iframe");
+
+    if (dexIframe) {
+
+        dexIframe.src =
+
+        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+
+    }
+
+
         
         const chartIcon = document.getElementById('chart-link-1');
         if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
@@ -678,13 +687,7 @@
 JUPITER SWAP
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-
-    updateDexChart();
-    updateAllLinks();
-    initMenu();
-
-    setTimeout(initJupiter, 1500);
-
+    setTimeout(initJupiter, 1800);
 });
 
 function initJupiter() {
