@@ -579,51 +579,42 @@ function setHref(id, url) {
 function initJupiter() {
 
     const target = document.getElementById("integrated-terminal");
-
-    if (!target) {
-        console.log("Div Jupiter tidak ditemukan");
-        return;
-    }
-
-    if (!window.Jupiter) {
-        console.log("Script Jupiter belum termuat");
-        return;
-    }
+    if (!target || !window.Jupiter) return;
 
     target.innerHTML = "";
 
-    try {
-        window.Jupiter.init({
-            displayMode: "integrated",
-            integratedTargetId: "integrated-terminal",
+    window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
 
-            endpoint:
-            "https://rpc.ankr.com/solana",
+        endpoint: "https://rpc.ankr.com/solana",
 
-            strictTokenList: false,
+        strictTokenList: false,
 
-            defaultExplorer: "Solscan",
+        defaultExplorer: "Solscan",
 
-            formProps: {
-                fixedOutputMint: false,
+        formProps: {
+            initialInputMint:
+                "So11111111111111111111111111111111111111112", // SOL
 
-                initialInputMint:
-                "So11111111111111111111111111111111111111112",
+            initialOutputMint:
+                "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump", // FEGSOL
 
-                initialOutputMint: CA_KITA
-            },
+            fixedInputMint: true,
+            fixedOutputMint: true
+        },
 
-            containerStyles: {
-                borderRadius: "18px",
-                minHeight: "600px",
-                width: "100%"
-            },
+        containerStyles: {
+            borderRadius: "18px",
+            minHeight: "600px",
+            width: "100%"
+        },
 
-            branding: {
-                name: "FEGSOL Official Swap"
-            }
-        });
-
+        branding: {
+            name: "FEGSOL Official Swap"
+        }
+    });
+}
         console.log("Jupiter berhasil aktif");
 
     } catch (error) {
