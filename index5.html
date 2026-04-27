@@ -544,15 +544,15 @@ document.addEventListener("DOMContentLoaded", () => {
     initMenu();
 });
 
-/* Jupiter wajib load setelah page selesai */
+/* tunggu semua asset selesai */
 window.addEventListener("load", () => {
     setTimeout(() => {
         initJupiter();
-    }, 1200);
+    }, 1500);
 });
 
 /* ===============================
-   UPDATE ALL LINKS
+   UPDATE LINKS
 ================================= */
 function updateAllLinks() {
 
@@ -574,64 +574,66 @@ function setHref(id, url) {
 }
 
 /* ===============================
-   JUPITER SWAP FIX FULL
+   JUPITER FIX CLEAN
 ================================= */
 function initJupiter() {
 
     const target = document.getElementById("integrated-terminal");
-    if (!target || !window.Jupiter) return;
+
+    if (!target) return;
+
+    if (!window.Jupiter) {
+        target.innerHTML = `
+        <div style="color:white;padding:30px;text-align:center;">
+        Jupiter script belum termuat
+        </div>`;
+        return;
+    }
 
     target.innerHTML = "";
 
-    window.Jupiter.init({
-        displayMode: "integrated",
-        integratedTargetId: "integrated-terminal",
+    try {
 
-        endpoint: "https://rpc.ankr.com/solana",
+        window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "integrated-terminal",
 
-        strictTokenList: false,
+            endpoint: "https://rpc.ankr.com/solana",
 
-        defaultExplorer: "Solscan",
+            strictTokenList: false,
 
-        formProps: {
-            initialInputMint:
-                "So11111111111111111111111111111111111111112", // SOL
+            defaultExplorer: "Solscan",
 
-            initialOutputMint:
-                "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump", // FEGSOL
+            formProps: {
+                initialInputMint:
+                "So11111111111111111111111111111111111111112",
 
-            fixedInputMint: true,
-            fixedOutputMint: true
-        },
+                initialOutputMint:
+                CA_KITA,
 
-        containerStyles: {
-            borderRadius: "18px",
-            minHeight: "600px",
-            width: "100%"
-        },
+                fixedInputMint: true,
+                fixedOutputMint: true
+            },
 
-        branding: {
-            name: "FEGSOL Official Swap"
-        }
-    });
-}
-        console.log("Jupiter berhasil aktif");
+            containerStyles: {
+                borderRadius: "18px"
+            },
+
+            branding: {
+                name: "FEGSOL Official Swap"
+            }
+        });
+
+        console.log("Jupiter aktif");
 
     } catch (error) {
-        console.error("Jupiter Error:", error);
+
+        console.log(error);
 
         target.innerHTML = `
-        <div style="
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100%;
-            color:white;
-            font-family:Arial;
-            text-align:center;
-            padding:20px;">
-            Jupiter Swap gagal dimuat.<br>
-            Refresh halaman.
+        <div style="color:white;padding:30px;text-align:center;">
+        Widget Jupiter gagal dimuat.<br>
+        Refresh halaman.
         </div>`;
     }
 }
@@ -641,16 +643,13 @@ function initJupiter() {
 ================================= */
 function copyCA() {
     navigator.clipboard.writeText(CA_KITA).then(() => {
-
         const btn = document.getElementById("ca-text");
         if (!btn) return;
 
         btn.innerText = "CA Copied!";
-        btn.classList.add("text-green-400");
 
         setTimeout(() => {
             btn.innerText = "Copy Contract Address";
-            btn.classList.remove("text-green-400");
         }, 2000);
     });
 }
@@ -663,11 +662,8 @@ window.addEventListener("scroll", () => {
     const btn = document.getElementById("toTop");
     if (!btn) return;
 
-    if (window.scrollY > 400) {
-        btn.classList.remove("hidden");
-    } else {
-        btn.classList.add("hidden");
-    }
+    if (window.scrollY > 400) btn.classList.remove("hidden");
+    else btn.classList.add("hidden");
 });
 
 /* ===============================
@@ -680,14 +676,14 @@ function initMenu() {
 
     if (!menuBtn || !menu) return;
 
-    menuBtn.addEventListener("click", function(e){
+    menuBtn.onclick = function(e) {
         e.stopPropagation();
         menu.classList.toggle("hidden");
-    });
+    };
 
-    document.addEventListener("click", function(){
+    document.onclick = function() {
         menu.classList.add("hidden");
-    });
+    };
 }
 </script>
 </body>
