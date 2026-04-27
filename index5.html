@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -393,24 +393,67 @@
         </div>
     </section>
 
-    <section id="swap-section" class="py-20 px-6">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">Trade on Raydium</h2>
-        <div class="glass-morphism overflow-hidden border-2 border-purple-500/30 bg-[#121214] shadow-2xl">
-            <iframe 
-                id="raydium-iframe"
-                src="" 
-                width="100%" 
-                height="600" 
-                style="border: none; border-radius: 15px;"
-                title="Raydium Swap">
-            </iframe>
+    <section id="swap-section" class="py-20 px-6 relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-purple-600/10 blur-[100px] rounded-full"></div>
+
+    <div class="max-w-md mx-auto relative z-10">
+        <div class="text-center mb-8">
+            <h2 class="font-orbitron text-2xl md:text-3xl font-bold gold-text uppercase tracking-widest">Instant Swap</h2>
+            <p class="text-gray-400 text-[10px] font-orbitron uppercase tracking-[0.3em] mt-2">Powered by Jupiter Aggregator</p>
         </div>
-        <p class="mt-4 text-[10px] font-orbitron text-gray-500 uppercase tracking-widest">Powered by Raydium Protocol</p>
+        
+        <div class="glass-morphism p-6 border-2 border-purple-500/20 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
+            <div class="bg-[#0a0a0b] p-4 rounded-xl border border-white/10 mb-2">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">You Pay</span>
+                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">Balance: <span id="sol-balance">0.00</span></span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="w-6 h-6 rounded-full" alt="SOL">
+                    <input id="swapAmount" type="number" placeholder="0.0" 
+                        class="bg-transparent w-full text-2xl font-bold font-orbitron outline-none focus:text-purple-400 transition-colors"
+                        oninput="calculateOutput()">
+                    <span class="font-orbitron font-bold text-sm text-gray-400">SOL</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center -my-3 relative z-20">
+                <div class="bg-purple-600 p-2 rounded-lg border-4 border-[#0a0a0b] text-white text-xs">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+            </div>
+
+            <div class="bg-[#0a0a0b] p-4 rounded-xl border border-white/10 mt-2 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[10px] font-orbitron text-gray-500 uppercase">You Receive</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <img src="G.PNG" class="w-6 h-6 rounded-full border border-purple-500/50" alt="FEGSOL">
+                    <input id="receiveAmount" type="text" placeholder="0.0" readonly
+                        class="bg-transparent w-full text-2xl font-bold font-orbitron outline-none text-purple-400">
+                    <span class="font-orbitron font-bold text-sm text-purple-500">$FEGSOL</span>
+                </div>
+            </div>
+
+            <button onclick="swapNow()" 
+                class="w-full bg-gradient-to-r from-purple-600 to-green-500 hover:from-purple-500 hover:to-green-400 text-white font-orbitron font-bold py-5 rounded-xl transition-all shadow-lg transform active:scale-95 uppercase tracking-widest text-sm flex items-center justify-center gap-3">
+                <i class="fas fa-bolt"></i>
+                <span id="swap-btn-text">Swap Now</span>
+            </button>
+
+            <div id="swapStatus" class="mt-4 text-[9px] font-orbitron text-gray-500 text-center uppercase tracking-widest min-h-[12px]"></div>
+        </div>
+        
+        <div class="mt-6 flex justify-between px-2">
+            <a href="https://pump.fun/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" target="_blank" class="text-[9px] font-orbitron text-gray-600 hover:text-yellow-500 transition-colors uppercase tracking-widest">
+                <i class="fas fa-pills mr-1"></i> Pump.fun
+            </a>
+            <a href="https://dexscreener.com/solana/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263" target="_blank" class="text-[9px] font-orbitron text-gray-600 hover:text-blue-500 transition-colors uppercase tracking-widest">
+                <i class="fas fa-chart-line mr-1"></i> DexScreener
+            </a>
+        </div>
     </div>
 </section>
-
-
 
     <section id="how-to-buy" class="py-20 px-6 max-w-6xl mx-auto border-t border-white/5">
         <div class="text-center mb-12">
@@ -505,7 +548,7 @@
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#080809]">
         <div class="flex justify-center space-x-8 mb-8">
-            <a href="https://x.com/fegirvansy?s=21" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
+            <a href="https://x.com/fegsol_official" target="_blank" class="text-gray-400 hover:text-purple-500 transition-all duration-300 text-3xl hover:scale-125">
                 <i class="fab fa-twitter"></i>
             </a>
             <a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="text-gray-400 hover:text-blue-400 transition-all duration-300 text-3xl hover:scale-125">
@@ -524,47 +567,56 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-    <script>
+        <script>
     // ==========================================
     // TANDAI: GANTI CA FEGSOL DI BAWAH INI
     // ==========================================
-    const CA_KITA = "EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm";
+    const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
     // ==========================================
 
     function updateAllLinks() {
-    // 1. Link Pump.fun
-    const pumpLink = document.getElementById('pump-link');
-    if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+        const pumpLink = document.getElementById('pump-link');
+        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
-    // 2. Link Raydium Iframe (Ini yang baru)
-    const raydiumIframe = document.getElementById('raydium-iframe');
-    if(raydiumIframe) {
-        raydiumIframe.src = `https://raydium.io/swap/?inputMint=sol&outputMint=${CA_KITA}`;
+        const dexIframe = document.getElementById('dex-iframe');
+        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        
+        const chartIcon = document.getElementById('chart-link-1');
+        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+
+        const scanLink = document.getElementById('scan-link');
+        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+        const swapLink = document.getElementById('swap-link');
+        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
+
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
     }
 
-    // 3. Link DexScreener Chart
-    const dexIframe = document.getElementById('dex-iframe');
-    if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+    updateAllLinks();
+
+            async function calculateOutput() {
+    const amount = document.getElementById("swapAmount").value;
+    const receiveInput = document.getElementById("receiveAmount");
     
-    // 4. Link Chart Icon
-    const chartIcon = document.getElementById('chart-link-1');
-    if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+    if (!amount || amount <= 0) {
+        receiveInput.value = "0.0";
+        return;
+    }
 
-    // 5. Link Solscan
-    const scanLink = document.getElementById('scan-link');
-    if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-    // 6. Link Swap (Tombol Manual)
-    const swapLink = document.getElementById('swap-link');
-    if(swapLink) swapLink.href = `https://raydium.io/swap/?inputMint=sol&outputMint=${CA_KITA}`;
-
-    // 7. Link Launch
-    const launchLink = document.getElementById('launch-link');
-    if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+    try {
+        const res = await fetch(`https://quote-api.jup.ag/v6/quote?inputMint=${SOL_MINT}&outputMint=${CA_KITA}&amount=${amount * 1e9}&slippageBps=100`);
+        const data = await res.json();
+        if (data.outAmount) {
+            // Konversi dari lamports (9 desimal) ke angka biasa
+            receiveInput.value = (data.outAmount / 1e9).toLocaleString(undefined, {maximumFractionDigits: 2});
+        }
+    } catch (e) {
+        console.log("Error fetching quote");
+    }
 }
 
-
-    updateAllLinks();
 
     function revealWallet(id) {
         const el = document.getElementById(id);
@@ -607,7 +659,7 @@
         }
     });
 
-    const countdownDate = new Date("April 22, 2026 20:00:00").getTime();
+    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
     const timer = setInterval(function() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
@@ -617,7 +669,24 @@
             document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
             document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
         }
-        if (distance < 0) { clearInterval(timer); }
+
+        // --- BAGIAN YANG DIUBAH: MENAMPILKAN GAMBAR SAAT LIVE ---
+        if (distance < 0) { 
+            clearInterval(timer); 
+            const timerContainer = document.querySelector('.grid.grid-cols-4');
+            if(timerContainer) {
+                timerContainer.parentElement.innerHTML = `
+                    <div class="col-span-4 glass-morphism p-1 border-2 border-yellow-500 animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)] flex items-center justify-center overflow-hidden rounded-2xl">
+                        <img src="LIVE-STONE-FINAL.jpg" alt="FEGSOL IS LIVE" class="w-full h-auto">
+                    </div>
+                `;
+            }
+            // Menghilangkan teks "Launching In"
+            const labels = document.querySelectorAll('p.text-purple-400, p.text-gray-600');
+            labels.forEach(p => { if(p.innerText.includes('Launch')) p.style.display = 'none'; });
+        }
+        // -------------------------------------------------------
+
     }, 1000);
 
     const supplyCount = document.getElementById('supply-count');
@@ -666,6 +735,7 @@
         }, 2000);
     }
 </script>
+
 
 </body>
 </html>
