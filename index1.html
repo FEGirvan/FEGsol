@@ -559,212 +559,263 @@ SWAP SECTION
     </button>
 
         <script>
-    // ==========================================
-    // TANDAI: GANTI CA FEGSOL DI BAWAH INI
-    // ==========================================
-    const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
-    // ==========================================
+/* ==========================================
+   FEGSOL MAIN SCRIPT (FULL FIXED VERSION)
+========================================== */
 
-/* ===============================
-AUTO START
-================================= */
+const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+
+/* ==========================================
+   DOM READY
+========================================== */
 document.addEventListener("DOMContentLoaded", () => {
     updateAllLinks();
     initMenu();
+    initScrollTop();
+    initCountdown();
+    initSupplyCounter();
 
     setTimeout(() => {
         initJupiter();
-    }, 2200);
+    }, 1500);
 });
 
-/* ===============================
-UPDATE LINKS
-================================= */
+/* ==========================================
+   UPDATE LINKS
+========================================== */
 function updateAllLinks() {
 
-        const dexIframe = document.getElementById('dex-iframe');
-        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-        
-        const chartIcon = document.getElementById('chart-link-1');
-        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
-
-        const scanLink = document.getElementById('scan-link');
-        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
-
-        const swapLink = document.getElementById('swap-link');
-        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-
-        const launchLink = document.getElementById('launch-link');
-        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+    const dexIframe = document.getElementById("dex-iframe");
+    if (dexIframe) {
+        dexIframe.src =
+        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
     }
 
-    updateAllLinks();
-
-    function revealWallet(id) {
-        const el = document.getElementById(id);
-        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
-        allWallets.forEach(walletId => {
-            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
-        });
-        el.classList.toggle('hidden');
+    const chartLink = document.getElementById("chart-link-1");
+    if (chartLink) {
+        chartLink.href = `https://dexscreener.com/solana/${CA_KITA}`;
     }
 
-    window.onscroll = function() {
-        const btn = document.getElementById("toTop");
-        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-            btn.classList.remove("hidden");
-        } else {
-            btn.classList.add("hidden");
-        }
-    };
-
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    if(menuBtn) {
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-                menuBtn.classList.add('border-purple-500/30');
-            } else {
-                menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            }
-        });
+    const scanLink = document.getElementById("scan-link");
+    if (scanLink) {
+        scanLink.href = `https://solscan.io/token/${CA_KITA}`;
     }
 
-    document.addEventListener('click', () => { 
-        if(menu && !menu.classList.contains('hidden')) {
-            menu.classList.add('hidden');
-            menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-            menuBtn.classList.add('border-purple-500/30');
+    const launchLink = document.getElementById("launch-link");
+    if (launchLink) {
+        launchLink.href = `https://pump.fun/${CA_KITA}`;
+    }
+
+    const swapLink = document.getElementById("swap-link");
+    if (swapLink) {
+        swapLink.href = "#swap-section";
+    }
+}
+
+/* ==========================================
+   JUPITER TERMINAL
+========================================== */
+function initJupiter() {
+
+    if (!window.Jupiter) {
+        console.log("Jupiter script not loaded.");
+        return;
+    }
+
+    window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "integrated-terminal",
+
+        endpoint: "https://api.mainnet-beta.solana.com",
+
+        defaultExplorer: "Solscan",
+
+        formProps: {
+            initialInputMint:
+                "So11111111111111111111111111111111111111112",
+            initialOutputMint: CA_KITA
+        },
+
+        containerStyles: {
+            borderRadius: "20px",
+            minHeight: "630px"
         }
     });
+}
 
-    const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-    const timer = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-        if(document.getElementById("days")) {
-            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }
-
-        // --- BAGIAN YANG DIUBAH: MENAMPILKAN GAMBAR SAAT LIVE ---
-        if (distance < 0) { 
-            clearInterval(timer); 
-            const timerContainer = document.querySelector('.grid.grid-cols-4');
-            if(timerContainer) {
-                timerContainer.parentElement.innerHTML = `
-                    <div class="col-span-4 glass-morphism p-1 border-2 border-yellow-500 animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)] flex items-center justify-center overflow-hidden rounded-2xl">
-                        <img src="LIVE-STONE-FINAL.jpg" alt="FEGSOL IS LIVE" class="w-full h-auto">
-                    </div>
-                `;
-            }
-            // Menghilangkan teks "Launching In"
-            const labels = document.querySelectorAll('p.text-purple-400, p.text-gray-600');
-            labels.forEach(p => { if(p.innerText.includes('Launch')) p.style.display = 'none'; });
-        }
-        // -------------------------------------------------------
-
-    }, 1000);
-
-    const supplyCount = document.getElementById('supply-count');
-    const supplyTarget = 1000000000;
-    let currentSupply = 0;
-
-    const updateCount = () => {
-        const increment = supplyTarget / 80;
-        if (currentSupply < supplyTarget) {
-            currentSupply += increment;
-            if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-            supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-            setTimeout(updateCount, 25);
-        } else {
-            supplyCount.innerText = supplyTarget.toLocaleString();
-        }
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-    }, { threshold: 0.5 });
-    
-    if(supplyCount) observer.observe(supplyCount);
-
-    function copyCA() {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
-        } else {
-            const textArea = document.createElement("textarea");
-            textArea.value = CA_KITA;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            handleCopySuccess();
-        }
-    }
-
-    function handleCopySuccess() {
-        const btnText = document.getElementById('ca-text');
-        btnText.innerText = "CA Copied!";
-        btnText.classList.add('text-green-400');
-        setTimeout(() => {
-            btnText.innerText = "Copy Contract Address";
-            btnText.classList.remove('text-green-400');
-        }, 2000);
-    }
-/* ===============================
-COPY CA
-================================= */
+/* ==========================================
+   COPY CA
+========================================== */
 function copyCA() {
+
     navigator.clipboard.writeText(CA_KITA).then(() => {
+
         const btn = document.getElementById("ca-text");
         if (!btn) return;
 
         btn.innerText = "CA Copied!";
+        btn.classList.add("text-green-400");
 
         setTimeout(() => {
             btn.innerText = "Copy Contract Address";
+            btn.classList.remove("text-green-400");
         }, 2000);
     });
 }
 
-/* ===============================
-TOP BUTTON
-================================= */
-window.addEventListener("scroll", () => {
-    const btn = document.getElementById("toTop");
-    if (!btn) return;
+/* ==========================================
+   REVEAL WALLET
+========================================== */
+function revealWallet(id) {
 
-    if (window.scrollY > 400) btn.classList.remove("hidden");
-    else btn.classList.add("hidden");
-});
+    const wallets = [
+        "marketing-addr",
+        "burn-addr",
+        "dev-addr",
+        "staking-addr"
+    ];
 
-/* ===============================
-MENU
-================================= */
+    wallets.forEach(wallet => {
+        const el = document.getElementById(wallet);
+        if (wallet !== id && el) el.classList.add("hidden");
+    });
+
+    const target = document.getElementById(id);
+    if (target) target.classList.toggle("hidden");
+}
+
+/* ==========================================
+   MENU MOBILE
+========================================== */
 function initMenu() {
 
-    const menuBtn = document.getElementById("mobile-menu-button");
+    const btn = document.getElementById("mobile-menu-button");
     const menu = document.getElementById("mobile-menu");
 
-    if (!menuBtn || !menu) return;
+    if (!btn || !menu) return;
 
-    menuBtn.onclick = function(e){
+    btn.addEventListener("click", (e) => {
         e.stopPropagation();
         menu.classList.toggle("hidden");
-    };
+    });
 
-    document.onclick = function(){
+    document.addEventListener("click", () => {
         menu.classList.add("hidden");
-    };
+    });
 }
-  
+
+/* ==========================================
+   BUTTON TOP
+========================================== */
+function initScrollTop() {
+
+    const btn = document.getElementById("toTop");
+
+    window.addEventListener("scroll", () => {
+
+        if (!btn) return;
+
+        if (window.scrollY > 400) {
+            btn.classList.remove("hidden");
+        } else {
+            btn.classList.add("hidden");
+        }
+    });
+}
+
+/* ==========================================
+   COUNTDOWN
+========================================== */
+function initCountdown() {
+
+    const targetDate =
+        new Date("April 23, 2026 20:00:00").getTime();
+
+    const timer = setInterval(() => {
+
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+
+            const days = document.getElementById("days");
+            const hours = document.getElementById("hours");
+            const mins = document.getElementById("minutes");
+            const secs = document.getElementById("seconds");
+
+            if (days) days.innerText = "00";
+            if (hours) hours.innerText = "00";
+            if (mins) mins.innerText = "00";
+            if (secs) secs.innerText = "LIVE";
+
+            return;
+        }
+
+        setTimer("days",
+            Math.floor(distance / (1000 * 60 * 60 * 24)));
+
+        setTimer("hours",
+            Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) /
+                (1000 * 60 * 60)
+            ));
+
+        setTimer("minutes",
+            Math.floor(
+                (distance % (1000 * 60 * 60)) /
+                (1000 * 60)
+            ));
+
+        setTimer("seconds",
+            Math.floor(
+                (distance % (1000 * 60)) / 1000
+            ));
+
+    }, 1000);
+}
+
+function setTimer(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerText =
+        val.toString().padStart(2, "0");
+}
+
+/* ==========================================
+   SUPPLY COUNTER
+========================================== */
+function initSupplyCounter() {
+
+    const el = document.getElementById("supply-count");
+    if (!el) return;
+
+    const target = 1000000000;
+    let current = 0;
+
+    const observer = new IntersectionObserver(entries => {
+
+        if (!entries[0].isIntersecting) return;
+
+        const run = setInterval(() => {
+
+            current += 12500000;
+
+            if (current >= target) {
+                current = target;
+                clearInterval(run);
+            }
+
+            el.innerText =
+                current.toLocaleString();
+
+        }, 30);
+
+        observer.disconnect();
+
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+}
 </script>
-
-
 </body>
 </html>
