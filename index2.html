@@ -221,7 +221,7 @@ JUPITER TERMINAL SCRIPT
         <div class="glass-morphism p-2 md:p-4 border-2 border-purple-500/30 shadow-[0_0_50px_rgba(124,58,237,0.1)]">
             <iframe 
                 id="dex-iframe"
-                src="" 
+                src="CA_KITA" 
                 style="width:100%; height:600px; border:none; border-radius:10px;"
                 allow="clipboard-write"
                 loading="lazy"
@@ -303,7 +303,7 @@ JUPITER TERMINAL SCRIPT
             <div class="flex justify-between items-center border-b border-white/5 pb-6">
                 <span class="text-gray-400 font-orbitron text-[10px] md:text-xs uppercase tracking-[0.2em]">Total Supply</span>
                 <div class="text-right">
-                    <div id="supply-count" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">0</div>
+                    <div id="supply-count" class="text-xl md:text-3xl font-bold font-orbitron text-white leading-none">1.000.000.000</div>
                     <div class="text-purple-500 font-bold font-orbitron text-xs md:text-sm mt-1 tracking-widest">$FEGSOL</div>
                 </div>
             </div>
@@ -562,7 +562,15 @@ document.addEventListener("DOMContentLoaded", () => {
 UPDATE LINKS
 ================================= */
 function updateAllLinks() {
-
+    
+function revealWallet(id) {
+        const el = document.getElementById(id);
+        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
+        allWallets.forEach(walletId => {
+            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+        });
+        el.classList.toggle('hidden');
+    }
     const dexIframe = document.getElementById("dex-iframe");
     if (dexIframe) {
         dexIframe.src =
