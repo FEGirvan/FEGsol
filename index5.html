@@ -532,28 +532,30 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-  <script>
+  <!-- GANTI SCRIPT LAMA PALING BAWAH DENGAN INI -->
+<script>
 const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
-const RPC_URL =
-"https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30";
 
-/* =================================
+/* ===============================
    AUTO START
 ================================= */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     updateAllLinks();
     initMenu();
 });
 
-/* tunggu semua asset selesai load */
-window.addEventListener("load", function () {
-    initJupiter();
+/* Jupiter wajib load setelah page selesai */
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        initJupiter();
+    }, 1200);
 });
 
-/* =================================
-   UPDATE LINKS
+/* ===============================
+   UPDATE ALL LINKS
 ================================= */
 function updateAllLinks() {
+
     const dexIframe = document.getElementById("dex-iframe");
     if (dexIframe) {
         dexIframe.src =
@@ -571,14 +573,15 @@ function setHref(id, url) {
     if (el) el.href = url;
 }
 
-/* =================================
-   JUPITER TERMINAL WIDGET
+/* ===============================
+   JUPITER SWAP FIX FULL
 ================================= */
 function initJupiter() {
+
     const target = document.getElementById("integrated-terminal");
 
     if (!target) {
-        console.log("Div swap tidak ditemukan");
+        console.log("Div Jupiter tidak ditemukan");
         return;
     }
 
@@ -594,33 +597,60 @@ function initJupiter() {
             displayMode: "integrated",
             integratedTargetId: "integrated-terminal",
 
-            endpoint: RPC_URL,
+            endpoint:
+            "https://rpc.ankr.com/solana",
+
             strictTokenList: false,
+
             defaultExplorer: "Solscan",
 
             formProps: {
-                fixedOutputMint: true,
+                fixedOutputMint: false,
+
                 initialInputMint:
                 "So11111111111111111111111111111111111111112",
+
                 initialOutputMint: CA_KITA
             },
 
             containerStyles: {
-                borderRadius: "18px"
+                borderRadius: "18px",
+                minHeight: "600px",
+                width: "100%"
+            },
+
+            branding: {
+                name: "FEGSOL Official Swap"
             }
         });
 
-        console.log("Jupiter swap aktif");
-    } catch (err) {
-        console.error("Jupiter gagal load:", err);
+        console.log("Jupiter berhasil aktif");
+
+    } catch (error) {
+        console.error("Jupiter Error:", error);
+
+        target.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100%;
+            color:white;
+            font-family:Arial;
+            text-align:center;
+            padding:20px;">
+            Jupiter Swap gagal dimuat.<br>
+            Refresh halaman.
+        </div>`;
     }
 }
 
-/* =================================
+/* ===============================
    COPY CA
 ================================= */
 function copyCA() {
     navigator.clipboard.writeText(CA_KITA).then(() => {
+
         const btn = document.getElementById("ca-text");
         if (!btn) return;
 
@@ -634,34 +664,39 @@ function copyCA() {
     });
 }
 
-/* =================================
+/* ===============================
    TOP BUTTON
 ================================= */
-window.addEventListener("scroll", function () {
+window.addEventListener("scroll", () => {
+
     const btn = document.getElementById("toTop");
     if (!btn) return;
 
-    if (window.scrollY > 400) btn.classList.remove("hidden");
-    else btn.classList.add("hidden");
+    if (window.scrollY > 400) {
+        btn.classList.remove("hidden");
+    } else {
+        btn.classList.add("hidden");
+    }
 });
 
-/* =================================
+/* ===============================
    MOBILE MENU
 ================================= */
 function initMenu() {
+
     const menuBtn = document.getElementById("mobile-menu-button");
     const menu = document.getElementById("mobile-menu");
 
     if (!menuBtn || !menu) return;
 
-    menuBtn.onclick = function (e) {
+    menuBtn.addEventListener("click", function(e){
         e.stopPropagation();
         menu.classList.toggle("hidden");
-    };
+    });
 
-    document.onclick = function () {
+    document.addEventListener("click", function(){
         menu.classList.add("hidden");
-    };
+    });
 }
 </script>
 </body>
