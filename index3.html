@@ -563,19 +563,35 @@ UPDATE LINKS
 ================================= */
 function updateAllLinks() {
 
-    const dexIframe = document.getElementById("dex-iframe");
-    if (dexIframe) {
-        dexIframe.src =
-        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+    const pumpLink = document.getElementById('pump-link');
+        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
+
+        const dexIframe = document.getElementById('dex-iframe');
+        if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
+        
+        const chartIcon = document.getElementById('chart-link-1');
+        if(chartIcon) chartIcon.href = `https://dexscreener.com/solana/${CA_KITA}`;
+
+        const scanLink = document.getElementById('scan-link');
+        if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
+
+        const swapLink = document.getElementById('swap-link');
+        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
+
+        const launchLink = document.getElementById('launch-link');
+        if(launchLink) launchLink.href = `https://pump.fun/${CA_KITA}`;
+
+    
+    function revealWallet(id) {
+        const el = document.getElementById(id);
+        const allWallets = ['marketing-addr', 'burn-addr', 'dev-addr', 'staking-addr'];
+        allWallets.forEach(walletId => {
+            if(walletId !== id) document.getElementById(walletId).classList.add('hidden');
+        });
+        el.classList.toggle('hidden');
     }
 
-    setHref("chart-link-1", `https://dexscreener.com/solana/${CA_KITA}`);
-    setHref("scan-link", `https://solscan.io/token/${CA_KITA}`);
-    setHref("swap-link", `https://jup.ag/swap/SOL-${CA_KITA}`);
-    setHref("launch-link", `https://pump.fun/${CA_KITA}`);
-}
-
-function setHref(id, url){
+    function setHref(id, url){
     const el = document.getElementById(id);
     if(el) el.href = url;
 }
