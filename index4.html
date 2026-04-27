@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FEGsol | Fortify Every Gorilla</title>
+
+<meta name="title" content="FEGsol | Fortify Every Gorilla">
+<meta name="description" content="FEGsol is the ultimate architecture on Solana, built to Fortify Every Gorilla.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap');
+
+body{
+background:#0a0a0b;
+color:#fff;
+font-family:'Inter',sans-serif;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+.font-orbitron{font-family:'Orbitron',sans-serif;}
+
+.glass{
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+}
+
+.gold{
+background:linear-gradient(to right,#fde047,#ca8a04);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+font-weight:900;
+}
+
+.hero{
+background:radial-gradient(circle at center,#2e1065 0%,#0a0a0b 75%);
+}
+
+.btn{
+background:linear-gradient(90deg,#7c3aed,#9333ea);
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 0 25px rgba(147,51,234,.4);
+}
+
+.ape{
+filter:drop-shadow(0 0 25px rgba(168,85,247,.55));
+border:2px solid rgba(168,85,247,.3);
+}
+
+.partner{
+filter:grayscale(100%) opacity(.6);
+transition:.3s;
+}
+
+.partner:hover{
+filter:none;
+transform:scale(1.1);
+}
+
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-thumb{background:#7c3aed;border-radius:20px;}
+::-webkit-scrollbar-track{background:#0a0a0b;}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 w-full z-50 px-4 py-5">
+<div class="max-w-7xl mx-auto glass px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center gap-4">
+<img src="G.PNG" class="w-11 h-11 rounded-full border border-purple-500/40">
+<h1 class="font-orbitron text-xl md:text-2xl font-bold">FEG<span class="text-purple-500">SOL</span></h1>
+</div>
+
+<div class="flex gap-3">
+<a href="#chart" class="text-sm hover:text-purple-400">Chart</a>
+<a href="#swap" class="text-sm hover:text-purple-400">Swap</a>
+<a href="#tokenomics" class="text-sm hover:text-purple-400">Tokenomics</a>
+</div>
+
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero min-h-screen flex flex-col justify-center items-center text-center px-6 pt-32">
+
+<div class="relative mb-8">
+<div class="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full"></div>
+<img src="G.PNG" class="relative w-44 h-44 md:w-60 md:h-60 rounded-full object-cover ape">
+</div>
+
+<h1 class="font-orbitron text-4xl md:text-7xl font-black leading-tight mb-5">
+WE BUILD <br>
+<span class="gold">THE FUTURE</span>
+</h1>
+
+<p class="text-gray-400 max-w-xl text-sm md:text-lg mb-8">
+FEGsol is the strongest tribe on Solana. Built to <span class="text-purple-400 font-bold">Fortify Every Gorilla</span>.
+</p>
+
+<div class="grid grid-cols-4 gap-3 mb-8 w-full max-w-lg">
+<div class="glass p-4">
+<div id="days" class="text-2xl font-bold gold font-orbitron">00</div>
+<div class="text-[10px] text-gray-500 uppercase">Days</div>
+</div>
+
+<div class="glass p-4">
+<div id="hours" class="text-2xl font-bold font-orbitron">00</div>
+<div class="text-[10px] text-gray-500 uppercase">Hours</div>
+</div>
+
+<div class="glass p-4">
+<div id="minutes" class="text-2xl font-bold font-orbitron">00</div>
+<div class="text-[10px] text-gray-500 uppercase">Mins</div>
+</div>
+
+<div class="glass p-4">
+<div id="seconds" class="text-2xl font-bold font-orbitron">00</div>
+<div class="text-[10px] text-gray-500 uppercase">Secs</div>
+</div>
+</div>
+
+<div class="flex flex-col gap-3 w-full max-w-xs">
+<a href="https://t.me/+16oraMVw88w3MmU9" target="_blank" class="btn py-3 rounded-xl font-orbitron text-xs font-bold uppercase">
+JOIN COMMUNITY
+</a>
+
+<button onclick="copyCA()" class="glass py-3 rounded-xl font-orbitron text-xs font-bold uppercase">
+<span id="copyText">Copy Contract Address</span>
+</button>
+</div>
+
+</section>
+
+<!-- LINKS -->
+<section class="py-10 px-6">
+<div class="max-w-4xl mx-auto flex justify-center flex-wrap gap-10 text-center">
+
+<a id="chart-link" target="_blank">
+<i class="fas fa-chart-line text-2xl text-blue-400"></i>
+<p class="text-xs mt-2">Chart</p>
+</a>
+
+<a id="swap-link" target="_blank">
+<i class="fas fa-random text-2xl text-green-400"></i>
+<p class="text-xs mt-2">Swap</p>
+</a>
+
+<a id="scan-link" target="_blank">
+<i class="fas fa-search text-2xl text-purple-400"></i>
+<p class="text-xs mt-2">Scan</p>
+</a>
+
+<a id="pump-link" target="_blank">
+<i class="fas fa-rocket text-2xl text-yellow-400"></i>
+<p class="text-xs mt-2">Pump.fun</p>
+</a>
+
+</div>
+</section>
+
+<!-- CHART -->
+<section id="chart" class="py-14 px-6">
+<div class="max-w-6xl mx-auto">
+<h2 class="font-orbitron text-center text-3xl gold mb-8">LIVE MARKET CHART</h2>
+
+<div class="glass p-3">
+<iframe
+id="dexChart"
+src=""
+style="width:100%;height:650px;border:none;border-radius:14px;"
+loading="lazy">
+</iframe>
+</div>
+</div>
+</section>
+
+<!-- DIRECT SWAP JUPITER -->
+<section id="swap" class="py-20 px-6">
+<div class="max-w-3xl mx-auto text-center">
+
+<h2 class="font-orbitron text-3xl gold mb-8">DIRECT SWAP</h2>
+
+<div class="glass p-4 border border-purple-500/20">
+<script src="https://terminal.jup.ag/main-v3.js"></script>
+<div id="jupiter-terminal"></div>
+</div>
+
+</div>
+</section>
+
+<!-- TOKENOMICS -->
+<section id="tokenomics" class="py-20 px-6">
+<div class="max-w-4xl mx-auto">
+<h2 class="font-orbitron text-center text-3xl gold mb-10">TOKENOMICS</h2>
+
+<div class="glass p-8 space-y-6">
+
+<div class="flex justify-between">
+<span class="text-gray-400">Total Supply</span>
+<span class="font-bold">1,000,000,000</span>
+</div>
+
+<div class="flex justify-between">
+<span class="text-gray-400">Launch Type</span>
+<span class="font-bold">Fair Launch</span>
+</div>
+
+<div class="flex justify-between">
+<span class="text-gray-400">Tax</span>
+<span class="font-bold">0%</span>
+</div>
+
+<div class="flex justify-between">
+<span class="text-gray-400">Liquidity</span>
+<span class="font-bold">Burned</span>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PARTNERS -->
+<section class="py-16 px-6">
+<div class="max-w-6xl mx-auto text-center">
+<h2 class="font-orbitron text-2xl gold mb-10">ECOSYSTEM</h2>
+
+<div class="flex justify-center flex-wrap gap-14">
+
+<div>
+<img src="https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png" class="h-8 mx-auto partner">
+<p class="text-xs mt-3">Solana</p>
+</div>
+
+<div>
+<img src="https://dexscreener.com/favicon.ico" class="h-8 mx-auto partner">
+<p class="text-xs mt-3">DexScreener</p>
+</div>
+
+<div>
+<img src="https://jup.ag/svg/jupiter-logo.svg" class="h-8 mx-auto partner">
+<p class="text-xs mt-3">Jupiter</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-12 border-t border-white/5 text-center">
+<div class="flex justify-center gap-8 text-3xl mb-6">
+
+<a href="https://x.com/fegsol_official" target="_blank"><i class="fab fa-twitter"></i></a>
+<a href="https://t.me/+16oraMVw88w3MmU9" target="_blank"><i class="fab fa-telegram"></i></a>
+
+</div>
+
+<p class="text-xs text-gray-500">FEGSOL © 2026</p>
+</footer>
+
+<!-- TO TOP -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})"
+class="fixed bottom-6 right-6 bg-purple-600 px-4 py-3 rounded-full">
+<i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+const CA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+
+document.getElementById("chart-link").href =
+`https://dexscreener.com/solana/${CA}`;
+
+document.getElementById("swap-link").href =
+`https://jup.ag/swap/SOL-${CA}`;
+
+document.getElementById("scan-link").href =
+`https://solscan.io/token/${CA}`;
+
+document.getElementById("pump-link").href =
+`https://pump.fun/${CA}`;
+
+document.getElementById("dexChart").src =
+`https://dexscreener.com/solana/${CA}?embed=1&theme=dark&trades=0&info=0`;
+
+/* COPY CA */
+function copyCA(){
+navigator.clipboard.writeText(CA);
+document.getElementById("copyText").innerText="CA Copied!";
+setTimeout(()=>{
+document.getElementById("copyText").innerText="Copy Contract Address";
+},2000);
+}
+
+/* COUNTDOWN */
+const launchDate = new Date("April 23, 2026 20:00:00").getTime();
+
+setInterval(()=>{
+let now = new Date().getTime();
+let dist = launchDate - now;
+
+document.getElementById("days").innerHTML =
+Math.floor(dist/(1000*60*60*24));
+
+document.getElementById("hours").innerHTML =
+Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+
+document.getElementById("minutes").innerHTML =
+Math.floor((dist%(1000*60*60))/(1000*60));
+
+document.getElementById("seconds").innerHTML =
+Math.floor((dist%(1000*60))/1000);
+},1000);
+
+/* JUPITER DIRECT SWAP */
+window.Jupiter.init({
+displayMode:"integrated",
+integratedTargetId:"jupiter-terminal",
+endpoint:"https://api.mainnet-beta.solana.com",
+strictTokenList:false,
+defaultInputMint:"So11111111111111111111111111111111111111112",
+defaultOutputMint:CA
+});
+</script>
+
+</body>
+</html>
