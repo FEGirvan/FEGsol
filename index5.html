@@ -532,102 +532,137 @@
         <i class="fas fa-arrow-up text-white"></i>
     </button>
 
-        <script>
+  <script>
 const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
+const RPC_URL =
+"https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30";
 
-/* =========================
+/* =================================
+   AUTO START
+================================= */
+document.addEventListener("DOMContentLoaded", function () {
+    updateAllLinks();
+    initMenu();
+});
+
+/* tunggu semua asset selesai load */
+window.addEventListener("load", function () {
+    initJupiter();
+});
+
+/* =================================
    UPDATE LINKS
-========================= */
+================================= */
 function updateAllLinks() {
     const dexIframe = document.getElementById("dex-iframe");
     if (dexIframe) {
         dexIframe.src =
-            "https://dexscreener.com/solana/" +
-            CA_KITA +
-            "?embed=1&theme=dark&trades=0&info=0";
+        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
     }
 
-    const chart = document.getElementById("chart-link-1");
-    if (chart) chart.href = "https://dexscreener.com/solana/" + CA_KITA;
-
-    const scan = document.getElementById("scan-link");
-    if (scan) scan.href = "https://solscan.io/token/" + CA_KITA;
-
-    const swap = document.getElementById("swap-link");
-    if (swap) swap.href = "https://jup.ag/swap/SOL-" + CA_KITA;
-
-    const launch = document.getElementById("launch-link");
-    if (launch) launch.href = "https://pump.fun/" + CA_KITA;
+    setHref("chart-link-1", `https://dexscreener.com/solana/${CA_KITA}`);
+    setHref("scan-link", `https://solscan.io/token/${CA_KITA}`);
+    setHref("swap-link", `https://jup.ag/swap/SOL-${CA_KITA}`);
+    setHref("launch-link", `https://pump.fun/${CA_KITA}`);
 }
 
-/* =========================
-   JUPITER SWAP
-========================= */
+function setHref(id, url) {
+    const el = document.getElementById(id);
+    if (el) el.href = url;
+}
+
+/* =================================
+   JUPITER TERMINAL WIDGET
+================================= */
 function initJupiter() {
-    if (!window.Jupiter) return;
+    const target = document.getElementById("integrated-terminal");
 
-    window.Jupiter.init({
-        displayMode: "integrated",
-        integratedTargetId: "integrated-terminal",
-        endpoint: "https://mainnet.helius-rpc.com/?api-key=066b5771-93f3-4f21-b935-c95d78335e30",
+    if (!target) {
+        console.log("Div swap tidak ditemukan");
+        return;
+    }
 
-        strictTokenList: false,
+    if (!window.Jupiter) {
+        console.log("Script Jupiter belum termuat");
+        return;
+    }
 
-        formProps: {
-            fixedOutputMint: true,
-            initialInputMint: "So11111111111111111111111111111111111111112",
-            initialOutputMint: CA_KITA
-        },
+    target.innerHTML = "";
 
-        defaultExplorer: "Solscan"
-    });
+    try {
+        window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "integrated-terminal",
+
+            endpoint: RPC_URL,
+            strictTokenList: false,
+            defaultExplorer: "Solscan",
+
+            formProps: {
+                fixedOutputMint: true,
+                initialInputMint:
+                "So11111111111111111111111111111111111111112",
+                initialOutputMint: CA_KITA
+            },
+
+            containerStyles: {
+                borderRadius: "18px"
+            }
+        });
+
+        console.log("Jupiter swap aktif");
+    } catch (err) {
+        console.error("Jupiter gagal load:", err);
+    }
 }
 
-/* =========================
+/* =================================
    COPY CA
-========================= */
+================================= */
 function copyCA() {
     navigator.clipboard.writeText(CA_KITA).then(() => {
         const btn = document.getElementById("ca-text");
+        if (!btn) return;
+
         btn.innerText = "CA Copied!";
+        btn.classList.add("text-green-400");
+
         setTimeout(() => {
             btn.innerText = "Copy Contract Address";
+            btn.classList.remove("text-green-400");
         }, 2000);
     });
 }
 
-/* =========================
+/* =================================
    TOP BUTTON
-========================= */
-window.onscroll = function () {
+================================= */
+window.addEventListener("scroll", function () {
     const btn = document.getElementById("toTop");
     if (!btn) return;
 
     if (window.scrollY > 400) btn.classList.remove("hidden");
     else btn.classList.add("hidden");
-};
+});
 
-/* =========================
+/* =================================
    MOBILE MENU
-========================= */
-document.addEventListener("DOMContentLoaded", function () {
-    updateAllLinks();
-    initJupiter();
-
+================================= */
+function initMenu() {
     const menuBtn = document.getElementById("mobile-menu-button");
     const menu = document.getElementById("mobile-menu");
 
-    if (menuBtn && menu) {
-        menuBtn.onclick = function (e) {
-            e.stopPropagation();
-            menu.classList.toggle("hidden");
-        };
+    if (!menuBtn || !menu) return;
 
-        document.onclick = function () {
-            menu.classList.add("hidden");
-        };
-    }
-});
+    menuBtn.onclick = function (e) {
+        e.stopPropagation();
+        menu.classList.toggle("hidden");
+    };
+
+    document.onclick = function () {
+        menu.classList.add("hidden");
+    };
+}
 </script>
 </body>
 </html>
