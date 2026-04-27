@@ -699,7 +699,13 @@ function initJupiter() {
 
     box.innerHTML = "";
 
-    window.Jupiter.init({
+    try {
+   window.Jupiter.init({
+      ...
+   });
+} catch(e){
+   console.log(e);
+}{
         displayMode: "integrated",
         integratedTargetId: "integrated-terminal",
 
