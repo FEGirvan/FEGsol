@@ -535,19 +535,16 @@
     const CA_KITA = "49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump";
     // ==========================================
 
-    function updateAllLinks() {
+    functione updateAllLinks() {
         const pumpLink = document.getElementById('pump-link');
         if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
           const dexIframe = document.getElementById("dex-iframe");
 
-    if (dexIframe) {
-
-        dexIframe.src =
-
-        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-
-    }
+if (dexIframe) {
+    dexIframe.src =
+    "https://dexscreener.com/solana/49vATs18ocX8EQC4ry6bQpQAZjc2WRuo9HieWawspump?embed=1&theme=dark&trades=0&info=0";
+}
 
 
         
