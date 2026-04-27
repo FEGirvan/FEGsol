@@ -677,8 +677,14 @@
 /* =========================
 JUPITER SWAP
 ========================= */
-document.addEventListener("DOMContentLoaded", function () {
-    setTimeout(initJupiter, 1800);
+document.addEventListener("DOMContentLoaded", () => {
+
+    updateDexChart();
+    updateAllLinks();
+    initMenu();
+
+    setTimeout(initJupiter, 1500);
+
 });
 
 function initJupiter() {
