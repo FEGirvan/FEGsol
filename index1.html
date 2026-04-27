@@ -20,11 +20,32 @@
     <meta property="twitter:description" content="Engineering excellence for the strongest tribe on Solana. Join the $FEGSOL movement.">
     <meta property="twitter:image" content="https://fegirvan.github.io/FEGsol/G.PNG">
 
-    <!-- =========================
-JUPITER TERMINAL SCRIPT
-(Taruh di <head>, ganti script lama)
-========================= -->
-<script src="https://terminal.jup.ag/main-v4.js"></script>
+    <script>
+function initJupiter() {
+  if (!window.Jupiter) {
+    console.log("Jupiter belum load");
+    return;
+  }
+
+  window.Jupiter.init({
+    displayMode: "integrated",
+    integratedTargetId: "integrated-terminal",
+
+    endpoint: "https://api.mainnet-beta.solana.com",
+
+    defaultExplorer: "Solscan",
+
+    formProps: {
+      initialInputMint: "So11111111111111111111111111111111111111112",
+      initialOutputMint: CA_KITA
+    },
+
+    containerStyles: {
+      borderRadius: "20px"
+    }
+  });
+}
+</script>
   
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -199,7 +220,7 @@ JUPITER TERMINAL SCRIPT
                     <i class="fas fa-chart-line text-xl text-gray-400 group-hover:text-blue-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Chart</span>
                 </a>
-                <a href="https://jup.ag" id="swap-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
+                <a href="#swap-section" id="swap-link" target="_blank" class="hover:scale-110 transition-transform text-center group">
                     <i class="fas fa-random text-xl text-gray-400 group-hover:text-green-400 transition-colors"></i>
                     <span class="block text-[8px] mt-2 text-gray-600 font-orbitron uppercase">Swap</span>
                 </a>
@@ -560,17 +581,6 @@ document.addEventListener("DOMContentLoaded", () => {
 UPDATE LINKS
 ================================= */
 function updateAllLinks() {
-
-    const dexIframe = document.getElementById("dex-iframe");
-    if (dexIframe) {
-        dexIframe.src =
-        `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
-    }
-
-          
-    function updateAllLinks() {
-        const pumpLink = document.getElementById('pump-link');
-        if(pumpLink) pumpLink.href = `https://pump.fun/${CA_KITA}`;
 
         const dexIframe = document.getElementById('dex-iframe');
         if(dexIframe) dexIframe.src = `https://dexscreener.com/solana/${CA_KITA}?embed=1&theme=dark&trades=0&info=0`;
