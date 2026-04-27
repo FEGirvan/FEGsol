@@ -395,39 +395,24 @@
 
     <section id="swap-section" class="py-20 px-6">
     <div class="max-w-md mx-auto text-center">
-
+        
         <h2 class="font-orbitron text-2xl font-bold mb-8 gold-text uppercase tracking-widest">
             Trade $FEGSOL
         </h2>
 
-        <div class="glass-morphism p-10 border-2 border-yellow-500/20 shadow-[0_0_50px_rgba(234,179,8,0.1)]">
+        <div class="glass-morphism p-6 border-2 border-purple-500/20">
 
-            <div class="mb-6 flex justify-center gap-4">
-                <i class="fas fa-pills text-5xl text-yellow-400 animate-bounce"></i>
-                <i class="fas fa-rocket text-5xl text-purple-500 animate-pulse"></i>
+            <div class="mb-4 flex justify-center gap-4">
+                <i class="fas fa-rocket text-4xl text-purple-500 animate-pulse"></i>
+                <i class="fas fa-swap text-4xl text-yellow-400 animate-bounce"></i>
             </div>
 
-            <h3 class="font-orbitron text-white text-lg font-bold mb-2">
-                Jupiter Direct Swap
-            </h3>
-
-            <p class="text-gray-400 text-[10px] mb-8 font-orbitron uppercase tracking-widest">
-                Instant Swap via Solana Aggregator
+            <p class="text-gray-400 text-[10px] mb-6 font-orbitron uppercase tracking-widest">
+                Jupiter Direct Swap (In-Web Trading)
             </p>
 
-            <div class="space-y-4">
-
-                <!-- BUTTON DIGANTI -->
-                <a href="#"
-                   onclick="document.getElementById('jupiter-terminal').scrollIntoView({behavior:'smooth'})"
-                   class="block w-full bg-yellow-500 hover:bg-yellow-400 text-black font-orbitron font-bold py-5 rounded-xl transition-all shadow-lg transform hover:-translate-y-1">
-                    OPEN SWAP <i class="fas fa-exchange-alt ml-2"></i>
-                </a>
-
-            </div>
-
-            <!-- JUPITER SWAP BOX -->
-            <div id="jupiter-terminal" class="mt-6 w-full rounded-xl overflow-hidden"></div>
+            <!-- 🔥 JUPITER TERMINAL CONTAINER -->
+            <div id="jupiter-terminal" class="w-full rounded-xl overflow-hidden"></div>
 
         </div>
     </div>
@@ -565,11 +550,6 @@
         const scanLink = document.getElementById('scan-link');
         if(scanLink) scanLink.href = `https://solscan.io/token/${CA_KITA}`;
 
-        // ❌ PUMP.FUN DIHAPUS LOGICNYA
-        // ✅ DIGANTI JUPITER DIRECT SWAP
-        const swapLink = document.getElementById('swap-link');
-        if(swapLink) swapLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
-
         const launchLink = document.getElementById('launch-link');
         if(launchLink) launchLink.href = `https://jup.ag/swap/SOL-${CA_KITA}`;
     }
@@ -692,7 +672,21 @@
     });
 
 </script>
+<script src="https://terminal.jup.ag/main-v3.js"></script>
 
+<script>
+window.addEventListener("load", () => {
+    window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "jupiter-terminal",
+        endpoint: "https://api.mainnet-beta.solana.com",
+        formProps: {
+            initialInputMint: "So11111111111111111111111111111111111111112", // SOL
+            initialOutputMint: CA_KITA, // token kamu
+        }
+    });
+});
+</script>
 
 </body>
 </html>
