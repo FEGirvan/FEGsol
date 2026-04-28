@@ -771,13 +771,18 @@ enableWalletPassthrough: true,
 useUserSlippage: true,
 
 containerStyles: {
-borderRadius: "24px",
-minHeight:"240px",
-width: "100%",
-background: "linear-gradient(180deg,#090909,#111111)",
-border: "1px solid rgba(168,85,247,0.35)",
-boxShadow: "0 0 45px rgba(168,85,247,0.18)"
+    borderRadius: "24px",
+    width: "100%",
+    height: "auto", // Mengikuti tinggi konten secara otomatis
+    minHeight: "150px", // Sebagai batas minimal saja
+    marginTop: "20px", // Memberi jarak agar tidak menempel tombol Connect Wallet
+    padding: "16px", // Memberi ruang napas di dalam kontainer
+    background: "linear-gradient(180deg,#090909,#111111)",
+    border: "1px solid rgba(168,85,247,0.35)",
+    boxShadow: "0 0 45px rgba(168,85,247,0.18)",
+    overflow: "hidden" // Memastikan konten tidak keluar dari border radius
 },
+
 
 theme: {
 palette: {
