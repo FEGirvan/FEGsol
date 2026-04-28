@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BANANA APE ($BAPE)</title>
+<meta name="description" content="BANANA APE ($BAPE) - The King of Meme Jungle on Solana.">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- JUPITER -->
+<script src="https://terminal.jup.ag/main-v4.js"></script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#050505;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+z-index:-3;
+background:
+radial-gradient(circle at 20% 20%, rgba(255,255,0,.08), transparent 25%),
+radial-gradient(circle at 80% 30%, rgba(0,255,100,.08), transparent 25%),
+radial-gradient(circle at 50% 80%, rgba(255,255,0,.06), transparent 25%),
+linear-gradient(180deg,#050505,#0b0b0b,#050505);
+}
+
+/* BANANA RAIN */
+.banana{
+position:fixed;
+top:-100px;
+font-size:28px;
+opacity:.13;
+animation:fall linear infinite;
+z-index:-1;
+pointer-events:none;
+}
+
+@keyframes fall{
+0%{transform:translateY(-100px) rotate(0deg);}
+100%{transform:translateY(115vh) rotate(360deg);}
+}
+
+header{
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:999;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-family:'Orbitron',sans-serif;
+font-size:28px;
+font-weight:900;
+color:#ffe600;
+text-shadow:0 0 12px #ffe600;
+}
+
+nav{
+display:flex;
+gap:25px;
+}
+
+nav a{
+text-decoration:none;
+color:#fff;
+font-weight:600;
+transition:.3s;
+}
+
+nav a:hover{
+color:#ffe600;
+}
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px 20px;
+}
+
+.hero img{
+width:220px;
+max-width:80%;
+border-radius:50%;
+margin-bottom:25px;
+box-shadow:0 0 45px rgba(255,230,0,.35);
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+}
+
+.hero h1{
+font-size:72px;
+font-family:'Orbitron',sans-serif;
+font-weight:900;
+color:#ffe600;
+text-shadow:0 0 22px #ffe600;
+}
+
+.hero p{
+font-size:22px;
+margin-top:15px;
+max-width:760px;
+color:#ddd;
+line-height:1.6;
+}
+
+.btns{
+margin-top:35px;
+display:flex;
+gap:18px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.btn{
+padding:16px 34px;
+border-radius:40px;
+font-weight:700;
+text-decoration:none;
+transition:.3s;
+display:inline-block;
+}
+
+.buy{
+background:#ffe600;
+color:#111;
+box-shadow:0 0 18px #ffe600;
+}
+
+.buy:hover{
+transform:translateY(-4px);
+}
+
+.join{
+border:2px solid #ffe600;
+color:#ffe600;
+}
+
+.join:hover{
+background:#ffe600;
+color:#111;
+}
+
+section{
+padding:90px 8%;
+}
+
+.title{
+font-size:42px;
+font-family:'Orbitron',sans-serif;
+text-align:center;
+margin-bottom:50px;
+color:#ffe600;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+padding:30px;
+border-radius:22px;
+backdrop-filter:blur(10px);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:rgba(255,230,0,.25);
+}
+
+.token-item{
+padding:22px;
+border-radius:18px;
+background:rgba(255,255,255,.03);
+text-align:center;
+border:1px solid rgba(255,255,255,.05);
+}
+
+/* CONTRACT */
+.ca-box{
+margin-top:35px;
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+}
+
+.ca-input{
+padding:14px 18px;
+min-width:260px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,.04);
+color:#fff;
+outline:none;
+}
+
+.copy-btn{
+padding:14px 20px;
+border:none;
+border-radius:14px;
+background:#ffe600;
+font-weight:700;
+cursor:pointer;
+}
+
+/* JUPITER */
+.swap-wrap{
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+padding:20px;
+border-radius:22px;
+max-width:470px;
+margin:auto;
+}
+
+#integrated-terminal{
+width:100%;
+min-height:630px;
+border-radius:18px;
+overflow:hidden;
+}
+
+/* FOOTER */
+footer{
+padding:35px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.08);
+color:#aaa;
+margin-top:40px;
+}
+
+@media(max-width:768px){
+.hero h1{font-size:44px;}
+.hero p{font-size:18px;}
+nav{display:none;}
+.title{font-size:32px;}
+.btn{width:100%;max-width:280px;}
+#integrated-terminal{min-height:620px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BANANA RAIN -->
+<div class="banana" style="left:5%;animation-duration:9s;">🍌</div>
+<div class="banana" style="left:15%;animation-duration:12s;">🍌</div>
+<div class="banana" style="left:28%;animation-duration:10s;">🍌</div>
+<div class="banana" style="left:42%;animation-duration:8s;">🍌</div>
+<div class="banana" style="left:57%;animation-duration:11s;">🍌</div>
+<div class="banana" style="left:69%;animation-duration:13s;">🍌</div>
+<div class="banana" style="left:81%;animation-duration:9s;">🍌</div>
+<div class="banana" style="left:93%;animation-duration:12s;">🍌</div>
+
+<header>
+<div class="logo">BANANA APE</div>
+
+<nav>
+<a href="#about">About</a>
+<a href="#swap">Buy</a>
+<a href="#tokenomics">Tokenomics</a>
+<a href="#roadmap">Roadmap</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<img src="YOUR-LOGO.png" alt="BANANA APE">
+
+<h1>BANANA APE</h1>
+
+<p>The King of Meme Jungle. Strong apes only. No paper hands.</p>
+
+<div class="btns">
+<a href="#swap" class="btn buy">BUY $BAPE</a>
+<a href="#" class="btn join">TWITTER</a>
+<a href="#" class="btn join">TELEGRAM</a>
+</div>
+
+<div class="ca-box">
+<input class="ca-input" id="caInput" value="" placeholder="Paste Contract Address" readonly>
+<button class="copy-btn" onclick="copyCA()">COPY CA</button>
+</div>
+
+</section>
+
+<section id="about">
+<h2 class="title">WHY BANANA APE?</h2>
+
+<div class="grid">
+<div class="card">
+<h3>🍌 Meme Power</h3>
+<p>Built for viral energy, degen culture, and community hype.</p>
+</div>
+
+<div class="card">
+<h3>🦍 Ape Army</h3>
+<p>Diamond hand apes ready to dominate Solana jungle.</p>
+</div>
+
+<div class="card">
+<h3>🚀 Future Utility</h3>
+<p>Banana Farm staking, games, rewards, ecosystem expansion.</p>
+</div>
+</div>
+</section>
+
+<section id="swap">
+<h2 class="title">BUY $BAPE</h2>
+
+<div class="swap-wrap">
+<div id="integrated-terminal"></div>
+</div>
+</section>
+
+<section id="tokenomics">
+<h2 class="title">TOKENOMICS</h2>
+
+<div class="grid">
+<div class="token-item">
+<h3>Total Supply</h3>
+<p>Coming Soon</p>
+</div>
+
+<div class="token-item">
+<h3>Tax</h3>
+<p>0%</p>
+</div>
+
+<div class="token-item">
+<h3>LP Burned</h3>
+<p>Coming Soon</p>
+</div>
+
+<div class="token-item">
+<h3>Mint Freeze</h3>
+<p>Coming Soon</p>
+</div>
+</div>
+</section>
+
+<section id="roadmap">
+<h2 class="title">ROADMAP</h2>
+
+<div class="grid">
+<div class="card">
+<h3>Phase 1</h3>
+<p>Launch + Website + Community</p>
+</div>
+
+<div class="card">
+<h3>Phase 2</h3>
+<p>Dex Trending + Meme Marketing</p>
+</div>
+
+<div class="card">
+<h3>Phase 3</h3>
+<p>Banana Farm Staking</p>
+</div>
+
+<div class="card">
+<h3>Phase 4</h3>
+<p>Rule The Jungle</p>
+</div>
+</div>
+</section>
+
+<footer>
+BANANA APE © 2026 | All Rights Reserved
+</footer>
+
+<script>
+/* PASTE CA DISINI NANTI */
+const CA_KITA = "";
+
+/* AUTO LOAD */
+document.addEventListener("DOMContentLoaded", () => {
+document.getElementById("caInput").value = CA_KITA;
+
+setTimeout(() => {
+initJupiter();
+}, 1800);
+});
+
+/* JUPITER */
+function initJupiter(){
+
+const box = document.getElementById("integrated-terminal");
+
+if(!CA_KITA){
+box.innerHTML = `
+<div style="padding:40px;text-align:center;color:white;">
+Waiting Contract Address...<br><br>
+Paste CA token in script first.
+</div>`;
+return;
+}
+
+if(!window.Jupiter){
+setTimeout(initJupiter,1200);
+return;
+}
+
+try{
+window.Jupiter.init({
+displayMode:"integrated",
+integratedTargetId:"integrated-terminal",
+
+endpoint:"https://api.mainnet-beta.solana.com",
+
+formProps:{
+initialInputMint:"So11111111111111111111111111111111111111112",
+initialOutputMint:CA_KITA,
+fixedInputMint:true,
+fixedOutputMint:true
+},
+
+strictTokenList:false,
+defaultExplorer:"Solscan",
+
+containerStyles:{
+borderRadius:"18px",
+minHeight:"630px",
+width:"100%",
+background:"transparent"
+},
+
+branding:{
+name:"BANANA APE Official Swap"
+}
+});
+
+}catch(err){
+
+box.innerHTML=`
+<div style="padding:40px;text-align:center;color:white;">
+Jupiter gagal dimuat.<br>
+Refresh halaman.
+</div>`;
+
+}
+}
+
+/* COPY CA */
+function copyCA(){
+
+if(!CA_KITA) return;
+
+navigator.clipboard.writeText(CA_KITA).then(()=>{
+alert("CA Copied!");
+});
+
+}
+</script>
+
+</body>
+</html>
