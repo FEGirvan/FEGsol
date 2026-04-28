@@ -528,6 +528,8 @@ class="fixed bottom-8 right-8 z-[70] bg-purple-600/80 p-4 rounded-full border bo
 <i class="fas fa-arrow-up text-white"></i>
 </button>
 
+<!-- GANTI SCRIPT JUPITER LAMA DI HTML KAMU DENGAN FULL INI, TIDAK MENGHILANGKAN BAGIAN LAIN -->
+
 <script>
 // ==========================================
 // TANDAI: GANTI CA FEGSOL DI BAWAH INI
@@ -577,123 +579,180 @@ btn.classList.add("hidden");
 
 const menuBtn = document.getElementById('mobile-menu-button');
 const menu = document.getElementById('mobile-menu');
-if(menuBtn) {
+
+if(menuBtn){
 menuBtn.addEventListener('click', (e) => {
 e.stopPropagation();
 menu.classList.toggle('hidden');
-if(menu.classList.contains('hidden')) {
-menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-menuBtn.classList.add('border-purple-500/30');
-} else {
-menuBtn.classList.add('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-}
 });
 }
 
 document.addEventListener('click', () => {
 if(menu && !menu.classList.contains('hidden')) {
 menu.classList.add('hidden');
-menuBtn.classList.remove('border-purple-400', 'shadow-[0_0_20px_rgba(168,85,247,0.4)]');
-menuBtn.classList.add('border-purple-500/30');
 }
 });
 
+/* =========================
+COUNTDOWN
+========================= */
 const countdownDate = new Date("April 23, 2026 20:00:00").getTime();
-const timer = setInterval(function() {
+
+const timer = setInterval(function () {
+
 const now = new Date().getTime();
 const distance = countdownDate - now;
-if(document.getElementById("days")) {
-document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-document.getElementById("minutes").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-document.getElementById("seconds").innerHTML = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+if(document.getElementById("days")){
+document.getElementById("days").innerHTML =
+Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2,'0');
+
+document.getElementById("hours").innerHTML =
+Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2,'0');
+
+document.getElementById("minutes").innerHTML =
+Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2,'0');
+
+document.getElementById("seconds").innerHTML =
+Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2,'0');
 }
 
-// --- BAGIAN YANG DIUBAH: MENAMPILKAN GAMBAR SAAT LIVE ---
-if (distance < 0) {
+if(distance < 0){
 clearInterval(timer);
 const timerContainer = document.querySelector('.grid.grid-cols-4');
-if(timerContainer) {
+
+if(timerContainer){
 timerContainer.parentElement.innerHTML = `
 <div class="col-span-4 glass-morphism p-1 border-2 border-yellow-500 animate-bounce shadow-[0_0_50px_rgba(234,179,8,0.5)] flex items-center justify-center overflow-hidden rounded-2xl">
-<img src="LIVE-STONE-FINAL.jpg" alt="FEGSOL IS LIVE" class="w-full h-auto">
+<img src="LIVE-STONE-FINAL.jpg" class="w-full h-auto">
 </div>
 `;
 }
-// Menghilangkan teks "Launching In"
-const labels = document.querySelectorAll('p.text-purple-400, p.text-gray-600');
-labels.forEach(p => { if(p.innerText.includes('Launch')) p.style.display = 'none'; });
 }
-// -------------------------------------------------------
 
-}, 1000);
+},1000);
 
+/* =========================
+SUPPLY COUNTER
+========================= */
 const supplyCount = document.getElementById('supply-count');
 const supplyTarget = 1000000000;
 let currentSupply = 0;
 
 const updateCount = () => {
 const increment = supplyTarget / 80;
-if (currentSupply < supplyTarget) {
+
+if(currentSupply < supplyTarget){
 currentSupply += increment;
-if (currentSupply > supplyTarget) currentSupply = supplyTarget;
-supplyCount.innerText = Math.floor(currentSupply).toLocaleString();
-setTimeout(updateCount, 25);
-} else {
-supplyCount.innerText = supplyTarget.toLocaleString();
+
+if(currentSupply > supplyTarget){
+currentSupply = supplyTarget;
+}
+
+supplyCount.innerText =
+Math.floor(currentSupply).toLocaleString();
+
+setTimeout(updateCount,25);
+
+}else{
+supplyCount.innerText =
+supplyTarget.toLocaleString();
 }
 };
 
-const observer = new IntersectionObserver((entries) => {
-if (entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
-}, { threshold: 0.5 });
+const observer = new IntersectionObserver((entries)=>{
+if(entries[0].isIntersecting){
+updateCount();
+observer.disconnect();
+}
+},{threshold:0.5});
 
 if(supplyCount) observer.observe(supplyCount);
 
+/* =========================
+COPY CA
+========================= */
 function copyCA() {
-if (navigator.clipboard && navigator.clipboard.writeText) {
-navigator.clipboard.writeText(CA_KITA).then(() => { handleCopySuccess(); });
-} else {
+
+if(navigator.clipboard && navigator.clipboard.writeText){
+
+navigator.clipboard.writeText(CA_KITA).then(()=>{
+handleCopySuccess();
+});
+
+}else{
+
 const textArea = document.createElement("textarea");
 textArea.value = CA_KITA;
 document.body.appendChild(textArea);
 textArea.select();
-document.execCommand('copy');
+document.execCommand("copy");
 document.body.removeChild(textArea);
+
 handleCopySuccess();
 }
 }
 
-function handleCopySuccess() {
-const btnText = document.getElementById('ca-text');
+function handleCopySuccess(){
+const btnText = document.getElementById("ca-text");
+
 btnText.innerText = "CA Copied!";
-btnText.classList.add('text-green-400');
-setTimeout(() => {
+btnText.classList.add("text-green-400");
+
+setTimeout(()=>{
 btnText.innerText = "Copy Contract Address";
-btnText.classList.remove('text-green-400');
-}, 2000);
+btnText.classList.remove("text-green-400");
+},2000);
 }
 
 /* =========================
-JUPITER SWAP
+AUTO CONNECT PHANTOM
+========================= */
+async function autoConnectPhantom() {
+
+try {
+
+if ("solana" in window) {
+
+const provider = window.solana;
+
+if(provider.isPhantom){
+await provider.connect({ onlyIfTrusted:true });
+return provider;
+}
+
+}
+
+}catch(err){
+console.log("No trusted wallet");
+}
+
+return null;
+}
+
+/* =========================
+JUPITER PREMIUM TERMINAL
 ========================= */
 document.addEventListener("DOMContentLoaded", function () {
-setTimeout(initJupiter, 1800);
+setTimeout(initJupiter, 1500);
 });
 
-function initJupiter() {
+async function initJupiter(){
 
 const box = document.getElementById("integrated-terminal");
-if (!box) return;
+if(!box) return;
 
-if (!window.Jupiter) {
-setTimeout(initJupiter, 1200);
+if(!window.Jupiter){
+setTimeout(initJupiter,1200);
 return;
 }
+
+await autoConnectPhantom();
 
 box.innerHTML = "";
 
 window.Jupiter.init({
+
 displayMode: "integrated",
 integratedTargetId: "integrated-terminal",
 
@@ -708,16 +767,38 @@ fixedOutputMint: true
 
 strictTokenList: false,
 defaultExplorer: "Solscan",
+enableWalletPassthrough: true,
+useUserSlippage: true,
 
 containerStyles: {
-borderRadius: "20px",
-minHeight: "630px",
-width: "100%"
+borderRadius: "24px",
+minHeight: "640px",
+width: "100%",
+background: "linear-gradient(180deg,#090909,#111111)",
+border: "1px solid rgba(168,85,247,0.35)",
+boxShadow: "0 0 45px rgba(168,85,247,0.18)"
+},
+
+theme: {
+palette: {
+primary: "#a855f7",
+secondary: "#7c3aed",
+success: "#14F195",
+warning: "#facc15",
+error: "#ef4444",
+text: "#ffffff",
+subText: "#9ca3af",
+background: "#0a0a0b",
+backgroundSecondary: "#111111",
+card: "#161616",
+cardSecondary: "#1d1d1d"
+}
 },
 
 branding: {
-name: "FEGSOL Official Swap"
+name: "FEGSOL Premium Swap"
 }
+
 });
 }
 </script>
