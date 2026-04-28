@@ -2,351 +2,379 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>BANANAAPE | Rule The Solana Jungle</title>
-
-<meta name="description" content="BANANAAPE is the wildest meme tribe on Solana. No brain. Only banana. Join the jungle now.">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BANANAAPE V3 | Hyper Meme Empire</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://terminal.jup.ag/main-v4.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;600;800&display=swap');
 
-body{
-background:#070707;
-color:#fff;
-font-family:'Inter',sans-serif;
-overflow-x:hidden;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
 scroll-behavior:smooth;
 }
 
+body{
+font-family:'Inter',sans-serif;
+background:#0a0a0a;
+color:#fff;
+overflow-x:hidden;
+position:relative;
+}
+
+/* ===== BACKGROUND ===== */
+.bg-gradient{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%, rgba(255,214,10,.15), transparent 25%),
+radial-gradient(circle at 80% 30%, rgba(168,85,247,.15), transparent 25%),
+radial-gradient(circle at 50% 80%, rgba(34,197,94,.12), transparent 25%),
+linear-gradient(180deg,#090909,#111111,#0a0a0a);
+z-index:-5;
+}
+
+/* ===== BANANA RAIN ===== */
+.banana{
+position:fixed;
+top:-80px;
+font-size:28px;
+opacity:.8;
+animation:fall linear infinite;
+z-index:-1;
+pointer-events:none;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-80px) rotate(0deg);
+opacity:0;
+}
+10%{opacity:.9;}
+100%{
+transform:translateY(115vh) rotate(360deg);
+opacity:0;
+}
+}
+
+.banana2{
+position:fixed;
+font-size:22px;
+bottom:10%;
+left:-80px;
+animation:slide 14s linear infinite;
+z-index:-1;
+opacity:.6;
+pointer-events:none;
+}
+
+@keyframes slide{
+0%{transform:translateX(0);}
+100%{transform:translateX(120vw);}
+}
+
+/* ===== UI ===== */
 .font-orbitron{
 font-family:'Orbitron',sans-serif;
 }
 
-.hero-bg{
-background:
-radial-gradient(circle at top,#2f2a00 0%,#111 35%,#070707 80%);
-}
-
 .glass{
-background:rgba(255,255,255,.03);
+background:rgba(255,255,255,.05);
 backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.09);
 border-radius:22px;
 }
 
 .gold{
-background:linear-gradient(to right,#ffe066,#ffb300);
+background:linear-gradient(90deg,#ffe600,#ffb700);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
-.green{
-color:#00e676;
-}
-
-.btn-main{
-background:linear-gradient(90deg,#ffd600,#ff9800);
-color:#111;
+.btn{
+padding:14px 22px;
+border-radius:14px;
 font-weight:800;
-transition:.3s;
+font-size:13px;
+letter-spacing:2px;
+text-transform:uppercase;
+transition:.25s;
+display:inline-block;
 }
 
-.btn-main:hover{
-transform:translateY(-3px) scale(1.02);
-box-shadow:0 0 30px rgba(255,214,0,.25);
+.btn:hover{
+transform:translateY(-3px) scale(1.03);
 }
 
-.btn-dark{
+.btn-yellow{
+background:linear-gradient(90deg,#ffe600,#ffae00);
+color:#000;
+box-shadow:0 0 20px rgba(255,230,0,.25);
+}
+
+.btn-purple{
+background:linear-gradient(90deg,#7c3aed,#9333ea);
+}
+
+.btn-green{
+background:linear-gradient(90deg,#22c55e,#16a34a);
+}
+
+.section{
+padding:80px 20px;
+max-width:1250px;
+margin:auto;
+}
+
+.card{
+padding:24px;
+border-radius:22px;
 background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
-transition:.3s;
+border:1px solid rgba(255,255,255,.07);
 }
 
-.btn-dark:hover{
-background:rgba(255,255,255,.08);
+.small{
+font-size:12px;
+color:#aaa;
 }
 
-.glow{
-box-shadow:0 0 45px rgba(255,214,0,.12);
+.hero-title{
+font-size:56px;
+line-height:1;
+font-weight:900;
 }
 
-.card:hover{
-transform:translateY(-6px);
-transition:.3s;
+@media(max-width:768px){
+.hero-title{
+font-size:36px;
+}
 }
 
-::-webkit-scrollbar{width:7px;}
-::-webkit-scrollbar-thumb{background:#ffd600;border-radius:10px;}
-::-webkit-scrollbar-track{background:#070707;}
+/* top button */
+#topBtn{
+position:fixed;
+right:20px;
+bottom:20px;
+width:52px;
+height:52px;
+border-radius:50%;
+display:none;
+z-index:50;
+}
 </style>
 </head>
 
 <body>
 
+<div class="bg-gradient"></div>
+
+<!-- bananas -->
+<div class="banana" style="left:5%;animation-duration:8s;">🍌</div>
+<div class="banana" style="left:18%;animation-duration:10s;animation-delay:1s;">🍌</div>
+<div class="banana" style="left:32%;animation-duration:9s;animation-delay:2s;">🍌</div>
+<div class="banana" style="left:47%;animation-duration:12s;">🍌</div>
+<div class="banana" style="left:63%;animation-duration:8s;animation-delay:1s;">🍌</div>
+<div class="banana" style="left:79%;animation-duration:11s;">🍌</div>
+<div class="banana" style="left:92%;animation-duration:9s;animation-delay:2s;">🍌</div>
+
+<div class="banana2">🍌</div>
+<div class="banana2" style="bottom:22%;animation-delay:5s;">🍌</div>
+
 <!-- NAV -->
-<nav class="fixed top-0 w-full z-50 px-4 py-4">
-<div class="max-w-7xl mx-auto glass px-6 py-4 flex justify-between items-center">
-
-<div class="flex items-center gap-3">
-<img src="G.PNG" class="w-10 h-10 rounded-full border border-yellow-400/40">
-<div class="font-orbitron font-bold text-xl">
-BANANA<span class="gold">APE</span>
-</div>
+<nav class="fixed top-0 left-0 w-full z-50 p-4">
+<div class="glass max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+<div class="font-orbitron text-xl font-black">
+BANANA<span class="text-yellow-400">APE</span>
 </div>
 
-<div class="hidden md:flex gap-8 text-sm text-gray-300 font-semibold">
-<a href="#about">About</a>
+<div class="hidden md:flex gap-4 text-sm">
+<a href="#swap">Swap</a>
+<a href="#farm">Farm</a>
 <a href="#tokenomics">Tokenomics</a>
-<a href="#swap">Buy</a>
-<a href="#roadmap">Roadmap</a>
 </div>
-
-<a href="https://t.me/" target="_blank"
-class="btn-main px-5 py-2 rounded-full text-sm">
-JOIN TRIBE
-</a>
-
 </div>
 </nav>
 
 <!-- HERO -->
-<section id="about" class="hero-bg min-h-screen flex items-center pt-28 px-6">
+<section class="section min-h-screen flex items-center justify-center text-center">
+<div class="max-w-4xl">
 
-<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<div class="mb-6 text-8xl">🦍</div>
 
-<div>
-
-<p class="font-orbitron text-yellow-400 text-xs tracking-[0.4em] mb-5 uppercase">
-Solana Meme Empire
-</p>
-
-<h1 class="font-orbitron text-5xl md:text-7xl font-black leading-tight mb-6">
-RULE THE <br>
-<span class="gold">JUNGLE</span>
+<h1 class="hero-title font-orbitron mb-5">
+WELCOME TO <br>
+<span class="gold">BANANAAPE V3</span>
 </h1>
 
-<p class="text-gray-400 text-lg leading-relaxed mb-8 max-w-xl">
-BANANAAPE is not a token. It is a tribe.
-No utility. No excuses. Only bananas, chaos and moon energy.
+<p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">
+The hyper meme ecosystem where apes buy, stake, earn bananas, and dominate Solana.
 </p>
 
-<div class="flex flex-col sm:flex-row gap-4">
-
-<a href="#swap"
-class="btn-main px-8 py-4 rounded-2xl text-center">
-BUY $BAPE
-</a>
-
-<button onclick="copyCA()"
-class="btn-dark px-8 py-4 rounded-2xl font-bold">
-<span id="copyText">COPY CA</span>
-</button>
-
+<div class="flex flex-col md:flex-row gap-4 justify-center mb-10">
+<a href="#swap" class="btn btn-yellow">Buy Now</a>
+<a href="#farm" class="btn btn-green">Banana Farm</a>
+<a href="https://t.me/" class="btn btn-purple">Join Tribe</a>
 </div>
 
-<div class="grid grid-cols-3 gap-4 mt-10">
-
-<div class="glass p-4 text-center">
-<p class="text-gray-500 text-[10px] uppercase">Tax</p>
-<p class="font-bold text-xl green">0%</p>
+<div class="grid md:grid-cols-4 gap-4">
+<div class="card">
+<div class="text-yellow-400 text-2xl mb-2">🔥</div>
+<div class="font-bold">LP Burned</div>
+<div class="small">Forever locked</div>
 </div>
 
-<div class="glass p-4 text-center">
-<p class="text-gray-500 text-[10px] uppercase">LP</p>
-<p class="font-bold text-xl gold">Burned</p>
+<div class="card">
+<div class="text-green-400 text-2xl mb-2">🔒</div>
+<div class="font-bold">Mint Revoked</div>
+<div class="small">Safe launch</div>
 </div>
 
-<div class="glass p-4 text-center">
-<p class="text-gray-500 text-[10px] uppercase">Mint</p>
-<p class="font-bold text-xl text-blue-400">Revoked</p>
+<div class="card">
+<div class="text-purple-400 text-2xl mb-2">💰</div>
+<div class="font-bold">Rewards Live</div>
+<div class="small">Farm active</div>
 </div>
 
+<div class="card">
+<div class="text-blue-400 text-2xl mb-2">🦍</div>
+<div class="font-bold">Community</div>
+<div class="small">Strong tribe</div>
 </div>
-
-</div>
-
-<div class="text-center">
-<img src="G.PNG"
-class="w-72 md:w-[420px] mx-auto rounded-full border-4 border-yellow-400/20 glow">
 </div>
 
 </div>
 </section>
 
-<!-- TOKENOMICS -->
-<section id="tokenomics" class="py-24 px-6">
+<!-- FARM -->
+<section id="farm" class="section">
+<div class="glass p-8 md:p-12 text-center">
 
-<div class="max-w-6xl mx-auto">
+<div class="text-7xl mb-5">🍌</div>
 
-<h2 class="font-orbitron text-4xl font-bold text-center mb-14">
-<span class="gold">TOKENOMICS</span>
+<h2 class="font-orbitron text-4xl font-black mb-4">
+BANANA FARM LIVE
 </h2>
 
-<div class="grid md:grid-cols-4 gap-6">
+<p class="text-gray-300 max-w-2xl mx-auto mb-8">
+Stake your tokens and harvest banana rewards daily. Passive income for real apes.
+</p>
 
-<div class="glass p-8 text-center card">
-<p class="text-gray-500 text-xs uppercase mb-3">Supply</p>
-<h3 class="font-orbitron text-2xl font-bold">1B</h3>
+<a href="farm.html" class="btn btn-yellow">
+Enter Banana Farm
+</a>
+
+</div>
+</section>
+
+<!-- TOKENOMICS -->
+<section id="tokenomics" class="section">
+<h2 class="font-orbitron text-4xl text-center mb-10 gold font-black">
+TOKENOMICS
+</h2>
+
+<div class="grid md:grid-cols-2 gap-5">
+
+<div class="card flex justify-between">
+<span>Total Supply</span>
+<b>1,000,000,000</b>
 </div>
 
-<div class="glass p-8 text-center card">
-<p class="text-gray-500 text-xs uppercase mb-3">Launch</p>
-<h3 class="font-orbitron text-2xl font-bold green">Fair</h3>
+<div class="card flex justify-between">
+<span>Tax</span>
+<b>0%</b>
 </div>
 
-<div class="glass p-8 text-center card">
-<p class="text-gray-500 text-xs uppercase mb-3">Chain</p>
-<h3 class="font-orbitron text-2xl font-bold text-purple-400">SOL</h3>
+<div class="card flex justify-between">
+<span>Liquidity</span>
+<b>Burned</b>
 </div>
 
-<div class="glass p-8 text-center card">
-<p class="text-gray-500 text-xs uppercase mb-3">Community</p>
-<h3 class="font-orbitron text-2xl font-bold gold">100%</h3>
+<div class="card flex justify-between">
+<span>Mint</span>
+<b>Revoked</b>
 </div>
 
+<div class="card flex justify-between">
+<span>Farm Rewards</span>
+<b>Locked</b>
+</div>
+
+<div class="card flex justify-between">
+<span>Chain</span>
+<b>Solana</b>
 </div>
 
 </div>
 </section>
 
 <!-- SWAP -->
-<section id="swap" class="py-24 px-6">
-
-<div class="max-w-5xl mx-auto text-center">
-
-<h2 class="font-orbitron text-4xl font-bold mb-4">
-BUY <span class="gold">$BAPE</span>
+<section id="swap" class="section text-center">
+<h2 class="font-orbitron text-4xl mb-3 gold font-black">
+INSTANT SWAP
 </h2>
 
-<p class="text-gray-400 mb-10">
-Direct Jupiter integrated swap.
+<p class="text-gray-400 mb-8">
+Buy directly from website using Jupiter.
 </p>
 
-<div class="flex justify-center">
-<div id="integrated-terminal"
-class="glass overflow-hidden"
-style="width:430px;max-width:100%;min-height:620px;">
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- FEATURES -->
-<section class="py-24 px-6">
-
-<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-
-<div class="glass p-8 text-center card">
-<i class="fas fa-shield text-4xl text-green-400 mb-5"></i>
-<h3 class="font-orbitron text-xl mb-3">SAFE</h3>
-<p class="text-gray-400 text-sm">
-Liquidity burned and mint revoked.
-</p>
-</div>
-
-<div class="glass p-8 text-center card">
-<i class="fas fa-bolt text-4xl text-yellow-400 mb-5"></i>
-<h3 class="font-orbitron text-xl mb-3">FAST</h3>
-<p class="text-gray-400 text-sm">
-Built on Solana for lightning speed swaps.
-</p>
-</div>
-
-<div class="glass p-8 text-center card">
-<i class="fas fa-users text-4xl text-purple-400 mb-5"></i>
-<h3 class="font-orbitron text-xl mb-3">TRIBE</h3>
-<p class="text-gray-400 text-sm">
-Apes together strong.
-</p>
-</div>
-
-</div>
-</section>
-
-<!-- ROADMAP -->
-<section id="roadmap" class="py-24 px-6">
-
-<div class="max-w-4xl mx-auto">
-
-<h2 class="font-orbitron text-4xl font-bold text-center mb-14">
-<span class="gold">ROADMAP</span>
-</h2>
-
-<div class="space-y-5">
-
-<div class="glass p-6">
-<p class="text-yellow-400 text-xs uppercase mb-2">Phase 1</p>
-<h3 class="font-bold text-xl mb-2">Jungle Arrival</h3>
-<p class="text-gray-400 text-sm">
-Launch token, grow tribe, raid socials.
-</p>
-</div>
-
-<div class="glass p-6">
-<p class="text-green-400 text-xs uppercase mb-2">Phase 2</p>
-<h3 class="font-bold text-xl mb-2">Banana Season</h3>
-<p class="text-gray-400 text-sm">
-Trending push, memes, burns, staking farm.
-</p>
-</div>
-
-<div class="glass p-6">
-<p class="text-purple-400 text-xs uppercase mb-2">Phase 3</p>
-<h3 class="font-bold text-xl mb-2">Empire</h3>
-<p class="text-gray-400 text-sm">
-Listings, influencers, domination.
-</p>
-</div>
-
-</div>
-
+<div class="max-w-md mx-auto glass p-3">
+<div id="integrated-terminal" style="min-height:620px;"></div>
 </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="py-14 border-t border-white/5 text-center px-6">
+<footer class="section text-center border-t border-white/10">
+<div class="text-5xl mb-4">🦍🍌</div>
 
-<div class="flex justify-center gap-6 text-2xl mb-6">
-<a href="https://x.com/" target="_blank"><i class="fab fa-twitter"></i></a>
-<a href="https://t.me/" target="_blank"><i class="fab fa-telegram"></i></a>
-</div>
-
-<p class="font-orbitron text-sm text-gray-500">
-BANANAAPE © 2026
+<p class="font-orbitron text-xl mb-2">
+BANANAAPE EMPIRE
 </p>
 
-<p class="text-gray-700 text-xs mt-2">
-No brain. Only banana.
+<p class="small">
+For the tribe. For the memes. For the bananas.
 </p>
-
 </footer>
 
-<script>
-const CA_KITA = "";
+<button id="topBtn" class="btn btn-yellow">
+↑
+</button>
 
-function copyCA(){
-navigator.clipboard.writeText(CA_KITA);
-let el=document.getElementById("copyText");
-el.innerText="CA COPIED!";
-setTimeout(()=>{
-el.innerText="COPY CA";
-},2000);
+<script>
+/* ======================
+GANTI CONTRACT ADDRESS
+====================== */
+const CA_KITA = "PASTE_CA_DISINI";
+
+/* TOP BUTTON */
+window.onscroll=()=>{
+const btn=document.getElementById("topBtn");
+if(window.scrollY>500){
+btn.style.display="block";
+}else{
+btn.style.display="none";
+}
 }
 
+document.getElementById("topBtn").onclick=()=>{
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* JUPITER */
 document.addEventListener("DOMContentLoaded",()=>{
-setTimeout(initJupiter,1200);
+setTimeout(loadJup,1500);
 });
 
-function initJupiter(){
-
+function loadJup(){
 if(!window.Jupiter){
-setTimeout(initJupiter,1000);
+setTimeout(loadJup,1200);
 return;
 }
 
@@ -361,9 +389,10 @@ fixedInputMint:true
 },
 
 containerStyles:{
-borderRadius:"20px",
-minHeight:"620px",
-width:"100%"
+borderRadius:"18px",
+background:"transparent",
+width:"100%",
+minHeight:"620px"
 },
 
 branding:{
