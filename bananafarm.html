@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FEGSOL Banana Farm V3</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#08080a;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+/* BACKGROUND */
+.bg-main{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#3b0764 0%,#12071f 25%,#08080a 70%);
+z-index:-5;
+}
+
+/* BANANA FALL */
+.banana{
+position:fixed;
+top:-100px;
+font-size:26px;
+animation:fall linear infinite;
+opacity:.75;
+z-index:-2;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(-100px) rotate(0deg);
+opacity:0;
+}
+15%{opacity:1;}
+100%{
+transform:translateY(120vh) rotate(360deg);
+opacity:0;
+}
+}
+
+/* WALKING BANANA */
+.walking{
+position:fixed;
+bottom:18px;
+left:-120px;
+font-size:42px;
+animation:walk 18s linear infinite;
+z-index:-1;
+opacity:.9;
+}
+
+@keyframes walk{
+0%{left:-120px; transform:scaleX(1);}
+49%{transform:scaleX(1);}
+50%{left:100%; transform:scaleX(-1);}
+100%{left:-120px; transform:scaleX(-1);}
+}
+
+/* UI */
+.font-orbitron{
+font-family:'Orbitron',sans-serif;
+}
+
+.glass{
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+}
+
+.glow{
+box-shadow:0 0 30px rgba(124,58,237,.18);
+}
+
+.gold{
+background:linear-gradient(to right,#fde047,#f59e0b);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.btn{
+transition:.25s;
+}
+
+.btn:hover{
+transform:translateY(-3px) scale(1.02);
+}
+
+.card:hover{
+transform:translateY(-5px);
+border-color:rgba(168,85,247,.35);
+}
+
+input{
+outline:none;
+}
+
+.stat-number{
+font-family:'Orbitron',sans-serif;
+font-weight:700;
+}
+
+.active-tier{
+border:1px solid rgba(168,85,247,.7)!important;
+box-shadow:0 0 25px rgba(168,85,247,.25);
+background:rgba(124,58,237,.15)!important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-main"></div>
+
+<!-- BANANA FALL -->
+<div class="banana" style="left:5%;animation-duration:8s;">🍌</div>
+<div class="banana" style="left:14%;animation-duration:10s;animation-delay:1s;">🍌</div>
+<div class="banana" style="left:26%;animation-duration:7s;animation-delay:2s;">🍌</div>
+<div class="banana" style="left:37%;animation-duration:9s;animation-delay:3s;">🍌</div>
+<div class="banana" style="left:48%;animation-duration:12s;">🍌</div>
+<div class="banana" style="left:61%;animation-duration:8s;animation-delay:1s;">🍌</div>
+<div class="banana" style="left:74%;animation-duration:11s;">🍌</div>
+<div class="banana" style="left:88%;animation-duration:7s;animation-delay:2s;">🍌</div>
+
+<!-- WALK -->
+<div class="walking">🐒🍌</div>
+
+<!-- NAV -->
+<nav class="p-5">
+<div class="max-w-6xl mx-auto glass glow px-5 py-4 flex justify-between items-center">
+
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-purple-600 flex items-center justify-center text-xl">
+🐒
+</div>
+<div>
+<p class="font-orbitron text-xl font-bold">
+FEG<span class="text-purple-400">SOL</span>
+</p>
+<p class="text-[10px] text-gray-400 uppercase tracking-widest">
+Banana Farm
+</p>
+</div>
+</div>
+
+<button onclick="connectWallet()"
+id="walletBtn"
+class="btn bg-purple-600 hover:bg-purple-700 px-5 py-2 rounded-full text-xs font-orbitron uppercase">
+Connect Wallet
+</button>
+
+</div>
+</nav>
+
+<!-- MAIN -->
+<section class="max-w-6xl mx-auto px-4 pt-8 pb-16">
+
+<div class="text-center mb-10">
+<h1 class="font-orbitron text-4xl md:text-6xl font-black gold uppercase">
+Banana Farm V3
+</h1>
+<p class="text-purple-300 mt-3 text-xs tracking-[0.35em] uppercase">
+Stake • Harvest • Compound • Conquer
+</p>
+</div>
+
+<!-- TOP STATS -->
+<div class="grid md:grid-cols-4 gap-4 mb-8">
+
+<div class="glass card p-5 text-center">
+<p class="text-gray-400 text-[10px] uppercase">TVL</p>
+<p class="stat-number text-xl">$<span id="tvl">0</span></p>
+</div>
+
+<div class="glass card p-5 text-center">
+<p class="text-gray-400 text-[10px] uppercase">APR</p>
+<p class="stat-number text-xl text-green-400"><span id="apr">80</span>%</p>
+</div>
+
+<div class="glass card p-5 text-center">
+<p class="text-gray-400 text-[10px] uppercase">Rewards</p>
+<p class="stat-number text-xl text-yellow-400"><span id="rewardLive">0</span></p>
+</div>
+
+<div class="glass card p-5 text-center">
+<p class="text-gray-400 text-[10px] uppercase">Rank</p>
+<p class="stat-number text-xl text-purple-400" id="rank">BABY APE</p>
+</div>
+
+</div>
+
+<!-- FARM BOX -->
+<div class="glass glow p-6 md:p-10">
+
+<p class="text-[10px] uppercase text-gray-400 mb-4 tracking-widest">
+Choose Duration
+</p>
+
+<div class="grid grid-cols-3 gap-3 mb-7">
+
+<button onclick="pickPlan(3,40,this)"
+class="planBtn glass p-3 text-xs active-tier">
+3 Days<br><span class="text-green-400">40%</span>
+</button>
+
+<button onclick="pickPlan(7,80,this)"
+class="planBtn glass p-3 text-xs">
+7 Days<br><span class="text-green-400">80%</span>
+</button>
+
+<button onclick="pickPlan(30,160,this)"
+class="planBtn glass p-3 text-xs">
+30 Days<br><span class="text-green-400">160%</span>
+</button>
+
+</div>
+
+<p class="text-[10px] uppercase text-gray-400 mb-3 tracking-widest">
+Amount to Stake
+</p>
+
+<div class="relative mb-6">
+<input id="stakeInput"
+oninput="calcReward()"
+type="number"
+placeholder="0"
+class="w-full bg-black/40 border border-purple-500/20 rounded-2xl px-5 py-4 text-white">
+
+<button onclick="maxStake()"
+class="absolute right-4 top-4 text-xs text-purple-400 uppercase">
+Max
+</button>
+</div>
+
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+
+<button onclick="farmAction('Stake')"
+class="btn bg-gradient-to-r from-purple-600 to-blue-600 py-4 rounded-2xl font-orbitron uppercase text-sm">
+Stake
+</button>
+
+<button onclick="farmAction('Harvest')"
+class="btn bg-green-600/20 border border-green-500/40 py-4 rounded-2xl font-orbitron uppercase text-sm text-green-400">
+Harvest
+</button>
+
+<button onclick="farmAction('Compound')"
+class="btn bg-yellow-500/20 border border-yellow-500/40 py-4 rounded-2xl font-orbitron uppercase text-sm text-yellow-400">
+Compound
+</button>
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-4">
+
+<div class="glass p-5 text-center">
+<p class="text-[10px] text-gray-400 uppercase">Daily Reward</p>
+<p class="font-orbitron text-xl text-green-400">
++<span id="daily">0</span>
+</p>
+</div>
+
+<div class="glass p-5 text-center">
+<p class="text-[10px] text-gray-400 uppercase">Total Reward</p>
+<p class="font-orbitron text-xl text-yellow-400">
++<span id="totalReward">0</span>
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+let wallet=false;
+let apr=40;
+let days=3;
+let fakeBalance=500000;
+
+function connectWallet(){
+wallet=true;
+document.getElementById("walletBtn").innerText="Connected";
+document.getElementById("walletBtn").classList.remove("bg-purple-600");
+document.getElementById("walletBtn").classList.add("bg-green-600");
+
+Swal.fire({
+title:"Wallet Connected",
+text:"Welcome Gorilla 🐒",
+icon:"success",
+background:"#08080a",
+color:"#fff"
+});
+}
+
+function pickPlan(d,a,el){
+days=d;
+apr=a;
+
+document.getElementById("apr").innerText=apr;
+
+document.querySelectorAll(".planBtn").forEach(x=>{
+x.classList.remove("active-tier");
+});
+
+el.classList.add("active-tier");
+
+calcReward();
+}
+
+function calcReward(){
+let amount=parseFloat(document.getElementById("stakeInput").value||0);
+
+let daily=(amount*(apr/100))/365;
+let total=daily*days;
+
+document.getElementById("daily").innerText=daily.toFixed(2);
+document.getElementById("totalReward").innerText=total.toFixed(2);
+document.getElementById("rewardLive").innerText=total.toFixed(2);
+
+if(amount>=1000000){
+document.getElementById("rank").innerText="KING KONG";
+}else if(amount>=100000){
+document.getElementById("rank").innerText="SILVERBACK";
+}else{
+document.getElementById("rank").innerText="BABY APE";
+}
+}
+
+function maxStake(){
+document.getElementById("stakeInput").value=fakeBalance;
+calcReward();
+}
+
+function farmAction(type){
+
+if(!wallet){
+Swal.fire({
+title:"Connect Wallet First",
+icon:"warning",
+background:"#08080a",
+color:"#fff"
+});
+return;
+}
+
+Swal.fire({
+title:type+" Success",
+text:"Banana Empire Activated 🍌",
+icon:"success",
+background:"#08080a",
+color:"#fff"
+});
+}
+
+/* LIVE TVL */
+let tvl=150000;
+setInterval(()=>{
+tvl+=Math.floor(Math.random()*500);
+document.getElementById("tvl").innerText=tvl.toLocaleString();
+},1200);
+</script>
+
+</body>
+</html>
